@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../styles.css" />
+
+    <title>Barber-Select | Entrar</title>
+  </head>
+  <body>
+    <div class="app">
+      <main class="auth-view">
+        <div class="auth-box">
+          <div class="mark">
+            <span class="mark-symbol">
+              <span>B</span>
+            </span>
+
+            <span>BARBER-SELECT</span>
+          </div>
+
+          <div class="eyebrow" style="margin-top: 30px" id="role-label"></div>
+
+          <h1>Acesse seu painel</h1>
+
+          <p class="muted">
+            As credenciais reais ficam em variáveis de ambiente do servidor, não
+            no código da página.
+          </p>
+
+          <form class="form" id="login-form">
+            <div class="field">
+              <label for="identity">E-mail ou usuário</label>
+
+              <input id="identity" name="identity" type="text" required />
+            </div>
+
+            <div class="field">
+              <label for="password">Senha</label>
+
+              <input id="password" name="password" type="password" required />
+            </div>
+
+            <div id="auth-msg" class="muted" style="min-height: 20px"></div>
+
+            <button class="btn btn-primary" type="submit">Entrar</button>
+          </form>
+
+          <a
+            class="btn btn-outline"
+            href="/index.html"
+            style="display: inline-block; margin-top: 14px; text-align: center"
+          >
+            Voltar
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/auth.js"></script>
+  </body>
+</html>

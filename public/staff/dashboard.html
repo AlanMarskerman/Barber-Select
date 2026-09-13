@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Barber-Select | Visão geral</title>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="main">
+          <header class="topbar">
+            <h1 id="topbar-title">Visão geral</h1>
+            <div class="muted" id="topbar-role"></div>
+          </header>
+          <main class="content">
+            <div class="page-head">
+              <div>
+                <div class="eyebrow">Hoje</div>
+                <h2>Visão geral</h2>
+                <p class="muted">Resumo de atendimentos e financeiro.</p>
+              </div>
+              <a class="btn btn-primary" href="appointments.html"
+                >Agendamento</a
+              >
+            </div>
+            <section class="grid kpis">
+              <div class="card">
+                <div class="muted">Atendimentos hoje</div>
+                <div class="kpi-value">12</div>
+              </div>
+              <div class="card">
+                <div class="muted">Faturamento</div>
+                <div class="kpi-value">R$ 875,00</div>
+              </div>
+              <div class="card">
+                <div class="muted">Clientes ativos</div>
+                <div class="kpi-value">58</div>
+              </div>
+              <div class="card">
+                <div class="muted">Saldo do caixa</div>
+                <div class="kpi-value">R$ 12.640,00</div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="../js/shared.js"></script>
+    <script>
+      requireAuth("staff");
+      renderSidebar("staff", "dashboard.html");
+      renderTopbar("Visão geral", "staff");
+    </script>
+  </body>
+</html>

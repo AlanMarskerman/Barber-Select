@@ -1,0 +1,19 @@
+# Variáveis de ambiente (sensível)
+.env
+.env.local
+.env.*.local
+
+# Dependências (recriadas via npm install)
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
