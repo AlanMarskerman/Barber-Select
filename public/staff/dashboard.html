@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../styles.css" />
     <title>Barber-Select | Visão geral</title>
   </head>
+
   <body>
     <div class="app">
       <div class="shell">
@@ -48,11 +49,7 @@
         </div>
       </div>
     </div>
-    <script src="../js/shared.js"></script>
-    <script>
-      requireAuth("staff");
-      renderSidebar("staff", "dashboard.html");
-      renderTopbar("Visão geral", "staff");
-    </script>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/staff-dashboard.js" defer></script>
   </body>
 </html>

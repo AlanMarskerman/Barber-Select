@@ -33,12 +33,7 @@
         </div>
       </div>
     </div>
-    <script src="../js/shared.js"></script>
-    <script>
-      const session = getSession();
-      requireAuth();
-      renderSidebar(session.role, "settings.html");
-      renderTopbar("Configurações", session.role);
-    </script>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/client-settings.js" defer></script>
   </body>
 </html>

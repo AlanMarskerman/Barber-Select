@@ -1,25 +1,44 @@
 const path = require("path");
 const express = require("express");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const jwt = require("jsonwebtoken");
+
 require("dotenv").config();
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, "public");
+const JWT_SECRET = process.env.JWT_SECRET;
 
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+if (!JWT_SECRET || JWT_SECRET.length < 32) {
+  throw new Error("JWT_SECRET ausente ou fraco no arquivo .env.");
+}
 
-// Arquivos públicos
+app.disable("x-powered-by");
+
+app.use(helmet());
+
+app.use(express.json({ limit: "100kb" }));
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    error: "Muitas tentativas. Tente novamente em 15 minutos.",
+  },
+});
+
 app.use(express.static(PUBLIC_DIR));
 
-// Página inicial
 app.get("/", (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, "index.html"));
 });
 
-// Teste do servidor
 app.get("/api/health", (req, res) => {
   res.json({
     ok: true,
@@ -27,70 +46,118 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Login do cliente
-app.post("/auth/login/cliente", (req, res) => {
-  console.log("Tentativa de login de cliente:", req.body);
-
+function validateLoginInput(req, res, next) {
   const { identity, password } = req.body;
 
   if (
-    identity !== process.env.CLIENT_LOGIN ||
-    password !== process.env.CLIENT_PASSWORD
+    typeof identity !== "string" ||
+    typeof password !== "string" ||
+    identity.length < 1 ||
+    identity.length > 100 ||
+    password.length < 1 ||
+    password.length > 200
   ) {
-    return res.status(401).json({
-      error: "Usuário ou senha do cliente incorretos.",
+    return res.status(400).json({
+      error: "Dados de login inválidos.",
     });
   }
 
-  return res.json({
-    token: "token-teste-cliente",
-    role: "client",
+  next();
+}
+
+function createToken(role) {
+  return jwt.sign({ role }, JWT_SECRET, {
+    expiresIn: "2h",
   });
-});
+}
 
-// Login do colaborador
-app.post("/auth/login/colaborador", (req, res) => {
-  console.log("Tentativa de login de colaborador:", req.body);
+function authenticate(requiredRoles = []) {
+  return (req, res, next) => {
+    const authorization = req.headers.authorization || "";
+    const [scheme, token] = authorization.split(" ");
 
-  const { identity, password } = req.body;
+    if (scheme !== "Bearer" || !token) {
+      return res.status(401).json({
+        error: "Autenticação obrigatória.",
+      });
+    }
 
-  if (
-    identity !== process.env.STAFF_LOGIN ||
-    password !== process.env.STAFF_PASSWORD
-  ) {
-    return res.status(401).json({
-      error: "Usuário ou senha do colaborador incorretos.",
+    try {
+      const user = jwt.verify(token, JWT_SECRET);
+
+      if (requiredRoles.length > 0 && !requiredRoles.includes(user.role)) {
+        return res.status(403).json({
+          error: "Você não tem permissão para esta ação.",
+        });
+      }
+
+      req.user = user;
+      next();
+    } catch {
+      return res.status(401).json({
+        error: "Sessão inválida ou expirada.",
+      });
+    }
+  };
+}
+
+function handleLogin(role, loginEnv, passwordEnv) {
+  return (req, res) => {
+    const { identity, password } = req.body;
+
+    const expectedLogin = process.env[loginEnv];
+    const expectedPassword = process.env[passwordEnv];
+
+    if (!expectedLogin || !expectedPassword) {
+      console.error(`Credenciais ausentes para o papel: ${role}`);
+      return res.status(500).json({
+        error: "Erro de configuração do servidor.",
+      });
+    }
+
+    if (identity !== expectedLogin || password !== expectedPassword) {
+      console.warn(`Falha de login para o papel: ${role}`);
+      return res.status(401).json({
+        error: "Usuário ou senha incorretos.",
+      });
+    }
+
+    return res.json({
+      token: createToken(role),
+      role,
     });
-  }
+  };
+}
 
-  return res.json({
-    token: "token-teste-colaborador",
-    role: "staff",
+app.post(
+  "/auth/login/cliente",
+  loginLimiter,
+  validateLoginInput,
+  handleLogin("client", "CLIENT_LOGIN", "CLIENT_PASSWORD"),
+);
+
+app.post(
+  "/auth/login/colaborador",
+  loginLimiter,
+  validateLoginInput,
+  handleLogin("staff", "STAFF_LOGIN", "STAFF_PASSWORD"),
+);
+
+app.post(
+  "/auth/login/admin",
+  loginLimiter,
+  validateLoginInput,
+  handleLogin("admin", "ADMIN_LOGIN", "ADMIN_PASSWORD"),
+);
+
+// Exemplo: use isto em endpoints administrativos reais.
+app.get("/api/admin/exemplo-protegido", authenticate(["admin"]), (req, res) => {
+  res.json({
+    message: "Acesso administrativo autorizado.",
+    user: req.user,
   });
 });
 
-// Login do administrador
-app.post("/auth/login/admin", (req, res) => {
-  console.log("Tentativa de login de administrador:", req.body);
-
-  const { identity, password } = req.body;
-
-  if (
-    identity !== process.env.ADMIN_LOGIN ||
-    password !== process.env.ADMIN_PASSWORD
-  ) {
-    return res.status(401).json({
-      error: "Usuário ou senha do administrador incorretos.",
-    });
-  }
-
-  return res.json({
-    token: "token-teste-admin",
-    role: "admin",
-  });
-});
-
-// Tratamento de erros
 app.use((err, req, res, next) => {
   console.error("Erro interno:", err);
 
@@ -99,7 +166,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Inicialização
 app.listen(PORT, () => {
   console.log(`Servidor executando em http://localhost:${PORT}`);
 });

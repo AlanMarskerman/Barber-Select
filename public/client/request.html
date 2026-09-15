@@ -49,21 +49,7 @@
         </div>
       </div>
     </div>
-    <script src="../js/shared.js"></script>
-    <script>
-      requireAuth("client");
-      renderSidebar("client", "request.html");
-      renderTopbar("Solicitar horário", "client");
-    </script>
-    <script>
-      document
-        .getElementById("request-form")
-        .addEventListener("submit", (event) => {
-          event.preventDefault();
-          alert(
-            "No backend, esta solicitação seria ligada ao token do cliente e gravada via API protegida.",
-          );
-        });
-    </script>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/client-request.js" defer></script>
   </body>
 </html>

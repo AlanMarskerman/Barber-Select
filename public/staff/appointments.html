@@ -63,19 +63,7 @@
         </div>
       </div>
     </div>
-    <script src="../js/shared.js"></script>
-    <script>
-      requireAuth("staff");
-      renderSidebar("staff", "appointments.html");
-      renderTopbar("Agenda", "staff");
-    </script>
-    <script>
-      document
-        .getElementById("appointment-form")
-        .addEventListener("submit", (event) => {
-          event.preventDefault();
-          alert("Este formulário usaria o token para gravar no backend.");
-        });
-    </script>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/staff-appointments.js" defer></script>
   </body>
 </html>

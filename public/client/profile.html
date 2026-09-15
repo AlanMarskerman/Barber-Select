@@ -26,16 +26,36 @@
             <div class="card">
               <form class="form" id="profile-form">
                 <div class="field">
-                  <label>Nome completo</label
-                  ><input value="Rafael Almeida" required />
+                  <label for="full-name">Nome completo</label>
+                  <input
+                    id="full-name"
+                    name="fullName"
+                    type="text"
+                    value="Rafael Almeida"
+                    required
+                  />
                 </div>
+
                 <div class="field">
-                  <label>Telefone</label
-                  ><input value="(11) 98888-1200" required />
+                  <label for="phone">Telefone</label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value="(11) 98888-1200"
+                    required
+                  />
                 </div>
+
                 <div class="field">
-                  <label>E-mail</label
-                  ><input type="email" value="rafael@email.com" required />
+                  <label for="email">E-mail</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value="rafael@email.com"
+                    required
+                  />
                 </div>
                 <button class="btn btn-primary" type="submit">Salvar</button>
               </form>
@@ -45,18 +65,7 @@
       </div>
     </div>
     <script src="../js/shared.js"></script>
-    <script>
-      requireAuth("client");
-      renderSidebar("client", "profile.html");
-      renderTopbar("Meu perfil", "client");
-    </script>
-    <script>
-      document
-        .getElementById("profile-form")
-        .addEventListener("submit", (event) => {
-          event.preventDefault();
-          alert("Backend atualizaria o perfil usando o token do cliente.");
-        });
-    </script>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/client-profile.js" defer></script>
   </body>
 </html>
