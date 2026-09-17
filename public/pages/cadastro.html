@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro | Barber-Select</title>
+
+    <!-- Biblioteca de ícones -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- CSS da página -->
+    <link rel="stylesheet" href="../styles-auth.css" />
+  </head>
+
+  <body>
+    <!-- Tela completa de cadastro -->
+    <div class="auth-container">
+      <!-- Painel verde da esquerda -->
+      <div class="auth-panel">
+        <img
+          src="../assets/TELA_DE_FUNDO.png"
+          alt="Fundo decorativo de barbearia"
+          class="auth-background"
+        />
+
+        <!-- Conteúdo exibido sobre o fundo verde -->
+        <div class="auth-panel-content">
+          <!-- Logo Barber Select -->
+          <div class="auth-logo">
+            <img
+              src="../assets/LOGO.png"
+              alt="Barber-Select"
+              class="logo-image"
+            />
+          </div>
+
+          <!-- Texto principal -->
+          <div class="auth-panel-text">
+            <h1>
+              Gestão inteligente<br />
+              <span>para sua barbearia</span>
+            </h1>
+            <p>
+              Mais organização, mais clientes,<br />
+              mais crescimento para o seu negócio.
+            </p>
+          </div>
+
+          <!-- Benefícios do sistema -->
+          <div class="auth-benefits">
+            <div class="auth-benefit">
+              <i class="bx bx-calendar benefit-icon"></i>
+              <div>
+                <h3>Agenda online</h3>
+                <span>Escolha dia, horário e serviço.</span>
+              </div>
+            </div>
+
+            <div class="auth-benefit">
+              <i class="bx bx-bar-chart-alt-2 benefit-icon"></i>
+              <div>
+                <h3>Barbearias perto de você</h3>
+                <span>Escolha o lugar ideal.</span>
+              </div>
+            </div>
+
+            <div class="auth-benefit">
+              <i class="bx bx-network-chart benefit-icon"></i>
+              <div>
+                <h3>Tudo na palma da mão</h3>
+                <span>Gerencie seus horários com facilidade.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frase final -->
+          <div class="auth-tagline">
+            <p>Barbearia mais forte<br />todos os dias</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Caixa branca do cadastro -->
+      <div class="auth-box" style="min-height: auto; margin: 40px auto;">
+        <!-- Link voltar -->
+        <a href="../index.html" class="back-link">
+          <i class="bx bx-arrow-back"></i>
+          Voltar ao início
+        </a>
+
+        <!-- Título -->
+        <div class="auth-header">
+          <h1>Crie sua conta</h1>
+          <p>Cadastre-se como cliente para agendar seus serviços.</p>
+        </div>
+
+        <!-- Formulário -->
+        <form class="auth-form" id="register-form">
+          <!-- Campo do nome -->
+          <div class="form-group">
+            <label for="name">Nome completo</label>
+            <div class="input-wrapper">
+              <i class="bx bx-user input-icon"></i>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Ex: João Silva"
+                required
+                minlength="3"
+              />
+            </div>
+          </div>
+
+          <!-- Campo de e-mail -->
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <div class="input-wrapper">
+              <i class="bx bx-envelope input-icon"></i>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Digite seu e-mail"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Campo de telefone -->
+          <div class="form-group">
+            <label for="phone">Telefone</label>
+            <div class="input-wrapper">
+              <i class="bx bx-phone input-icon"></i>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="(00) 00000-0000"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Campo de senha -->
+          <div class="form-group">
+            <label for="password">Senha</label>
+            <div class="input-wrapper">
+              <i class="bx bx-lock input-icon"></i>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Digite sua senha"
+                required
+                minlength="6"
+              />
+              <i class="bx bx-show eye-icon" id="toggle-password"></i>
+            </div>
+          </div>
+
+          <!-- Confirmação de senha -->
+          <div class="form-group">
+            <label for="password-confirm">Confirme a senha</label>
+            <div class="input-wrapper">
+              <i class="bx bx-lock input-icon"></i>
+              <input
+                type="password"
+                id="password-confirm"
+                name="password-confirm"
+                placeholder="Digite a senha novamente"
+                required
+                minlength="6"
+              />
+              <i class="bx bx-show eye-icon" id="toggle-password-confirm"></i>
+            </div>
+          </div>
+
+          <!-- Termos de uso -->
+          <div class="form-group" style="margin-top: 10px;">
+            <label class="checkbox-label" style="font-weight: normal; line-height: 1.6;">
+              <input type="checkbox" id="terms" name="terms" required />
+              <span style="font-size: 13px;">
+                Concordo com os <a href="#" style="color: var(--gold2); text-decoration: none;">Termos de uso</a>
+                e a <a href="#" style="color: var(--gold2); text-decoration: none;">Política de Privacidade</a>
+              </span>
+            </label>
+          </div>
+
+          <!-- Mensagem de erro/sucesso -->
+          <div id="register-message" class="auth-message"></div>
+
+          <!-- Botão de criar conta -->
+          <button type="submit" class="btn-submit">
+            <span>Criar conta</span>
+            <i class="bx bx-right-arrow-alt"></i>
+          </button>
+        </form>
+
+        <!-- Link para login -->
+        <div class="auth-footer">
+          <p>
+            Já possui uma conta?
+            <a href="login.html">Fazer login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script de cadastro -->
+    <script src="../js/register.js"></script>
+  </body>
+</html>

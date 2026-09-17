@@ -1,69 +1,236 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Barber-Select | Início</title>
+    <title>Barber-Select | Gestão Inteligente para sua Barbearia</title>
+
+    <!-- Biblioteca de ícones -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="styles-landing.css" />
   </head>
+
   <body>
-    <div class="app">
-      <section class="landing">
-        <div class="landing-copy">
-          <div class="mark">
-            <span class="mark-symbol"><span>B</span></span>
-            <span>BARBER-SELECT</span>
-          </div>
-          <div class="eyebrow" style="margin-top: 70px">
-            Selecione seu acesso
-          </div>
-          <h1>Três portas para a mesma barbearia.</h1>
-          <p>
-            Cliente, colaborador e administrador com experiências feitas para
-            cada rotina.
+    <!-- Header com botões Login/Cadastro -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-header">
+          <img src="assets/logo.png" alt="Barber-Select Logo" class="logo-img" />
+        </div>
+
+        <nav class="header-nav">
+          <a href="pages/login.html" class="btn-header btn-login">Login</a>
+          <a href="pages/cadastro.html" class="btn-header btn-cadastro">Cadastro</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-background">
+        <img src="assets/hero-bg.jpg" alt="Barbearia profissional" class="hero-bg-img" />
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class="eyebrow">Sistema completo de gestão</span>
+          <h1>
+            Gestão inteligente<br />
+            <span class="highlight">para sua barbearia</span>
+          </h1>
+          <p class="hero-description">
+            Mais organização, mais clientes, mais crescimento para o seu negócio.
+            Conecte clientes, equipe e administração em uma plataforma única.
           </p>
-          <div class="landing-actions">
-            <a class="btn btn-primary" href="pages/auth.html?role=client"
-              >Entrar como cliente</a
-            >
-            <a class="btn btn-primary" href="pages/auth.html?role=staff"
-              >Acesso da equipe</a
-            >
-            <a class="btn btn-primary" href="pages/auth.html?role=admin"
-              >Administração</a
-            >
+
+          <div class="hero-actions">
+            <a href="pages/cadastro.html" class="btn btn-primary">
+              Começar agora
+              <i class="bx bx-right-arrow-alt"></i>
+            </a>
+            <a href="#recursos" class="btn btn-secondary">
+              Conhecer recursos
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefícios Section -->
+    <section class="benefits" id="recursos">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Por que escolher o Barber-Select?</span>
+          <h2>Três perfis. Uma plataforma.</h2>
+          <p>Experiências personalizadas para cada tipo de usuário</p>
+        </div>
+
+        <div class="benefits-grid">
+          <!-- Benefício 1: Cliente -->
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="bx bx-user"></i>
+            </div>
+            <h3>Área do Cliente</h3>
+            <p>Agende horários, escolha seu profissional favorito e acompanhe seu histórico de atendimentos.</p>
+            <ul class="benefit-features">
+              <li><i class="bx bx-check"></i> Agendamento online 24/7</li>
+              <li><i class="bx bx-check"></i> Histórico completo</li>
+              <li><i class="bx bx-check"></i> Notificações automáticas</li>
+            </ul>
+          </div>
+
+          <!-- Benefício 2: Colaborador -->
+          <div class="benefit-card featured">
+            <div class="badge">Mais usado</div>
+            <div class="benefit-icon">
+              <i class="bx bx-group"></i>
+            </div>
+            <h3>Área do Colaborador</h3>
+            <p>Gerencie sua agenda, visualize clientes e organize seus atendimentos com eficiência.</p>
+            <ul class="benefit-features">
+              <li><i class="bx bx-check"></i> Agenda inteligente</li>
+              <li><i class="bx bx-check"></i> Gestão de clientes</li>
+              <li><i class="bx bx-check"></i> Controle de serviços</li>
+            </ul>
+          </div>
+
+          <!-- Benefício 3: Dono/Admin -->
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="bx bx-line-chart"></i>
+            </div>
+            <h3>Área Administrativa</h3>
+            <p>Controle financeiro, dashboards completos e gestão total do seu negócio em tempo real.</p>
+            <ul class="benefit-features">
+              <li><i class="bx bx-check"></i> Dashboard executivo</li>
+              <li><i class="bx bx-check"></i> Relatórios financeiros</li>
+              <li><i class="bx bx-check"></i> Controle de equipe</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <div class="features-content">
+          <div class="features-text">
+            <span class="eyebrow">Recursos poderosos</span>
+            <h2>Tudo que você precisa em um só lugar</h2>
+            <p>
+              O Barber-Select foi desenvolvido para facilitar a rotina de barbearias
+              de todos os tamanhos, desde profissionais autônomos até redes.
+            </p>
+
+            <div class="features-list">
+              <div class="feature-item">
+                <i class="bx bx-calendar-check"></i>
+                <div>
+                  <h4>Agenda online completa</h4>
+                  <p>Sistema de agendamento inteligente que evita conflitos</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <i class="bx bx-mobile"></i>
+                <div>
+                  <h4>Acesso de qualquer lugar</h4>
+                  <p>Responsivo e otimizado para desktop, tablet e smartphone</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <i class="bx bx-shield-alt-2"></i>
+                <div>
+                  <h4>Segurança em primeiro lugar</h4>
+                  <p>Autenticação JWT, rate limiting e proteção de dados</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <i class="bx bx-bar-chart-alt-2"></i>
+                <div>
+                  <h4>Relatórios e insights</h4>
+                  <p>Dashboards visuais com métricas importantes do negócio</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="features-image">
+            <img src="assets/dashboard-preview.png" alt="Preview do dashboard" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Pronto para modernizar sua barbearia?</h2>
+          <p>Cadastre-se agora e comece a gerenciar seu negócio de forma profissional</p>
+
+          <div class="cta-actions">
+            <a href="pages/cadastro.html" class="btn btn-primary btn-large">
+              Criar conta gratuita
+              <i class="bx bx-right-arrow-alt"></i>
+            </a>
+            <p class="cta-note">Não precisa de cartão de crédito</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <img src="assets/logo.png" alt="Barber-Select" class="footer-logo" />
+            <p>Sistema completo de gestão para barbearias modernas</p>
+          </div>
+
+          <div class="footer-links">
+            <div class="footer-column">
+              <h4>Produto</h4>
+              <ul>
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="pages/login.html">Login</a></li>
+                <li><a href="pages/cadastro.html">Cadastro</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Suporte</h4>
+              <ul>
+                <li><a href="#">Central de ajuda</a></li>
+                <li><a href="#">Contato</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#">Termos de uso</a></li>
+                <li><a href="#">Política de privacidade</a></li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div class="role-card">
-          <div class="eyebrow">Barber-Select</div>
-          <h2>Ambientes distintos</h2>
-          <p>
-            Autenticação no servidor usando variáveis de ambiente para proteger
-            credenciais.
-          </p>
-          <div class="role-options">
-            <a class="role-option" href="pages/auth.html?role=client">
-              <span
-                ><strong>Área do cliente</strong
-                ><small> Agendamentos e perfil</small></span
-              >
-            </a>
-            <a class="role-option" href="pages/auth.html?role=staff">
-              <span
-                ><strong>Área do colaborador</strong
-                ><small> Agenda, clientes e serviços</small></span
-              >
-            </a>
-            <a class="role-option" href="pages/auth.html?role=admin">
-              <span
-                ><strong>Área administrativa</strong
-                ><small> Fluxo financeiro e controle geral</small></span
-              >
-            </a>
-          </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Barber-Select. Todos os direitos reservados.</p>
         </div>
-      </section>
-    </div>
+      </div>
+    </footer>
   </body>
 </html>
