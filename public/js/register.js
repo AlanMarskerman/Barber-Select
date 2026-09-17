@@ -128,7 +128,9 @@ if (registerForm) {
 
     // Simula cadastro (em produção, aqui faria uma chamada para a API)
     showMessage("Criando sua conta...", "info");
-
+    
+    /*
+    // ABA DE SIMULAÇÃO DE CADASTRO
     // TODO: Implementar endpoint de cadastro no servidor
     // Por enquanto, simula um delay e depois redireciona para login
     setTimeout(() => {
@@ -138,11 +140,12 @@ if (registerForm) {
         window.location.href = "login.html";
       }, 1500);
     }, 1500);
+    */
 
+    // ABA DE CADASTRO 
     // Exemplo de como seria a chamada real para a API:
-    /*
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("http://localhost:3001/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -174,7 +177,7 @@ if (registerForm) {
       submitButton.disabled = false;
       submitButton.innerHTML = originalText;
     }
-    */
+    
   });
 } else {
   console.error("Formulário de cadastro não encontrado. Verifique o ID 'register-form'.");

@@ -4,7 +4,7 @@
 // Mapeamento de credenciais para perfis (baseado no .env do servidor)
 const PROFILE_MAP = {
   client: {
-    endpoint: "/auth/login/cliente",
+    endpoint: "http://localhost:3001/api/login",
     destination: "/client/home.html",
     label: "Cliente"
   },

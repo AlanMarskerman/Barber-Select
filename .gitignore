@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.*.local
+features/cadastro-mysql/.env.register
 
 # Dependências (recriadas via npm install)
 node_modules/

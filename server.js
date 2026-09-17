@@ -18,7 +18,16 @@ if (!JWT_SECRET || JWT_SECRET.length < 32) {
 
 app.disable("x-powered-by");
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "connect-src": ["'self'", "http://localhost:3001"],
+      },
+    },
+  }),
+);
 
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true, limit: "100kb" }));
