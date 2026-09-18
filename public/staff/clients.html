@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Barber-Select | Clientes</title>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="main">
+          <header class="topbar">
+            <h1 id="topbar-title">Clientes</h1>
+            <div class="muted" id="topbar-role"></div>
+          </header>
+          <main class="content">
+            <div class="page-head">
+              <div>
+                <div class="eyebrow">Relacionamento</div>
+                <h2>Clientes</h2>
+                <p class="muted">Filtro e ações rápidas.</p>
+              </div>
+              <button class="btn btn-primary">+ Cliente</button>
+            </div>
+            <div class="card">
+              <div class="table-wrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Cliente</th>
+                      <th>Telefone</th>
+                      <th>E-mail</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Rafael Almeida</strong></td>
+                      <td>(11) 98888-1200</td>
+                      <td>rafael@email.com</td>
+                      <td><span class="status">Ativo</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/staff-clients.js" defer></script>
+  </body>
+</html>

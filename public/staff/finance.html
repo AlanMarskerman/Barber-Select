@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Barber-Select | Financeiro</title>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="main">
+          <header class="topbar">
+            <h1 id="topbar-title">Financeiro</h1>
+            <div class="muted" id="topbar-role"></div>
+          </header>
+          <main class="content">
+            <div class="page-head">
+              <div>
+                <div class="eyebrow">Administração</div>
+                <h2>Fluxo de caixa</h2>
+                <p class="muted">Controle de lançamentos.</p>
+              </div>
+              <button class="btn btn-primary">+ Lançamento</button>
+            </div>
+            <div class="card">
+              <h3>Lançamentos</h3>
+              <div class="table-wrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Descrição</th>
+                      <th>Tipo</th>
+                      <th>Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>10/09/2026</td>
+                      <td><strong>Atendimento - Rafael</strong></td>
+                      <td><span class="status">Entrada</span></td>
+                      <td>R$ 75,00</td>
+                    </tr>
+                    <tr>
+                      <td>09/09/2026</td>
+                      <td><strong>Compra de produtos</strong></td>
+                      <td><span class="status pending">Saída</span></td>
+                      <td>R$ 180,00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/staff-finance.js" defer></script>
+  </body>
+</html>

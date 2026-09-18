@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Barber-Select | Agenda</title>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="main">
+          <header class="topbar">
+            <h1 id="topbar-title">Agenda</h1>
+            <div class="muted" id="topbar-role"></div>
+          </header>
+          <main class="content">
+            <div class="page-head">
+              <div>
+                <div class="eyebrow">Operação</div>
+                <h2>Agendamento</h2>
+                <p class="muted">Cadastre e visualize horários.</p>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="card">
+                <h3>Novo agendamento</h3>
+                <form class="form" id="appointment-form">
+                  <div class="field">
+                    <label>Cliente</label><input required />
+                  </div>
+                  <div class="field">
+                    <label>Serviço</label><input required />
+                  </div>
+                  <div class="field">
+                    <label>Profissional</label><input required />
+                  </div>
+                  <div class="field">
+                    <label>Data</label><input type="date" required />
+                  </div>
+                  <div class="field">
+                    <label>Horário</label><input type="time" required />
+                  </div>
+                  <button class="btn btn-primary" type="submit">
+                    Confirmar
+                  </button>
+                </form>
+              </div>
+              <div class="card">
+                <h3>Agenda de hoje</h3>
+                <div class="agenda-item">
+                  <div>14:00</div>
+                  <div>
+                    <strong>Rafael Almeida</strong>
+                    <div class="muted">Combo executivo - André</div>
+                  </div>
+                  <span class="status">Confirmado</span>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/staff-appointments.js" defer></script>
+  </body>
+</html>

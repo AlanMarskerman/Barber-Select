@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Barber-Select | Minha área</title>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="main">
+          <header class="topbar">
+            <h1 id="topbar-title">Minha área</h1>
+            <div class="muted" id="topbar-role"></div>
+          </header>
+          <main class="content">
+            <div class="page-head">
+              <div>
+                <div class="eyebrow">Cliente</div>
+                <h2>Minha área</h2>
+                <p class="muted">Veja seus horários e dados.</p>
+              </div>
+              <a class="btn btn-primary" href="request.html"
+                >Solicitar agendamento</a
+              >
+            </div>
+            <section class="grid">
+              <div class="card">
+                <h3>Próximo horário</h3>
+                <div class="agenda-item">
+                  <div>14:00</div>
+                  <div>
+                    <strong>Combo executivo</strong>
+                    <div class="muted">Com André</div>
+                  </div>
+                  <span class="status">Confirmado</span>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Perfil</h3>
+                <p class="muted">Nome: Rafael Almeida</p>
+                <p class="muted">Telefone: (11) 98888-1200</p>
+                <p class="muted">Total gasto: R$ 280,00</p>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/client-home.js" defer></script>
+  </body>
+</html>

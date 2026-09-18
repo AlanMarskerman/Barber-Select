@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<!-- DASHBOARD - INÍCIO DA ALTERAÇÃO: adaptação necessária para a Dashboard/sidebar. -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles.css" />
+  <title>Barber Select | Dashboard</title>
+</head>
+<body>
+<div class="app"><div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main dashboard-page">
+    <header class="topbar dashboard-topbar">
+      <div class="dashboard-title-wrap"><span class="menu-glyph">☰</span><div><h1 id="topbar-title">Dashboard</h1><p>Visão geral da sua barbearia</p></div></div>
+      <div class="dashboard-user"><span class="notification">♧</span><span class="user-avatar">○</span><div class="user-copy"><strong>Barber Select</strong><span id="topbar-role">Administrador</span></div><span>⌄</span></div>
+    </header>
+    <main class="dashboard-content">
+      <div class="date-row"><div class="date-pill">▣ &nbsp; Hoje, 18 de setembro de 2026 &nbsp;&nbsp;&nbsp;⌄</div></div>
+      <section class="dashboard-kpis">
+        <article class="dashboard-kpi"><div class="kpi-icon">♙</div><div class="kpi-copy"><small>Atendimentos hoje</small><strong>18</strong></div><div class="kpi-trend"><b>↗ +12%</b> em relação a ontem ↗</div></article>
+        <article class="dashboard-kpi"><div class="kpi-icon">$</div><div class="kpi-copy"><small>Faturamento hoje</small><strong>R$ 1.840,00</strong></div><div class="kpi-trend"><b>↗ +15%</b> em relação a ontem ↗</div></article>
+        <article class="dashboard-kpi"><div class="kpi-icon">▣</div><div class="kpi-copy"><small>Agendamentos</small><strong>24</strong></div><div class="kpi-trend"><b>↗ +8%</b> em relação a ontem ↗</div></article>
+        <article class="dashboard-kpi"><div class="kpi-icon">↗</div><div class="kpi-copy"><small>Ticket médio</small><strong>R$ 76,67</strong></div><div class="kpi-trend"><b>↗ +6%</b> em relação a ontem ↗</div></article>
+      </section>
+      <section class="dashboard-main-grid">
+        <article class="dashboard-panel"><div class="panel-head"><h2>Faturamento semanal</h2><button class="panel-select">Esta semana　⌄</button></div>
+          <div class="chart-area"><svg viewBox="0 0 620 250" preserveAspectRatio="none" aria-label="Gráfico de faturamento semanal">
+            <defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ea083" stop-opacity=".35"/><stop offset="1" stop-color="#7ea083" stop-opacity=".03"/></linearGradient></defs>
+            <path class="chart-grid" d="M70 20H600M70 65H600M70 110H600M70 155H600M70 200H600"/>
+            <text class="chart-label" x="5" y="24">R$ 2.500</text><text class="chart-label" x="5" y="69">R$ 2.000</text><text class="chart-label" x="5" y="114">R$ 1.500</text><text class="chart-label" x="5" y="159">R$ 1.000</text><text class="chart-label" x="20" y="204">R$ 500</text>
+            <path class="chart-fill" d="M80 160 L165 120 L250 75 L335 110 L420 72 L505 50 L590 170 L590 200 L80 200Z"/>
+            <path class="chart-line" d="M80 160 L165 120 L250 75 L335 110 L420 72 L505 50 L590 170"/>
+            <g class="chart-dot"><circle cx="80" cy="160" r="5"/><circle cx="165" cy="120" r="5"/><circle cx="250" cy="75" r="5"/><circle cx="335" cy="110" r="5"/><circle cx="420" cy="72" r="5"/><circle cx="505" cy="50" r="5"/><circle cx="590" cy="170" r="5"/></g>
+            <g class="chart-label"><text x="72" y="225">Seg</text><text x="157" y="225">Ter</text><text x="242" y="225">Qua</text><text x="327" y="225">Qui</text><text x="412" y="225">Sex</text><text x="497" y="225">Sáb</text><text x="582" y="225">Dom</text></g>
+          </svg></div>
+          <div class="week-total"><span class="week-total-icon">↗</span><div><small>Total da semana</small><strong>R$ 11.780,00</strong></div><div class="week-growth"><b>↗ +18%</b> em relação à semana anterior ↗</div></div>
+        </article>
+        <article class="dashboard-panel"><div class="panel-head"><h2>Próximos agendamentos</h2><a class="panel-button" href="appointments.html">Ver todos</a></div>
+          <div class="appointment-row"><span class="appointment-time">09:00</span><div class="appointment-client"><strong>Bruno Ferreira</strong><span>Corte Social</span></div><div class="barber"><span class="mini-avatar">○</span>Carlos</div><span class="status-pill ok">Confirmado</span></div>
+          <div class="appointment-row"><span class="appointment-time">10:30</span><div class="appointment-client"><strong>Gabriel Santos</strong><span>Barba + Corte</span></div><div class="barber"><span class="mini-avatar">○</span>Lucas</div><span class="status-pill ok">Confirmado</span></div>
+          <div class="appointment-row"><span class="appointment-time">14:00</span><div class="appointment-client"><strong>Rafael Silva</strong><span>Degradê</span></div><div class="barber"><span class="mini-avatar">○</span>Mateus</div><span class="status-pill pending">Pendente</span></div>
+          <div class="appointment-row"><span class="appointment-time">15:30</span><div class="appointment-client"><strong>André Lima</strong><span>Corte Social</span></div><div class="barber"><span class="mini-avatar">○</span>Carlos</div><span class="status-pill ok">Confirmado</span></div>
+          <div class="appointment-row"><span class="appointment-time">17:00</span><div class="appointment-client"><strong>Felipe Almeida</strong><span>Barba</span></div><div class="barber"><span class="mini-avatar">○</span>Lucas</div><span class="status-pill pending">Pendente</span></div>
+        </article>
+      </section>
+      <section class="dashboard-panel quick-panel"><div class="panel-head"><h2>Atalhos rápidos</h2></div><div class="quick-grid">
+        <a class="quick-card" href="appointments.html"><span class="quick-icon">▣</span><span class="quick-copy"><strong>Novo Agendamento</strong><span>Agendar um novo atendimento</span></span><span class="quick-arrow">›</span></a>
+        <a class="quick-card" id="quick-client" href="/admin/clients.html"><span class="quick-icon">♙+</span><span class="quick-copy"><strong>Novo Cliente</strong><span>Cadastrar um novo cliente</span></span><span class="quick-arrow">›</span></a>
+        <div class="quick-card"><span class="quick-icon">□</span><span class="quick-copy"><strong>Cadastrar Produto</strong><span>Adicionar novo produto</span></span><span class="quick-arrow">›</span></div>
+        <div class="quick-card"><span class="quick-icon">$</span><span class="quick-copy"><strong>Nova Venda</strong><span>Registrar uma venda</span></span><span class="quick-arrow">›</span></div>
+      </div></section>
+    </main>
+  </div>
+</div></div>
+<script src="/js/shared.js" defer></script><script src="/js/staff-dashboard.js" defer></script>
+</body></html>
+<!-- DASHBOARD - FIM DA ALTERAÇÃO -->

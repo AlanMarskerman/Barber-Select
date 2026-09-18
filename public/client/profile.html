@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Barber-Select | Meu perfil</title>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="main">
+          <header class="topbar">
+            <h1 id="topbar-title">Meu perfil</h1>
+            <div class="muted" id="topbar-role"></div>
+          </header>
+          <main class="content">
+            <div class="page-head">
+              <div>
+                <div class="eyebrow">Dados pessoais</div>
+                <h2>Meu perfil</h2>
+                <p class="muted">Edite informações básicas.</p>
+              </div>
+            </div>
+            <div class="card">
+              <form class="form" id="profile-form">
+                <div class="field">
+                  <label for="full-name">Nome completo</label>
+                  <input
+                    id="full-name"
+                    name="fullName"
+                    type="text"
+                    value="Rafael Almeida"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="phone">Telefone</label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value="(11) 98888-1200"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="email">E-mail</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value="rafael@email.com"
+                    required
+                  />
+                </div>
+                <button class="btn btn-primary" type="submit">Salvar</button>
+              </form>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="../js/shared.js"></script>
+    <script src="/js/shared.js" defer></script>
+    <script src="/js/client-profile.js" defer></script>
+  </body>
+</html>

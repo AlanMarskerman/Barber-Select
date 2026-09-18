@@ -1,0 +1,138 @@
+<!-- DASHBOARD/CLIENTES - Arquivo novo da versão integrada; tela administrativa de clientes. -->
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barber Select | Clientes</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="/admin/clients-original.css"><link rel="stylesheet" href="/styles.css">
+</head><body><div class="app"><div class="shell"><aside class="sidebar" id="sidebar"></aside><div class="main admin-clients-main"><main class="main-container">
+<header class="header">
+<div>
+<span class="breadcrumb">Home &gt; Clientes</span>
+<h1>Clientes</h1>
+</div>
+<div class="user-area">
+<div class="user-info">
+<strong>Riann K. F. Pereira</strong>
+<small>Administrador</small>
+</div>
+<div class="avatar">RK</div>
+</div>
+</header>
+<div class="content">
+<!-- Filtros de Busca e Ações -->
+<div class="card filter-card">
+<div class="field">
+<label>Buscar por nome</label>
+<input id="filtroNome" oninput="filtrar()" placeholder="Ex: Ana Paula" type="text"/>
+</div>
+<div class="field">
+<label>Telefone</label>
+<input id="filtroTel" maxlength="15" oninput="filtrar()" placeholder="(11) 99999-9999" type="text"/>
+</div>
+<div class="field">
+<label>Barbeiro</label>
+<select id="filtroBarbeiro" onchange="filtrar()">
+<option value="">Todos os Barbeiros</option>
+<option value="Carlos Silva">Carlos Silva</option>
+<option value="Diego Souza">Diego Souza</option>
+<option value="Lucas Mendes">Lucas Mendes</option>
+<option value="Rafael Costa">Rafael Costa</option>
+</select>
+</div>
+<div class="filter-actions">
+<button class="btn btn-gray" onclick="limpar()"><i class="fa-solid fa-rotate-left"></i> Limpar</button>
+</div>
+<!-- Botão para excluir os itens selecionados por checkbox -->
+<button class="btn btn-red" id="btnExcluirSelecionados" onclick="excluirSelecionados()" style="display: none;">
+<i class="fa-solid fa-trash-can"></i> Excluir (<span id="qtdSelecionados">0</span>)
+                    </button>
+<button class="btn btn-gold btn-add" onclick="abrirNovo()"><i class="fa-solid fa-plus"></i> Novo Cliente</button>
+</div>
+<!-- Tabela de Clientes -->
+<div class="card table-card">
+<table>
+<thead>
+<tr>
+<th style="width: 30px; text-align: center;"><input id="checkTodos" onclick="alternarSelecionarTodos(this)" type="checkbox"/></th>
+<th class="th-sortable" onclick="ordenarPor('nome')">
+                                    Nome <i class="fa-solid fa-sort sort-icon" id="icon-sort-nome"></i>
+</th>
+<th>Contato / E-mail</th>
+<th>Tipo de Corte &amp; Preço</th>
+<th>Barbeiro</th>
+<th class="th-sortable" onclick="ordenarPor('data')">
+                                    Data do Corte <i class="fa-solid fa-sort sort-icon" id="icon-sort-data"></i>
+</th>
+<th class="th-sortable" onclick="ordenarPor('status')">
+                                    Status <i class="fa-solid fa-sort sort-icon" id="icon-sort-status"></i>
+</th>
+<th style="text-align: center;">Ações</th>
+</tr>
+</thead>
+<tbody id="tabelaBody">
+<!-- O JS injeta os clientes aqui -->
+</tbody>
+</table>
+<!-- Rodapé com Paginação Dinâmica (Limite de 7 por página) -->
+<div class="pagination-bar">
+<span>Mostrando <strong id="qtdExibida">0</strong> de <strong id="qtdTotal">0</strong> clientes cadastrados</span>
+<div class="pages" id="paginasContainer"></div>
+</div>
+</div>
+</div>
+</main></div></div></div><div class="modal" id="modalCliente">
+<div class="modal-content" id="modalContainerBox">
+<span class="close-btn" onclick="fecharModal()">×</span>
+<h2 id="modalTitulo">Editar Cliente</h2>
+<form onsubmit="salvarModal(event)">
+<input id="modalId" type="hidden"/>
+<div class="form-group">
+<label>Nome Completo (Apenas letras):</label>
+<input id="modalNome" placeholder="Digite o nome completo" required="" type="text"/>
+</div>
+<div class="form-group">
+<label>E-mail:</label>
+<input id="modalEmail" placeholder="exemplo@email.com" required="" type="email"/>
+</div>
+<div class="form-group">
+<label>Telefone:</label>
+<input id="modalTel" maxlength="15" placeholder="(11) 99999-9999" required="" type="text"/>
+</div>
+<div class="form-group">
+<label>Tipo de Corte e Preço:</label>
+<select id="modalCorte" required="">
+<option value="">Selecione o corte e valor...</option>
+<option data-preco="45.00" value="Degradê Navalhado">Degradê Navalhado - R$ 45,00</option>
+<option data-preco="35.00" value="Social Moderno">Social Moderno - R$ 35,00</option>
+<option data-preco="30.00" value="Corte Militar (Buzz Cut)">Corte Militar (Buzz Cut) - R$ 30,00</option>
+<option data-preco="50.00" value="Pompadour">Pompadour - R$ 50,00</option>
+<option data-preco="40.00" value="Undercut">Undercut - R$ 40,00</option>
+<option data-preco="75.00" value="Corte + Barba Completa">Corte + Barba Completa - R$ 75,00</option>
+</select>
+</div>
+<div class="form-group">
+<label>Barbeiro Responsável:</label>
+<select id="modalBarbeiro" required="">
+<option value="">Selecione o barbeiro...</option>
+<option value="Carlos Silva">Carlos Silva</option>
+<option value="Diego Souza">Diego Souza</option>
+<option value="Lucas Mendes">Lucas Mendes</option>
+<option value="Rafael Costa">Rafael Costa</option>
+</select>
+</div>
+<div class="form-group">
+<label>Data do Corte:</label>
+<input id="modalData" required="" type="date"/>
+</div>
+<div class="form-group">
+<label>Status:</label>
+<select id="modalStatus">
+<option value="Ativo">Ativo</option>
+<option value="Inativo">Inativo</option>
+</select>
+</div>
+<button class="btn btn-gold modal-btn" id="btnSalvarModal" type="submit">Salvar Alterações</button>
+</form>
+</div>
+</div>
+<script src="/js/shared.js" defer></script><script src="/js/admin/clients.js" defer></script></body></html>
