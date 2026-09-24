@@ -1,29 +1,114 @@
 // js/shared.js
-// Lógica comum a todas as páginas internas (sidebar, sessão, logout).
+// Lógica comum a todas as páginas internas (sidebar, sessão, logout, refresh token).
 
 const icon = {
-  home: "\u2302",
-  calendar: "\u25F7",
-  clients: "\u2659",
-  services: "\u2702",
-  finance: "\u20BF",
-  profile: "\u25C9",
-  settings: "\u2699",
-  logout: "\u21AA",
+  home: "⌂",
+  calendar: "◷",
+  clients: "♙",
+  services: "✂",
+  finance: "₿",
+  profile: "◉",
+  settings: "⚙",
+  logout: "↪",
 };
 
 function getSession() {
   return {
-    token: sessionStorage.getItem("token"),
+    accessToken: sessionStorage.getItem("accessToken"),
+    refreshToken: sessionStorage.getItem("refreshToken"),
     role: sessionStorage.getItem("role"),
+    userId: sessionStorage.getItem("userId"),
+    identity: sessionStorage.getItem("identity"),
   };
+}
+
+// Função para refresh automático do access token
+async function refreshAccessToken() {
+  const { refreshToken } = getSession();
+
+  if (!refreshToken) {
+    return false;
+  }
+
+  try {
+    const response = await fetch("/auth/refresh", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const data = await response.json();
+    sessionStorage.setItem("accessToken", data.accessToken);
+    return true;
+  } catch (error) {
+    console.error("Erro ao renovar token:", error);
+    return false;
+  }
+}
+
+// Wrapper para fetch com refresh automático
+async function authenticatedFetch(url, options = {}) {
+  const { accessToken } = getSession();
+
+  // Primeira tentativa com o token atual
+  let response = await fetch(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  // Se o token expirou, tenta renovar e fazer a requisição novamente
+  if (response.status === 401) {
+    const data = await response.json();
+    if (data.code === "TOKEN_EXPIRED") {
+      const refreshed = await refreshAccessToken();
+
+      if (refreshed) {
+        const { accessToken: newToken } = getSession();
+        response = await fetch(url, {
+          ...options,
+          headers: {
+            ...options.headers,
+            Authorization: `Bearer ${newToken}`,
+          },
+        });
+      } else {
+        // Refresh falhou, redireciona para login
+        clearSessionAndRedirect();
+        return null;
+      }
+    } else {
+      // Outro erro de autenticação
+      clearSessionAndRedirect();
+      return null;
+    }
+  }
+
+  return response;
+}
+
+function clearSessionAndRedirect() {
+  sessionStorage.removeItem("accessToken");
+  sessionStorage.removeItem("refreshToken");
+  sessionStorage.removeItem("role");
+  sessionStorage.removeItem("userId");
+  sessionStorage.removeItem("identity");
+  window.location.href = "../pages/auth.html";
 }
 
 // Redireciona para o login se não houver sessão válida para a página atual
 function requireAuth(expectedRole) {
-  const { token, role } = getSession();
-  if (!token || (expectedRole && role !== expectedRole)) {
-    window.location.href = resolveAuthPath();
+  const { accessToken, role } = getSession();
+  if (!accessToken || (expectedRole && role !== expectedRole)) {
+    clearSessionAndRedirect();
   }
 }
 
@@ -32,9 +117,29 @@ function resolveAuthPath() {
   return "../pages/auth.html";
 }
 
-function logout() {
-  sessionStorage.removeItem("token");
+async function logout() {
+  const { accessToken } = getSession();
+
+  // Chama o endpoint de logout no servidor
+  if (accessToken) {
+    try {
+      await fetch("/auth/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    }
+  }
+
+  // Limpa a sessão local
+  sessionStorage.removeItem("accessToken");
+  sessionStorage.removeItem("refreshToken");
   sessionStorage.removeItem("role");
+  sessionStorage.removeItem("userId");
+  sessionStorage.removeItem("identity");
   window.location.href = "../index.html";
 }
 

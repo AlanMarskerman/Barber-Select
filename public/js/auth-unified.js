@@ -68,8 +68,11 @@ async function tryLogin(profile, identity, password) {
     if (response.ok) {
       return {
         success: true,
-        token: data.token,
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
         role: data.role,
+        userId: data.userId,
+        identity: data.identity,
         destination: config.destination,
       };
     }
@@ -129,9 +132,12 @@ if (loginForm) {
     const result = await unifiedLogin(identity, password);
 
     if (result.success) {
-      // Salva token e role no sessionStorage
-      sessionStorage.setItem("token", result.token);
+      // Salva tokens e informações do usuário no sessionStorage
+      sessionStorage.setItem("accessToken", result.accessToken);
+      sessionStorage.setItem("refreshToken", result.refreshToken);
       sessionStorage.setItem("role", result.role);
+      sessionStorage.setItem("userId", result.userId);
+      sessionStorage.setItem("identity", result.identity);
 
       // Exibe mensagem de sucesso
       showMessage("Login realizado com sucesso! Redirecionando...", "success");

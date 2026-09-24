@@ -65,8 +65,11 @@ loginForm.addEventListener("submit", async (event) => {
       return;
     }
 
-    sessionStorage.setItem("token", data.token);
+    sessionStorage.setItem("accessToken", data.accessToken);
+    sessionStorage.setItem("refreshToken", data.refreshToken);
     sessionStorage.setItem("role", data.role);
+    sessionStorage.setItem("userId", data.userId);
+    sessionStorage.setItem("identity", data.identity);
 
     authMessage.textContent = "Login realizado.";
 
