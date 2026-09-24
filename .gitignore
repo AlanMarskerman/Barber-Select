@@ -17,3 +17,8 @@ Thumbs.db
 
 # Editor
 .vscode/
+
+#.mds
+
+SECURITY_IMPROVEMENTS.md
+JS_REORGANIZATION.md
