@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: 30, // Aumentado para 30 tentativas para desenvolvimento local
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -277,6 +277,65 @@ app.post(
   loginLimiter,
   validateLoginInput,
   handleLogin("admin", "ADMIN_LOGIN", "ADMIN_PASSWORD"),
+);
+
+// Endpoint de login unificado que tenta todos os perfis internamente
+// Evita consumir rate limit fazendo múltiplas requisições do cliente
+app.post(
+  "/auth/login/unified",
+  loginLimiter,
+  validateLoginInput,
+  (req, res) => {
+    const { identity, password } = req.body;
+
+    // Define ordem de tentativa: client -> staff -> admin
+    const profiles = [
+      { role: "client", loginEnv: "CLIENT_LOGIN", passwordEnv: "CLIENT_PASSWORD" },
+      { role: "staff", loginEnv: "STAFF_LOGIN", passwordEnv: "STAFF_PASSWORD" },
+      { role: "admin", loginEnv: "ADMIN_LOGIN", passwordEnv: "ADMIN_PASSWORD" },
+    ];
+
+    // Tenta autenticar em cada perfil
+    for (const profile of profiles) {
+      const expectedLogin = process.env[profile.loginEnv];
+      const expectedPassword = process.env[profile.passwordEnv];
+
+      if (!expectedLogin || !expectedPassword) {
+        continue; // Pula se credenciais não configuradas
+      }
+
+      // Se as credenciais batem, autentica
+      if (identity === expectedLogin && password === expectedPassword) {
+        const userId = generateUserId(profile.role, identity);
+        const accessToken = createAccessToken(userId, profile.role, identity);
+        const refreshToken = createRefreshToken(userId, profile.role, identity);
+
+        // Registra a sessão ativa
+        activeSessions.set(userId, {
+          refreshToken,
+          createdAt: Date.now(),
+          lastUsed: Date.now(),
+          identity,
+          role: profile.role,
+        });
+
+        return res.json({
+          accessToken,
+          refreshToken,
+          role: profile.role,
+          userId,
+          identity,
+          expiresIn: 15 * 60,
+        });
+      }
+    }
+
+    // Se nenhum perfil autenticou
+    console.warn(`Falha de login unificado para: ${identity}`);
+    return res.status(401).json({
+      error: "Usuário ou senha incorretos.",
+    });
+  }
 );
 
 // Endpoint para refresh token

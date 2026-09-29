@@ -113,23 +113,35 @@
 
   // Login unificado: tenta autenticar em todos os perfis
   async function unifiedLogin(identity, password) {
-    // CORREÇÃO DO BUG: Ordem de prioridade ajustada
-    // Tenta client primeiro, depois staff, depois admin
-    const profiles = ["client", "staff", "admin"];
+    // Usa o endpoint unificado do servidor que valida todos os perfis internamente
+    // Isso evita múltiplas requisições que consomem o rate limit
+    try {
+      const response = await fetch("/auth/login/unified", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identity, password }),
+      });
 
-    for (const profile of profiles) {
-      const result = await tryLogin(profile, identity, password);
+      const data = await response.json();
 
-      if (result.success) {
-        return result;
+      if (response.ok) {
+        return {
+          success: true,
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+          role: data.role,
+          userId: data.userId,
+          identity: data.identity,
+          destination: PROFILE_MAP[data.role]?.destination || "/",
+        };
       }
-    }
 
-    // Se nenhum perfil funcionou
-    return {
-      success: false,
-      error: "Usuário ou senha incorretos.",
-    };
+      return { success: false, error: data.error || "Usuário ou senha incorretos." };
+    } catch (error) {
+      return { success: false, error: "Erro de conexão" };
+    }
   }
 
   // Login por role específico (auth.html?role=client)
