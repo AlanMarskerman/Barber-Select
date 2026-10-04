@@ -1,63 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles.css" />
-    <title>Barber-Select | Financeiro</title>
-  </head>
-  <body>
-    <div class="app">
-      <div class="shell">
-        <aside class="sidebar" id="sidebar"></aside>
-        <div class="main">
-          <header class="topbar">
-            <h1 id="topbar-title">Financeiro</h1>
-            <div class="muted" id="topbar-role"></div>
-          </header>
-          <main class="content">
-            <div class="page-head">
-              <div>
-                <div class="eyebrow">Administração</div>
-                <h2>Fluxo de caixa</h2>
-                <p class="muted">Controle de lançamentos.</p>
-              </div>
-              <button class="btn btn-primary">+ Lançamento</button>
-            </div>
-            <div class="card">
-              <h3>Lançamentos</h3>
-              <div class="table-wrap">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Data</th>
-                      <th>Descrição</th>
-                      <th>Tipo</th>
-                      <th>Valor</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>10/09/2026</td>
-                      <td><strong>Atendimento - Rafael</strong></td>
-                      <td><span class="status">Entrada</span></td>
-                      <td>R$ 75,00</td>
-                    </tr>
-                    <tr>
-                      <td>09/09/2026</td>
-                      <td><strong>Compra de produtos</strong></td>
-                      <td><span class="status pending">Saída</span></td>
-                      <td>R$ 180,00</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </main>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Dashboard</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <!-- Estrutura principal da aplicação -->
+  <div class="app">
+
+    <!-- Menu lateral -->
+    <aside class="sidebar">
+
+      <!-- Logo da Barber Select -->
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-    </div>
-    <script src="/js/core/shared.js" defer></script>
-    <script src="/js/staff/staff-app.js" defer></script>
-  </body>
+
+      <!-- Links de navegação do menu -->
+      <nav class="nav">
+        <a class="active" href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+        <a href="clientes.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+        <a href="barbeiros.html">
+          <i class="bx bx-user"></i>
+          <span>Barbeiros</span>
+        </a>
+        <a href="servicos.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+        <a href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+        <a href="financeiro.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+        <a href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+
+      <!-- Botão para sair do sistema -->
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+    <!-- Conteúdo principal do dashboard -->
+    <main class="main">
+
+      <!-- Cabeçalho superior -->
+      <header class="topbar">
+
+        <!-- Lado esquerdo do cabeçalho: menu e título -->
+        <div class="head-left">
+          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+            <i class="bx bx-menu"></i>
+          </button>
+          <div class="title">
+            <h1>Financeiro</h1>
+            <p>Acompanhe as entradas e saídas da sua barbearia</p>
+          </div>
+        </div>
+
+        <!-- Lado direito do cabeçalho: notificações e usuário -->
+        <div class="head-right">
+          <button class="bell" type="button" aria-label="Notificações">
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+            <i class="bx bx-chevron-down down"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Área de conteúdo do dashboard -->
+      <section class="content">
+
+        <!-- Cards de resumo -->
+        <div class="cards">
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-up-arrow-alt"></i>
+              </div>
+              <div>
+                <div class="label">Receitas</div>
+                <div class="value">R$ 4.350,00</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +12%</b>
+              <span>em relação ao mês anterior</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-down-arrow-alt"></i>
+              </div>
+              <div>
+                <div class="label">Dispesas</div>
+                <div class="value">R$ 850,00</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +8%</b>
+              <span>em relação ao mês anterior</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-wallet"></i>
+              </div>
+              <div>
+                <div class="label">Saldo do mês</div>
+                <div class="value">R$ 3.500,00</div>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-calendar-minus"></i>
+              </div>
+              <div>
+                <div class="label">Período atual</div>
+                <div class="value">Setembro de 2026</div>
+              </div>
+            </div>
+          </article>
+        </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- JavaScript principal -->
+  <script src="../js/app.js"></script>
+</body>
 </html>

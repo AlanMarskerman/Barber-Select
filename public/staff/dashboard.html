@@ -1,55 +1,338 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles.css" />
-    <title>Barber-Select | Visão geral</title>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Dashboard</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
 
-  <body>
-    <div class="app">
-      <div class="shell">
-        <aside class="sidebar" id="sidebar"></aside>
-        <div class="main">
-          <header class="topbar">
-            <h1 id="topbar-title">Visão geral</h1>
-            <div class="muted" id="topbar-role"></div>
-          </header>
-          <main class="content">
-            <div class="page-head">
-              <div>
-                <div class="eyebrow">Hoje</div>
-                <h2>Visão geral</h2>
-                <p class="muted">Resumo de atendimentos e financeiro.</p>
-              </div>
-              <a class="btn btn-primary" href="appointments.html"
-                >Agendamento</a
-              >
-            </div>
-            <section class="grid kpis">
-              <div class="card">
-                <div class="muted">Atendimentos hoje</div>
-                <div class="kpi-value">12</div>
-              </div>
-              <div class="card">
-                <div class="muted">Faturamento</div>
-                <div class="kpi-value">R$ 875,00</div>
-              </div>
-              <div class="card">
-                <div class="muted">Clientes ativos</div>
-                <div class="kpi-value">58</div>
-              </div>
-              <div class="card">
-                <div class="muted">Saldo do caixa</div>
-                <div class="kpi-value">R$ 12.640,00</div>
-              </div>
-            </section>
-          </main>
-        </div>
+  <!-- Estrutura principal da aplicação -->
+  <div class="app">
+
+    <!-- Menu lateral -->
+    <aside class="sidebar">
+
+      <!-- Logo da Barber Select -->
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-    </div>
-    <script src="/js/core/shared.js" defer></script>
-    <script src="/js/staff/staff-app.js" defer></script>
-  </body>
+
+      <!-- Links de navegação do menu -->
+      <nav class="nav">
+        <a class="active" href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+        <a href="barbeiros.html">
+          <i class="bx bx-user"></i>
+          <span>Barbeiros</span>
+        </a>
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+        <a href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+        <a href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+
+      <!-- Botão para sair do sistema -->
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+    <!-- Conteúdo principal do dashboard -->
+    <main class="main">
+
+      <!-- Cabeçalho superior -->
+      <header class="topbar">
+
+        <!-- Lado esquerdo do cabeçalho: menu e título -->
+        <div class="head-left">
+          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+            <i class="bx bx-menu"></i>
+          </button>
+          <div class="title">
+            <h1>Dashboard</h1>
+            <p>Visão geral da sua barbearia</p>
+          </div>
+        </div>
+
+        <!-- Lado direito do cabeçalho: notificações e usuário -->
+        <div class="head-right">
+          <button class="bell" type="button" aria-label="Notificações">
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+            <i class="bx bx-chevron-down down"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Área de conteúdo do dashboard -->
+      <section class="content">
+
+        <!-- Seletor de data -->
+        <div class="page-date">
+          <select aria-label="Selecionar data do dashboard">
+            <option>Hoje, 20 de maio de 2025</option>
+          </select>
+        </div>
+
+        <!-- Cards de resumo -->
+        <div class="cards">
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-group"></i>
+              </div>
+              <div>
+                <div class="label">ATENDIMENTOS HOJE</div>
+                <div class="value">18</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +12%</b>
+              <span>em relação a ontem</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-dollar-circle"></i>
+              </div>
+              <div>
+                <div class="label">FATURAMENTO HOJE</div>
+                <div class="value">R$ 1.840,00</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +15%</b>
+              <span>em relação a ontem</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-calendar"></i>
+              </div>
+              <div>
+                <div class="label">AGENDAMENTOS</div>
+                <div class="value">24</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +8%</b>
+              <span>em relação a ontem</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-line-chart"></i>
+              </div>
+              <div>
+                <div class="label">TICKET MÉDIO</div>
+                <div class="value">R$ 76,67</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +6%</b>
+              <span>em relação a ontem</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Área com gráfico e próximos agendamentos -->
+        <div class="dash-grid">
+
+          <!-- Painel de faturamento semanal -->
+          <section class="panel panel-pad revenue-panel">
+            <div class="panel-header">
+              <h2>FATURAMENTO SEMANAL</h2>
+              <select class="period-select" aria-label="Período do faturamento">
+                <option>Esta semana</option>
+              </select>
+            </div>
+            <div class="linechart">
+              <svg class="svg-chart dashboard-chart" viewBox="0 0 760 300" role="img" aria-label="Faturamento semanal">
+                <defs>
+                  <linearGradient id="dashboardArea" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#0b5a37" stop-opacity="0.22"></stop>
+                    <stop offset="100%" stop-color="#0b5a37" stop-opacity="0.02"></stop>
+                  </linearGradient>
+                </defs>
+                <g class="chart-grid">
+                  <line x1="78" x2="730" y1="24" y2="24"></line>
+                  <line x1="78" x2="730" y1="68" y2="68"></line>
+                  <line x1="78" x2="730" y1="112" y2="112"></line>
+                  <line x1="78" x2="730" y1="156" y2="156"></line>
+                  <line x1="78" x2="730" y1="200" y2="200"></line>
+                  <line x1="78" x2="730" y1="244" y2="244"></line>
+                </g>
+                <g class="chart-y-labels">
+                  <text x="8" y="29">R$ 2.500</text>
+                  <text x="8" y="73">R$ 2.000</text>
+                  <text x="8" y="117">R$ 1.500</text>
+                  <text x="8" y="161">R$ 1.000</text>
+                  <text x="17" y="205">R$ 500</text>
+                  <text x="31" y="249">R$ 0</text>
+                </g>
+                <path class="chart-area" d="M 88 156 L 194 112 L 300 68 L 406 104 L 512 64 L 618 46 L 720 165 L 720 244 L 88 244 Z"></path>
+                <polyline class="chart-line" points="88,156 194,112 300,68 406,104 512,64 618,46 720,165"></polyline>
+                <g class="chart-points">
+                  <circle cx="88" cy="156" r="5"></circle>
+                  <circle cx="194" cy="112" r="5"></circle>
+                  <circle cx="300" cy="68" r="5"></circle>
+                  <circle cx="406" cy="104" r="5"></circle>
+                  <circle cx="512" cy="64" r="5"></circle>
+                  <circle cx="618" cy="46" r="5"></circle>
+                  <circle cx="720" cy="165" r="5"></circle>
+                </g>
+                <g class="chart-x-labels">
+                  <text text-anchor="middle" x="88" y="280">Seg</text>
+                  <text text-anchor="middle" x="194" y="280">Ter</text>
+                  <text text-anchor="middle" x="300" y="280">Qua</text>
+                  <text text-anchor="middle" x="406" y="280">Qui</text>
+                  <text text-anchor="middle" x="512" y="280">Sex</text>
+                  <text text-anchor="middle" x="618" y="280">Sáb</text>
+                  <text text-anchor="middle" x="720" y="280">Dom</text>
+                </g>
+              </svg>
+            </div>
+            <div class="week-summary">
+              <div>
+                <small>Total da semana</small>
+                <b>R$ 11.780,00</b>
+              </div>
+              <span>↗ +18% &nbsp; em relação à semana anterior</span>
+            </div>
+          </section>
+
+          <!-- Painel de próximos agendamentos -->
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>PRÓXIMOS AGENDAMENTOS</h2>
+              <a class="view-all" href="agenda.html">Ver todos</a>
+            </div>
+            <div class="table-wrap">
+              <table class="table appointments-table">
+                <tbody>
+                  <tr>
+                    <td><span class="time">09:00</span></td>
+                    <td><b>Bruno Ferreira</b><br><small>Corte Social</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
+                    <td><span class="pill green">Confirmado</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">10:30</span></td>
+                    <td><b>Gabriel Santos</b><br><small>Barba + Corte</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
+                    <td><span class="pill green">Confirmado</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">14:00</span></td>
+                    <td><b>Rafael Silva</b><br><small>Degradê</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Mateus</span></td>
+                    <td><span class="pill yellow">Pendente</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">15:30</span></td>
+                    <td><b>André Lima</b><br><small>Corte Social</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
+                    <td><span class="pill green">Confirmado</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">17:00</span></td>
+                    <td><b>Felipe Almeida</b><br><small>Barba</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
+                    <td><span class="pill yellow">Pendente</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <!-- Atalhos rápidos -->
+        <section class="panel quick">
+          <h2>ATALHOS RÁPIDOS</h2>
+          <div class="quick-grid">
+            <button class="quick-item" type="button" onclick="location.href='agenda.html'">
+              <span class="sq"><i class="bx bx-calendar-plus"></i></span>
+              <span class="quick-text">
+                <b>Novo Agendamento</b>
+                <span>Agendar um novo atendimento</span>
+              </span>
+            </button>
+            <button class="quick-item" type="button" onclick="location.href='novo-cliente.html'">
+              <span class="sq"><i class="bx bx-user-plus"></i></span>
+              <span class="quick-text">
+                <b>Novo Cliente</b>
+                <span>Cadastrar um novo cliente</span>
+              </span>
+            </button>
+            <button class="quick-item" type="button" onclick="location.href='novo-produto.html'">
+              <span class="sq"><i class="bx bx-shopping-bag"></i></span>
+              <span class="quick-text">
+                <b>Cadastrar Produto</b>
+                <span>Adicionar novo produto</span>
+              </span>
+            </button>
+            <button class="quick-item" type="button" onclick="location.href='venda.html'">
+              <span class="sq"><i class="bx bx-dollar-circle"></i></span>
+              <span class="quick-text">
+                <b>Nova Venda</b>
+                <span>Registrar uma venda</span>
+              </span>
+            </button>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- JavaScript principal -->
+  <script src="../js/app.js"></script>
+</body>
 </html>

@@ -87,8 +87,8 @@
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
-            <h1>Clientes</h1>
-            <p>Gerencie seus clientes e Acompanhe o historico de atendimentos</p>
+            <h1>Relatorios</h1>
+            <p>Analise o desempenho da sua barbearia</p>
           </div>
         </div>
 
@@ -117,6 +117,11 @@
           <select aria-label="Selecionar data do dashboard">
             <option>Hoje, 20 de maio de 2025</option>
           </select>
+          <select aria-label="Selecionar data do dashboard">
+            <option>Mensal</option>
+          </select>
+
+          <button>Exportar PDF</button>
         </div>
 
         <!-- Cards de resumo -->
@@ -124,16 +129,46 @@
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
+                <i class="bx bx-dollar-circle"></i>
+              </div>
+              <div>
+                <div class="label">Faturamento total</div>
+                <div class="value">R$ 42.680,00</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +18%</b>
+              <span>em relação ao mês anterior</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
                 <i class="bx bx-group"></i>
               </div>
               <div>
-                <div class="label">Total de clientes</div>
-                <div class="value">328</div>
+                <div class="label">atendimentos</div>
+                <div class="value">542</div>
               </div>
             </div>
             <div class="trend">
               <b>↗ +12%</b>
-              <span>este mês</span>
+              <span>em relação so mês anterior</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-line-chart"></i>
+              </div>
+              <div>
+                <div class="label">Ticket médio</div>
+                <div class="value">R$ 78,75</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +5%</b>
+              <span>em relação ao mês anterior</span>
             </div>
           </article>
           <article class="card">
@@ -143,40 +178,12 @@
               </div>
               <div>
                 <div class="label">Novos clientes</div>
-                <div class="value">24</div>
+                <div class="value">86</div>
               </div>
             </div>
             <div class="trend">
-              <span>nos últimos 30 dias</span>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class='bx bxs-group'></i>
-              </div>
-              <div>
-                <div class="label">Clientes ativos</div>
-                <div class="value">286</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +87%</b>
-              <span>do total</span>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class='bx bx-loader'></i>
-              </div>
-              <div>
-                <div class="label">Retorno médio</div>
-                <div class="value">37 dias</div>
-              </div>
-            </div>
-            <div class="trend">
-              <span>entre atendimentos</span>
+              <b>↗ +9%</b>
+              <span>em relação ao mês anterior</span>
             </div>
           </article>
         </div>
