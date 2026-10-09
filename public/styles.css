@@ -611,6 +611,560 @@ button {
 }
 
 /* ==============================
+   Novo agendamentos
+   ============================== */
+
+   .caixa{
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid#ddd;
+    margin-top: 20px;
+    padding: 10px;
+
+   }
+
+   .caixa-titulo{
+    display: flex;
+    gap: 20px;
+   }
+
+   .caixa-titulo i{
+    font-size: 50px;
+    padding: 15px;
+    background-color: #e6f0e6;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 5px;
+    color: #063014;
+   }
+   .caixa-agendamentos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-top: 20px;
+    gap: 16px;
+
+   }
+
+.caixa-cabecalho{
+  display: flex;
+}
+
+   .caixa-dados{
+    border: 1px solid#ddd;
+    flex: 1;
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 420px;
+    min-width: 0;
+    
+   }
+
+   .titulo-caixa{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   }
+
+   .titulo-caixa h2{
+    font-size: 20px;
+    margin: 0 0 8px;
+   }
+
+   .btn-novo-cliente{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid#0b6b3f;
+    background-color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+   }
+
+   .btn-novo-cliente i{
+    font-size: 20px;
+   }
+
+   .campo{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 25px;
+   }
+
+   .campo i{
+    display: flex;
+    position: absolute;
+    font-size: 25px;
+    z-index: 2;
+    pointer-events: none;
+   }
+
+   .campo div{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+   }
+
+   .campo label{
+    font-weight: 600;
+    font-size: 14px;
+    color: #6f7277;
+   }
+
+   .campo select,
+   .campo textarea{
+    width: 100%;
+    border: 1px solid#dddd;
+    border-radius: 8px;
+    outline: none;
+   }
+
+   .campo select{
+    height: 48px;
+    padding: 0 12px;
+   }
+
+   .campo textarea{
+    min-height: 130px;
+    padding: 12px;
+    resize: none;
+   }
+
+   .caixa-detalhes{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+   }
+
+   .caixa-detalhes select{
+    width: 100%;
+    padding: 0 12px;
+    height: 48px;
+    border-radius: 8px;
+    border: none;
+    border: 1px solid#dddd;
+    outline: none;
+   }
+
+   .caixa-detalhes i{
+    display: flex;
+    position: absolute;
+    font-size: 25px;
+   }
+
+   .caixa-detalhes div{
+    display: flex;
+    align-items: center;
+   }
+   
+   .caixa-data{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+   }
+
+   .caixa-data input{
+    width: 100%;
+    padding: 0 12px;
+    height: 48px;
+    border-radius: 6px;
+    border: none;
+    border: 1px solid#dddd;
+
+   }
+
+   .caixa-horarios{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+   }
+
+   .caixa-horarios div{
+    display: flex;
+    gap: 20px;
+
+   }
+
+   .caixa-horarios button{
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #fff;
+    border: 1px solid#dddd;
+    cursor: pointer;
+   }
+
+
+   .cliente input{
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    border: 1.9px solid#ddd;
+   }
+
+   .cliente button{
+    padding: 5px;
+    border-radius:5px ;
+    border: 1px solid#0b6b3f;
+    color: #0b6b3f;
+    background-color: #fff;
+    background-color: transparent;   
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+
+
+   .caixa-resumo{
+    border: 1px solid#ddd;
+    border-radius: 12px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 18px 20px;
+
+   }
+
+   .resumo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   }
+
+   .resumo div{
+
+    border: 1px solid#dddd;
+    height: 81px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-right: 1px solid#dddd;
+   }
+
+   .resumo i{
+    font-size: 50px;
+    padding: 15px;
+    background-color: #e6f0e6;
+    border-radius: 100%;
+   }
+
+    .resumo > div{
+      flex: 1;
+    }
+
+    .resumo b {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .resumo h3{
+      margin-top: 4px;
+      font-size: 18px;
+    }
+
+    .btn-agendamentos{
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn-agendamentos button{
+      height: 45px;
+      padding: 0 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-agendamentos div:last-child button{
+      background-color: #062d1f;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-agendamentos div:first-child button{
+      border: none;
+      color: #0f6b3f;
+      border: 1px solid#0f6b3f;
+      background-color: #fff;
+    }
+
+    .btn-agendamentos i{
+      position: absolute;
+      font-size: 25px;
+    }
+
+    .btn-agendamentos div{
+      display: flex;
+      align-items: center;
+    }
+
+    .btn-agendamentos div:first-child i{
+      color: #122e1f;
+    }
+
+    .btn-agendamentos div:last-child i{
+      color: #fff;
+    }
+    
+   /* ==============================
+   Novo cliente
+   ============================== */
+.cab {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.cab > i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+
+    font-size: 26px;
+
+    color: #174a2b;
+    background-color: #e8eee9;
+
+    border-radius: 8px;
+
+    flex-shrink: 0;
+}
+
+.cab h1 {
+    margin: 0 0 5px 0;
+}
+
+.cab p {
+    margin: 0;
+    color: #6c6a66;
+}
+
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.cadastro1 {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    gap: 10px;
+}
+
+.cadastro1 label {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #292929;
+
+    margin-top: 8px;
+}
+
+
+/* =========================
+   INPUT COM ÍCONE
+========================= */
+
+.input-icon {
+    position: relative;
+
+    width: 100%;
+}
+
+.input-icon > i {
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 20px;
+    color: #777;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.input-icon input {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 15px 0 45px;
+
+    border: 1px solid #d8d5cf;
+    border-radius: 8px;
+
+    background-color: #fff;
+
+    font-size: 14px;
+
+    outline: none;
+
+    box-sizing: border-box;
+}
+
+.input-icon input:focus {
+    border-color: #174a2b;
+}
+
+
+/* =========================
+   TELEFONE + DATA
+========================= */
+
+.linha {
+    display: flex;
+
+    width: 100%;
+
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    min-width: 0;
+
+    gap: 10px;
+}
+
+.campo .input-icon {
+    width: 100%;
+}
+
+
+/* =========================
+   OBSERVAÇÕES
+========================= */
+
+.observacao {
+    position: relative;
+    width: 100%;
+}
+
+.observacao i {
+    position: absolute;
+
+    left: 15px;
+    top: 17px;
+
+    font-size: 20px;
+    color: #777;
+
+    z-index: 2;
+}
+
+.observacao textarea {
+    width: 100%;
+    height: 110px;
+
+    padding: 15px 15px 15px 45px;
+
+    border: 1px solid #d8d5cf;
+    border-radius: 8px;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+
+    outline: none;
+
+    resize: none;
+
+    box-sizing: border-box;
+}
+
+.observacao textarea:focus {
+    border-color: #174a2b;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.linha1 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: 100%;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.btn12,
+.btn1 {
+    height: 45px;
+
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.btn12 i,
+.btn1 i {
+    font-size: 20px;
+}
+
+
+/* CANCELAR */
+
+.btn12 {
+    background-color: transparent;
+
+    color: #333;
+
+    border: 1px solid #ccc;
+}
+
+
+/* CADASTRAR */
+
+.btn1 {
+    background-color: #174a2b;
+
+    color: #fff;
+
+    border: 1px solid #174a2b;
+}
+/* ==============================
    Sidebar recolhida pelo JS
    ============================== */
 .app.sidebar-collapsed .sidebar {
