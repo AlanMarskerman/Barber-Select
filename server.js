@@ -258,6 +258,22 @@ function handleLogin(role, loginEnv, passwordEnv) {
   };
 }
 
+// Cadastro e login de clientes no MySQL (features/cadastro-mysql).
+const { getPool } = require("./features/cadastro-mysql/db");
+const createClientAuth = require("./features/cadastro-mysql/client-auth");
+const { registerRouter, clientLogin } = createClientAuth({
+  getPool,
+  generateUserId,
+  createAccessToken,
+  createRefreshToken,
+  activeSessions,
+});
+app.use("/api/register", registerRouter);
+
+// Lista de clientes para a tela /staff/clients.html (features/clientes-mysql).
+const createClientsRouter = require("./features/clientes-mysql/clients-routes");
+app.use("/api/clients", createClientsRouter({ authenticate, getPool }));
+
 app.post(
   "/auth/login/cliente",
   loginLimiter,
@@ -285,6 +301,7 @@ app.post(
   "/auth/login/unified",
   loginLimiter,
   validateLoginInput,
+  clientLogin,
   (req, res) => {
     const { identity, password } = req.body;
 

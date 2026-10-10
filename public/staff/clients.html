@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
+  <title>Barber Select - Clientes</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../styles-clients.css">
 </head>
 <body>
 
@@ -22,7 +23,7 @@
 
       <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a class="active" href="dashboard.html">
+        <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -30,7 +31,7 @@
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a href="clientes.html">
+        <a class="active" href="clientes.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
@@ -128,12 +129,11 @@
               </div>
               <div>
                 <div class="label">Total de clientes</div>
-                <div class="value">328</div>
+                <div class="value" id="cli-total">—</div>
               </div>
             </div>
             <div class="trend">
-              <b>↗ +12%</b>
-              <span>este mês</span>
+              <span>cadastrados no sistema</span>
             </div>
           </article>
           <article class="card">
@@ -143,7 +143,7 @@
               </div>
               <div>
                 <div class="label">Novos clientes</div>
-                <div class="value">24</div>
+                <div class="value" id="cli-new">—</div>
               </div>
             </div>
             <div class="trend">
@@ -157,11 +157,11 @@
               </div>
               <div>
                 <div class="label">Clientes ativos</div>
-                <div class="value">286</div>
+                <div class="value" id="cli-active">—</div>
               </div>
             </div>
             <div class="trend">
-              <b>↗ +87%</b>
+              <b id="cli-active-pct">—</b>
               <span>do total</span>
             </div>
           </article>
@@ -172,20 +172,53 @@
               </div>
               <div>
                 <div class="label">Retorno médio</div>
-                <div class="value">37 dias</div>
+                <div class="value">—</div>
               </div>
             </div>
             <div class="trend">
-              <span>entre atendimentos</span>
+              <span>disponível quando houver agendamentos</span>
             </div>
           </article>
         </div>
+
+        <!-- Lista de clientes (vem do MySQL via /api/clients) -->
+        <section class="panel panel-pad">
+          <div class="panel-header">
+            <h2>CLIENTES CADASTRADOS</h2>
+          </div>
+          <div class="clients-toolbar">
+            <input class="cli-search" id="client-search" type="search" placeholder="Buscar por nome, e-mail ou telefone" aria-label="Buscar clientes">
+            <select class="cli-filter" id="client-status-filter" aria-label="Filtrar por situação">
+              <option value="all">Todos</option>
+              <option value="active">Ativos</option>
+              <option value="inactive">Inativos</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="clients-table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Telefone</th>
+                  <th>Cadastro</th>
+                  <th>Situação</th>
+                  <th class="actions">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="clients-body">
+                <tr><td colspan="5" class="cli-empty">Carregando clientes...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="cli-message" id="clients-message" role="status" hidden></div>
         </section>
       </section>
     </main>
   </div>
 
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
+  <!-- JavaScript: sessão e login (shared + staff-app) e a lógica desta tela -->
+  <script src="/js/core/shared.js" defer></script>
+  <script src="/js/staff/staff-app.js" defer></script>
+  <script src="/js/staff/clients-page.js" defer></script>
 </body>
 </html>

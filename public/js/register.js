@@ -126,21 +126,8 @@ if (registerForm) {
     submitButton.disabled = true;
     submitButton.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Criando conta...';
 
-    // Simula cadastro (em produção, aqui faria uma chamada para a API)
     showMessage("Criando sua conta...", "info");
 
-    // TODO: Implementar endpoint de cadastro no servidor
-    // Por enquanto, simula um delay e depois redireciona para login
-    setTimeout(() => {
-      showMessage("Conta criada com sucesso! Redirecionando para o login...", "success");
-
-      setTimeout(() => {
-        window.location.href = "login.html";
-      }, 1500);
-    }, 1500);
-
-    // Exemplo de como seria a chamada real para a API:
-    /*
     try {
       const response = await fetch("/api/register", {
         method: "POST",
@@ -174,7 +161,6 @@ if (registerForm) {
       submitButton.disabled = false;
       submitButton.innerHTML = originalText;
     }
-    */
   });
 } else {
   console.error("Formulário de cadastro não encontrado. Verifique o ID 'register-form'.");

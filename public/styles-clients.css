@@ -1,0 +1,181 @@
+/* styles-clients.css
+   Estilos da tela de Clientes (staff/admin).
+   Reaproveita as variáveis e classes do styles.css (.panel, .panel-pad,
+   .panel-header, .pill, --green, --line, --muted...) e só acrescenta o que
+   falta: busca, filtro, tabela, botões e mensagens. */
+
+/* ---------- Busca e filtro ---------- */
+.clients-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.cli-search,
+.cli-filter {
+  padding: 12px 14px;
+  border: 1px solid #ded7ce;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+}
+
+.cli-search {
+  flex: 1 1 280px;
+  max-width: 420px;
+}
+
+.cli-search:focus,
+.cli-filter:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-soft);
+}
+
+/* ---------- Tabela de clientes ---------- */
+.clients-table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.clients-table th {
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.clients-table td {
+  padding: 14px 10px;
+  border-bottom: 1px solid #eee7df;
+  vertical-align: middle;
+}
+
+.clients-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.clients-table small {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.clients-table .num {
+  white-space: nowrap;
+}
+
+.clients-table th.actions,
+.clients-table td.actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.clients-table tr.is-inactive td:not(.actions) {
+  opacity: 0.6;
+}
+
+.clients-table .pill {
+  min-width: 78px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.cli-empty {
+  padding: 32px 8px !important;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---------- Botões ---------- */
+.cli-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cli-btn:hover {
+  background: var(--green-soft);
+}
+
+.cli-btn-danger {
+  border-color: #b3261e;
+  color: #b3261e;
+}
+
+.cli-btn-danger:hover {
+  background: #fdecea;
+}
+
+/* ---------- Mensagens ---------- */
+.cli-message {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.cli-message.success {
+  background: var(--green-soft);
+  color: #205d3b;
+}
+
+.cli-message.error {
+  background: #fdecea;
+  color: #a1261d;
+}
+
+/* ---------- Celular: cada cliente vira um bloco empilhado ---------- */
+@media (max-width: 700px) {
+  .clients-table thead {
+    display: none;
+  }
+
+  .clients-table,
+  .clients-table tbody,
+  .clients-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .clients-table tr {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee7df;
+  }
+
+  .clients-table tr:last-child {
+    border-bottom: 0;
+  }
+
+  .clients-table td {
+    display: inline-block;
+    width: auto;
+    padding: 3px 14px 3px 0;
+    border-bottom: 0;
+  }
+
+  .clients-table td:first-child,
+  .clients-table td.actions,
+  .clients-table td.cli-empty {
+    display: block;
+    width: 100%;
+  }
+
+  .clients-table td.actions {
+    padding-top: 8px;
+    text-align: left;
+  }
+}
