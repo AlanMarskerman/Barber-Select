@@ -5,6 +5,8 @@
 //   - registerRouter: a rota POST /api/register (cadastro);
 //   - clientLogin: um "middleware" que entra na rota /auth/login/unified e
 //     confere e-mail e senha na tabela clients.
+// Todo cadastro feito por aqui vira CLIENTE. Colaborador e dono são criados só
+// pelo admin (veja staff-auth.js).
 // Tudo roda dentro do server.js (porta 3000), usando as mesmas sessões, tokens,
 // refresh e logout que os outros perfis já usam.
 
@@ -12,6 +14,8 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 // bcryptjs: transforma a senha em um "hash" (nunca guardamos a senha em texto
 // puro) e compara a senha digitada com o hash guardado no banco.
+const { ensureStaffTable } = require("./staff-table");
+// Usada para conferir se o e-mail já pertence a alguém da equipe.
 const rateLimit = require("express-rate-limit");
 // express-rate-limit: limita quantas vezes alguém pode chamar a rota de cadastro.
 
@@ -105,6 +109,13 @@ function createClientAuth({
     const { name, email, phone, password } = parsed.value;
 
     try {
+      await ensureStaffTable(getPool);
+      const [staffRows] = await getPool().query("SELECT 1 FROM staff_users WHERE email = ? LIMIT 1", [email]);
+      if (staffRows.length > 0) {
+        return res.status(409).json({ error: "E-mail já cadastrado." });
+      }
+      // O e-mail de um colaborador ou dono não pode virar cadastro de cliente.
+
       const passwordHash = await bcrypt.hash(password, 10);
       // Gera o hash da senha. O 10 é o "custo": quanto maior, mais lento e mais
       // seguro. Só o hash vai para o banco.
