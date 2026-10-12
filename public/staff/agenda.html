@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Agenda</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <!-- Estrutura principal da aplicação -->
+  <div class="app">
+
+    <!-- Menu lateral -->
+    <aside class="sidebar">
+
+      <!-- Logo da Barber Select -->
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <!-- Links de navegação do menu -->
+      <nav class="nav">
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="active" href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+        <a href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+        <a href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+
+      <!-- Botão para sair do sistema -->
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="main">
+
+      <!-- Cabeçalho superior -->
+      <header class="topbar">
+
+        <!-- Lado esquerdo do cabeçalho: menu e título -->
+        <div class="head-left">
+          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+            <i class="bx bx-menu"></i>
+          </button>
+          <div class="title">
+            <h1>Agenda</h1>
+            <p>Gerencie os agendamentos da sua barbearia</p>
+          </div>
+        </div>
+
+        <!-- Lado direito do cabeçalho: notificações e usuário -->
+        <div class="head-right">
+          <button class="bell" type="button" aria-label="Notificações">
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+            <div class="user-info">
+              <b>Usuário</b>
+              <span>Colaborador</span>
+            </div>
+            <i class="bx bx-chevron-down down"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Área de conteúdo -->
+      <section class="content">
+
+        <!-- Cards de resumo -->
+        <div class="cards">
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-calendar"></i>
+              </div>
+              <div>
+                <div class="label">AGENDAMENTOS HOJE</div>
+                <div class="value">18</div>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-check-circle"></i>
+              </div>
+              <div>
+                <div class="label">CONFIRMADOS</div>
+                <div class="value">15</div>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-time"></i>
+              </div>
+              <div>
+                <div class="label">PENDENTES</div>
+                <div class="value">3</div>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-user-check"></i>
+              </div>
+              <div>
+                <div class="label">BARBEIROS ATIVOS</div>
+                <div class="value">4</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Grade principal -->
+        <div class="dash-grid">
+
+          <!-- Painel: Novo Agendamento -->
+          <section class="panel panel-pad">
+            <div class="panel-header">
+              <h2>NOVO AGENDAMENTO</h2>
+            </div>
+            <form id="appointment-form" style="margin-top: 20px;">
+              <div style="display: grid; gap: 16px;">
+                <div style="display: grid; gap: 6px;">
+                  <label style="font-weight: 600; font-size: 13px;">Cliente</label>
+                  <input type="text" required placeholder="Nome do cliente" style="width: 100%; padding: 12px; border: 1px solid #e7e0d7; border-radius: 8px; font-size: 14px;">
+                </div>
+                <div style="display: grid; gap: 6px;">
+                  <label style="font-weight: 600; font-size: 13px;">Serviço</label>
+                  <select required style="width: 100%; padding: 12px; border: 1px solid #e7e0d7; border-radius: 8px; font-size: 14px;">
+                    <option value="">Selecione um serviço</option>
+                    <option value="corte">Corte Social</option>
+                    <option value="barba">Barba</option>
+                    <option value="combo">Barba + Corte</option>
+                    <option value="degrade">Degradê</option>
+                  </select>
+                </div>
+                <div style="display: grid; gap: 6px;">
+                  <label style="font-weight: 600; font-size: 13px;">Barbeiro</label>
+                  <select required style="width: 100%; padding: 12px; border: 1px solid #e7e0d7; border-radius: 8px; font-size: 14px;">
+                    <option value="">Selecione um barbeiro</option>
+                    <option value="carlos">Carlos Silva</option>
+                    <option value="lucas">Lucas Santos</option>
+                    <option value="mateus">Mateus Oliveira</option>
+                    <option value="andre">André Costa</option>
+                  </select>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div style="display: grid; gap: 6px;">
+                    <label style="font-weight: 600; font-size: 13px;">Data</label>
+                    <input type="date" required style="width: 100%; padding: 12px; border: 1px solid #e7e0d7; border-radius: 8px; font-size: 14px;">
+                  </div>
+                  <div style="display: grid; gap: 6px;">
+                    <label style="font-weight: 600; font-size: 13px;">Horário</label>
+                    <input type="time" required style="width: 100%; padding: 12px; border: 1px solid #e7e0d7; border-radius: 8px; font-size: 14px;">
+                  </div>
+                </div>
+                <button type="submit" style="padding: 14px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer; font-size: 15px;">
+                  Agendar
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <!-- Painel: Agendamentos de Hoje -->
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>AGENDAMENTOS DE HOJE</h2>
+            </div>
+            <div class="table-wrap">
+              <table class="table appointments-table">
+                <tbody>
+                  <tr>
+                    <td><span class="time">09:00</span></td>
+                    <td><b>Bruno Ferreira</b><br><small>Corte Social</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
+                    <td><span class="pill green">Confirmado</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">10:30</span></td>
+                    <td><b>Gabriel Santos</b><br><small>Barba + Corte</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
+                    <td><span class="pill green">Confirmado</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">14:00</span></td>
+                    <td><b>Rafael Silva</b><br><small>Degradê</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Mateus</span></td>
+                    <td><span class="pill yellow">Pendente</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">15:30</span></td>
+                    <td><b>André Lima</b><br><small>Corte Social</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
+                    <td><span class="pill green">Confirmado</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">17:00</span></td>
+                    <td><b>Felipe Almeida</b><br><small>Barba</small></td>
+                    <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
+                    <td><span class="pill yellow">Pendente</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Configurações</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+      <nav class="nav">
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+        <a href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+        <a class="active" href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="head-left">
+          <button class="menu-button hamb" type="button">
+            <i class="bx bx-menu"></i>
+          </button>
+          <div class="title">
+            <h1>Configurações</h1>
+            <p>Gerencie as configurações da sua barbearia</p>
+          </div>
+        </div>
+        <div class="head-right">
+          <button class="bell" type="button">
+            <i class="bx bx-bell"></i>
+          </button>
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+            <div class="user-info">
+              <b>Usuário</b>
+              <span>Administrador</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="content">
+
+        <div class="dash-grid">
+          <section class="panel panel-pad">
+            <div class="panel-header">
+              <h2>DADOS DA BARBEARIA</h2>
+            </div>
+            <form style="margin-top: 20px; display: grid; gap: 16px;">
+              <div>
+                <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Nome da Barbearia</label>
+                <input type="text" value="Barber Select - Unidade Central" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+              </div>
+              <div>
+                <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">CNPJ</label>
+                <input type="text" value="12.345.678/0001-90" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+              </div>
+              <div>
+                <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Telefone / WhatsApp</label>
+                <input type="text" value="(11) 99999-8888" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+              </div>
+              <div>
+                <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Endereço</label>
+                <input type="text" value="Av. Paulista, 1000 - Bela Vista, São Paulo - SP" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Horário Abertura</label>
+                  <input type="time" value="09:00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Horário Fechamento</label>
+                  <input type="time" value="20:00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+              </div>
+              <button type="button" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer;">
+                Salvar Alterações
+              </button>
+            </form>
+          </section>
+
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>GERENCIAMENTO DE UNIDADES (SAAS)</h2>
+            </div>
+            <div style="margin-top: 20px;">
+              <p style="color: var(--muted); font-size: 13px; line-height: 1.5;">
+                Como administrador de uma rede de barbearias, você pode alternar entre unidades ou cadastrar novas filiais no sistema.
+              </p>
+
+              <div style="margin-top: 20px; display: grid; gap: 12px;">
+                <div style="padding: 14px; border: 1px solid var(--line); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <b>Unidade Central (Matriz)</b>
+                    <small style="display: block; color: var(--muted);">Av. Paulista, 1000</small>
+                  </div>
+                  <span class="pill green">Ativa</span>
+                </div>
+                <div style="padding: 14px; border: 1px solid var(--line); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <b>Unidade Jardins (Filial 1)</b>
+                    <small style="display: block; color: var(--muted);">Rua Oscar Freire, 500</small>
+                  </div>
+                  <span class="pill green">Ativa</span>
+                </div>
+                <div style="padding: 14px; border: 1px solid var(--line); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <b>Unidade Moema (Filial 2)</b>
+                    <small style="display: block; color: var(--muted);">Av. Ibirapuera, 1200</small>
+                  </div>
+                  <span class="pill yellow">Em implantação</span>
+                </div>
+              </div>
+
+              <button type="button" style="margin-top: 20px; width: 100%; padding: 12px; border: 1px dashed var(--green); border-radius: 8px; background: transparent; color: var(--green); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i class="bx bx-plus"></i> Adicionar Nova Unidade
+              </button>
+            </div>
+          </section>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
+</body>
+</html>

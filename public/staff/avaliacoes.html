@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
+  <title>Barber Select - Avaliações</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-
-      <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a class="active" href="dashboard.html">
+        <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -30,12 +23,12 @@
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a href="clientes.html">
+        <a href="clients.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
         <a href="services.html">
@@ -50,7 +43,7 @@
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
-        <a href="financeiro.html">
+        <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
@@ -58,7 +51,7 @@
           <i class="bx bx-bar-chart-alt-2"></i>
           <span>Relatórios</span>
         </a>
-        <a href="avaliacoes.html">
+        <a class="active" href="avaliacoes.html">
           <i class="bx bx-star"></i>
           <span>Avaliações</span>
         </a>
@@ -67,68 +60,40 @@
           <span>Configurações</span>
         </a>
       </nav>
-
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal do dashboard -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
-
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+          <button class="menu-button hamb" type="button">
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
             <h1>Avaliações</h1>
-            <p>Acompanhe a satisfação dos seus clientes</p>
+            <p>Acompanhe a satisfação dos clientes</p>
           </div>
         </div>
-
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
         <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
+          <button class="bell" type="button">
             <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
+            <span class="badge">5</span>
           </button>
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Kenis Cardoso</b>
-              <span>Administrador</span>
+              <b>Usuário</b>
+              <span>Colaborador</span>
             </div>
-            <i class="bx bx-chevron-down down"></i>
           </div>
         </div>
       </header>
 
-      <!-- Área de conteúdo do dashboard -->
       <section class="content">
 
-        <!-- Seletor de data -->
-        <div class="page-date">
-          <select aria-label="Selecionar data do dashboard">
-            <option>Hoje, 20 de maio de 2025</option>
-          </select>
-
-         <select aria-label="Selecionar data do dashboard">
-            <option>Todas as avaliações</option>
-          </select>
-
-          <span>
-            <a href="">Exportar</a>
-          </span>
-
-        </div>
-
-        <!-- Cards de resumo -->
         <div class="cards">
           <article class="card">
             <div class="stat">
@@ -136,68 +101,162 @@
                 <i class="bx bx-star"></i>
               </div>
               <div>
-                <div class="label">Avaliações média</div>
-                <div class="value">4,8</div>
+                <div class="label">MÉDIA GERAL</div>
+                <div class="value">4.8</div>
               </div>
-            </div>
-            <div class="trend">
-                <b>estrela</b>
-              <b>↗ +0,3</b>
-              <span>no período</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-message"></i>
+                <i class="bx bx-comment"></i>
               </div>
               <div>
-                <div class="label">Total de avaliações</div>
-                <div class="value">328</div>
+                <div class="label">TOTAL AVALIAÇÕES</div>
+                <div class="value">248</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +12%</b>
-              <span>no período</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-like"></i>
+                <i class="bx bx-happy"></i>
               </div>
               <div>
-                <div class="label">Avaliações positivas</div>
-                <div class="value">94%</div>
+                <div class="label">AVALIAÇÕES POSITIVAS</div>
+                <div class="value">92%</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>309</b>
-              <span>avaliações</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-line-chart"></i>
+                <i class="bx bx-message-alt-dots"></i>
               </div>
               <div>
-                <div class="label">Taxa de resposta</div>
-                <div class="value">87%</div>
+                <div class="label">NOVAS ESTE MÊS</div>
+                <div class="value">32</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>285</b>
-              <span>respondidas</span>
             </div>
           </article>
         </div>
-        </section>
+
+        <div class="dash-grid">
+          <section class="panel panel-pad">
+            <div class="panel-header">
+              <h2>AVALIAÇÕES RECENTES</h2>
+            </div>
+            <div style="margin-top: 20px; display: grid; gap: 20px;">
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Rafael Silva</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i></span>
+                </div>
+                <p style="margin: 8px 0; font-size: 14px;">Excelente atendimento! O Carlos é muito profissional e o ambiente é impecável. Recomendo demais!</p>
+                <small style="color: var(--muted);">Serviço: Corte Social • há 2 horas</small>
+              </div>
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>João Santos</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bx-star"></i></span>
+                </div>
+                <p style="margin: 8px 0; font-size: 14px;">Muito bom, mas demorou um pouco mais do que o esperado. Fora isso, tudo certo.</p>
+                <small style="color: var(--muted);">Serviço: Barba • há 1 dia</small>
+              </div>
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Pedro Costa</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i></span>
+                </div>
+                <p style="margin: 8px 0; font-size: 14px;">O melhor barbeiro da região! Combo perfeito, atendimento rápido e qualidade excepcional.</p>
+                <small style="color: var(--muted);">Serviço: Combo • há 2 dias</small>
+              </div>
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Lucas Lima</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i></span>
+                </div>
+                <p style="margin: 8px 0; font-size: 14px;">Atendimento impecável do início ao fim. O espaço é limpo e organizado. Voltarei com certeza!</p>
+                <small style="color: var(--muted);">Serviço: Degradê • há 3 dias</small>
+              </div>
+
+            </div>
+          </section>
+
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>AVALIAÇÃO POR SERVIÇO</h2>
+            </div>
+            <div style="margin-top: 20px; display: grid; gap: 16px;">
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Combo Corte + Barba</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.9</span>
+                </div>
+                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 98%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
+                </div>
+                <small style="color: var(--muted);">89 avaliações</small>
+              </div>
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Corte Social</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.8</span>
+                </div>
+                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 96%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
+                </div>
+                <small style="color: var(--muted);">67 avaliações</small>
+              </div>
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Barba Completa</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.7</span>
+                </div>
+                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 94%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
+                </div>
+                <small style="color: var(--muted);">45 avaliações</small>
+              </div>
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Barba Terapêutica</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.9</span>
+                </div>
+                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 98%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
+                </div>
+                <small style="color: var(--muted);">32 avaliações</small>
+              </div>
+
+              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <b>Degradê</b>
+                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.6</span>
+                </div>
+                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 92%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
+                </div>
+                <small style="color: var(--muted);">15 avaliações</small>
+              </div>
+
+            </div>
+          </section>
+        </div>
+
       </section>
     </main>
   </div>
 
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
+  <title>Barber Select - Produtos</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-
-      <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a class="active" href="dashboard.html">
+        <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -30,19 +23,19 @@
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a href="clientes.html">
+        <a href="clients.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
-        <a href="servicos.html">
+        <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
-        <a href="produtos.html">
+        <a class="active" href="produtos.html">
           <i class="bx bx-briefcase"></i>
           <span>Produtos</span>
         </a>
@@ -50,7 +43,7 @@
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
-        <a href="financeiro.html">
+        <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
@@ -67,23 +60,16 @@
           <span>Configurações</span>
         </a>
       </nav>
-
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal do dashboard -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
-
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+          <button class="menu-button hamb" type="button">
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
@@ -91,96 +77,166 @@
             <p>Gerencie os produtos da sua barbearia</p>
           </div>
         </div>
-
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
         <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
+          <button class="bell" type="button">
             <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
+            <span class="badge">1</span>
           </button>
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Kenis Cardoso</b>
-              <span>Administrador</span>
+              <b>Usuário</b>
+              <span>Colaborador</span>
             </div>
-            <i class="bx bx-chevron-down down"></i>
           </div>
         </div>
       </header>
 
-      <!-- Área de conteúdo do dashboard -->
       <section class="content">
 
-        <!-- Cards de resumo -->
         <div class="cards">
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-calendar-week"></i>
+                <i class="bx bx-package"></i>
               </div>
               <div>
-                <div class="label">total de produtos</div>
-                <div class="value">28</div>
+                <div class="label">PRODUTOS ATIVOS</div>
+                <div class="value">24</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +12%</b>
-              <span>em relação ao mês anterior</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-archive"></i>
-              </div>
+                <i class="bx bx-error">
+                </div>
               <div>
-                <div class="label">Produtos em estoque</div>
-                <div class="value">22</div>
+                <div class="label">ESTOQUE BAIXO</div>
+                <div class="value">5</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +10%</b>
-              <span>em relação ao mês anterior</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-error"></i>
-              </div>
+                <i class="bx bx-chart-down">
+                </div>
               <div>
-                <div class="label">Estoque baixo</div>
-                <div class="value">4</div>
+                <div class="label">VENDAS DO MÊS</div>
+                <div class="value">R$ 3.480</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +33%</b>
-              <span>em relação ao mês anterior</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class='bx bx-money-withdraw'></i>
+                <i class="bx bx-dollar-circle"></i>
               </div>
               <div>
-                <div class="label">Valor em estoque</div>
-                <div class="value">R$ 1.250,00</div>
+                <div class="label">VALOR DO ESTOQUE</div>
+                <div class="value">R$ 2.840</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +8%</b>
-              <span>em relação ao mês anterior</span>
             </div>
           </article>
         </div>
-        </section>
+
+        <div class="dash-grid">
+          <section class="panel panel-pad">
+            <div class="panel-header">
+              <h2>NOVO PRODUTO</h2>
+            </div>
+            <form id="product-form" style="margin-top: 20px;">
+              <div style="display: grid; gap: 16px;">
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Nome do Produto</label>
+                  <input type="text" required placeholder="Ex: Shampoo Barbear" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Descrição</label>
+                  <textarea rows="3" placeholder="Descrição do produto" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;"></textarea>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div>
+                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Preço de Custo (R$)</label>
+                    <input type="number" step="0.01" placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                  </div>
+                  <div>
+                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Preço de Venda (R$)</label>
+                    <input type="number" step="0.01" required placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                  </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div>
+                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Estoque Atual</label>
+                    <input type="number" required placeholder="0" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                  </div>
+                  <div>
+                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Estoque Mínimo</label>
+                    <input type="number" placeholder="10" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                  </div>
+                </div>
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Categoria</label>
+                  <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                    <option>Shampoos</option>
+                    <option>Condicionadores</option>
+                    <option>Óleos e Pomadas</option>
+                    <option>Tesouras e Acessórios</option>
+                    <option>Remédios e Cuidados</option>
+                    <option>Outros</option>
+                  </select>
+                </div>
+                <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer;">
+                  <i class="bx bx-plus"></i> Cadastrar Produto
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>PRODUTOS NO ESTOQUE</h2>
+              <a class="view-all" href="produtos.html">Ver todos</a>
+            </div>
+            <div class="table-wrap" style="margin-top: 16px;">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td><b>Shampoo Barbear</b><br><small>Lótus</small></td>
+                    <td>R$ 25,00</td>
+                    <td><span class="pill green">24 unidades</span></td>
+                    <td>
+                      <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>Gel de Cabelo</b><br><small>Strong Hold</small></td>
+                    <td>R$ 35,00</td>
+                    <td><span class="pill yellow">5 unidades</span></td>
+                    <td>
+                      <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>Pomada Brilhante</b><br><small>30g</small></td>
+                    <td>R$ 45,00</td>
+                    <td><span class="pill green">18 unidades</span></td>
+                    <td>
+                      <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
       </section>
     </main>
   </div>
 
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>
