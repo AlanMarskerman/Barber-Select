@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,7 +12,6 @@
 
   <div class="app">
 
-    <!-- Menu lateral -->
     <aside class="sidebar">
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
@@ -31,10 +31,10 @@
           <span>Clientes</span>
         </a>
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
-        <a href="servicos.html">
+        <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
@@ -46,7 +46,7 @@
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
-        <a href="financeiro.html">
+        <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
@@ -70,7 +70,6 @@
       </button>
     </aside>
 
-    <!-- Conteúdo principal -->
     <main class="main">
 
       <header class="topbar">
@@ -94,8 +93,8 @@
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Kenis Cardoso</b>
-              <span>Administrador</span>
+              <b>Usuário</b>
+              <span>Colaborador</span>
             </div>
             <i class="bx bx-chevron-down down"></i>
           </div>
@@ -104,7 +103,6 @@
 
       <section class="content agenda-page">
 
-        <!-- Cards de resumo -->
         <div class="cards agenda-cards">
 
           <article class="card">
@@ -173,7 +171,6 @@
 
         </div>
 
-        <!-- Calendário e lista de agendamentos -->
         <div class="agenda-layout">
 
           <aside class="agenda-calendario">
@@ -202,7 +199,6 @@
               <span class="dia-semana">Sex</span>
               <span class="dia-semana">Sáb</span>
 
-              <span class="dia-vazio"></span>
               <span class="dia-vazio"></span>
               <span class="dia-vazio"></span>
               <span class="dia-vazio"></span>
@@ -287,7 +283,6 @@
 
           </aside>
 
-          <!-- Lista de agendamentos -->
           <div class="agenda-lista">
 
             <div class="agenda-lista-header">
@@ -302,9 +297,7 @@
               </button>
             </div>
 
-            <!-- Busca e filtros -->
             <div class="agenda-filtros">
-
               <label class="agenda-busca">
                 <i class="bx bx-search"></i>
                 <input
@@ -327,13 +320,10 @@
                 <option value="pendente">Pendente</option>
                 <option value="cancelado">Cancelado</option>
               </select>
-
             </div>
 
-            <!-- Tabela de agendamentos -->
             <div class="agenda-tabela-wrap">
               <table class="agenda-tabela">
-
                 <thead>
                   <tr>
                     <th>Horário</th>
@@ -347,250 +337,97 @@
                 </thead>
 
                 <tbody>
-
                   <tr>
                     <td><span class="agenda-horario">09:00</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>Bruno Ferreira</strong>
-                        <span>(61) 91579-6423</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>Bruno Ferreira</strong><span>(61) 91579-6423</span></div></td>
                     <td>Corte social</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Carlos</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Carlos</span></div></td>
                     <td class="agenda-valor">R$ 50,00</td>
                     <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para Bruno Ferreira">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Bruno Ferreira">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Bruno Ferreira"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Bruno Ferreira"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
 
                   <tr>
                     <td><span class="agenda-horario">09:30</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>Matheus Oliveira</strong>
-                        <span>(62) 98123-4567</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>Matheus Oliveira</strong><span>(62) 98123-4567</span></div></td>
                     <td>Corte degradê</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Marcos</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Marcos</span></div></td>
                     <td class="agenda-valor">R$ 45,00</td>
                     <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para Matheus Oliveira">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Matheus Oliveira">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Matheus Oliveira"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Matheus Oliveira"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
 
                   <tr>
                     <td><span class="agenda-horario">10:00</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>Lucas Almeida</strong>
-                        <span>(62) 98765-4321</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>Lucas Almeida</strong><span>(62) 98765-4321</span></div></td>
                     <td>Barba</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Carlos</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Carlos</span></div></td>
                     <td class="agenda-valor">R$ 30,00</td>
                     <td><span class="agenda-status pendente">Pendente</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para Lucas Almeida">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Lucas Almeida">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Lucas Almeida"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Lucas Almeida"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
 
                   <tr>
                     <td><span class="agenda-horario">10:30</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>Pedro Santos</strong>
-                        <span>(62) 97654-3210</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>Pedro Santos</strong><span>(62) 97654-3210</span></div></td>
                     <td>Corte + barba</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Marcos</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Marcos</span></div></td>
                     <td class="agenda-valor">R$ 70,00</td>
                     <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para Pedro Santos">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Pedro Santos">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Pedro Santos"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Pedro Santos"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
 
                   <tr>
                     <td><span class="agenda-horario">11:00</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>Gabriel Costa</strong>
-                        <span>(62) 96543-2109</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>Gabriel Costa</strong><span>(62) 96543-2109</span></div></td>
                     <td>Corte na máquina</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Rafael</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Rafael</span></div></td>
                     <td class="agenda-valor">R$ 35,00</td>
                     <td><span class="agenda-status cancelado">Cancelado</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para Gabriel Costa">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Gabriel Costa">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Gabriel Costa"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Gabriel Costa"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
 
                   <tr>
                     <td><span class="agenda-horario">13:00</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>Rafael Mendes</strong>
-                        <span>(62) 99456-7812</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>Rafael Mendes</strong><span>(62) 99456-7812</span></div></td>
                     <td>Acabamento</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Carlos</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Carlos</span></div></td>
                     <td class="agenda-valor">R$ 20,00</td>
                     <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para Rafael Mendes">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Rafael Mendes">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Rafael Mendes"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Rafael Mendes"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
 
                   <tr>
                     <td><span class="agenda-horario">14:00</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>André Ribeiro</strong>
-                        <span>(62) 98234-5678</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>André Ribeiro</strong><span>(62) 98234-5678</span></div></td>
                     <td>Corte social</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Marcos</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Marcos</span></div></td>
                     <td class="agenda-valor">R$ 50,00</td>
                     <td><span class="agenda-status pendente">Pendente</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para André Ribeiro">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de André Ribeiro">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para André Ribeiro"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de André Ribeiro"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
 
                   <tr>
                     <td><span class="agenda-horario">15:00</span></td>
-                    <td>
-                      <div class="agenda-cliente">
-                        <strong>Felipe Martins</strong>
-                        <span>(62) 99123-4560</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-cliente"><strong>Felipe Martins</strong><span>(62) 99123-4560</span></div></td>
                     <td>Corte + barba</td>
-                    <td>
-                      <div class="agenda-barbeiro">
-                        <i class="bx bx-user-circle"></i>
-                        <span>Rafael</span>
-                      </div>
-                    </td>
+                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Rafael</span></div></td>
                     <td class="agenda-valor">R$ 70,00</td>
                     <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit">
-                      <div class="agenda-acoes">
-                        <button class="agenda-acao" type="button" aria-label="Mais ações para Felipe Martins">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Felipe Martins">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Felipe Martins"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Felipe Martins"><i class="bx bx-edit-alt"></i></button></div></td>
                   </tr>
-
                 </tbody>
               </table>
             </div>
 
           </div>
         </div>
-
       </section>
     </main>
   </div>
 
-  <script src="../js/app.js"></script>
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>
+```

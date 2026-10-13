@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
+  <title>Barber Select - Relatórios</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-
-      <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a class="active" href="dashboard.html">
+        <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -30,15 +23,15 @@
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a href="clientes.html">
+        <a href="clients.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
-        <a href="servicos.html">
+        <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
@@ -50,11 +43,11 @@
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
-        <a href="financeiro.html">
+        <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
-        <a href="relatorios.html">
+        <a class="active" href="relatorios.html">
           <i class="bx bx-bar-chart-alt-2"></i>
           <span>Relatórios</span>
         </a>
@@ -67,132 +60,235 @@
           <span>Configurações</span>
         </a>
       </nav>
-
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal do dashboard -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
-
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+          <button class="menu-button hamb" type="button">
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
-            <h1>Relatorios</h1>
-            <p>Analise o desempenho da sua barbearia</p>
+            <h1>Relatórios</h1>
+            <p>Analise o desempenho da barbearia</p>
           </div>
         </div>
-
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
         <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
+          <button class="bell" type="button">
             <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
           </button>
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Kenis Cardoso</b>
+              <b>Usuário</b>
               <span>Administrador</span>
             </div>
-            <i class="bx bx-chevron-down down"></i>
           </div>
         </div>
       </header>
 
-      <!-- Área de conteúdo do dashboard -->
       <section class="content">
 
-        <!-- Seletor de data -->
-        <div class="page-date">
-          <select aria-label="Selecionar data do dashboard">
-            <option>Hoje, 20 de maio de 2025</option>
-          </select>
-          <select aria-label="Selecionar data do dashboard">
-            <option>Mensal</option>
-          </select>
-
-          <button>Exportar PDF</button>
-        </div>
-
-        <!-- Cards de resumo -->
         <div class="cards">
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-dollar-circle"></i>
+                <i class="bx bx-trending-up"></i>
               </div>
               <div>
-                <div class="label">Faturamento total</div>
-                <div class="value">R$ 42.680,00</div>
+                <div class="label">CRESCIMENTO MÊS</div>
+                <div class="value">+18%</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +18%</b>
-              <span>em relação ao mês anterior</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-group"></i>
+                <i class="bx bx-user"></i>
               </div>
               <div>
-                <div class="label">atendimentos</div>
-                <div class="value">542</div>
+                <div class="label">CLIENTES ATIVOS</div>
+                <div class="value">342</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +12%</b>
-              <span>em relação so mês anterior</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-line-chart"></i>
+                <i class="bx bx-cut"></i>
               </div>
               <div>
-                <div class="label">Ticket médio</div>
-                <div class="value">R$ 78,75</div>
+                <div class="label">ATENDIMENTOS</div>
+                <div class="value">1.248</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +5%</b>
-              <span>em relação ao mês anterior</span>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-user-plus"></i>
+                <i class="bx bx-star"></i>
               </div>
               <div>
-                <div class="label">Novos clientes</div>
-                <div class="value">86</div>
+                <div class="label">SATISFAÇÃO</div>
+                <div class="value">4.8/5</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>↗ +9%</b>
-              <span>em relação ao mês anterior</span>
             </div>
           </article>
         </div>
+
+        <section class="panel panel-pad revenue-panel">
+          <div class="panel-header">
+            <h2>DESEMPENHO MENSAL</h2>
+            <select class="period-select" aria-label="Período do relatório">
+              <option>Últimos 6 meses</option>
+              <option>Este ano</option>
+              <option>Ano anterior</option>
+            </select>
+          </div>
+          <div class="linechart">
+            <svg class="svg-chart dashboard-chart" viewBox="0 0 760 300" role="img" aria-label="Desempenho mensal">
+              <defs>
+                <linearGradient id="reportArea" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#0b5a37" stop-opacity="0.22"></stop>
+                  <stop offset="100%" stop-color="#0b5a37" stop-opacity="0.02"></stop>
+                </linearGradient>
+              </defs>
+              <g class="chart-grid">
+                <line x1="78" x2="730" y1="24" y2="24"></line>
+                <line x1="78" x2="730" y1="68" y2="68"></line>
+                <line x1="78" x2="730" y1="112" y2="112"></line>
+                <line x1="78" x2="730" y1="156" y2="156"></line>
+                <line x1="78" x2="730" y1="200" y2="200"></line>
+                <line x1="78" x2="730" y1="244" y2="244"></line>
+              </g>
+              <g class="chart-y-labels">
+                <text x="8" y="29">R$ 2.500</text>
+                <text x="8" y="73">R$ 2.000</text>
+                <text x="8" y="117">R$ 1.500</text>
+                <text x="8" y="161">R$ 1.000</text>
+                <text x="17" y="205">R$ 500</text>
+                <text x="31" y="249">R$ 0</text>
+              </g>
+              <path class="chart-area" d="M 88 200 L 194 156 L 300 180 L 406 112 L 512 134 L 618 88 L 720 68 L 720 244 L 88 244 Z"></path>
+              <polyline class="chart-line" points="88,200 194,156 300,180 406,112 512,134 618,88 720,68"></polyline>
+              <g class="chart-points">
+                <circle cx="88" cy="200" r="5"></circle>
+                <circle cx="194" cy="156" r="5"></circle>
+                <circle cx="300" cy="180" r="5"></circle>
+                <circle cx="406" cy="112" r="5"></circle>
+                <circle cx="512" cy="134" r="5"></circle>
+                <circle cx="618" cy="88" r="5"></circle>
+                <circle cx="720" cy="68" r="5"></circle>
+              </g>
+              <g class="chart-x-labels">
+                <text text-anchor="middle" x="88" y="280">Maio</text>
+                <text text-anchor="middle" x="194" y="280">Jun</text>
+                <text text-anchor="middle" x="300" y="280">Jul</text>
+                <text text-anchor="middle" x="406" y="280">Ago</text>
+                <text text-anchor="middle" x="512" y="280">Set</text>
+                <text text-anchor="middle" x="618" y="280">Out</text>
+                <text text-anchor="middle" x="720" y="280">Nov</text>
+              </g>
+            </svg>
+          </div>
+          <div class="week-summary">
+            <div>
+              <small>Total do período</small>
+              <b>R$ 42.890,00</b>
+            </div>
+            <span>↗ +18% &nbsp; em relação ao período anterior</span>
+          </div>
         </section>
+
+        <div class="dash-grid" style="margin-top: 16px;">
+          <section class="panel panel-pad">
+            <div class="panel-header">
+              <h2>RELATÓRIOS DISPONÍVEIS</h2>
+            </div>
+            <div style="margin-top: 16px; display: grid; gap: 12px;">
+              <div class="quick-item" style="cursor: pointer;">
+                <span class="sq"><i class="bx bx-file-pdf"></i></span>
+                <span class="quick-text">
+                  <b>Relatório de Vendas</b>
+                  <span>Exportar em PDF</span>
+                </span>
+              </div>
+              <div class="quick-item" style="cursor: pointer;">
+                <span class="sq"><i class="bx bx-file-excel"></i></span>
+                <span class="quick-text">
+                  <b>Planilha Financeira</b>
+                  <span>Exportar em Excel</span>
+                </span>
+              </div>
+              <div class="quick-item" style="cursor: pointer;">
+                <span class="sq"><i class="bx bx-user-voice"></i></span>
+                <span class="quick-text">
+                  <b>Relatório de Clientes</b>
+                  <span>Histórico de atendimentos</span>
+                </span>
+              </div>
+              <div class="quick-item" style="cursor: pointer;">
+                <span class="sq"><i class="bx bx-bar-chart"></i></span>
+                <span class="quick-text">
+                  <b>Desempenho da Equipe</b>
+                  <span>Prodividade por barbeiro</span>
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>RANKING DE SERVIÇOS</h2>
+            </div>
+            <div class="table-wrap" style="margin-top: 16px;">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td><span class="time">#1</span></td>
+                    <td><b>Combo Corte + Barba</b></td>
+                    <td>156 atendimentos</td>
+                    <td>R$ 12.480</td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">#2</span></td>
+                    <td><b>Corte Social</b></td>
+                    <td>98 atendimentos</td>
+                    <td>R$ 4.900</td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">#3</span></td>
+                    <td><b>Barba Completa</b></td>
+                    <td>76 atendimentos</td>
+                    <td>R$ 3.040</td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">#4</span></td>
+                    <td><b>Corte Degradê</b></td>
+                    <td>54 atendimentos</td>
+                    <td>R$ 2.970</td>
+                  </tr>
+                  <tr>
+                    <td><span class="time">#5</span></td>
+                    <td><b>Barba Terapêutica</b></td>
+                    <td>32 atendimentos</td>
+                    <td>R$ 1.760</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
       </section>
     </main>
   </div>
 
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

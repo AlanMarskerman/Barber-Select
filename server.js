@@ -258,6 +258,34 @@ function handleLogin(role, loginEnv, passwordEnv) {
   };
 }
 
+// Cadastro e login de clientes no MySQL (features/cadastro-mysql).
+const { getPool } = require("./features/cadastro-mysql/db");
+const createClientAuth = require("./features/cadastro-mysql/client-auth");
+const { registerRouter, clientLogin } = createClientAuth({
+  getPool,
+  generateUserId,
+  createAccessToken,
+  createRefreshToken,
+  activeSessions,
+});
+app.use("/api/register", registerRouter);
+
+// Login e contas da equipe (colaborador e dono) no MySQL.
+const createStaffAuth = require("./features/cadastro-mysql/staff-auth");
+const { staffRouter, staffLogin } = createStaffAuth({
+  getPool,
+  authenticate,
+  generateUserId,
+  createAccessToken,
+  createRefreshToken,
+  activeSessions,
+});
+app.use("/api/staff-users", staffRouter);
+
+// Lista de clientes para a tela /staff/clients.html (features/clientes-mysql).
+const createClientsRouter = require("./features/clientes-mysql/clients-routes");
+app.use("/api/clients", createClientsRouter({ authenticate, getPool }));
+
 app.post(
   "/auth/login/cliente",
   loginLimiter,
@@ -285,6 +313,8 @@ app.post(
   "/auth/login/unified",
   loginLimiter,
   validateLoginInput,
+  clientLogin,
+  staffLogin,
   (req, res) => {
     const { identity, password } = req.body;
 

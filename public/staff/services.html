@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
+  <title>Barber Select - Serviços</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-
-      <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a class="active" href="dashboard.html">
+        <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -30,15 +23,15 @@
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a href="clientes.html">
+        <a href="clients.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
-        <a href="servicos.html">
+        <a class="active" href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
@@ -50,7 +43,7 @@
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
-        <a href="financeiro.html">
+        <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
@@ -67,73 +60,72 @@
           <span>Configurações</span>
         </a>
       </nav>
-
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal do dashboard -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
-
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+          <button class="menu-button hamb" type="button">
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
             <h1>Serviços</h1>
-            <p>Gerencie os serviços oferecidos pela sua barbearia</p>
+            <p>Gerencie os serviços oferecidos pela barbearia</p>
           </div>
         </div>
-
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
         <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
+          <button class="bell" type="button">
             <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
+            <span class="badge">1</span>
           </button>
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Kenis Cardoso</b>
-              <span>Administrador</span>
+              <b>Usuário</b>
+              <span>Colaborador</span>
             </div>
-            <i class="bx bx-chevron-down down"></i>
           </div>
         </div>
       </header>
 
-      <!-- Área de conteúdo do dashboard -->
       <section class="content">
 
-        <!-- Seletor de data -->
-        <div class="page-date">
-          <select aria-label="Selecionar data do dashboard">
-            <option>Hoje, 20 de maio de 2025</option>
-          </select>
-        </div>
-
-        <!-- Cards de resumo -->
         <div class="cards">
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-cut bx-rotate-270"></i>
+                <i class="bx bx-cut"></i>
               </div>
               <div>
-                <div class="label">Total de serviços</div>
-                <div class="value">18</div>
+                <div class="label">SERVIÇOS ATIVOS</div>
+                <div class="value">8</div>
               </div>
             </div>
-            <div class="trend">
-              <b> 15 </b>
-              <span>ativos</span>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-cart"></i>
+              </div>
+              <div>
+                <div class="label">MELHOR AVALIADO</div>
+                <div class="value">Combo</div>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-diamond"></i>
+              </div>
+              <div>
+                <div class="label">SERVIÇO DE LUXO</div>
+                <div class="value">Premium</div>
+              </div>
             </div>
           </article>
           <article class="card">
@@ -142,51 +134,129 @@
                 <i class="bx bx-star"></i>
               </div>
               <div>
-                <div class="label">serviços agendado</div>
-                <div class="value">Corte Social</div>
+                <div class="label">MÉDIA AVALIAÇÃO</div>
+                <div class="value">4.8</div>
               </div>
-            </div>
-            <div class="trend">
-              <b>186</b>
-              <span>agendamentos</span>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-dollar-circle"></i>
-              </div>
-              <div>
-                <div class="label">Preço médio</div>
-                <div class="value">R$ 52,40</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +4%</b>
-              <span>No periodo</span>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-clock-5"></i>
-              </div>
-              <div>
-                <div class="label">Tempo medio</div>
-                <div class="value">42 min</div>
-              </div>
-            </div>
-            <div class="trend">
-              <span>por atendimentos</span>
             </div>
           </article>
         </div>
-        </section>
+
+        <div class="dash-grid">
+          <section class="panel panel-pad">
+            <div class="panel-header">
+              <h2>NOVO SERVIÇO</h2>
+            </div>
+            <form id="service-form" style="margin-top: 20px;">
+              <div style="display: grid; gap: 16px;">
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Nome do Serviço</label>
+                  <input type="text" required placeholder="Ex: Corte Social" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Descrição</label>
+                  <textarea rows="3" placeholder="Descrição do serviço" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;"></textarea>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div>
+                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Preço (R$)</label>
+                    <input type="number" step="0.01" required placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                  </div>
+                  <div>
+                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Duração (min)</label>
+                    <input type="number" required placeholder="30" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                  </div>
+                </div>
+                <div>
+                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Categoria</label>
+                  <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                    <option value="corte">Corte de Cabelo</option>
+                    <option value="barba">Barba</option>
+                    <option value="combo">Combo</option>
+                    <option value="luxo">Serviço Premium</option>
+                    <option value="adicional">Adicional</option>
+                  </select>
+                </div>
+                <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer;">
+                  <i class="bx bx-plus"></i> Cadastrar Serviço
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>SERVIÇOS ATIVOS</h2>
+              <a class="view-all" href="services.html">Ver todos</a>
+            </div>
+            <div class="table-wrap" style="margin-top: 16px;">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td><b>Corte Social</b><br><small>45 min</small></td>
+                    <td>R$ 50,00</td>
+                    <td><span class="pill green">Ativo</span></td>
+                    <td>
+                      <div style="display: flex; gap: 8px;">
+                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>Barba Completa</b><br><small>30 min</small></td>
+                    <td>R$ 40,00</td>
+                    <td><span class="pill green">Ativo</span></td>
+                    <td>
+                      <div style="display: flex; gap: 8px;">
+                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>Combo Corte + Barba</b><br><small>60 min</small></td>
+                    <td>R$ 80,00</td>
+                    <td><span class="pill green">Ativo</span></td>
+                    <td>
+                      <div style="display: flex; gap: 8px;">
+                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>Barba Terapêutica</b><br><small>40 min</small></td>
+                    <td>R$ 55,00</td>
+                    <td><span class="pill green">Ativo</span></td>
+                    <td>
+                      <div style="display: flex; gap: 8px;">
+                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>Corte Degradê</b><br><small>40 min</small></td>
+                    <td>R$ 55,00</td>
+                    <td><span class="pill yellow">Pausado</span></td>
+                    <td>
+                      <div style="display: flex; gap: 8px;">
+                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
+                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
       </section>
     </main>
   </div>
 
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

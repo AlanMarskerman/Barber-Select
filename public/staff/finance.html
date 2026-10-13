@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
+  <title>Barber Select - Financeiro</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-
-      <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a class="active" href="dashboard.html">
+        <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -30,15 +23,15 @@
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a href="clientes.html">
+        <a href="clients.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
-        <a href="servicos.html">
+        <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
@@ -50,7 +43,7 @@
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
-        <a href="financeiro.html">
+        <a class="active" href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
@@ -67,112 +60,200 @@
           <span>Configurações</span>
         </a>
       </nav>
-
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal do dashboard -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
-
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+          <button class="menu-button hamb" type="button">
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
             <h1>Financeiro</h1>
-            <p>Acompanhe as entradas e saídas da sua barbearia</p>
+            <p>Controle financeiro da sua barbearia</p>
           </div>
         </div>
-
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
         <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
+          <button class="bell" type="button">
             <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
           </button>
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Kenis Cardoso</b>
+              <b>Usuário</b>
               <span>Administrador</span>
             </div>
-            <i class="bx bx-chevron-down down"></i>
           </div>
         </div>
       </header>
 
-      <!-- Área de conteúdo do dashboard -->
       <section class="content">
 
-        <!-- Cards de resumo -->
         <div class="cards">
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-up-arrow-alt"></i>
-              </div>
-              <div>
-                <div class="label">Receitas</div>
-                <div class="value">R$ 4.350,00</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +12%</b>
-              <span>em relação ao mês anterior</span>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-down-arrow-alt"></i>
-              </div>
-              <div>
-                <div class="label">Dispesas</div>
-                <div class="value">R$ 850,00</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +8%</b>
-              <span>em relação ao mês anterior</span>
-            </div>
-          </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
                 <i class="bx bx-wallet"></i>
               </div>
               <div>
-                <div class="label">Saldo do mês</div>
-                <div class="value">R$ 3.500,00</div>
+                <div class="label">RECEITA DO DIA</div>
+                <div class="value">R$ 1.840</div>
               </div>
             </div>
           </article>
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-calendar-minus"></i>
+                <i class="bx bx-line-chart"></i>
               </div>
               <div>
-                <div class="label">Período atual</div>
-                <div class="value">Setembro de 2026</div>
+                <div class="label">TOTAL MÊS</div>
+                <div class="value">R$ 42.890</div>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-pie-chart-alt"></i>
+              </div>
+              <div>
+                <div class="label">TICKET MÉDIO</div>
+                <div class="value">R$ 76,67</div>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-hand"></i>
+              </div>
+              <div>
+                <div class="label">EM ESPERA</div>
+                <div class="value">R$ 840</div>
               </div>
             </div>
           </article>
         </div>
-        </section>
+
+        <div class="dash-grid">
+          <section class="panel panel-pad">
+            <div class="panel-header">
+              <h2>TRANSACÇÕES RECENTES</h2>
+              <select class="period-select" aria-label="Filtrar período">
+                <option>Hoje</option>
+                <option>Esta semana</option>
+                <option>Este mês</option>
+                <option>Ano</option>
+              </select>
+            </div>
+            <div class="table-wrap" style="margin-top: 16px;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>_data</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Pagamento</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><small>12/10/2026</small></td>
+                    <td><b>Carlos Silva</b><br><small>Corte Social</small></td>
+                    <td>Entrada</td>
+                    <td><span class="pill green">+R$ 50,00</span></td>
+                    <td>Dinheiro</td>
+                  </tr>
+                  <tr>
+                    <td><small>12/10/2026</small></td>
+                    <td><b>João Santos</b><br><small>Barba</small></td>
+                    <td>Entrada</td>
+                    <td><span class="pill green">+R$ 40,00</span></td>
+                    <td>PIX</td>
+                  </tr>
+                  <tr>
+                    <td><small>11/10/2026</small></td>
+                    <td><b>Pedro Costa</b><br><small>Combo</small></td>
+                    <td>Entrada</td>
+                    <td><span class="pill green">+R$ 80,00</span></td>
+                    <td>Crédito</td>
+                  </tr>
+                  <tr>
+                    <td><small>11/10/2026</small></td>
+                    <td><b>Estoque Shampoo</b><br><small>Compra</small></td>
+                    <td>Saída</td>
+                    <td><span class="pill yellow">-R$ 300,00</span></td>
+                    <td>PIX</td>
+                  </tr>
+                  <tr>
+                    <td><small>10/10/2026</small></td>
+                    <td><b>Lucas Oliveira</b><br><small>Corte</small></td>
+                    <td>Entrada</td>
+                    <td><span class="pill green">+R$ 50,00</span></td>
+                    <td>Dinheiro</td>
+                  </tr>
+                  <tr>
+                    <td><small>10/10/2026</small></td>
+                    <td><b>Rafael Lima</b><br><small>Barba</small></td>
+                    <td>Entrada</td>
+                    <td><span class="pill green">+R$ 40,00</span></td>
+                    <td>Débito</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel panel-pad appointments-panel">
+            <div class="panel-header">
+              <h2>RESUMO FINANCEIRO</h2>
+            </div>
+            <div style="margin-top: 20px; display: grid; gap: 16px;">
+              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px; display: flex; justify-content: space-between;">
+                <div>
+                  <small style="color: var(--muted);">ENTRADAS HOJE</small>
+                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 1.840</div>
+                </div>
+                <div style="text-align: right;">
+                  <small style="color: var(--muted);">SAÍDAS HOJE</small>
+                  <div style="font-size: 24px; font-weight: 700; color: var(--yellow);">R$ 300</div>
+                </div>
+              </div>
+              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px; display: flex; justify-content: space-between;">
+                <div>
+                  <small style="color: var(--muted);">ENTRADAS ESTA SEMANA</small>
+                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 8.450</div>
+                </div>
+                <div style="text-align: right;">
+                  <small style="color: var(--muted);">SALDO ATUAL</small>
+                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 12.450</div>
+                </div>
+              </div>
+              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <small style="color: var(--muted);">META DO MÊS</small>
+                  <span style="font-weight: 700; color: var(--green);">R$ 50.000</span>
+                </div>
+                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 85%; height: 100%; background: var(--green); border-radius: 4px;"></div>
+                </div>
+                <small style="color: var(--muted);">Progresso: 85%</small>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </section>
     </main>
   </div>
 
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

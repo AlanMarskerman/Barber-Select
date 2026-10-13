@@ -2,64 +2,318 @@
 // Lógica consolidada para todas as páginas da Área do Colaborador e Admin
 
 (function () {
-  // 1. Obtém a sessão atual
+  'use strict';
+
+  // ===========================
+  // VERIFICAÇÃO DE AUTENTICAÇÃO
+  // ===========================
+
+  // Obtém a sessão atual
   const session = getSession();
 
-  // 2. Identificação da página atual pelo nome do arquivo na URL
+  // Identificação da página atual
   const pathname = window.location.pathname;
-  const currentPage = pathname.substring(pathname.lastIndexOf("/") + 1) || "dashboard.html";
+  const currentPage = pathname.substring(pathname.lastIndexOf('/') + 1) || 'dashboard.html';
 
-  // 3. Determina se é staff ou admin baseado na página e na role
-  let requiredRole = "staff";
+  // Mapeamento de páginas exclusivas para admin
+  const ADMIN_ONLY_PAGES = ['finance.html', 'relatorios.html', 'configuracoes.html'];
 
-  // finance.html é exclusivo para admin
-  if (currentPage === "finance.html") {
-    requiredRole = "admin";
-  }
+  // Verifica se a página atual requer admin
+  const requiresAdmin = ADMIN_ONLY_PAGES.includes(currentPage);
 
-  // 4. Verificação de autenticação
-  // Permite tanto staff quanto admin acessarem páginas de staff
-  // Mas apenas admin acessa finance.html
-  if (requiredRole === "admin") {
-    requireAuth("admin");
+  // AUTENTICAÇÃO ROBUSTA: Impede acesso não autorizado
+  if (requiresAdmin) {
+    // Página exclusiva de admin
+    requireAuth(['admin']);
   } else {
-    // Aceita staff ou admin
+    // Páginas acessíveis por staff e admin
     const { accessToken, role } = session;
-    if (!accessToken || (role !== "staff" && role !== "admin")) {
+    if (!accessToken || (role !== 'staff' && role !== 'admin')) {
       clearSessionAndRedirect();
     }
   }
 
-  // 5. Mapeamento de títulos das páginas
+  // ===========================
+  // CONFIGURAÇÃO DA INTERFACE
+  // ===========================
+
+  // Mapeamento de títulos das páginas
   const pageTitles = {
-    "dashboard.html": "Visão geral",
-    "appointments.html": "Agenda",
-    "clients.html": "Clientes",
-    "services.html": "Serviços",
-    "finance.html": "Financeiro",
-    "settings.html": "Configurações",
+    'dashboard.html': 'Dashboard',
+    'agenda.html': 'Agenda',
+    'appointments.html': 'Agendamentos',
+    'clients.html': 'Clientes',
+    'clientes.html': 'Clientes',
+    'barbeiros.html': 'Barbeiros',
+    'services.html': 'Serviços',
+    'servicos.html': 'Serviços',
+    'produtos.html': 'Produtos',
+    'venda.html': 'Vendas',
+    'finance.html': 'Financeiro',
+    'relatorios.html': 'Relatórios',
+    'avaliacoes.html': 'Avaliações',
+    'configuracoes.html': 'Configurações',
+    'settings.html': 'Configurações'
   };
 
-  const title = pageTitles[currentPage] || "Área do Colaborador";
+  const title = pageTitles[currentPage] || 'Área do Colaborador';
 
-  // 6. Determina qual role usar para a sidebar (admin ou staff)
-  const sidebarRole = session.role === "admin" ? "admin" : "staff";
+  // ===========================
+  // ATUALIZA INFORMAÇÕES DO USUÁRIO NO HEADER
+  // ===========================
 
-  // 7. Renderização padrão de layout
-  renderSidebar(sidebarRole, currentPage);
-  renderTopbar(title, sidebarRole);
+  function updateUserInfo() {
+    const userNameElement = document.querySelector('.user-info b');
+    const userRoleElement = document.querySelector('.user-info span');
 
-  // 8. Handlers de formulários específicos de cada tela
-  document.addEventListener("DOMContentLoaded", () => {
-    // Tela de Agendamentos
-    const appointmentForm = document.getElementById("appointment-form");
-    if (appointmentForm) {
-      appointmentForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        alert("Agendamento salvo com sucesso!");
+    if (userNameElement && session.identity) {
+      userNameElement.textContent = session.identity;
+    }
+
+    if (userRoleElement && session.role) {
+      const roleLabels = {
+        admin: 'Administrador',
+        staff: 'Colaborador',
+        client: 'Cliente'
+      };
+      userRoleElement.textContent = roleLabels[session.role] || session.role;
+    }
+  }
+
+  // ===========================
+  // MARCA O LINK ATIVO NA SIDEBAR
+  // ===========================
+
+  function setActiveNavLink() {
+    const navLinks = document.querySelectorAll('.sidebar .nav a');
+
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === currentPage) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // ===========================
+  // HANDLERS DE LOGOUT
+  // ===========================
+
+  function setupLogoutHandlers() {
+    const logoutButtons = document.querySelectorAll('.logout');
+
+    logoutButtons.forEach(button => {
+      button.addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        if (confirm('Tem certeza que deseja sair?')) {
+          await logout();
+        }
+      });
+    });
+  }
+
+  // ===========================
+  // MENU MOBILE (HAMBURGUER)
+  // ===========================
+
+  function setupMobileMenu() {
+    const hamburgerButton = document.querySelector('.hamb');
+    const app = document.querySelector('.app');
+
+    if (hamburgerButton) {
+      hamburgerButton.addEventListener('click', () => {
+        // Toggle para desktop (esconde sidebar)
+        if (window.innerWidth > 760) {
+          app.classList.toggle('sidebar-collapsed');
+        } else {
+          // Toggle para mobile (abre menu overlay)
+          app.classList.toggle('mobile-menu-open');
+        }
       });
     }
 
-    // Outras telas podem ter seus handlers adicionados aqui conforme necessário
+    // Fecha menu mobile ao clicar fora
+    if (window.innerWidth <= 760) {
+      const sidebar = document.querySelector('.sidebar');
+      const main = document.querySelector('.main');
+
+      main?.addEventListener('click', () => {
+        app.classList.remove('mobile-menu-open');
+      });
+
+      // Fecha ao clicar em um link
+      const navLinks = document.querySelectorAll('.sidebar .nav a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          app.classList.remove('mobile-menu-open');
+        });
+      });
+    }
+  }
+
+  // ===========================
+  // INICIALIZAÇÃO
+  // ===========================
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateUserInfo();
+    setActiveNavLink();
+    setupLogoutHandlers();
+    setupMobileMenu();
+
+    // Handlers específicos de cada página
+    initPageSpecificHandlers();
   });
+
+  // ===========================
+  // HANDLERS ESPECÍFICOS DAS PÁGINAS
+  // ===========================
+
+  function initPageSpecificHandlers() {
+    // Dashboard: Nenhum handler específico necessário por enquanto
+
+    // Clientes: Carrega lista de clientes
+    if (currentPage === 'clients.html' || currentPage === 'clientes.html') {
+      loadClients();
+    }
+
+    // Serviços: Handler de formulário de novo serviço
+    const serviceForm = document.getElementById('service-form');
+    if (serviceForm) {
+      serviceForm.addEventListener('submit', handleServiceSubmit);
+    }
+
+    // Barbeiros: Handler de formulário de novo barbeiro
+    const barberForm = document.getElementById('barber-form');
+    if (barberForm) {
+      barberForm.addEventListener('submit', handleBarberSubmit);
+    }
+
+    // Produtos: Handler de formulário de novo produto
+    const productForm = document.getElementById('product-form');
+    if (productForm) {
+      productForm.addEventListener('submit', handleProductSubmit);
+    }
+
+    // Vendas: Handler de formulário de nova venda
+    const saleForm = document.getElementById('sale-form');
+    if (saleForm) {
+      saleForm.addEventListener('submit', handleSaleSubmit);
+    }
+
+    // Agendamentos
+    const appointmentForm = document.getElementById('appointment-form');
+    if (appointmentForm) {
+      appointmentForm.addEventListener('submit', handleAppointmentSubmit);
+    }
+  }
+
+  // ===========================
+  // CARREGA LISTA DE CLIENTES
+  // ===========================
+
+  async function loadClients() {
+    try {
+      const response = await authenticatedFetch('/api/clients');
+
+      if (!response) return;
+
+      if (response.ok) {
+        const data = await response.json();
+        renderClientsTable(data.clients);
+        updateClientsSummary(data.summary);
+      } else {
+        console.error('Erro ao carregar clientes');
+      }
+    } catch (error) {
+      console.error('Erro ao carregar clientes:', error);
+    }
+  }
+
+  function renderClientsTable(clients) {
+    const tbody = document.getElementById('clients-tbody');
+    if (!tbody) return;
+
+    if (clients.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhum cliente cadastrado</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = clients.map(client => `
+      <tr>
+        <td><b>${escapeHtml(client.name)}</b></td>
+        <td>${escapeHtml(client.email)}</td>
+        <td>${escapeHtml(client.phone || '-')}</td>
+        <td><span class="pill ${client.active ? 'green' : 'yellow'}">${client.active ? 'Ativo' : 'Inativo'}</span></td>
+        <td>
+          <button class="btn-icon" onclick="viewClient(${client.id})" title="Ver detalhes">
+            <i class="bx bx-show"></i>
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function updateClientsSummary(summary) {
+    const totalEl = document.getElementById('clients-total');
+    const activeEl = document.getElementById('clients-active');
+    const recentEl = document.getElementById('clients-recent');
+
+    if (totalEl) totalEl.textContent = summary.total;
+    if (activeEl) activeEl.textContent = summary.active;
+    if (recentEl) recentEl.textContent = summary.newLast30Days;
+  }
+
+  // ===========================
+  // HANDLERS DE FORMULÁRIOS
+  // ===========================
+
+  async function handleServiceSubmit(e) {
+    e.preventDefault();
+    alert('Serviço cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
+    e.target.reset();
+  }
+
+  async function handleBarberSubmit(e) {
+    e.preventDefault();
+    alert('Barbeiro cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
+    e.target.reset();
+  }
+
+  async function handleProductSubmit(e) {
+    e.preventDefault();
+    alert('Produto cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
+    e.target.reset();
+  }
+
+  async function handleSaleSubmit(e) {
+    e.preventDefault();
+    alert('Venda registrada com sucesso! (Funcionalidade em desenvolvimento)');
+    e.target.reset();
+  }
+
+  async function handleAppointmentSubmit(e) {
+    e.preventDefault();
+    alert('Agendamento criado com sucesso! (Funcionalidade em desenvolvimento)');
+    e.target.reset();
+  }
+
+  // ===========================
+  // UTILITÁRIOS
+  // ===========================
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Exporta funções globais se necessário
+  window.viewClient = function(id) {
+    alert(`Ver detalhes do cliente ${id} (em desenvolvimento)`);
+  };
+
 })();
