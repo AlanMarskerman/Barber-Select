@@ -456,6 +456,34 @@ app.get("/auth/session", authenticate(), (req, res) => {
   });
 });
 
+// Endpoint para validar acesso a uma página específica
+app.post("/auth/validate-access", authenticate(), (req, res) => {
+  const { requiredRoles } = req.body;
+  const { role } = req.user;
+
+  if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
+    return res.status(400).json({
+      error: "requiredRoles deve ser um array não vazio.",
+    });
+  }
+
+  // Verifica se o role do usuário está autorizado
+  const hasAccess = requiredRoles.includes(role);
+
+  if (!hasAccess) {
+    return res.status(403).json({
+      error: "Você não tem permissão para acessar esta página.",
+      userRole: role,
+      requiredRoles,
+    });
+  }
+
+  return res.json({
+    hasAccess: true,
+    userRole: role,
+  });
+});
+
 // Exemplo: use isto em endpoints administrativos reais.
 app.get("/api/admin/exemplo-protegido", authenticate(["admin"]), (req, res) => {
   res.json({

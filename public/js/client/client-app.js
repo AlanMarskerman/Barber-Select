@@ -25,6 +25,15 @@
 
   // 5. Handlers de formulários específicos de cada tela do cliente
   document.addEventListener("DOMContentLoaded", () => {
+    // Handler para o botão de logout
+    const logoutButton = document.querySelector(".client-logout .logout");
+    if (logoutButton) {
+      logoutButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+        await logout(); // Usa a função logout() do shared.js que já tem confirmação visual
+      });
+    }
+
     // Tela de Perfil
     const profileForm = document.getElementById("profile-form");
     if (profileForm) {
