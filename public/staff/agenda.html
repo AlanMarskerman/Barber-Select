@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Agenda</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- Menu lateral -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="active" href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+        <a href="barbeiros.html">
+          <i class="bx bx-user"></i>
+          <span>Barbeiros</span>
+        </a>
+        <a href="servicos.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+        <a href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+        <a href="financeiro.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+        <a href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="main">
+
+      <header class="topbar">
+        <div class="head-left">
+          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="title">
+            <h1>Agenda</h1>
+            <p>Gerencie os agendamentos da sua barbearia</p>
+          </div>
+        </div>
+
+        <div class="head-right">
+          <button class="bell" type="button" aria-label="Notificações">
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+            <i class="bx bx-chevron-down down"></i>
+          </div>
+        </div>
+      </header>
+
+      <section class="content agenda-page">
+
+        <!-- Cards de resumo -->
+        <div class="cards agenda-cards">
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-calendar"></i>
+              </div>
+              <div>
+                <div class="label">AGENDAMENTOS HOJE</div>
+                <div class="value">24</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +8%</b>
+              <span>em relação a ontem</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-time-five"></i>
+              </div>
+              <div>
+                <div class="label">HORÁRIOS DISPONÍVEIS</div>
+                <div class="value">12</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +15%</b>
+              <span>em relação a hoje</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-group"></i>
+              </div>
+              <div>
+                <div class="label">CLIENTES DO DIA</div>
+                <div class="value">18</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +6%</b>
+              <span>em relação a ontem</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-cut"></i>
+              </div>
+              <div>
+                <div class="label">SERVIÇO MAIS AGENDADO</div>
+                <div class="value">Corte</div>
+              </div>
+            </div>
+            <div class="trend">
+              <b>↗ +12%</b>
+              <span>em relação à semana passada</span>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Calendário e lista de agendamentos -->
+        <div class="agenda-layout">
+
+          <aside class="agenda-calendario">
+
+            <div class="agenda-cal-header">
+              <div>
+                <h2>Outubro de 2026</h2>
+              </div>
+
+              <div class="agenda-mes-controle">
+                <button type="button" aria-label="Mês anterior">
+                  <i class="bx bx-chevron-left"></i>
+                </button>
+                <button type="button" aria-label="Próximo mês">
+                  <i class="bx bx-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="agenda-cal-grid">
+              <span class="dia-semana">Dom</span>
+              <span class="dia-semana">Seg</span>
+              <span class="dia-semana">Ter</span>
+              <span class="dia-semana">Qua</span>
+              <span class="dia-semana">Qui</span>
+              <span class="dia-semana">Sex</span>
+              <span class="dia-semana">Sáb</span>
+
+              <span class="dia-vazio"></span>
+              <span class="dia-vazio"></span>
+              <span class="dia-vazio"></span>
+              <span class="dia-vazio"></span>
+
+              <button type="button" class="dia">1</button>
+              <button type="button" class="dia">2</button>
+              <button type="button" class="dia">3</button>
+              <button type="button" class="dia">4</button>
+              <button type="button" class="dia">5</button>
+              <button type="button" class="dia">6</button>
+              <button type="button" class="dia">7</button>
+              <button type="button" class="dia">8</button>
+              <button type="button" class="dia selecionado">9</button>
+              <button type="button" class="dia">10</button>
+              <button type="button" class="dia">11</button>
+              <button type="button" class="dia">12</button>
+              <button type="button" class="dia">13</button>
+              <button type="button" class="dia">14</button>
+              <button type="button" class="dia">15</button>
+              <button type="button" class="dia">16</button>
+              <button type="button" class="dia">17</button>
+              <button type="button" class="dia">18</button>
+              <button type="button" class="dia">19</button>
+              <button type="button" class="dia">20</button>
+              <button type="button" class="dia">21</button>
+              <button type="button" class="dia">22</button>
+              <button type="button" class="dia">23</button>
+              <button type="button" class="dia">24</button>
+              <button type="button" class="dia">25</button>
+              <button type="button" class="dia">26</button>
+              <button type="button" class="dia">27</button>
+              <button type="button" class="dia">28</button>
+              <button type="button" class="dia">29</button>
+              <button type="button" class="dia">30</button>
+              <button type="button" class="dia">31</button>
+            </div>
+
+            <div class="agenda-resumo">
+              <h3>Hoje, 09 de outubro</h3>
+              <p class="agenda-resumo-subtitulo">Resumo dos atendimentos</p>
+
+              <div class="agenda-resumo-item">
+                <span class="agenda-resumo-icone">
+                  <i class="bx bx-calendar-check"></i>
+                </span>
+                <div>
+                  <strong>24</strong>
+                  <span>Agendamentos</span>
+                </div>
+              </div>
+
+              <div class="agenda-resumo-item">
+                <span class="agenda-resumo-icone">
+                  <i class="bx bx-time-five"></i>
+                </span>
+                <div>
+                  <strong>12</strong>
+                  <span>Horários disponíveis</span>
+                </div>
+              </div>
+
+              <div class="agenda-resumo-item">
+                <span class="agenda-resumo-icone">
+                  <i class="bx bx-x-circle"></i>
+                </span>
+                <div>
+                  <strong>3</strong>
+                  <span>Cancelamentos</span>
+                </div>
+              </div>
+
+              <div class="agenda-resumo-item">
+                <span class="agenda-resumo-icone">
+                  <i class="bx bx-group"></i>
+                </span>
+                <div>
+                  <strong>18</strong>
+                  <span>Clientes atendidos</span>
+                </div>
+              </div>
+            </div>
+
+          </aside>
+
+          <!-- Lista de agendamentos -->
+          <div class="agenda-lista">
+
+            <div class="agenda-lista-header">
+              <div>
+                <h2>Agendamentos do dia</h2>
+                <p>Sexta-feira, 09 de outubro de 2026</p>
+              </div>
+
+              <button class="agenda-btn-novo" type="button">
+                <i class="bx bx-plus"></i>
+                <span>Novo agendamento</span>
+              </button>
+            </div>
+
+            <!-- Busca e filtros -->
+            <div class="agenda-filtros">
+
+              <label class="agenda-busca">
+                <i class="bx bx-search"></i>
+                <input
+                  type="search"
+                  placeholder="Buscar cliente, serviço ou barbeiro"
+                  aria-label="Buscar agendamentos"
+                >
+              </label>
+
+              <select aria-label="Filtrar por barbeiro">
+                <option value="">Todos os barbeiros</option>
+                <option value="carlos">Carlos</option>
+                <option value="marcos">Marcos</option>
+                <option value="rafael">Rafael</option>
+              </select>
+
+              <select aria-label="Filtrar por status">
+                <option value="">Todos os status</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="pendente">Pendente</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+
+            </div>
+
+            <!-- Tabela de agendamentos -->
+            <div class="agenda-tabela-wrap">
+              <table class="agenda-tabela">
+
+                <thead>
+                  <tr>
+                    <th>Horário</th>
+                    <th>Cliente</th>
+                    <th>Serviço</th>
+                    <th>Barbeiro</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr>
+                    <td><span class="agenda-horario">09:00</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>Bruno Ferreira</strong>
+                        <span>(61) 91579-6423</span>
+                      </div>
+                    </td>
+                    <td>Corte social</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Carlos</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 50,00</td>
+                    <td><span class="agenda-status confirmado">Confirmado</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para Bruno Ferreira">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Bruno Ferreira">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span class="agenda-horario">09:30</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>Matheus Oliveira</strong>
+                        <span>(62) 98123-4567</span>
+                      </div>
+                    </td>
+                    <td>Corte degradê</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Marcos</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 45,00</td>
+                    <td><span class="agenda-status confirmado">Confirmado</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para Matheus Oliveira">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Matheus Oliveira">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span class="agenda-horario">10:00</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>Lucas Almeida</strong>
+                        <span>(62) 98765-4321</span>
+                      </div>
+                    </td>
+                    <td>Barba</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Carlos</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 30,00</td>
+                    <td><span class="agenda-status pendente">Pendente</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para Lucas Almeida">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Lucas Almeida">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span class="agenda-horario">10:30</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>Pedro Santos</strong>
+                        <span>(62) 97654-3210</span>
+                      </div>
+                    </td>
+                    <td>Corte + barba</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Marcos</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 70,00</td>
+                    <td><span class="agenda-status confirmado">Confirmado</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para Pedro Santos">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Pedro Santos">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span class="agenda-horario">11:00</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>Gabriel Costa</strong>
+                        <span>(62) 96543-2109</span>
+                      </div>
+                    </td>
+                    <td>Corte na máquina</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Rafael</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 35,00</td>
+                    <td><span class="agenda-status cancelado">Cancelado</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para Gabriel Costa">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Gabriel Costa">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span class="agenda-horario">13:00</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>Rafael Mendes</strong>
+                        <span>(62) 99456-7812</span>
+                      </div>
+                    </td>
+                    <td>Acabamento</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Carlos</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 20,00</td>
+                    <td><span class="agenda-status confirmado">Confirmado</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para Rafael Mendes">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Rafael Mendes">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span class="agenda-horario">14:00</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>André Ribeiro</strong>
+                        <span>(62) 98234-5678</span>
+                      </div>
+                    </td>
+                    <td>Corte social</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Marcos</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 50,00</td>
+                    <td><span class="agenda-status pendente">Pendente</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para André Ribeiro">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de André Ribeiro">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span class="agenda-horario">15:00</span></td>
+                    <td>
+                      <div class="agenda-cliente">
+                        <strong>Felipe Martins</strong>
+                        <span>(62) 99123-4560</span>
+                      </div>
+                    </td>
+                    <td>Corte + barba</td>
+                    <td>
+                      <div class="agenda-barbeiro">
+                        <i class="bx bx-user-circle"></i>
+                        <span>Rafael</span>
+                      </div>
+                    </td>
+                    <td class="agenda-valor">R$ 70,00</td>
+                    <td><span class="agenda-status confirmado">Confirmado</span></td>
+                    <td class="btn-edit">
+                      <div class="agenda-acoes">
+                        <button class="agenda-acao" type="button" aria-label="Mais ações para Felipe Martins">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <button class="agenda-acao" type="button" aria-label="Editar agendamento de Felipe Martins">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

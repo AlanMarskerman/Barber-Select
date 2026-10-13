@@ -28,6 +28,7 @@ body {
   font-family: Inter, Arial, sans-serif;
   background: var(--background);
   color: var(--text);
+  overflow: hidden;
 }
 
 button,
@@ -380,6 +381,9 @@ button {
   color: #333333;
   font-size: 12px;
   text-decoration: none;
+  border: 1px solid#dddd;
+  padding: 7px;
+  border-radius: 8px;
 }
 
 /* ==============================
@@ -710,9 +714,10 @@ button {
    .campo div{
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 
    }
+
 
    .campo label{
     font-weight: 600;
@@ -881,11 +886,24 @@ button {
       margin-top: 20px;
     }
 
+
     .btn-agendamentos button{
       height: 45px;
       padding: 0 20px;
       border-radius: 8px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-agendamentos button i{
+      position: static;
+    }
+
+    .btn-agendamentos i{
+      position: absolute;
+      font-size: 25px;
     }
 
     .btn-agendamentos div:last-child button{
@@ -901,10 +919,6 @@ button {
       background-color: #fff;
     }
 
-    .btn-agendamentos i{
-      position: absolute;
-      font-size: 25px;
-    }
 
     .btn-agendamentos div{
       display: flex;
@@ -919,45 +933,61 @@ button {
       color: #fff;
     }
     
-   /* ==============================
-   Novo cliente
-   ============================== */
+
+   /* =========================
+   CAIXA NOVO CLIENTE
+========================= */
+
+.cadastro {
+    width: 100%;
+    max-width: 1026px;
+    margin: 25px auto;
+    padding: 38px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+/* =========================
+   CABEÇALHO NOVO CLIENTE
+========================= */
+
 .cab {
     display: flex;
     align-items: center;
-    gap: 15px;
-
+    gap: 30px;
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 18px;
 }
 
 .cab > i {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 45px;
-    height: 45px;
-
-    font-size: 26px;
-
-    color: #174a2b;
-    background-color: #e8eee9;
-
-    border-radius: 8px;
-
+    width: 81px;
+    height: 81px;
     flex-shrink: 0;
+    font-size: 45px;
+    color: #063014;
+    background-color: #e8eee9;
+    border-radius: 50%;
 }
 
 .cab h1 {
-    margin: 0 0 5px 0;
+    margin: 0 0 10px;
+    font-size: 40px;
+    font-weight: 700;
 }
 
 .cab p {
     margin: 0;
     color: #6c6a66;
+    font-size: 20px;
 }
-
 
 /* =========================
    FORMULÁRIO
@@ -966,20 +996,23 @@ button {
 .cadastro1 {
     display: flex;
     flex-direction: column;
-
     width: 100%;
     gap: 10px;
 }
 
-.cadastro1 label {
-    font-size: 14px;
-    font-weight: 600;
-
-    color: #292929;
-
-    margin-top: 8px;
+.campo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: 10px;
 }
 
+.campo label {
+    color: #292929;
+    font-size: 16px;
+    font-weight: 600;
+}
 
 /* =========================
    INPUT COM ÍCONE
@@ -987,48 +1020,35 @@ button {
 
 .input-icon {
     position: relative;
-
     width: 100%;
 }
 
 .input-icon > i {
     position: absolute;
-
-    left: 15px;
     top: 50%;
-
+    left: 20px;
     transform: translateY(-50%);
-
-    font-size: 20px;
+    font-size: 22px;
     color: #777;
-
-    z-index: 2;
-
     pointer-events: none;
 }
 
 .input-icon input {
     width: 100%;
-    height: 48px;
-
-    padding: 0 15px 0 45px;
-
-    border: 1px solid #d8d5cf;
-    border-radius: 8px;
-
-    background-color: #fff;
-
-    font-size: 14px;
-
-    outline: none;
-
+    height: 60px;
+    padding: 0 15px 0 55px;
     box-sizing: border-box;
+    border: 1px solid #d8d5cf;
+    border-radius: 10px;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    outline: none;
 }
 
 .input-icon input:focus {
     border-color: #174a2b;
 }
-
 
 /* =========================
    TELEFONE + DATA
@@ -1036,71 +1056,35 @@ button {
 
 .linha {
     display: flex;
-
     width: 100%;
-
-    gap: 20px;
+    gap: 35px;
 }
-
-.campo {
-    display: flex;
-    flex-direction: column;
-
-    flex: 1;
-    min-width: 0;
-
-    gap: 10px;
-}
-
-.campo .input-icon {
-    width: 100%;
-}
-
 
 /* =========================
    OBSERVAÇÕES
 ========================= */
 
 .observacao {
-    position: relative;
     width: 100%;
-}
-
-.observacao i {
-    position: absolute;
-
-    left: 15px;
-    top: 17px;
-
-    font-size: 20px;
-    color: #777;
-
-    z-index: 2;
 }
 
 .observacao textarea {
     width: 100%;
-    height: 110px;
-
-    padding: 15px 15px 15px 45px;
-
-    border: 1px solid #d8d5cf;
-    border-radius: 8px;
-
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-
-    outline: none;
-
-    resize: none;
-
+    height: 138px;
+    padding: 18px 20px;
     box-sizing: border-box;
+    border: 1px solid #d8d5cf;
+    border-radius: 10px;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    outline: none;
+    resize: none;
 }
 
 .observacao textarea:focus {
     border-color: #174a2b;
 }
-
 
 /* =========================
    BOTÕES
@@ -1110,60 +1094,770 @@ button {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
     width: 100%;
-
-    gap: 12px;
-
+    gap: 15px;
     margin-top: 30px;
 }
 
 .btn12,
 .btn1 {
-    height: 45px;
-
-    padding: 0 20px;
-
+    height: 48px;
+    padding: 0 22px;
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 8px;
-
-    border-radius: 8px;
-
-    font-size: 14px;
+    border-radius: 9px;
+    font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
+}
+
+.btn12 {
+     color: #0f6b3f;
+    background-color: #fff;
+    border: 1px solid#0f6b3f;
+}
+
+.btn1 {
+    color: #fff;
+    background-color: #012f17;
+    border: 1px solid #174a2b;
+}
+
+.btn1:hover {
+    background-color: #0f2117;
 }
 
 .btn12 i,
 .btn1 i {
     font-size: 20px;
+  
 }
 
 
-/* CANCELAR */
 
-.btn12 {
-    background-color: transparent;
+/* ==========================================
+   AGENDA — ESTILOS EXCLUSIVOS DESTA PÁGINA
+   ========================================== */
 
-    color: #333;
+.agenda-page {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: calc(100vh - 80px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
-    border: 1px solid #ccc;
+.agenda-layout,
+.agenda-calendario,
+.agenda-lista {
+min-width: 0;
+box-sizing: border-box;
+}
+
+/* Cards de resumo */
+.agenda-page .agenda-cards {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.agenda-page .agenda-cards .card {
+  min-height: 125px;
+  padding: 18px;
+}
+
+.agenda-page .agenda-cards .stat {
+  gap: 13px;
+}
+
+.agenda-page .agenda-cards .icon-circle {
+  width: 54px;
+  height: 54px;
+  flex-basis: 54px;
+}
+
+.agenda-page .agenda-cards .icon-circle i {
+  font-size: 29px;
+}
+
+.agenda-page .agenda-cards .label {
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.agenda-page .agenda-cards .value {
+  font-size: 26px;
+}
+
+.agenda-page .agenda-cards .trend {
+  gap: 5px;
+  margin-top: 12px;
+  font-size: 11px;
+}
+
+/* Distribuição do calendário e da lista */
+
+.agenda-layout {
+  display: grid;
+  grid-template-columns: minmax(245px, 0.78fr) minmax(0, 2fr);
+  align-items: stretch;
+  gap: 20px;
+  width: 100%;
+  height: 620px;
+  box-sizing: border-box;
+}
+
+.agenda-calendario,
+.agenda-lista {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.agenda-lista {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 
-/* CADASTRAR */
-
-.btn1 {
-    background-color: #174a2b;
-
-    color: #fff;
-
-    border: 1px solid #174a2b;
+/* Cabeçalho do calendário */
+.agenda-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
+
+.agenda-cal-header h2,
+.agenda-lista-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.agenda-lista-header p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.agenda-mes-controle {
+  display: flex;
+  gap: 5px;
+}
+
+.agenda-mes-controle button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--green);
+  cursor: pointer;
+  border: none;
+}
+
+.agenda-mes-controle button:hover {
+  background: var(--green-soft);
+}
+
+.agenda-mes-controle i {
+  font-size: 21px;
+}
+
+.agenda-mes {
+  margin: 24px 0 16px;
+  font-size: 15px;
+}
+
+/* Grade do calendário */
+.agenda-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px 3px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+.agenda-cal-grid .dia-semana {
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.agenda-cal-grid .dia,
+.agenda-cal-grid .dia-vazio {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 39px;
+  place-items: center;
+}
+
+.agenda-cal-grid .dia {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.agenda-cal-grid .dia:hover {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.agenda-cal-grid .dia.selecionado {
+  background: var(--green);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Resumo do calendário */
+.agenda-resumo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 22px;
+}
+
+.agenda-resumo > h3 {
+  font-size: 15px;
+}
+
+.agenda-resumo-subtitulo {
+  margin-top: -10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.agenda-resumo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.agenda-resumo-icone {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  place-items: center;
+  border-radius: 10px;
+  color: var(--green);
+}
+
+.agenda-resumo-item:has(.bx-x-circle) .agenda-resumo-icone {
+  color: #dc2626;
+}
+
+.agenda-resumo-icone i {
+  font-size: 21px;
+}
+
+.agenda-resumo-item > div {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  gap: 8px;
+}
+
+.agenda-resumo-item span:not(.agenda-resumo-icone) {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.agenda-resumo-item strong {
+  font-size: 17px;
+}
+
+/* Cabeçalho dos agendamentos */
+.agenda-lista-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.agenda-lista-header > div {
+  min-width: 0;
+}
+
+.agenda-btn-novo {
+  display: inline-flex;
+  min-height: 42px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 14px;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.agenda-btn-novo:hover {
+  background: var(--green-hover);
+}
+
+.agenda-btn-novo i {
+  font-size: 19px;
+}
+
+/* Busca e filtros */
+.agenda-filtros {
+  display: grid;
+  grid-template-columns: minmax(160px, 1.6fr) minmax(125px, 1fr) minmax(125px, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.agenda-busca {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.agenda-busca > i {
+  position: absolute;
+  left: 12px;
+  color: var(--muted);
+  font-size: 19px;
+  pointer-events: none;
+}
+
+.agenda-busca input,
+.agenda-filtros select {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  border: 1px solid #dedbd5;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.agenda-busca input {
+  padding: 0 10px 0 38px;
+}
+
+.agenda-busca input::placeholder {
+  color: #8a8d91;
+}
+
+.agenda-filtros select {
+  padding: 0 9px;
+  cursor: pointer;
+}
+
+.agenda-busca input:focus,
+.agenda-filtros select:focus {
+  border-color: var(--green);
+}
+
+/* Tabela */
+.agenda-tabela-wrap {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.agenda-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 11px;
+}
+
+.agenda-tabela th {
+  padding: 13px 10px;
+  border-bottom: 1px solid var(--line);
+  color: #686d70;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.agenda-tabela td {
+  padding: 16px 10px;
+  border-bottom: 1px solid #eee9e2;
+  vertical-align: middle;
+}
+
+.agenda-tabela tbody tr:hover {
+  background: #fcfdfb;
+}
+
+.agenda-tabela tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.agenda-horario {
+  display: inline-block;
+  padding: 7px 9px;
+  border-radius: 6px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 10px;
+  width: 55px;
+}
+
+.agenda-cliente {
+  display: flex;
+  min-width: 115px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.agenda-cliente strong {
+  color: #222;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.agenda-cliente span {
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.agenda-barbeiro {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.agenda-barbeiro i {
+  color: var(--green);
+  font-size: 22px;
+}
+
+.agenda-valor {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.agenda-status {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  width: 80px;
+}
+
+.agenda-status.confirmado {
+  background: #e5f3e9;
+  color: #21653d;
+}
+
+.agenda-status.pendente {
+  background: #fff2d4;
+  color: #946512;
+}
+
+.agenda-status.cancelado {
+  background: #fce8e6;
+  color: #b43b32;
+}
+
+.agenda-acao {
+  display: grid;
+  width: 30px;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #555;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agenda-acao:hover {
+  border-color: var(--line);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.agenda-acao i {
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid#dddd;
+}
+
+.btn-edit {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.agenda-acoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.agenda-acao {
+  flex-shrink: 0;
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE EXCLUSIVA DA AGENDA
+   ========================================== */
+
+@media (max-width: 1400px) {
+  .agenda-layout {
+    grid-template-columns: minmax(225px, 0.72fr) minmax(0, 2fr);
+    gap: 14px;
+  }
+
+  .agenda-calendario,
+  .agenda-lista {
+    padding: 16px;
+  }
+
+  .agenda-page .agenda-cards .card {
+    padding: 14px;
+  }
+
+  .agenda-page .agenda-cards .icon-circle {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+  }
+
+  .agenda-page .agenda-cards .icon-circle i {
+    font-size: 25px;
+  }
+
+  .agenda-page .agenda-cards .label {
+    font-size: 9px;
+  }
+
+  .agenda-page .agenda-cards .value {
+    font-size: 23px;
+  }
+
+  .agenda-tabela th,
+  .agenda-tabela td {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+}
+
+@media (max-width: 1100px) {
+
+.agenda-calendario,
+.agenda-lista {
+  height: auto;
+}
+
+.agenda-lista {
+  overflow: visible;
+}
+
+.agenda-tabela-wrap {
+  flex: initial;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+  .agenda-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .agenda-calendario {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    column-gap: 25px;
+  }
+
+  .agenda-cal-header,
+  .agenda-mes,
+  .agenda-cal-grid {
+    grid-column: 1;
+  }
+
+  .agenda-cal-header {
+    grid-row: 1;
+  }
+
+  .agenda-mes {
+    grid-row: 2;
+  }
+
+  .agenda-cal-grid {
+    grid-row: 3;
+  }
+
+  .agenda-resumo {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .agenda-page {
+    padding-top: 14px;
+  }
+
+  .agenda-page .agenda-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .agenda-page .agenda-cards .card {
+    min-height: 105px;
+    padding: 12px;
+  }
+
+  .agenda-page .agenda-cards .stat {
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .agenda-page .agenda-cards .icon-circle {
+    width: 37px;
+    height: 37px;
+    flex-basis: 37px;
+  }
+
+  .agenda-page .agenda-cards .icon-circle i {
+    font-size: 21px;
+  }
+
+  .agenda-page .agenda-cards .label {
+    font-size: 9px;
+  }
+
+  .agenda-page .agenda-cards .value {
+    font-size: 21px;
+  }
+
+  .agenda-page .agenda-cards .trend {
+    font-size: 9px;
+  }
+
+  .agenda-layout {
+    gap: 14px;
+  }
+
+  .agenda-calendario,
+  .agenda-lista {
+    padding: 14px;
+  }
+
+  .agenda-calendario {
+    grid-template-columns: 1fr;
+  }
+
+  .agenda-cal-header,
+  .agenda-mes,
+  .agenda-cal-grid,
+  .agenda-resumo {
+    grid-column: 1;
+  }
+
+  .agenda-cal-header {
+    grid-row: auto;
+  }
+
+  .agenda-mes {
+    grid-row: auto;
+  }
+
+  .agenda-cal-grid {
+    grid-row: auto;
+  }
+
+  .agenda-resumo {
+    grid-row: auto;
+    padding-top: 20px;
+  }
+
+  .agenda-lista-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .agenda-btn-novo {
+    width: 100%;
+  }
+
+  .agenda-filtros {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .agenda-busca {
+    grid-column: 1 / -1;
+  }
+
+  .agenda-tabela {
+    min-width: 800px;
+  }
+
+}
+
+@media (max-width: 420px) {
+  .agenda-page .agenda-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .agenda-page .agenda-cards .card {
+    min-height: 95px;
+  }
+
+  .agenda-filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .agenda-busca {
+    grid-column: auto;
+  }
+
+  .agenda-lista-header h2 {
+    font-size: 17px;
+  }
+}
+
 /* ==============================
    Sidebar recolhida pelo JS
    ============================== */
