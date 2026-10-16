@@ -158,7 +158,7 @@
   // SISTEMA DE AUTENTICAÇÃO ROBUSTO
   // ===========================
 
-  function requireAuth(expectedRoles) {
+  async function requireAuth(expectedRoles) {
     const session = getSession();
     const { accessToken, role } = session;
 
@@ -181,23 +181,48 @@
       // Se expectedRoles foi fornecido, usa ele. Senão usa o mapeamento da página.
       const allowedRoles = expectedRoles || pageRoles;
 
-      if (!allowedRoles.includes(role)) {
-        console.warn(`[Auth] Acesso negado. Role '${role}' não tem permissão para acessar '${currentPage}'.`);
-        console.warn(`[Auth] Roles permitidas: ${allowedRoles.join(', ')}`);
+      // Valida no servidor para garantir máxima segurança
+      try {
+        const response = await fetch('/auth/validate-access', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          },
+          body: JSON.stringify({ requiredRoles: allowedRoles })
+        });
 
-        // Redireciona para a página apropriada baseada no role do usuário
-        const destination = ROLE_DESTINATIONS[role];
-        if (destination) {
-          window.location.href = destination;
-        } else {
-          clearSession();
-          redirectToLogin();
+        if (!response.ok) {
+          console.warn(`[Auth] Acesso negado para role '${role}' na página '${currentPage}'.`);
+
+          // Redireciona para a página apropriada baseada no role do usuário
+          const destination = ROLE_DESTINATIONS[role];
+          if (destination) {
+            window.location.href = destination;
+          } else {
+            clearSession();
+            redirectToLogin();
+          }
+          return false;
         }
-        return false;
+      } catch (error) {
+        console.error('[Auth] Erro ao validar acesso no servidor:', error);
+        // Em caso de erro na validação, usa a validação local como fallback
+        if (!allowedRoles.includes(role)) {
+          console.warn(`[Auth] Acesso negado (validação local). Role '${role}' não autorizado.`);
+          const destination = ROLE_DESTINATIONS[role];
+          if (destination) {
+            window.location.href = destination;
+          } else {
+            clearSession();
+            redirectToLogin();
+          }
+          return false;
+        }
       }
     }
 
-    // Valida o token com o servidor (verificação assíncrona)
+    // Valida sessão com o servidor (verificação assíncrona)
     validateSession();
 
     return true;
@@ -205,7 +230,7 @@
 
   // Valida sessão no servidor
   async function validateSession() {
-    const { accessToken } = getSession();
+    const { accessToken, refreshToken } = getSession();
 
     if (!accessToken) return;
 
@@ -217,12 +242,68 @@
       });
 
       if (!response.ok) {
-        console.warn('[Auth] Sessão inválida no servidor.');
+        // Se a sessão for inválida, tenta renovar o token antes de redirecionar
+        console.warn('[Auth] Sessão inválida no servidor. Tentando renovar token...');
+
+        if (refreshToken) {
+          const refreshed = await refreshAccessToken();
+          if (refreshed) {
+            console.log('[Auth] Token renovado com sucesso.');
+            return; // Token renovado, sessão válida
+          }
+        }
+
+        // Só limpa e redireciona se não conseguir renovar
+        console.warn('[Auth] Não foi possível renovar o token. Redirecionando para login.');
         clearSession();
         redirectToLogin();
       }
     } catch (error) {
       console.error('[Auth] Erro ao validar sessão:', error);
+      // Em caso de erro de rede, não redireciona automaticamente
+      // O usuário pode estar em uma conexão instável
+    }
+  }
+
+  // ===========================
+  // MODAL DE CONFIRMAÇÃO DE LOGOUT
+  // ===========================
+
+  function createLogoutModal() {
+    if (document.getElementById('logout-modal-container')) return;
+
+    const container = document.createElement('div');
+    container.id = 'logout-modal-container';
+    container.innerHTML = `
+      <div class="modal-backdrop" id="logout-modal">
+        <div class="logout-modal">
+          <div class="logout-modal-header">
+            <i class="bx bx-log-out"></i>
+            <h3>Sair do Sistema</h3>
+            <p>Tem certeza que deseja encerrar sua sessão?</p>
+          </div>
+          <div class="logout-modal-footer">
+            <button class="cancel-btn" id="modal-cancel">Cancelar</button>
+            <button class="confirm-btn" id="modal-confirm"><i class="bx bx-log-out"></i> Sair</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(container);
+  }
+
+  function showLogoutModal() {
+    if (!document.getElementById('logout-modal-container')) {
+      createLogoutModal();
+    }
+    document.getElementById('logout-modal').classList.add('active');
+  }
+
+  function hideLogoutModal() {
+    const modal = document.getElementById('logout-modal');
+    if (modal) {
+      modal.classList.remove('active');
     }
   }
 
@@ -230,7 +311,7 @@
   // LOGOUT
   // ===========================
 
-  async function logout() {
+  async function performLogout() {
     const { accessToken } = getSession();
 
     // Chama o endpoint de logout no servidor
@@ -244,12 +325,60 @@
         });
       } catch (error) {
         console.error('Erro ao fazer logout:', error);
+        // Mesmo com erro no servidor, continua com o logout local
       }
     }
 
-    // Limpa a sessão local
+    // Limpa a sessão local e redireciona
     clearSession();
     window.location.href = '../index.html';
+  }
+
+  async function logout() {
+    // Mostra o modal de confirmação
+    showLogoutModal();
+
+    // Configura os botões do modal
+    const modal = document.getElementById('logout-modal');
+    const cancelBtn = document.getElementById('modal-cancel');
+    const confirmBtn = document.getElementById('modal-confirm');
+
+    // Função de cleanup para evitar listeners duplicados
+    const cleanup = () => {
+      hideLogoutModal();
+      cancelBtn?.removeEventListener('click', handleCancel);
+      confirmBtn?.removeEventListener('click', handleConfirm);
+    };
+
+    const handleCancel = () => {
+      cleanup();
+      // Usuário cancelou
+    };
+
+    const handleConfirm = async () => {
+      // Adiciona feedback visual
+      confirmBtn.classList.add('logout-processing');
+      confirmBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Saindo...';
+
+      await performLogout();
+      cleanup();
+    };
+
+    // Remove listeners antigos para evitar duplicação
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+    newCancelBtn.addEventListener('click', () => {
+      hideLogoutModal();
+    });
+
+    newConfirmBtn.addEventListener('click', async () => {
+      newConfirmBtn.classList.add('logout-processing');
+      newConfirmBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Saindo...';
+      await performLogout();
+    });
   }
 
   // ===========================

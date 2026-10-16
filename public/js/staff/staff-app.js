@@ -8,9 +8,6 @@
   // VERIFICAÇÃO DE AUTENTICAÇÃO
   // ===========================
 
-  // Obtém a sessão atual
-  const session = getSession();
-
   // Identificação da página atual
   const pathname = window.location.pathname;
   const currentPage = pathname.substring(pathname.lastIndexOf('/') + 1) || 'dashboard.html';
@@ -22,298 +19,324 @@
   const requiresAdmin = ADMIN_ONLY_PAGES.includes(currentPage);
 
   // AUTENTICAÇÃO ROBUSTA: Impede acesso não autorizado
-  if (requiresAdmin) {
-    // Página exclusiva de admin
-    requireAuth(['admin']);
-  } else {
-    // Páginas acessíveis por staff e admin
-    const { accessToken, role } = session;
-    if (!accessToken || (role !== 'staff' && role !== 'admin')) {
-      clearSessionAndRedirect();
-    }
+  // Validação síncrona primeiro (rápida)
+  const session = getSession();
+  const { accessToken, role } = session;
+
+  if (!accessToken) {
+    clearSessionAndRedirect();
   }
 
-  // ===========================
-  // CONFIGURAÇÃO DA INTERFACE
-  // ===========================
-
-  // Mapeamento de títulos das páginas
-  const pageTitles = {
-    'dashboard.html': 'Dashboard',
-    'agenda.html': 'Agenda',
-    'appointments.html': 'Agendamentos',
-    'clients.html': 'Clientes',
-    'clientes.html': 'Clientes',
-    'barbeiros.html': 'Barbeiros',
-    'services.html': 'Serviços',
-    'servicos.html': 'Serviços',
-    'produtos.html': 'Produtos',
-    'venda.html': 'Vendas',
-    'finance.html': 'Financeiro',
-    'relatorios.html': 'Relatórios',
-    'avaliacoes.html': 'Avaliações',
-    'configuracoes.html': 'Configurações',
-    'settings.html': 'Configurações'
-  };
-
-  const title = pageTitles[currentPage] || 'Área do Colaborador';
-
-  // ===========================
-  // ATUALIZA INFORMAÇÕES DO USUÁRIO NO HEADER
-  // ===========================
-
-  function updateUserInfo() {
-    const userNameElement = document.querySelector('.user-info b');
-    const userRoleElement = document.querySelector('.user-info span');
-
-    if (userNameElement && session.identity) {
-      userNameElement.textContent = session.identity;
-    }
-
-    if (userRoleElement && session.role) {
-      const roleLabels = {
-        admin: 'Administrador',
-        staff: 'Colaborador',
-        client: 'Cliente'
-      };
-      userRoleElement.textContent = roleLabels[session.role] || session.role;
-    }
-  }
-
-  // ===========================
-  // MARCA O LINK ATIVO NA SIDEBAR
-  // ===========================
-
-  function setActiveNavLink() {
-    const navLinks = document.querySelectorAll('.sidebar .nav a');
-
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      if (href === currentPage) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
+  // Validação assíncrona com o servidor para máxima segurança
+  async function verifyAccess() {
+    if (requiresAdmin) {
+      // Página exclusiva de admin - valida no servidor
+      const hasAccess = await requireAuth(['admin']);
+      if (!hasAccess) {
+        return; // requireAuth já redirecionou
       }
-    });
+    } else {
+      // Páginas acessíveis por staff e admin - valida no servidor
+      const hasAccess = await requireAuth(['staff', 'admin']);
+      if (!hasAccess) {
+        return; // requireAuth já redirecionou
+      }
+    }
+
+    // Se passou na validação, inicializa a página
+    initPage();
+  }
+
+  // Se houver sessão, valida o acesso
+  if (accessToken) {
+    verifyAccess();
   }
 
   // ===========================
-  // HANDLERS DE LOGOUT
+  // INICIALIZAÇÃO DA PÁGINA
   // ===========================
 
-  function setupLogoutHandlers() {
-    const logoutButtons = document.querySelectorAll('.logout');
+  function initPage() {
+    // ===========================
+    // CONFIGURAÇÃO DA INTERFACE
+    // ===========================
 
-    logoutButtons.forEach(button => {
-      button.addEventListener('click', async (e) => {
-        e.preventDefault();
+    // Mapeamento de títulos das páginas
+    const pageTitles = {
+      'dashboard.html': 'Dashboard',
+      'agenda.html': 'Agenda',
+      'appointments.html': 'Agendamentos',
+      'clients.html': 'Clientes',
+      'clientes.html': 'Clientes',
+      'barbeiros.html': 'Barbeiros',
+      'services.html': 'Serviços',
+      'servicos.html': 'Serviços',
+      'produtos.html': 'Produtos',
+      'venda.html': 'Vendas',
+      'finance.html': 'Financeiro',
+      'relatorios.html': 'Relatórios',
+      'avaliacoes.html': 'Avaliações',
+      'configuracoes.html': 'Configurações',
+      'settings.html': 'Configurações'
+    };
 
-        if (confirm('Tem certeza que deseja sair?')) {
-          await logout();
-        }
-      });
-    });
-  }
+    const title = pageTitles[currentPage] || 'Área do Colaborador';
 
-  // ===========================
-  // MENU MOBILE (HAMBURGUER)
-  // ===========================
+    // ===========================
+    // ATUALIZA INFORMAÇÕES DO USUÁRIO NO HEADER
+    // ===========================
 
-  function setupMobileMenu() {
-    const hamburgerButton = document.querySelector('.hamb');
-    const app = document.querySelector('.app');
+    function updateUserInfo() {
+      const userNameElement = document.querySelector('.user-info b');
+      const userRoleElement = document.querySelector('.user-info span');
 
-    if (hamburgerButton) {
-      hamburgerButton.addEventListener('click', () => {
-        // Toggle para desktop (esconde sidebar)
-        if (window.innerWidth > 760) {
-          app.classList.toggle('sidebar-collapsed');
+      if (userNameElement && session.identity) {
+        userNameElement.textContent = session.identity;
+      }
+
+      if (userRoleElement && session.role) {
+        const roleLabels = {
+          admin: 'Administrador',
+          staff: 'Colaborador',
+          client: 'Cliente'
+        };
+        userRoleElement.textContent = roleLabels[session.role] || session.role;
+      }
+    }
+
+    // ===========================
+    // MARCA O LINK ATIVO NA SIDEBAR
+    // ===========================
+
+    function setActiveNavLink() {
+      const navLinks = document.querySelectorAll('.sidebar .nav a');
+
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage) {
+          link.classList.add('active');
         } else {
-          // Toggle para mobile (abre menu overlay)
-          app.classList.toggle('mobile-menu-open');
+          link.classList.remove('active');
         }
       });
     }
 
-    // Fecha menu mobile ao clicar fora
-    if (window.innerWidth <= 760) {
-      const sidebar = document.querySelector('.sidebar');
-      const main = document.querySelector('.main');
+    // ===========================
+    // HANDLERS DE LOGOUT
+    // ===========================
 
-      main?.addEventListener('click', () => {
-        app.classList.remove('mobile-menu-open');
-      });
+    function setupLogoutHandlers() {
+      const logoutButtons = document.querySelectorAll('.logout');
 
-      // Fecha ao clicar em um link
-      const navLinks = document.querySelectorAll('.sidebar .nav a');
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          app.classList.remove('mobile-menu-open');
+      logoutButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+          e.preventDefault();
+          // Usa a função logout() do shared.js que já tem confirmação visual
+          await logout();
         });
       });
     }
-  }
 
-  // ===========================
-  // INICIALIZAÇÃO
-  // ===========================
+    // ===========================
+    // MENU MOBILE (HAMBURGUER)
+    // ===========================
 
-  document.addEventListener('DOMContentLoaded', () => {
-    updateUserInfo();
-    setActiveNavLink();
-    setupLogoutHandlers();
-    setupMobileMenu();
+    function setupMobileMenu() {
+      const hamburgerButton = document.querySelector('.hamb');
+      const app = document.querySelector('.app');
 
-    // Handlers específicos de cada página
-    initPageSpecificHandlers();
-  });
-
-  // ===========================
-  // HANDLERS ESPECÍFICOS DAS PÁGINAS
-  // ===========================
-
-  function initPageSpecificHandlers() {
-    // Dashboard: Nenhum handler específico necessário por enquanto
-
-    // Clientes: Carrega lista de clientes
-    if (currentPage === 'clients.html' || currentPage === 'clientes.html') {
-      loadClients();
-    }
-
-    // Serviços: Handler de formulário de novo serviço
-    const serviceForm = document.getElementById('service-form');
-    if (serviceForm) {
-      serviceForm.addEventListener('submit', handleServiceSubmit);
-    }
-
-    // Barbeiros: Handler de formulário de novo barbeiro
-    const barberForm = document.getElementById('barber-form');
-    if (barberForm) {
-      barberForm.addEventListener('submit', handleBarberSubmit);
-    }
-
-    // Produtos: Handler de formulário de novo produto
-    const productForm = document.getElementById('product-form');
-    if (productForm) {
-      productForm.addEventListener('submit', handleProductSubmit);
-    }
-
-    // Vendas: Handler de formulário de nova venda
-    const saleForm = document.getElementById('sale-form');
-    if (saleForm) {
-      saleForm.addEventListener('submit', handleSaleSubmit);
-    }
-
-    // Agendamentos
-    const appointmentForm = document.getElementById('appointment-form');
-    if (appointmentForm) {
-      appointmentForm.addEventListener('submit', handleAppointmentSubmit);
-    }
-  }
-
-  // ===========================
-  // CARREGA LISTA DE CLIENTES
-  // ===========================
-
-  async function loadClients() {
-    try {
-      const response = await authenticatedFetch('/api/clients');
-
-      if (!response) return;
-
-      if (response.ok) {
-        const data = await response.json();
-        renderClientsTable(data.clients);
-        updateClientsSummary(data.summary);
-      } else {
-        console.error('Erro ao carregar clientes');
+      if (hamburgerButton) {
+        hamburgerButton.addEventListener('click', () => {
+          // Toggle para desktop (esconde sidebar)
+          if (window.innerWidth > 760) {
+            app.classList.toggle('sidebar-collapsed');
+          } else {
+            // Toggle para mobile (abre menu overlay)
+            app.classList.toggle('mobile-menu-open');
+          }
+        });
       }
-    } catch (error) {
-      console.error('Erro ao carregar clientes:', error);
+
+      // Fecha menu mobile ao clicar fora
+      if (window.innerWidth <= 760) {
+        const sidebar = document.querySelector('.sidebar');
+        const main = document.querySelector('.main');
+
+        main?.addEventListener('click', () => {
+          app.classList.remove('mobile-menu-open');
+        });
+
+        // Fecha ao clicar em um link
+        const navLinks = document.querySelectorAll('.sidebar .nav a');
+        navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            app.classList.remove('mobile-menu-open');
+          });
+        });
+      }
     }
-  }
 
-  function renderClientsTable(clients) {
-    const tbody = document.getElementById('clients-tbody');
-    if (!tbody) return;
+    // ===========================
+    // INICIALIZAÇÃO
+    // ===========================
 
-    if (clients.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhum cliente cadastrado</td></tr>';
-      return;
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUserInfo();
+      setActiveNavLink();
+      setupLogoutHandlers();
+      setupMobileMenu();
+
+      // Handlers específicos de cada página
+      initPageSpecificHandlers();
+    });
+
+    // ===========================
+    // HANDLERS ESPECÍFICOS DAS PÁGINAS
+    // ===========================
+
+    function initPageSpecificHandlers() {
+      // Dashboard: Nenhum handler específico necessário por enquanto
+
+      // Clientes: Carrega lista de clientes
+      if (currentPage === 'clients.html' || currentPage === 'clientes.html') {
+        loadClients();
+      }
+
+      // Serviços: Handler de formulário de novo serviço
+      const serviceForm = document.getElementById('service-form');
+      if (serviceForm) {
+        serviceForm.addEventListener('submit', handleServiceSubmit);
+      }
+
+      // Barbeiros: Handler de formulário de novo barbeiro
+      const barberForm = document.getElementById('barber-form');
+      if (barberForm) {
+        barberForm.addEventListener('submit', handleBarberSubmit);
+      }
+
+      // Produtos: Handler de formulário de novo produto
+      const productForm = document.getElementById('product-form');
+      if (productForm) {
+        productForm.addEventListener('submit', handleProductSubmit);
+      }
+
+      // Vendas: Handler de formulário de nova venda
+      const saleForm = document.getElementById('sale-form');
+      if (saleForm) {
+        saleForm.addEventListener('submit', handleSaleSubmit);
+      }
+
+      // Agendamentos
+      const appointmentForm = document.getElementById('appointment-form');
+      if (appointmentForm) {
+        appointmentForm.addEventListener('submit', handleAppointmentSubmit);
+      }
     }
 
-    tbody.innerHTML = clients.map(client => `
-      <tr>
-        <td><b>${escapeHtml(client.name)}</b></td>
-        <td>${escapeHtml(client.email)}</td>
-        <td>${escapeHtml(client.phone || '-')}</td>
-        <td><span class="pill ${client.active ? 'green' : 'yellow'}">${client.active ? 'Ativo' : 'Inativo'}</span></td>
-        <td>
-          <button class="btn-icon" onclick="viewClient(${client.id})" title="Ver detalhes">
-            <i class="bx bx-show"></i>
-          </button>
-        </td>
-      </tr>
-    `).join('');
-  }
+    // ===========================
+    // CARREGA LISTA DE CLIENTES
+    // ===========================
 
-  function updateClientsSummary(summary) {
-    const totalEl = document.getElementById('clients-total');
-    const activeEl = document.getElementById('clients-active');
-    const recentEl = document.getElementById('clients-recent');
+    async function loadClients() {
+      try {
+        const response = await authenticatedFetch('/api/clients');
 
-    if (totalEl) totalEl.textContent = summary.total;
-    if (activeEl) activeEl.textContent = summary.active;
-    if (recentEl) recentEl.textContent = summary.newLast30Days;
-  }
+        if (!response) return;
 
-  // ===========================
-  // HANDLERS DE FORMULÁRIOS
-  // ===========================
+        if (response.ok) {
+          const data = await response.json();
+          renderClientsTable(data.clients);
+          updateClientsSummary(data.summary);
+        } else {
+          console.error('Erro ao carregar clientes');
+        }
+      } catch (error) {
+        console.error('Erro ao carregar clientes:', error);
+      }
+    }
 
-  async function handleServiceSubmit(e) {
-    e.preventDefault();
-    alert('Serviço cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
-    e.target.reset();
-  }
+    function renderClientsTable(clients) {
+      const tbody = document.getElementById('clients-tbody');
+      if (!tbody) return;
 
-  async function handleBarberSubmit(e) {
-    e.preventDefault();
-    alert('Barbeiro cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
-    e.target.reset();
-  }
+      if (clients.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhum cliente cadastrado</td></tr>';
+        return;
+      }
 
-  async function handleProductSubmit(e) {
-    e.preventDefault();
-    alert('Produto cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
-    e.target.reset();
-  }
+      tbody.innerHTML = clients.map(client => `
+        <tr>
+          <td><b>${escapeHtml(client.name)}</b></td>
+          <td>${escapeHtml(client.email)}</td>
+          <td>${escapeHtml(client.phone || '-')}</td>
+          <td><span class="pill ${client.active ? 'green' : 'yellow'}">${client.active ? 'Ativo' : 'Inativo'}</span></td>
+          <td>
+            <button class="btn-icon" onclick="viewClient(${client.id})" title="Ver detalhes">
+              <i class="bx bx-show"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
 
-  async function handleSaleSubmit(e) {
-    e.preventDefault();
-    alert('Venda registrada com sucesso! (Funcionalidade em desenvolvimento)');
-    e.target.reset();
-  }
+    function updateClientsSummary(summary) {
+      const totalEl = document.getElementById('clients-total');
+      const activeEl = document.getElementById('clients-active');
+      const recentEl = document.getElementById('clients-recent');
 
-  async function handleAppointmentSubmit(e) {
-    e.preventDefault();
-    alert('Agendamento criado com sucesso! (Funcionalidade em desenvolvimento)');
-    e.target.reset();
-  }
+      if (totalEl) totalEl.textContent = summary.total;
+      if (activeEl) activeEl.textContent = summary.active;
+      if (recentEl) recentEl.textContent = summary.newLast30Days;
+    }
 
-  // ===========================
-  // UTILITÁRIOS
-  // ===========================
+    // ===========================
+    // HANDLERS DE FORMULÁRIOS
+    // ===========================
 
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
+    async function handleServiceSubmit(e) {
+      e.preventDefault();
+      alert('Serviço cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
+      e.target.reset();
+    }
 
-  // Exporta funções globais se necessário
-  window.viewClient = function(id) {
-    alert(`Ver detalhes do cliente ${id} (em desenvolvimento)`);
-  };
+    async function handleBarberSubmit(e) {
+      e.preventDefault();
+      alert('Barbeiro cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
+      e.target.reset();
+    }
+
+    async function handleProductSubmit(e) {
+      e.preventDefault();
+      alert('Produto cadastrado com sucesso! (Funcionalidade em desenvolvimento)');
+      e.target.reset();
+    }
+
+    async function handleSaleSubmit(e) {
+      e.preventDefault();
+      alert('Venda registrada com sucesso! (Funcionalidade em desenvolvimento)');
+      e.target.reset();
+    }
+
+    async function handleAppointmentSubmit(e) {
+      e.preventDefault();
+      alert('Agendamento criado com sucesso! (Funcionalidade em desenvolvimento)');
+      e.target.reset();
+    }
+
+    // ===========================
+    // UTILITÁRIOS
+    // ===========================
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Exporta funções globais se necessário
+    window.viewClient = function(id) {
+      alert(`Ver detalhes do cliente ${id} (em desenvolvimento)`);
+    };
+  } // Fim da função initPage()
 
 })();
