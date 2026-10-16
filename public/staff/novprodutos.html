@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Novo Produto</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a class="active" href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main">
+
+      <!-- CABEÇALHO -->
+      <header class="topbar">
+
+        <div class="head-left">
+
+          <button class="menu-button hamb" type="button" aria-label="Menu">
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="title">
+            <h1>Novo Produto</h1>
+            <p>Cadastre um novo produto no estoque da barbearia</p>
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button class="bell" type="button" aria-label="Notificações">
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Usuário</b>
+              <span>Colaborador</span>
+            </div>
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- PÁGINA NOVO PRODUTO -->
+      <section class="content novo-produto-page">
+
+        <!-- PAINEL -->
+        <section class="novo-produto-panel">
+
+          <!-- TÍTULO -->
+          <div class="novo-produto-header">
+
+            <div class="novo-produto-header-icone">
+              <i class="bx bx-package"></i>
+            </div>
+
+            <div class="novo-produto-header-texto">
+              <h2>Novo Produto</h2>
+              <p>Preencha as informações abaixo para cadastrar um novo produto.</p>
+            </div>
+
+          </div>
+
+          <!-- FORMULÁRIO -->
+          <form
+            id="novo-produto-form"
+            action="#"
+            method="post"
+            enctype="multipart/form-data"
+          >
+
+            <div class="novo-produto-form-grid">
+
+              <!-- COLUNA: NOME, MARCA E ESTOQUE -->
+              <div class="novo-produto-coluna">
+
+                <div class="novo-produto-campo">
+                  <label for="novo-produto-nome">
+                    Nome do produto
+                    <span class="novo-produto-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-produto-input-wrap">
+                    <i class="bx bx-purchase-tag"></i>
+
+                    <input
+                      type="text"
+                      id="novo-produto-nome"
+                      name="nome"
+                      placeholder="Ex.: Pomada Modeladora"
+                      required
+                    >
+                  </div>
+                </div>
+
+                <div class="novo-produto-campo">
+                  <label for="novo-produto-marca">
+                    Marca <span class="novo-produto-opcional">(opcional)</span>
+                  </label>
+
+                  <div class="novo-produto-input-wrap">
+                    <i class="bx bx-buildings"></i>
+
+                    <input
+                      type="text"
+                      id="novo-produto-marca"
+                      name="marca"
+                      placeholder="Ex.: Bozzano"
+                    >
+                  </div>
+                </div>
+
+                <div class="novo-produto-campo">
+                  <label for="novo-produto-estoque">
+                    Estoque inicial
+                    <span class="novo-produto-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-produto-input-wrap">
+                    <i class="bx bx-package"></i>
+
+                    <input
+                      type="number"
+                      id="novo-produto-estoque"
+                      name="estoque"
+                      placeholder="0"
+                      min="0"
+                      step="1"
+                      required
+                    >
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- COLUNA: CATEGORIA, PREÇO E UNIDADE -->
+              <div class="novo-produto-coluna">
+
+                <div class="novo-produto-campo">
+                  <label for="novo-produto-categoria">
+                    Categoria
+                    <span class="novo-produto-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-produto-input-wrap">
+                    <i class="bx bx-grid-alt"></i>
+
+                    <select
+                      id="novo-produto-categoria"
+                      name="categoria"
+                      required
+                    >
+                      <option value="" selected disabled>
+                        Selecione uma categoria
+                      </option>
+                      <option value="cabelo">Cabelo</option>
+                      <option value="higiene">Higiene</option>
+                      <option value="barba">Barba</option>
+                      <option value="acessorios">Acessórios</option>
+                      <option value="outros">Outros</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="novo-produto-campo">
+                  <label for="novo-produto-preco">
+                    Preço de venda
+                    <span class="novo-produto-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-produto-input-wrap">
+                    <i class="bx bx-dollar-circle"></i>
+
+                    <input
+                      type="number"
+                      id="novo-produto-preco"
+                      name="preco"
+                      placeholder="R$ 0,00"
+                      min="0"
+                      step="0.01"
+                      required
+                    >
+                  </div>
+                </div>
+
+                <div class="novo-produto-campo">
+                  <label for="novo-produto-unidade">
+                    Unidade
+                  </label>
+
+                  <div class="novo-produto-input-wrap">
+                    <i class="bx bx-ruler"></i>
+
+                    <select
+                      id="novo-produto-unidade"
+                      name="unidade"
+                    >
+                      <option value="" selected>Selecione</option>
+                      <option value="un">Unidade (un)</option>
+                      <option value="ml">Mililitro (ml)</option>
+                      <option value="l">Litro (L)</option>
+                      <option value="g">Grama (g)</option>
+                      <option value="kg">Quilograma (kg)</option>
+                      <option value="cx">Caixa (cx)</option>
+                      <option value="pct">Pacote (pct)</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- COLUNA: IMAGEM -->
+              <div class="novo-produto-imagem-coluna">
+
+                <div class="novo-produto-upload-painel">
+
+                  <label class="novo-produto-upload-titulo" for="novo-produto-imagem">
+                    Imagem do produto <span>(opcional)</span>
+                  </label>
+
+                  <div class="novo-produto-upload-area">
+
+                    <div class="novo-produto-upload-icone">
+                      <i class="bx bx-image"></i>
+                    </div>
+
+                    <p>Clique para adicionar uma imagem</p>
+                    <span>PNG, JPG ou JPEG (máx. 5MB)</span>
+
+                    <input
+                      type="file"
+                      id="novo-produto-imagem"
+                      name="imagem"
+                      accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+                      class="novo-produto-file-input"
+                    >
+
+                    <label
+                      for="novo-produto-imagem"
+                      class="novo-produto-upload-botao"
+                    >
+                      <i class="bx bx-upload"></i>
+                      Selecionar imagem
+                    </label>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- DESCRIÇÃO -->
+            <div class="novo-produto-campo novo-produto-descricao">
+
+              <label for="novo-produto-descricao">
+                Descrição <span class="novo-produto-opcional">(opcional)</span>
+              </label>
+
+              <div class="novo-produto-textarea-wrap">
+
+                <i class="bx bx-file"></i>
+
+                <textarea
+                  id="novo-produto-descricao"
+                  name="descricao"
+                  maxlength="300"
+                  rows="4"
+                  placeholder="Adicione uma breve descrição sobre o produto..."
+                ></textarea>
+
+                <span class="novo-produto-contador">0/300</span>
+
+              </div>
+
+            </div>
+
+            <!-- RODAPÉ -->
+            <div class="novo-produto-rodape">
+
+              <a href="produtos.html" class="novo-produto-btn-cancelar">
+                <i class="bx bx-x"></i>
+                <span>Cancelar</span>
+              </a>
+
+              <button type="submit" class="novo-produto-btn-cadastrar">
+                <i class="bx bx-save"></i>
+                <span>Cadastrar produto</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

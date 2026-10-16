@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barber Select - Notificações</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL PRINCIPAL -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracoes.html" class="active">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO SUPERIOR -->
+
+      <header class="topbar configuracoes-topbar">
+
+        <div class="head-left configuracoes-topbar-esquerda">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="configuracoes-pesquisa">
+
+            <i class="bx bx-search"></i>
+
+            <input
+              type="search"
+              placeholder="Pesquisar..."
+              aria-label="Pesquisa geral"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+
+            <i class="bx bx-chevron-down configuracoes-user-seta"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- CONFIGURAÇÕES -->
+
+      <section class="content configuracoes-page">
+
+        <!-- TÍTULO -->
+
+        <div class="configuracoes-cabecalho">
+
+          <i class="bx bx-cog"></i>
+
+          <div>
+            <h1>Configurações</h1>
+            <p>Gerencie as preferências e informações do sistema.</p>
+          </div>
+
+        </div>
+
+        <!-- LAYOUT INTERNO -->
+
+        <div class="configuracoes-layout">
+
+          <!-- MENU INTERNO -->
+
+          <aside class="configuracoes-menu">
+
+            <nav aria-label="Seções de configurações">
+
+              <a href="configuracao.html">
+                <i class="bx bx-store"></i>
+                <span>Perfil da Barbearia</span>
+              </a>
+
+              <a href="usuarios.html">
+                <i class="bx bx-user"></i>
+                <span>Usuários</span>
+              </a>
+
+              <a
+                href="notificacoes.html"
+                class="configuracoes-menu-ativo"
+                aria-current="page"
+              >
+                <i class="bx bx-bell"></i>
+                <span>Notificações</span>
+              </a>
+
+              <a href="pagamentos.html">
+                <i class="bx bx-credit-card"></i>
+                <span>Pagamentos</span>
+              </a>
+
+              <a href="integracoes.html">
+                <i class="bx bx-link"></i>
+                <span>Integrações</span>
+              </a>
+
+              <a href="seguranca.html">
+                <i class="bx bx-shield"></i>
+                <span>Segurança</span>
+              </a>
+
+              <a href="backup.html">
+                <i class="bx bx-cloud"></i>
+                <span>Backup</span>
+              </a>
+
+            </nav>
+
+          </aside>
+
+          <!-- ÁREA DE NOTIFICAÇÕES -->
+
+          <div class="config-notificacoes-conteudo">
+
+            <form class="config-notificacoes-formulario">
+
+              <!-- PREFERÊNCIAS -->
+
+              <section class="config-notificacoes-card">
+
+                <div class="config-notificacoes-cabecalho">
+
+                  <h2>Notificações</h2>
+
+                  <p>
+                    Configure como e quando você deseja receber notificações.
+                  </p>
+
+                </div>
+
+                <div class="config-notificacoes-preferencias">
+
+                  <div class="config-notificacoes-tabela">
+
+                    <!-- CABEÇALHO DA TABELA -->
+
+                    <div class="config-notificacoes-tabela-cabecalho">
+
+                      <strong>Preferências de notificações</strong>
+
+                      <span>Sistema</span>
+                      <span>E-mail</span>
+                      <span>SMS</span>
+                      <span>Ativo</span>
+
+                    </div>
+
+                    <!-- NOVOS AGENDAMENTOS -->
+
+                    <div class="config-notificacoes-linha">
+
+                      <div class="config-notificacoes-info">
+
+                        <div class="config-notificacoes-icone">
+                          <i class="bx bx-calendar"></i>
+                        </div>
+
+                        <div>
+                          <h3>Novos agendamentos</h3>
+                          <p>Seja notificado quando um novo agendamento for realizado.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="agendamentos_sistema"
+                          checked
+                          aria-label="Novos agendamentos por sistema"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="agendamentos_email"
+                          checked
+                          aria-label="Novos agendamentos por e-mail"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="agendamentos_sms"
+                          checked
+                          aria-label="Novos agendamentos por SMS"
+                        >
+                      </label>
+
+                      <div class="config-notificacoes-ativo">
+
+                        <label class="config-notificacoes-switch">
+                          <input
+                            type="checkbox"
+                            name="agendamentos_ativo"
+                            checked
+                            aria-label="Ativar novos agendamentos"
+                          >
+                          <span></span>
+                        </label>
+
+                      </div>
+
+                    </div>
+
+                    <!-- CANCELAMENTOS -->
+
+                    <div class="config-notificacoes-linha">
+
+                      <div class="config-notificacoes-info">
+
+                        <div class="config-notificacoes-icone">
+                          <i class="bx bx-x-circle"></i>
+                        </div>
+
+                        <div>
+                          <h3>Cancelamentos</h3>
+                          <p>Receba avisos quando um agendamento for cancelado.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="cancelamentos_sistema"
+                          checked
+                          aria-label="Cancelamentos por sistema"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="cancelamentos_email"
+                          checked
+                          aria-label="Cancelamentos por e-mail"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="cancelamentos_sms"
+                          aria-label="Cancelamentos por SMS"
+                        >
+                      </label>
+
+                      <div class="config-notificacoes-ativo">
+
+                        <label class="config-notificacoes-switch">
+                          <input
+                            type="checkbox"
+                            name="cancelamentos_ativo"
+                            checked
+                            aria-label="Ativar cancelamentos"
+                          >
+                          <span></span>
+                        </label>
+
+                      </div>
+
+                    </div>
+
+                    <!-- LEMBRETES -->
+
+                    <div class="config-notificacoes-linha">
+
+                      <div class="config-notificacoes-info">
+
+                        <div class="config-notificacoes-icone">
+                          <i class="bx bx-bell"></i>
+                        </div>
+
+                        <div>
+                          <h3>Lembretes de agendamento</h3>
+                          <p>Receba lembretes dos agendamentos do dia.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="lembretes_sistema"
+                          checked
+                          aria-label="Lembretes por sistema"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="lembretes_email"
+                          checked
+                          aria-label="Lembretes por e-mail"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="lembretes_sms"
+                          checked
+                          aria-label="Lembretes por SMS"
+                        >
+                      </label>
+
+                      <div class="config-notificacoes-ativo">
+
+                        <label class="config-notificacoes-switch">
+                          <input
+                            type="checkbox"
+                            name="lembretes_ativo"
+                            checked
+                            aria-label="Ativar lembretes"
+                          >
+                          <span></span>
+                        </label>
+
+                      </div>
+
+                    </div>
+
+                    <!-- ESTOQUE BAIXO -->
+
+                    <div class="config-notificacoes-linha">
+
+                      <div class="config-notificacoes-info">
+
+                        <div class="config-notificacoes-icone">
+                          <i class="bx bx-package"></i>
+                        </div>
+
+                        <div>
+                          <h3>Estoque baixo</h3>
+                          <p>Seja alertado quando um produto estiver com estoque baixo.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="estoque_sistema"
+                          checked
+                          aria-label="Estoque baixo por sistema"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="estoque_email"
+                          checked
+                          aria-label="Estoque baixo por e-mail"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="estoque_sms"
+                          aria-label="Estoque baixo por SMS"
+                        >
+                      </label>
+
+                      <div class="config-notificacoes-ativo">
+
+                        <label class="config-notificacoes-switch">
+                          <input
+                            type="checkbox"
+                            name="estoque_ativo"
+                            checked
+                            aria-label="Ativar estoque baixo"
+                          >
+                          <span></span>
+                        </label>
+
+                      </div>
+
+                    </div>
+
+                    <!-- RELATÓRIOS FINANCEIROS -->
+
+                    <div class="config-notificacoes-linha">
+
+                      <div class="config-notificacoes-info">
+
+                        <div class="config-notificacoes-icone">
+                          <i class="bx bx-bar-chart-alt-2"></i>
+                        </div>
+
+                        <div>
+                          <h3>Relatórios financeiros</h3>
+                          <p>Receba um resumo dos relatórios financeiros.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="relatorios_sistema"
+                          checked
+                          aria-label="Relatórios financeiros por sistema"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="relatorios_email"
+                          checked
+                          aria-label="Relatórios financeiros por e-mail"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="relatorios_sms"
+                          aria-label="Relatórios financeiros por SMS"
+                        >
+                      </label>
+
+                      <div class="config-notificacoes-ativo">
+
+                        <label class="config-notificacoes-switch">
+                          <input
+                            type="checkbox"
+                            name="relatorios_ativo"
+                            checked
+                            aria-label="Ativar relatórios financeiros"
+                          >
+                          <span></span>
+                        </label>
+
+                      </div>
+
+                    </div>
+
+                    <!-- NOVAS AVALIAÇÕES -->
+
+                    <div class="config-notificacoes-linha">
+
+                      <div class="config-notificacoes-info">
+
+                        <div class="config-notificacoes-icone">
+                          <i class="bx bx-star"></i>
+                        </div>
+
+                        <div>
+                          <h3>Novas avaliações</h3>
+                          <p>Seja notificado quando um cliente avaliar sua barbearia.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="avaliacoes_sistema"
+                          checked
+                          aria-label="Novas avaliações por sistema"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="avaliacoes_email"
+                          checked
+                          aria-label="Novas avaliações por e-mail"
+                        >
+                      </label>
+
+                      <label class="config-notificacoes-checkbox">
+                        <input
+                          type="checkbox"
+                          name="avaliacoes_sms"
+                          checked
+                          aria-label="Novas avaliações por SMS"
+                        >
+                      </label>
+
+                      <div class="config-notificacoes-ativo">
+
+                        <label class="config-notificacoes-switch">
+                          <input
+                            type="checkbox"
+                            name="avaliacoes_ativo"
+                            checked
+                            aria-label="Ativar novas avaliações"
+                          >
+                          <span></span>
+                        </label>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </section>
+
+              <!-- HORÁRIO DE ENVIO -->
+
+              <section class="config-notificacoes-horario">
+
+                <div class="config-notificacoes-horario-titulo">
+
+                  <i class="bx bx-time-five"></i>
+
+                  <div>
+                    <h3>Horário de envio</h3>
+                    <p>
+                      Defina o período em que as notificações devem ser enviadas.
+                    </p>
+                  </div>
+
+                </div>
+
+                <div class="config-notificacoes-horario-campos">
+
+                  <div class="config-notificacoes-periodo">
+
+                    <label for="notificacoes-periodo">
+                      Período de envio
+                    </label>
+
+                    <select
+                      id="notificacoes-periodo"
+                      name="periodo_envio"
+                    >
+                      <option value="08-22" selected>
+                        Das 08:00 às 22:00
+                      </option>
+
+                      <option value="08-18">
+                        Das 08:00 às 18:00
+                      </option>
+
+                      <option value="09-20">
+                        Das 09:00 às 20:00
+                      </option>
+
+                      <option value="24h">
+                        Qualquer horário
+                      </option>
+                    </select>
+
+                  </div>
+
+                  <label class="config-notificacoes-domingo">
+
+                    <input
+                      type="checkbox"
+                      name="nao_enviar_domingo"
+                    >
+
+                    <span>
+                      <strong>
+                        Não enviar notificações aos domingos
+                      </strong>
+
+                      <small>
+                        As notificações não serão enviadas aos domingos.
+                      </small>
+                    </span>
+
+                  </label>
+
+                </div>
+
+              </section>
+
+              <!-- BOTÃO SALVAR -->
+
+              <div class="config-notificacoes-acoes">
+
+                <button
+                  type="submit"
+                  class="config-notificacoes-btn-salvar"
+                >
+                  <i class="bx bx-check"></i>
+                  <span>Salvar alterações</span>
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

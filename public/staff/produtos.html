@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,10 +11,12 @@
 <body>
 
   <div class="app">
+
     <aside class="sidebar">
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
+
       <nav class="nav">
         <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
@@ -55,11 +58,12 @@
           <i class="bx bx-star"></i>
           <span>Avaliações</span>
         </a>
-        <a href="configuracoes.html">
+        <a href="configuracao.html">
           <i class="bx bx-cog"></i>
           <span>Configurações</span>
         </a>
       </nav>
+
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
@@ -67,21 +71,25 @@
     </aside>
 
     <main class="main">
+
       <header class="topbar">
         <div class="head-left">
-          <button class="menu-button hamb" type="button">
+          <button class="menu-button hamb" type="button" aria-label="Menu">
             <i class="bx bx-menu"></i>
           </button>
+
           <div class="title">
             <h1>Produtos</h1>
             <p>Gerencie os produtos da sua barbearia</p>
           </div>
         </div>
+
         <div class="head-right">
-          <button class="bell" type="button">
+          <button class="bell" type="button" aria-label="Notificações">
             <i class="bx bx-bell"></i>
-            <span class="badge">1</span>
+            <span class="badge">3</span>
           </button>
+
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
@@ -92,151 +100,383 @@
         </div>
       </header>
 
-      <section class="content">
+      <section class="content produtos-page">
 
+        <!-- CARDS ORIGINAIS DO DASHBOARD -->
         <div class="cards">
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-calendar-check"></i>
+              </div>
+              <div>
+                <div class="label">TOTAL DE PRODUTOS</div>
+                <div class="value">28</div>
+                <div class="produtos-card-info">
+                  <span class="produtos-card-tendencia">
+                    <i class="bx bx-trending-up"></i>
+                    +12%
+                  </span>
+                  <span>em relação ao mês anterior</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
                 <i class="bx bx-package"></i>
               </div>
               <div>
-                <div class="label">PRODUTOS ATIVOS</div>
-                <div class="value">24</div>
+                <div class="label">PRODUTOS EM ESTOQUE</div>
+                <div class="value">22</div>
+                <div class="produtos-card-info">
+                  <span class="produtos-card-tendencia">
+                    <i class="bx bx-trending-up"></i>
+                    +10%
+                  </span>
+                  <span>em relação ao mês anterior</span>
+                </div>
               </div>
             </div>
           </article>
+
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-error">
-                </div>
+                <i class="bx bx-error"></i>
+              </div>
               <div>
                 <div class="label">ESTOQUE BAIXO</div>
-                <div class="value">5</div>
+                <div class="value">4</div>
+                <div class="produtos-card-info">
+                  <span class="produtos-card-tendencia">
+                    <i class="bx bx-trending-up"></i>
+                    +33%
+                  </span>
+                  <span>em relação ao mês anterior</span>
+                </div>
               </div>
             </div>
           </article>
+
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
-                <i class="bx bx-chart-down">
-                </div>
+                <i class="bx bx-money"></i>
+              </div>
               <div>
-                <div class="label">VENDAS DO MÊS</div>
-                <div class="value">R$ 3.480</div>
+                <div class="label">VALOR EM ESTOQUE</div>
+                <div class="value">R$ 1.250,00</div>
+                <div class="produtos-card-info">
+                  <span class="produtos-card-tendencia">
+                    <i class="bx bx-trending-up"></i>
+                    +8%
+                  </span>
+                  <span>em relação ao mês anterior</span>
+                </div>
               </div>
             </div>
           </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-dollar-circle"></i>
-              </div>
-              <div>
-                <div class="label">VALOR DO ESTOQUE</div>
-                <div class="value">R$ 2.840</div>
-              </div>
-            </div>
-          </article>
+
         </div>
 
-        <div class="dash-grid">
-          <section class="panel panel-pad">
-            <div class="panel-header">
-              <h2>NOVO PRODUTO</h2>
-            </div>
-            <form id="product-form" style="margin-top: 20px;">
-              <div style="display: grid; gap: 16px;">
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Nome do Produto</label>
-                  <input type="text" required placeholder="Ex: Shampoo Barbear" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Descrição</label>
-                  <textarea rows="3" placeholder="Descrição do produto" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;"></textarea>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Preço de Custo (R$)</label>
-                    <input type="number" step="0.01" placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Preço de Venda (R$)</label>
-                    <input type="number" step="0.01" required placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Estoque Atual</label>
-                    <input type="number" required placeholder="0" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Estoque Mínimo</label>
-                    <input type="number" placeholder="10" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Categoria</label>
-                  <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                    <option>Shampoos</option>
-                    <option>Condicionadores</option>
-                    <option>Óleos e Pomadas</option>
-                    <option>Tesouras e Acessórios</option>
-                    <option>Remédios e Cuidados</option>
-                    <option>Outros</option>
-                  </select>
-                </div>
-                <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer;">
-                  <i class="bx bx-plus"></i> Cadastrar Produto
-                </button>
-              </div>
-            </form>
-          </section>
+        <!-- LISTA DE PRODUTOS -->
+        <section class="produtos-panel">
 
-          <section class="panel panel-pad appointments-panel">
-            <div class="panel-header">
-              <h2>PRODUTOS NO ESTOQUE</h2>
-              <a class="view-all" href="produtos.html">Ver todos</a>
+          <div class="produtos-panel-header">
+            <div class="produtos-panel-titulo">
+              <h2>Lista de Produtos</h2>
+              <p>Visualize, adicione, edite ou remova os produtos do seu estoque</p>
             </div>
-            <div class="table-wrap" style="margin-top: 16px;">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td><b>Shampoo Barbear</b><br><small>Lótus</small></td>
-                    <td>R$ 25,00</td>
-                    <td><span class="pill green">24 unidades</span></td>
-                    <td>
-                      <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Gel de Cabelo</b><br><small>Strong Hold</small></td>
-                    <td>R$ 35,00</td>
-                    <td><span class="pill yellow">5 unidades</span></td>
-                    <td>
-                      <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Pomada Brilhante</b><br><small>30g</small></td>
-                    <td>R$ 45,00</td>
-                    <td><span class="pill green">18 unidades</span></td>
-                    <td>
-                      <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+            <a class="produtos-btn-novo" href="novprodutos.html">
+              <i class="bx bx-plus"></i>
+              <span>Novo produto</span>
+            </a>
+          </div>
+
+          <!-- FILTROS -->
+          <div class="produtos-filtros">
+
+            <div class="produtos-busca">
+              <i class="bx bx-search"></i>
+              <input
+                type="search"
+                id="produtos-busca"
+                placeholder="Buscar produto, marca ou categoria..."
+                aria-label="Buscar produto, marca ou categoria"
+              >
             </div>
-          </section>
-        </div>
+
+            <select id="produtos-filtro-categoria" aria-label="Filtrar por categoria">
+              <option value="todas">Todas as categorias</option>
+              <option value="cabelo">Cabelo</option>
+              <option value="higiene">Higiene</option>
+              <option value="barba">Barba</option>
+              <option value="acessorios">Acessórios</option>
+            </select>
+
+            <select id="produtos-filtro-status" aria-label="Filtrar por status">
+              <option value="todos">Todos os status</option>
+              <option value="estoque">Em estoque</option>
+              <option value="baixo">Estoque baixo</option>
+              <option value="sem">Sem estoque</option>
+            </select>
+
+          </div>
+
+          <!-- TABELA -->
+          <div class="produtos-tabela-wrap">
+
+            <table class="produtos-tabela">
+              <colgroup>
+                <col class="produtos-col-imagem">
+                <col class="produtos-col-nome">
+                <col class="produtos-col-categoria">
+                <col class="produtos-col-preco">
+                <col class="produtos-col-estoque">
+                <col class="produtos-col-status">
+                <col class="produtos-col-acoes">
+              </colgroup>
+
+              <thead>
+                <tr>
+                  <th>Imagem</th>
+                  <th>Produto</th>
+                  <th>Categoria</th>
+                  <th>Preço de venda</th>
+                  <th>Estoque</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>
+                    <div class="produtos-foto">
+                      <i class="bx bx-package"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="produtos-identificacao">
+                      <strong>Pomada Modeladora</strong>
+                      <span>Bozzano</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="produtos-categoria cabelo">Cabelo</span>
+                  </td>
+                  <td>R$ 35,00</td>
+                  <td>12</td>
+                  <td>
+                    <span class="produtos-status em-estoque">Em estoque</span>
+                  </td>
+                  <td>
+                    <div class="produtos-acoes">
+                      <button type="button" title="Editar Pomada Modeladora" aria-label="Editar Pomada Modeladora">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button type="button" title="Mais opções para Pomada Modeladora" aria-label="Mais opções para Pomada Modeladora">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="produtos-foto">
+                      <i class="bx bx-package"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="produtos-identificacao">
+                      <strong>Shampoo Anticaspa</strong>
+                      <span>Head &amp; Shoulders</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="produtos-categoria higiene">Higiene</span>
+                  </td>
+                  <td>R$ 28,00</td>
+                  <td>8</td>
+                  <td>
+                    <span class="produtos-status em-estoque">Em estoque</span>
+                  </td>
+                  <td>
+                    <div class="produtos-acoes">
+                      <button type="button" title="Editar Shampoo Anticaspa" aria-label="Editar Shampoo Anticaspa">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button type="button" title="Mais opções para Shampoo Anticaspa" aria-label="Mais opções para Shampoo Anticaspa">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="produtos-foto">
+                      <i class="bx bx-droplet"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="produtos-identificacao">
+                      <strong>Óleo para Barba</strong>
+                      <span>Barba de Respeito</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="produtos-categoria barba">Barba</span>
+                  </td>
+                  <td>R$ 42,00</td>
+                  <td>5</td>
+                  <td>
+                    <span class="produtos-status estoque-baixo">Estoque baixo</span>
+                  </td>
+                  <td>
+                    <div class="produtos-acoes">
+                      <button type="button" title="Editar Óleo para Barba" aria-label="Editar Óleo para Barba">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button type="button" title="Mais opções para Óleo para Barba" aria-label="Mais opções para Óleo para Barba">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="produtos-foto">
+                      <i class="bx bx-package"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="produtos-identificacao">
+                      <strong>Lâmina de Barbear</strong>
+                      <span>Gillette</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="produtos-categoria acessorios">Acessórios</span>
+                  </td>
+                  <td>R$ 15,00</td>
+                  <td>2</td>
+                  <td>
+                    <span class="produtos-status estoque-baixo">Estoque baixo</span>
+                  </td>
+                  <td>
+                    <div class="produtos-acoes">
+                      <button type="button" title="Editar Lâmina de Barbear" aria-label="Editar Lâmina de Barbear">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button type="button" title="Mais opções para Lâmina de Barbear" aria-label="Mais opções para Lâmina de Barbear">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="produtos-foto">
+                      <i class="bx bx-spray-can"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="produtos-identificacao">
+                      <strong>After Shave</strong>
+                      <span>Nivea</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="produtos-categoria higiene">Higiene</span>
+                  </td>
+                  <td>R$ 32,00</td>
+                  <td>15</td>
+                  <td>
+                    <span class="produtos-status em-estoque">Em estoque</span>
+                  </td>
+                  <td>
+                    <div class="produtos-acoes">
+                      <button type="button" title="Editar After Shave" aria-label="Editar After Shave">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button type="button" title="Mais opções para After Shave" aria-label="Mais opções para After Shave">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="produtos-foto">
+                      <i class="bx bx-brush"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="produtos-identificacao">
+                      <strong>Escova para Cabelo</strong>
+                      <span>Marco Boni</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="produtos-categoria acessorios">Acessórios</span>
+                  </td>
+                  <td>R$ 18,00</td>
+                  <td class="produtos-estoque-zero">0</td>
+                  <td>
+                    <span class="produtos-status sem-estoque">Sem estoque</span>
+                  </td>
+                  <td>
+                    <div class="produtos-acoes">
+                      <button type="button" title="Editar Escova para Cabelo" aria-label="Editar Escova para Cabelo">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button type="button" title="Mais opções para Escova para Cabelo" aria-label="Mais opções para Escova para Cabelo">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RODAPÉ -->
+          <div class="produtos-rodape">
+            <p>Mostrando 1 a 6 de 28 produtos</p>
+
+            <div class="produtos-paginacao">
+              <button type="button" aria-label="Página anterior" disabled>
+                <i class="bx bx-chevron-left"></i>
+              </button>
+              <button type="button" class="pagina-ativa" aria-current="page">1</button>
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button">4</button>
+              <button type="button">5</button>
+              <button type="button" aria-label="Próxima página">
+                <i class="bx bx-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </section>
 
       </section>
+
     </main>
   </div>
 
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

@@ -1,173 +1,876 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Barber Select - Clientes</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="../styles.css">
 </head>
+
 <body>
 
   <div class="app">
+
+    <!-- MENU LATERAL -->
+
     <aside class="sidebar">
+
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
+
       <nav class="nav">
+
         <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
+
         <a href="agenda.html">
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a class="active" href="clients.html">
+
+        <a href="clients.html" class="active" aria-current="page">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
+
         <a href="barbeiros.html">
           <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
+
         <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
+
         <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
+          <i class="bx bx-package"></i>
           <span>Produtos</span>
         </a>
+
         <a href="venda.html">
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
+
         <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
+
         <a href="relatorios.html">
           <i class="bx bx-bar-chart-alt-2"></i>
           <span>Relatórios</span>
         </a>
+
         <a href="avaliacoes.html">
           <i class="bx bx-star"></i>
           <span>Avaliações</span>
         </a>
-        <a href="configuracoes.html">
+
+        <a href="configuracao.html">
           <i class="bx bx-cog"></i>
           <span>Configurações</span>
         </a>
+
       </nav>
+
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
+
     </aside>
 
+    <!-- CONTEÚDO PRINCIPAL -->
+
     <main class="main">
-      <header class="topbar">
-        <div class="head-left">
-          <button class="menu-button hamb" type="button">
+
+      <!-- CABEÇALHO -->
+
+      <header class="topbar clientes-topbar">
+
+        <div class="head-left clientes-head-left">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
             <i class="bx bx-menu"></i>
           </button>
-          <div class="title">
+
+          <div class="clientes-titulo-topo">
             <h1>Clientes</h1>
-            <p>Gerencie a base de clientes da sua barbearia</p>
+            <p>
+              Gerencie seus clientes e acompanhe o histórico de atendimentos
+            </p>
           </div>
+
         </div>
+
         <div class="head-right">
-          <button class="bell" type="button">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
             <i class="bx bx-bell"></i>
-            <span class="badge">2</span>
+            <span class="badge">3</span>
           </button>
+
           <div class="user">
+
             <i class="bx bx-user-circle user-avatar"></i>
+
             <div class="user-info">
-              <b>Usuário</b>
-              <span>Colaborador</span>
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
             </div>
+
+            <i class="bx bx-chevron-down clientes-user-seta"></i>
+
           </div>
+
         </div>
+
       </header>
 
-      <section class="content">
+      <!-- PÁGINA DE CLIENTES -->
 
-        <div class="cards">
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-user-check"></i>
-              </div>
-              <div>
-                <div class="label">CLIENTES ATIVOS</div>
-                <div class="value" id="clients-active">-</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-user"></i>
-              </div>
-              <div>
-                <div class="label">TOTAL DE CLIENTES</div>
-                <div class="value" id="clients-total">-</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-calendar-event"></i>
-              </div>
-              <div>
-                <div class="label">NOVOS (30 DIAS)</div>
-                <div class="value" id="clients-recent">-</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-trending-up"></i>
-              </div>
-              <div>
-                <div class="label">TAXA DE RETORNO</div>
-                <div class="value">78%</div>
-              </div>
-            </div>
-          </article>
+      <section class="content clientes-page">
+
+        <!-- DATA -->
+
+        <div class="clientes-data-linha">
+
+          <div class="clientes-data-seletor">
+
+            <i class="bx bx-calendar"></i>
+
+            <select aria-label="Período dos indicadores">
+              <option selected>Hoje, 20 de maio de 2025</option>
+              <option>Últimos 7 dias</option>
+              <option>Últimos 30 dias</option>
+              <option>Este mês</option>
+            </select>
+
+          </div>
+
         </div>
 
-        <section class="panel panel-pad">
-          <div class="panel-header">
-            <h2>LISTA DE CLIENTES</h2>
+        <!-- INDICADORES -->
+
+        <div class="clientes-indicadores">
+
+          <!-- TOTAL DE CLIENTES -->
+
+          <article class="clientes-indicador">
+
+            <div class="clientes-indicador-topo">
+
+              <div class="clientes-indicador-icone">
+                <i class="bx bx-group"></i>
+              </div>
+
+              <div class="clientes-indicador-dados">
+
+                <h2>TOTAL DE CLIENTES</h2>
+                <strong>328</strong>
+                <p>este mês</p>
+
+              </div>
+
+            </div>
+
+            <div class="clientes-indicador-crescimento">
+              <i class="bx bx-trending-up"></i>
+              <span>+12%</span>
+            </div>
+
+          </article>
+
+          <!-- NOVOS CLIENTES -->
+
+          <article class="clientes-indicador">
+
+            <div class="clientes-indicador-topo">
+
+              <div class="clientes-indicador-icone">
+                <i class="bx bx-user-plus"></i>
+              </div>
+
+              <div class="clientes-indicador-dados">
+
+                <h2>NOVOS CLIENTES</h2>
+                <strong>24</strong>
+                <p>nos últimos 30 dias</p>
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- CLIENTES ATIVOS -->
+
+          <article class="clientes-indicador">
+
+            <div class="clientes-indicador-topo">
+
+              <div class="clientes-indicador-icone">
+                <i class="bx bx-group"></i>
+              </div>
+
+              <div class="clientes-indicador-dados">
+
+                <h2>CLIENTES ATIVOS</h2>
+                <strong>286</strong>
+                <p>87% do total</p>
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- RETORNO MÉDIO -->
+
+          <article class="clientes-indicador">
+
+            <div class="clientes-indicador-topo">
+
+              <div class="clientes-indicador-icone">
+                <i class="bx bx-refresh"></i>
+              </div>
+
+              <div class="clientes-indicador-dados">
+
+                <h2>RETORNO MÉDIO</h2>
+                <strong>32 dias</strong>
+                <p>entre atendimentos</p>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+        <!-- CLIENTES CADASTRADOS -->
+
+        <section class="clientes-painel">
+
+          <div class="clientes-painel-cabecalho">
+
+            <h2>CLIENTES CADASTRADOS</h2>
+
+            <p>
+              Visualize, edite ou cadastre novos clientes.
+            </p>
+
           </div>
-          <div class="table-wrap" style="margin-top: 16px;">
-            <table class="table">
+
+          <!-- FILTROS -->
+
+          <form class="clientes-filtros" role="search">
+
+            <div class="clientes-campo">
+
+              <label for="clientes-busca-nome">
+                Buscar por nome
+              </label>
+
+              <div class="clientes-input-icone">
+
+                <i class="bx bx-user"></i>
+
+                <input
+                  type="text"
+                  id="clientes-busca-nome"
+                  name="nome"
+                  placeholder="Ex.: Ana Paula"
+                >
+
+              </div>
+
+            </div>
+
+            <div class="clientes-campo">
+
+              <label for="clientes-busca-telefone">
+                Telefone
+              </label>
+
+              <div class="clientes-input-icone">
+
+                <i class="bx bx-phone"></i>
+
+                <input
+                  type="tel"
+                  id="clientes-busca-telefone"
+                  name="telefone"
+                  placeholder="(00) 00000-0000"
+                >
+
+              </div>
+
+            </div>
+
+            <div class="clientes-campo">
+
+              <label for="clientes-busca-email">
+                E-mail
+              </label>
+
+              <div class="clientes-input-icone">
+
+                <i class="bx bx-envelope"></i>
+
+                <input
+                  type="email"
+                  id="clientes-busca-email"
+                  name="email"
+                  placeholder="contato@email.com"
+                >
+
+              </div>
+
+            </div>
+
+            <button
+              type="submit"
+              class="clientes-btn clientes-btn-filtrar"
+            >
+              <i class="bx bx-search"></i>
+              <span>Filtrar</span>
+            </button>
+
+            <button
+              type="reset"
+              class="clientes-btn clientes-btn-limpar"
+            >
+              Limpar
+            </button>
+
+            <a
+              href="novocliente.html"
+              class="clientes-btn clientes-btn-novo"
+            >
+              <i class="bx bx-plus"></i>
+              <span>Novo Cliente</span>
+            </a>
+
+          </form>
+
+          <!-- TABELA -->
+
+          <div class="clientes-tabela-container">
+
+            <table class="clientes-tabela">
+
               <thead>
-                <tr style="font-weight: 600; text-transform: uppercase; font-size: 12px; color: var(--muted);">
-                  <td>Nome</td>
-                  <td>E-mail</td>
-                  <td>Telefone</td>
-                  <td>Status</td>
-                  <td>Ações</td>
+
+                <tr>
+
+                  <th class="clientes-coluna-check">
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar todos os clientes"
+                    >
+                  </th>
+
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Data de cadastro</th>
+                  <th>Último atendimento</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+
                 </tr>
+
               </thead>
-              <tbody id="clients-tbody">
-                <tr><td colspan="5" style="text-align: center; padding: 40px;">Carregando...</td></tr>
+
+              <tbody>
+
+                <!-- CLIENTE 1 -->
+
+                <tr>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar André Nascimento Pinto"
+                    >
+                  </td>
+
+                  <td>André Nascimento Pinto</td>
+                  <td>andre.pinto@outlook.com.br</td>
+                  <td>(13) 90000-0000</td>
+                  <td>12/01/2026</td>
+                  <td>Hoje, 09:00</td>
+
+                  <td>
+                    <span class="clientes-status clientes-status-ativo">
+                      Ativo
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="clientes-acoes">
+
+                      <a
+                        href="visualizar-cliente.html"
+                        class="clientes-acao clientes-acao-ver"
+                        aria-label="Visualizar André Nascimento Pinto"
+                        title="Visualizar"
+                      >
+                        <i class="bx bx-show"></i>
+                      </a>
+
+                      <a
+                        href="editar-cliente.html"
+                        class="clientes-acao clientes-acao-editar"
+                        aria-label="Editar André Nascimento Pinto"
+                        title="Editar"
+                      >
+                        <i class="bx bx-pencil"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="clientes-acao clientes-acao-excluir"
+                        aria-label="Excluir André Nascimento Pinto"
+                        title="Excluir"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+
+                    </div>
+                  </td>
+
+                </tr>
+
+                <!-- CLIENTE 2 -->
+
+                <tr>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar Calebe Santos"
+                    >
+                  </td>
+
+                  <td>Calebe Santos</td>
+                  <td>calebe.santos@gmail.com</td>
+                  <td>(14) 90000-0000</td>
+                  <td>15/01/2026</td>
+                  <td>Ontem, 15:30</td>
+
+                  <td>
+                    <span class="clientes-status clientes-status-ativo">
+                      Ativo
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="clientes-acoes">
+
+                      <a
+                        href="visualizar-cliente.html"
+                        class="clientes-acao clientes-acao-ver"
+                        aria-label="Visualizar Calebe Santos"
+                        title="Visualizar"
+                      >
+                        <i class="bx bx-show"></i>
+                      </a>
+
+                      <a
+                        href="editar-cliente.html"
+                        class="clientes-acao clientes-acao-editar"
+                        aria-label="Editar Calebe Santos"
+                        title="Editar"
+                      >
+                        <i class="bx bx-pencil"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="clientes-acao clientes-acao-excluir"
+                        aria-label="Excluir Calebe Santos"
+                        title="Excluir"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+
+                    </div>
+                  </td>
+
+                </tr>
+
+                <!-- CLIENTE 3 -->
+
+                <tr>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar Gabriel de Cássio"
+                    >
+                  </td>
+
+                  <td>Gabriel de Cássio</td>
+                  <td>gabriel.cassio@gmail.com</td>
+                  <td>(15) 90000-0000</td>
+                  <td>20/01/2026</td>
+                  <td>10/05/2026</td>
+
+                  <td>
+                    <span class="clientes-status clientes-status-inativo">
+                      Inativo
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="clientes-acoes">
+
+                      <a
+                        href="visualizar-cliente.html"
+                        class="clientes-acao clientes-acao-ver"
+                        aria-label="Visualizar Gabriel de Cássio"
+                        title="Visualizar"
+                      >
+                        <i class="bx bx-show"></i>
+                      </a>
+
+                      <a
+                        href="editar-cliente.html"
+                        class="clientes-acao clientes-acao-editar"
+                        aria-label="Editar Gabriel de Cássio"
+                        title="Editar"
+                      >
+                        <i class="bx bx-pencil"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="clientes-acao clientes-acao-excluir"
+                        aria-label="Excluir Gabriel de Cássio"
+                        title="Excluir"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+
+                    </div>
+                  </td>
+
+                </tr>
+
+                <!-- CLIENTE 4 -->
+
+                <tr>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar Vinicius Lima"
+                    >
+                  </td>
+
+                  <td>Vinicius Lima</td>
+                  <td>vinicius.lima@outlook.com</td>
+                  <td>(41) 90000-0000</td>
+                  <td>02/02/2026</td>
+                  <td>18/05/2026</td>
+
+                  <td>
+                    <span class="clientes-status clientes-status-ativo">
+                      Ativo
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="clientes-acoes">
+
+                      <a
+                        href="visualizar-cliente.html"
+                        class="clientes-acao clientes-acao-ver"
+                        aria-label="Visualizar Vinicius Lima"
+                        title="Visualizar"
+                      >
+                        <i class="bx bx-show"></i>
+                      </a>
+
+                      <a
+                        href="editar-cliente.html"
+                        class="clientes-acao clientes-acao-editar"
+                        aria-label="Editar Vinicius Lima"
+                        title="Editar"
+                      >
+                        <i class="bx bx-pencil"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="clientes-acao clientes-acao-excluir"
+                        aria-label="Excluir Vinicius Lima"
+                        title="Excluir"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+
+                    </div>
+                  </td>
+
+                </tr>
+
+                <!-- CLIENTE 5 -->
+
+                <tr>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar João Pedro Qualhato"
+                    >
+                  </td>
+
+                  <td>João Pedro Qualhato</td>
+                  <td>joao.qualhato@gmail.com</td>
+                  <td>(58) 90000-0000</td>
+                  <td>10/02/2026</td>
+                  <td>17/05/2026</td>
+
+                  <td>
+                    <span class="clientes-status clientes-status-ativo">
+                      Ativo
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="clientes-acoes">
+
+                      <a
+                        href="visualizar-cliente.html"
+                        class="clientes-acao clientes-acao-ver"
+                        aria-label="Visualizar João Pedro Qualhato"
+                        title="Visualizar"
+                      >
+                        <i class="bx bx-show"></i>
+                      </a>
+
+                      <a
+                        href="editar-cliente.html"
+                        class="clientes-acao clientes-acao-editar"
+                        aria-label="Editar João Pedro Qualhato"
+                        title="Editar"
+                      >
+                        <i class="bx bx-pencil"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="clientes-acao clientes-acao-excluir"
+                        aria-label="Excluir João Pedro Qualhato"
+                        title="Excluir"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+
+                    </div>
+                  </td>
+
+                </tr>
+
+                <!-- CLIENTE 6 -->
+
+                <tr>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar Thiago Alves Rocha"
+                    >
+                  </td>
+
+                  <td>Thiago Alves Rocha</td>
+                  <td>thiago.rocha@yahoo.com.br</td>
+                  <td>(62) 90000-0000</td>
+                  <td>18/02/2026</td>
+                  <td>02/04/2026</td>
+
+                  <td>
+                    <span class="clientes-status clientes-status-inativo">
+                      Inativo
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="clientes-acoes">
+
+                      <a
+                        href="visualizar-cliente.html"
+                        class="clientes-acao clientes-acao-ver"
+                        aria-label="Visualizar Thiago Alves Rocha"
+                        title="Visualizar"
+                      >
+                        <i class="bx bx-show"></i>
+                      </a>
+
+                      <a
+                        href="editar-cliente.html"
+                        class="clientes-acao clientes-acao-editar"
+                        aria-label="Editar Thiago Alves Rocha"
+                        title="Editar"
+                      >
+                        <i class="bx bx-pencil"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="clientes-acao clientes-acao-excluir"
+                        aria-label="Excluir Thiago Alves Rocha"
+                        title="Excluir"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+
+                    </div>
+                  </td>
+
+                </tr>
+
+                <!-- CLIENTE 7 -->
+
+                <tr>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      aria-label="Selecionar Beatriz Martins Ferreira"
+                    >
+                  </td>
+
+                  <td>Beatriz Martins Ferreira</td>
+                  <td>beatriz.ferreira@bol.com.br</td>
+                  <td>(11) 90000-0000</td>
+                  <td>25/02/2026</td>
+                  <td>16/05/2026</td>
+
+                  <td>
+                    <span class="clientes-status clientes-status-ativo">
+                      Ativo
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="clientes-acoes">
+
+                      <a
+                        href="visualizar-cliente.html"
+                        class="clientes-acao clientes-acao-ver"
+                        aria-label="Visualizar Beatriz Martins Ferreira"
+                        title="Visualizar"
+                      >
+                        <i class="bx bx-show"></i>
+                      </a>
+
+                      <a
+                        href="editar-cliente.html"
+                        class="clientes-acao clientes-acao-editar"
+                        aria-label="Editar Beatriz Martins Ferreira"
+                        title="Editar"
+                      >
+                        <i class="bx bx-pencil"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="clientes-acao clientes-acao-excluir"
+                        aria-label="Excluir Beatriz Martins Ferreira"
+                        title="Excluir"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+
+                    </div>
+                  </td>
+
+                </tr>
+
               </tbody>
+
             </table>
+
           </div>
+
+          <!-- RODAPÉ DA TABELA -->
+
+          <div class="clientes-tabela-rodape">
+
+            <p>Mostrando 1-7 de 328 clientes</p>
+
+            <nav
+              class="clientes-paginacao"
+              aria-label="Paginação de clientes"
+            >
+
+              <button
+                type="button"
+                aria-label="Página anterior"
+              >
+                <i class="bx bx-chevron-left"></i>
+              </button>
+
+              <button
+                type="button"
+                class="clientes-pagina-ativa"
+                aria-current="page"
+              >
+                1
+              </button>
+
+              <button type="button">2</button>
+
+              <button type="button">3</button>
+
+              <span>...</span>
+
+              <button type="button">47</button>
+
+              <button
+                type="button"
+                aria-label="Próxima página"
+              >
+                <i class="bx bx-chevron-right"></i>
+              </button>
+
+            </nav>
+
+          </div>
+
         </section>
 
       </section>
+
     </main>
+
   </div>
 
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

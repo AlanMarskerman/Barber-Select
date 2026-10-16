@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barber Select - Configurações</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL PRINCIPAL -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a
+          href="configuracao.html"
+          class="active"
+          aria-current="page"
+        >
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO -->
+
+      <header class="topbar configuracoes-topbar">
+
+        <div class="head-left configuracoes-topbar-esquerda">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="configuracoes-pesquisa">
+
+            <i class="bx bx-search"></i>
+
+            <input
+              type="search"
+              placeholder="Pesquisar..."
+              aria-label="Pesquisar nas configurações"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+
+            <i class="bx bx-chevron-down configuracoes-user-seta"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- PÁGINA CONFIGURAÇÕES -->
+
+      <section class="content configuracoes-page">
+
+        <!-- TÍTULO DA PÁGINA -->
+
+        <div class="configuracoes-cabecalho">
+
+          <i class="bx bx-cog"></i>
+
+          <div>
+            <h1>Configurações</h1>
+            <p>Gerencie as preferências e informações do sistema.</p>
+          </div>
+
+        </div>
+
+        <!-- DASHBOARD INTERNO -->
+
+        <div class="configuracoes-layout">
+
+          <!-- MENU INTERNO -->
+
+          <aside class="configuracoes-menu">
+
+            <nav aria-label="Seções de configurações">
+
+              <a
+                href="configuracao.html"
+                class="configuracoes-menu-ativo"
+                aria-current="page"
+              >
+                <i class="bx bx-store"></i>
+                <span>Perfil da Barbearia</span>
+              </a>
+
+              <a href="usuarios.html">
+                <i class="bx bx-group"></i>
+                <span>Usuários</span>
+              </a>
+
+              <a href="notificacoes.html">
+                <i class="bx bx-bell"></i>
+                <span>Notificações</span>
+              </a>
+
+              <a href="notificacoes.html">
+                <i class="bx bx-credit-card"></i>
+                <span>Pagamentos</span>
+              </a>
+
+              <a href="integracoes.html">
+                <i class="bx bx-link"></i>
+                <span>Integrações</span>
+              </a>
+
+              <a href="seguranca.html">
+                <i class="bx bx-shield"></i>
+                <span>Segurança</span>
+              </a>
+
+              <a href="backup.html">
+                <i class="bx bx-cloud"></i>
+                <span>Backup</span>
+              </a>
+
+            </nav>
+
+          </aside>
+
+          <!-- PAINEL PERFIL DA BARBEARIA -->
+
+          <section class="configuracoes-painel">
+
+            <div class="configuracoes-painel-cabecalho">
+
+              <h2>Perfil da Barbearia</h2>
+
+              <p>
+                Configure as informações principais da sua barbearia.
+              </p>
+
+            </div>
+
+            <form class="configuracoes-formulario">
+
+              <!-- INFORMAÇÕES PRINCIPAIS -->
+
+              <div class="configuracoes-perfil-grid">
+
+                <!-- LOGO -->
+
+                <div class="configuracoes-logo-campo">
+
+                  <div class="configuracoes-logo-preview">
+
+                    <img
+                      src="../assets/LOGO.png"
+                      alt="Logo da Barber Select"
+                    >
+
+                    <label
+                      for="configuracoes-logo"
+                      class="configuracoes-logo-editar"
+                      title="Alterar logo"
+                    >
+                      <i class="bx bx-pencil"></i>
+                    </label>
+
+                  </div>
+
+                  <input
+                    type="file"
+                    id="configuracoes-logo"
+                    name="logo"
+                    accept="image/png,image/jpeg,image/webp"
+                    class="configuracoes-logo-input"
+                  >
+
+                </div>
+
+                <!-- DADOS CADASTRAIS -->
+
+                <div class="configuracoes-perfil-campos">
+
+                  <div class="configuracoes-campo">
+
+                    <label for="barbearia-nome">
+                      Nome da barbearia
+                    </label>
+
+                    <input
+                      type="text"
+                      id="barbearia-nome"
+                      name="nome_barbearia"
+                      value="Barber Select"
+                      required
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo">
+
+                    <label for="barbearia-cnpj">
+                      CNPJ
+                    </label>
+
+                    <input
+                      type="text"
+                      id="barbearia-cnpj"
+                      name="cnpj"
+                      value="12.345.678/0001-90"
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo">
+
+                    <label for="barbearia-telefone">
+                      Telefone
+                    </label>
+
+                    <input
+                      type="tel"
+                      id="barbearia-telefone"
+                      name="telefone"
+                      value="(62) 99999-9999"
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo">
+
+                    <label for="barbearia-email">
+                      E-mail
+                    </label>
+
+                    <input
+                      type="email"
+                      id="barbearia-email"
+                      name="email"
+                      value="contato@barberselect.com"
+                    >
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- ENDEREÇO -->
+
+              <section class="configuracoes-secao">
+
+                <div class="configuracoes-secao-titulo">
+
+                  <i class="bx bx-map"></i>
+
+                  <div>
+                    <h3>Endereço</h3>
+                    <p>Informe o endereço da sua barbearia.</p>
+                  </div>
+
+                </div>
+
+                <div class="configuracoes-endereco-grid">
+
+                  <div class="configuracoes-campo configuracoes-cep">
+
+                    <label for="barbearia-cep">
+                      CEP
+                    </label>
+
+                    <input
+                      type="text"
+                      id="barbearia-cep"
+                      name="cep"
+                      value="74980-000"
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo configuracoes-rua">
+
+                    <label for="barbearia-rua">
+                      Rua
+                    </label>
+
+                    <input
+                      type="text"
+                      id="barbearia-rua"
+                      name="rua"
+                      value="Av. Principal"
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo configuracoes-numero">
+
+                    <label for="barbearia-numero">
+                      Número
+                    </label>
+
+                    <input
+                      type="text"
+                      id="barbearia-numero"
+                      name="numero"
+                      value="123"
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo configuracoes-bairro">
+
+                    <label for="barbearia-bairro">
+                      Bairro
+                    </label>
+
+                    <input
+                      type="text"
+                      id="barbearia-bairro"
+                      name="bairro"
+                      value="Centro"
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo configuracoes-cidade">
+
+                    <label for="barbearia-cidade">
+                      Cidade
+                    </label>
+
+                    <input
+                      type="text"
+                      id="barbearia-cidade"
+                      name="cidade"
+                      value="Aparecida de Goiânia"
+                    >
+
+                  </div>
+
+                  <div class="configuracoes-campo configuracoes-estado">
+
+                    <label for="barbearia-estado">
+                      Estado
+                    </label>
+
+                    <select
+                      id="barbearia-estado"
+                      name="estado"
+                    >
+                      <option value="AC">AC</option>
+                      <option value="AL">AL</option>
+                      <option value="AP">AP</option>
+                      <option value="AM">AM</option>
+                      <option value="BA">BA</option>
+                      <option value="CE">CE</option>
+                      <option value="DF">DF</option>
+                      <option value="ES">ES</option>
+                      <option value="GO" selected>GO</option>
+                      <option value="MA">MA</option>
+                      <option value="MT">MT</option>
+                      <option value="MS">MS</option>
+                      <option value="MG">MG</option>
+                      <option value="PA">PA</option>
+                      <option value="PB">PB</option>
+                      <option value="PR">PR</option>
+                      <option value="PE">PE</option>
+                      <option value="PI">PI</option>
+                      <option value="RJ">RJ</option>
+                      <option value="RN">RN</option>
+                      <option value="RS">RS</option>
+                      <option value="RO">RO</option>
+                      <option value="RR">RR</option>
+                      <option value="SC">SC</option>
+                      <option value="SP">SP</option>
+                      <option value="SE">SE</option>
+                      <option value="TO">TO</option>
+                    </select>
+
+                  </div>
+
+                </div>
+
+              </section>
+
+              <!-- HORÁRIO DE FUNCIONAMENTO -->
+
+              <section class="configuracoes-secao configuracoes-horarios">
+
+                <div class="configuracoes-secao-titulo">
+
+                  <i class="bx bx-time-five"></i>
+
+                  <div>
+                    <h3>Horário de funcionamento</h3>
+                    <p>
+                      Defina os horários em que sua barbearia estará aberta.
+                    </p>
+                  </div>
+
+                </div>
+
+                <div class="configuracoes-dias-grid">
+
+                  <!-- SEGUNDA -->
+
+                  <div class="configuracoes-dia">
+
+                    <div class="configuracoes-dia-topo">
+
+                      <span>Seg</span>
+
+                      <label class="configuracoes-switch">
+                        <input
+                          type="checkbox"
+                          name="segunda_ativo"
+                          checked
+                          aria-label="Abrir na segunda-feira"
+                        >
+                        <span class="configuracoes-switch-trilho"></span>
+                      </label>
+
+                    </div>
+
+                    <div class="configuracoes-dia-horas">
+
+                      <input
+                        type="time"
+                        name="segunda_abertura"
+                        value="08:00"
+                        aria-label="Abertura na segunda-feira"
+                      >
+
+                      <span>–</span>
+
+                      <input
+                        type="time"
+                        name="segunda_fechamento"
+                        value="22:00"
+                        aria-label="Fechamento na segunda-feira"
+                      >
+
+                    </div>
+
+                  </div>
+
+                  <!-- TERÇA -->
+
+                  <div class="configuracoes-dia">
+
+                    <div class="configuracoes-dia-topo">
+
+                      <span>Ter</span>
+
+                      <label class="configuracoes-switch">
+                        <input
+                          type="checkbox"
+                          name="terca_ativo"
+                          checked
+                          aria-label="Abrir na terça-feira"
+                        >
+                        <span class="configuracoes-switch-trilho"></span>
+                      </label>
+
+                    </div>
+
+                    <div class="configuracoes-dia-horas">
+
+                      <input
+                        type="time"
+                        name="terca_abertura"
+                        value="08:00"
+                        aria-label="Abertura na terça-feira"
+                      >
+
+                      <span>–</span>
+
+                      <input
+                        type="time"
+                        name="terca_fechamento"
+                        value="22:00"
+                        aria-label="Fechamento na terça-feira"
+                      >
+
+                    </div>
+
+                  </div>
+
+                  <!-- QUARTA -->
+
+                  <div class="configuracoes-dia">
+
+                    <div class="configuracoes-dia-topo">
+
+                      <span>Qua</span>
+
+                      <label class="configuracoes-switch">
+                        <input
+                          type="checkbox"
+                          name="quarta_ativo"
+                          checked
+                          aria-label="Abrir na quarta-feira"
+                        >
+                        <span class="configuracoes-switch-trilho"></span>
+                      </label>
+
+                    </div>
+
+                    <div class="configuracoes-dia-horas">
+
+                      <input
+                        type="time"
+                        name="quarta_abertura"
+                        value="08:00"
+                        aria-label="Abertura na quarta-feira"
+                      >
+
+                      <span>–</span>
+
+                      <input
+                        type="time"
+                        name="quarta_fechamento"
+                        value="22:00"
+                        aria-label="Fechamento na quarta-feira"
+                      >
+
+                    </div>
+
+                  </div>
+
+                  <!-- QUINTA -->
+
+                  <div class="configuracoes-dia">
+
+                    <div class="configuracoes-dia-topo">
+
+                      <span>Qui</span>
+
+                      <label class="configuracoes-switch">
+                        <input
+                          type="checkbox"
+                          name="quinta_ativo"
+                          checked
+                          aria-label="Abrir na quinta-feira"
+                        >
+                        <span class="configuracoes-switch-trilho"></span>
+                      </label>
+
+                    </div>
+
+                    <div class="configuracoes-dia-horas">
+
+                      <input
+                        type="time"
+                        name="quinta_abertura"
+                        value="08:00"
+                        aria-label="Abertura na quinta-feira"
+                      >
+
+                      <span>–</span>
+
+                      <input
+                        type="time"
+                        name="quinta_fechamento"
+                        value="22:00"
+                        aria-label="Fechamento na quinta-feira"
+                      >
+
+                    </div>
+
+                  </div>
+
+                  <!-- SEXTA -->
+
+                  <div class="configuracoes-dia">
+
+                    <div class="configuracoes-dia-topo">
+
+                      <span>Sex</span>
+
+                      <label class="configuracoes-switch">
+                        <input
+                          type="checkbox"
+                          name="sexta_ativo"
+                          checked
+                          aria-label="Abrir na sexta-feira"
+                        >
+                        <span class="configuracoes-switch-trilho"></span>
+                      </label>
+
+                    </div>
+
+                    <div class="configuracoes-dia-horas">
+
+                      <input
+                        type="time"
+                        name="sexta_abertura"
+                        value="08:00"
+                        aria-label="Abertura na sexta-feira"
+                      >
+
+                      <span>–</span>
+
+                      <input
+                        type="time"
+                        name="sexta_fechamento"
+                        value="22:00"
+                        aria-label="Fechamento na sexta-feira"
+                      >
+
+                    </div>
+
+                  </div>
+
+                  <!-- SÁBADO -->
+
+                  <div class="configuracoes-dia">
+
+                    <div class="configuracoes-dia-topo">
+
+                      <span>Sáb</span>
+
+                      <label class="configuracoes-switch">
+                        <input
+                          type="checkbox"
+                          name="sabado_ativo"
+                          checked
+                          aria-label="Abrir no sábado"
+                        >
+                        <span class="configuracoes-switch-trilho"></span>
+                      </label>
+
+                    </div>
+
+                    <div class="configuracoes-dia-horas">
+
+                      <input
+                        type="time"
+                        name="sabado_abertura"
+                        value="08:00"
+                        aria-label="Abertura no sábado"
+                      >
+
+                      <span>–</span>
+
+                      <input
+                        type="time"
+                        name="sabado_fechamento"
+                        value="20:00"
+                        aria-label="Fechamento no sábado"
+                      >
+
+                    </div>
+
+                  </div>
+
+                  <!-- DOMINGO -->
+
+                  <div class="configuracoes-dia configuracoes-dia-fechado">
+
+                    <div class="configuracoes-dia-topo">
+
+                      <span>Dom</span>
+
+                      <label class="configuracoes-switch">
+                        <input
+                          type="checkbox"
+                          name="domingo_ativo"
+                          aria-label="Abrir no domingo"
+                        >
+                        <span class="configuracoes-switch-trilho"></span>
+                      </label>
+
+                    </div>
+
+                    <div class="configuracoes-dia-horas">
+
+                      <input
+                        type="time"
+                        name="domingo_abertura"
+                        value="08:00"
+                        aria-label="Abertura no domingo"
+                      >
+
+                      <span>–</span>
+
+                      <input
+                        type="time"
+                        name="domingo_fechamento"
+                        value="18:00"
+                        aria-label="Fechamento no domingo"
+                      >
+
+                    </div>
+
+                    <span class="configuracoes-dia-status">
+                      Fechado
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </section>
+
+              <!-- SALVAR ALTERAÇÕES -->
+
+              <div class="configuracoes-acoes">
+
+                <button
+                  type="submit"
+                  class="configuracoes-btn-salvar"
+                >
+                  <i class="bx bx-check"></i>
+                  <span>Salvar alterações</span>
+                </button>
+
+              </div>
+
+            </form>
+
+          </section>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

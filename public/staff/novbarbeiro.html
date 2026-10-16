@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Novo Barbeiro</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+      <nav class="nav">
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+        <a class="active" href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+        <a href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+        <a href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="head-left">
+          <button class="menu-button hamb" type="button">
+            <i class="bx bx-menu"></i>
+          </button>
+          <div class="title">
+            <h1>Novo Barbeiro</h1>
+            <p>Cadastre um novo profissional na sua barbearia</p>
+          </div>
+        </div>
+        <div class="head-right">
+          <button class="bell" type="button">
+            <i class="bx bx-bell"></i>
+            <span class="badge">2</span>
+          </button>
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+            <div class="user-info">
+              <b>Usuário</b>
+              <span>Colaborador</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="content novo-barbeiro-page">
+
+        <div class="novo-barbeiro-breadcrumb">
+          <a href="barbeiros.html">
+            <i class="bx bx-left-arrow-alt"></i>
+            Barbeiros
+          </a>
+          <i class="bx bx-chevron-right"></i>
+          <span>Novo Barbeiro</span>
+        </div>
+
+        <form class="novo-barbeiro-form" id="novo-barbeiro-form" enctype="multipart/form-data">
+
+          <div class="novo-barbeiro-top-grid">
+
+            <section class="novo-barbeiro-box">
+              <div class="novo-barbeiro-section-heading">
+                <h2>Foto do Barbeiro</h2>
+                <p>Adicione uma foto para o perfil do profissional</p>
+              </div>
+
+              <label class="novo-barbeiro-upload" for="nb-foto">
+                <span class="novo-barbeiro-photo-icon">
+                  <i class="bx bx-user-circle"></i>
+                  <i class="bx bxs-camera"></i>
+                </span>
+                <strong>Clique para enviar uma foto</strong>
+                <small>PNG, JPG ou JPEG (máx. 5 MB)</small>
+              </label>
+
+              <input
+                class="novo-barbeiro-file-input"
+                type="file"
+                id="nb-foto"
+                name="foto"
+                accept="image/png,image/jpeg"
+              >
+            </section>
+
+            <section class="novo-barbeiro-box">
+              <div class="novo-barbeiro-section-heading">
+                <h2>Informações Pessoais</h2>
+                <p>Dados básicos do profissional</p>
+              </div>
+
+              <div class="novo-barbeiro-fields novo-barbeiro-two-col">
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-nome">Nome completo <span>*</span></label>
+                  <input
+                    id="nb-nome"
+                    name="nome"
+                    type="text"
+                    placeholder="Digite o nome completo"
+                    required
+                  >
+                </div>
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-telefone">Telefone <span>*</span></label>
+                  <input
+                    id="nb-telefone"
+                    name="telefone"
+                    type="tel"
+                    placeholder="(11) 98765-4321"
+                    required
+                  >
+                </div>
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-email">E-mail</label>
+                  <input
+                    id="nb-email"
+                    name="email"
+                    type="email"
+                    placeholder="Digite o e-mail (opcional)"
+                  >
+                </div>
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-nascimento">Data de nascimento</label>
+                  <input
+                    id="nb-nascimento"
+                    name="data_nascimento"
+                    type="date"
+                  >
+                </div>
+
+              </div>
+            </section>
+          </div>
+
+          <section class="novo-barbeiro-box">
+            <div class="novo-barbeiro-section-heading">
+              <h2>Especialidades e Serviços</h2>
+              <p>Selecione as especialidades e serviços que o barbeiro realiza</p>
+            </div>
+
+            <div class="novo-barbeiro-fields novo-barbeiro-two-col">
+
+              <fieldset class="novo-barbeiro-choice-group">
+                <legend>Especialidades <span>*</span></legend>
+                <div class="novo-barbeiro-choices">
+                  <label><input type="checkbox" name="especialidades" value="corte-social"> Corte Social</label>
+                  <label><input type="checkbox" name="especialidades" value="barba"> Barba</label>
+                  <label><input type="checkbox" name="especialidades" value="fade"> Fade</label>
+                  <label><input type="checkbox" name="especialidades" value="degrade"> Degradê</label>
+                  <label><input type="checkbox" name="especialidades" value="infantil"> Infantil</label>
+                </div>
+              </fieldset>
+
+              <fieldset class="novo-barbeiro-choice-group">
+                <legend>Serviços</legend>
+                <div class="novo-barbeiro-choices">
+                  <label><input type="checkbox" name="servicos" value="corte-social"> Corte Social</label>
+                  <label><input type="checkbox" name="servicos" value="barba"> Barba</label>
+                  <label><input type="checkbox" name="servicos" value="degrade"> Degradê</label>
+                  <label><input type="checkbox" name="servicos" value="sobrancelha"> Sobrancelha</label>
+                </div>
+              </fieldset>
+
+            </div>
+          </section>
+
+          <div class="novo-barbeiro-bottom-grid">
+
+            <section class="novo-barbeiro-box">
+              <div class="novo-barbeiro-section-heading">
+                <h2>Horário de Trabalho</h2>
+                <p>Defina os horários de disponibilidade do barbeiro</p>
+              </div>
+
+              <div class="novo-barbeiro-schedule">
+
+                <fieldset class="novo-barbeiro-choice-group">
+                  <legend>Dias de trabalho <span>*</span></legend>
+                  <div class="novo-barbeiro-choices novo-barbeiro-days">
+                    <label><input type="checkbox" name="dias" value="seg"> Seg</label>
+                    <label><input type="checkbox" name="dias" value="ter"> Ter</label>
+                    <label><input type="checkbox" name="dias" value="qua"> Qua</label>
+                    <label><input type="checkbox" name="dias" value="qui"> Qui</label>
+                    <label><input type="checkbox" name="dias" value="sex"> Sex</label>
+                    <label><input type="checkbox" name="dias" value="sab"> Sáb</label>
+                    <label><input type="checkbox" name="dias" value="dom"> Dom</label>
+                  </div>
+                </fieldset>
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-inicio">Horário de início <span>*</span></label>
+                  <input
+                    type="time"
+                    id="nb-inicio"
+                    name="horario_inicio"
+                    value="08:00"
+                    required
+                  >
+                </div>
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-fim">Horário de término <span>*</span></label>
+                  <input
+                    type="time"
+                    id="nb-fim"
+                    name="horario_fim"
+                    value="18:00"
+                    required
+                  >
+                </div>
+
+              </div>
+            </section>
+
+            <section class="novo-barbeiro-box">
+              <div class="novo-barbeiro-section-heading">
+                <h2>Informações Adicionais</h2>
+                <p>Configurações e observações</p>
+              </div>
+
+              <div class="novo-barbeiro-fields novo-barbeiro-two-col">
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-status">Status <span>*</span></label>
+                  <select id="nb-status" name="status" required>
+                    <option value="ativo">Ativo</option>
+                    <option value="ferias">Férias</option>
+                    <option value="inativo">Inativo</option>
+                  </select>
+                </div>
+
+                <div class="novo-barbeiro-field">
+                  <label for="nb-avaliacao">Avaliação inicial</label>
+                  <select id="nb-avaliacao" name="avaliacao_inicial">
+                    <option value="">Sem avaliação</option>
+                    <option value="5">★ 5,0</option>
+                    <option value="4">★ 4,0</option>
+                    <option value="3">★ 3,0</option>
+                    <option value="2">★ 2,0</option>
+                    <option value="1">★ 1,0</option>
+                  </select>
+                </div>
+
+                <div class="novo-barbeiro-field novo-barbeiro-full">
+                  <label for="nb-observacoes">Observações</label>
+                  <textarea
+                    id="nb-observacoes"
+                    name="observacoes"
+                    rows="3"
+                    maxlength="500"
+                    placeholder="Adicione observações sobre o profissional (opcional)"
+                  ></textarea>
+                </div>
+
+              </div>
+            </section>
+
+          </div>
+
+          <div class="novo-barbeiro-actions">
+            <a
+              class="novo-barbeiro-btn novo-barbeiro-btn-secondary"
+              href="barbeiros.html"
+            >
+              Cancelar
+            </a>
+
+            <button
+              class="novo-barbeiro-btn novo-barbeiro-btn-primary"
+              type="submit"
+            >
+              <i class="bx bx-save"></i>
+              Salvar Barbeiro
+            </button>
+          </div>
+
+        </form>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
+</body>
+</html>

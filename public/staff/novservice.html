@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Select - Novo Serviço</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a class="active" href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-briefcase"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracoes.html">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main">
+
+      <!-- CABEÇALHO -->
+      <header class="topbar">
+        <div class="head-left">
+          <button class="menu-button hamb" type="button" aria-label="Menu">
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="title">
+            <h1>Novo Serviço</h1>
+            <p>Cadastre um novo serviço na sua barbearia</p>
+          </div>
+        </div>
+
+        <div class="head-right">
+          <button class="bell" type="button" aria-label="Notificações">
+            <i class="bx bx-bell"></i>
+            <span class="badge">1</span>
+          </button>
+
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Usuário</b>
+              <span>Colaborador</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PÁGINA NOVO SERVIÇO -->
+      <section class="content novo-servico-page">
+
+        <!-- CAMINHO DE NAVEGAÇÃO -->
+        <nav class="novo-servico-breadcrumb" aria-label="Navegação">
+          <a href="services.html">Serviços</a>
+          <i class="bx bx-chevron-right"></i>
+          <span>Novo Serviço</span>
+        </nav>
+
+        <!-- PAINEL -->
+        <section class="novo-servico-panel">
+
+          <!-- TÍTULO DO PAINEL -->
+          <div class="novo-servico-panel-header">
+            <div class="novo-servico-header-icon">
+              <i class="bx bx-cut"></i>
+            </div>
+
+            <div class="novo-servico-header-texto">
+              <h2>Novo Serviço</h2>
+              <p>Preencha as informações abaixo para cadastrar um novo serviço.</p>
+            </div>
+          </div>
+
+          <!-- FORMULÁRIO -->
+          <form id="novo-servico-form" action="#" method="get">
+
+            <div class="novo-servico-grid">
+
+              <!-- COLUNA ESQUERDA -->
+              <div class="novo-servico-coluna">
+
+                <!-- NOME -->
+                <div class="novo-servico-campo">
+                  <label for="novo-servico-nome">
+                    Nome do serviço <span class="novo-servico-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-servico-input-wrap">
+                    <i class="bx bx-purchase-tag"></i>
+                    <input
+                      type="text"
+                      id="novo-servico-nome"
+                      name="nome"
+                      placeholder="Ex.: Corte Social"
+                      required
+                    >
+                  </div>
+                </div>
+
+                <!-- CATEGORIA -->
+                <div class="novo-servico-campo">
+                  <label for="novo-servico-categoria">
+                    Categoria <span class="novo-servico-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-servico-input-wrap">
+                    <i class="bx bx-grid-alt"></i>
+
+                    <select
+                      id="novo-servico-categoria"
+                      name="categoria"
+                      required
+                    >
+                      <option value="" selected disabled>Selecione uma categoria</option>
+                      <option value="cabelo">Cabelo</option>
+                      <option value="barba">Barba</option>
+                      <option value="combo">Combo</option>
+                      <option value="estetica">Estética</option>
+                      <option value="tratamento">Tratamento</option>
+                      <option value="outros">Outros</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- PREÇO -->
+                <div class="novo-servico-campo">
+                  <label for="novo-servico-preco">
+                    Preço <span class="novo-servico-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-servico-input-wrap">
+                    <i class="bx bx-dollar-circle"></i>
+
+                    <input
+                      type="number"
+                      id="novo-servico-preco"
+                      name="preco"
+                      placeholder="R$ 0,00"
+                      min="0"
+                      step="0.01"
+                      required
+                    >
+                  </div>
+                </div>
+
+                <!-- DURAÇÃO -->
+                <div class="novo-servico-campo">
+                  <label for="novo-servico-duracao">
+                    Duração estimada <span class="novo-servico-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-servico-input-wrap">
+                    <i class="bx bx-time-five"></i>
+
+                    <input
+                      type="number"
+                      id="novo-servico-duracao"
+                      name="duracao"
+                      placeholder="Ex.: 40 minutos"
+                      min="1"
+                      required
+                    >
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- COLUNA DIREITA -->
+              <div class="novo-servico-coluna">
+
+                <!-- PROFISSIONAIS -->
+                <div class="novo-servico-campo">
+                  <label for="novo-servico-profissionais">
+                    Profissionais habilitados <span class="novo-servico-obrigatorio">*</span>
+                  </label>
+
+                  <div class="novo-servico-profissionais-wrap">
+
+                    <i class="bx bx-user novo-servico-profissionais-icone"></i>
+
+                    <div class="novo-servico-profissionais-selecionados">
+                      <span class="novo-servico-profissional-tag">Carlos</span>
+                      <span class="novo-servico-profissional-tag">Lucas</span>
+                      <span class="novo-servico-profissional-tag">Mateus</span>
+                    </div>
+
+                    <select
+                      id="novo-servico-profissionais"
+                      name="profissionais"
+                      aria-label="Selecionar profissionais"
+                    >
+                      <option value="" selected>Selecionar profissionais</option>
+                      <option value="carlos">Carlos</option>
+                      <option value="lucas">Lucas</option>
+                      <option value="mateus">Mateus</option>
+                      <option value="rafael">Rafael</option>
+                      <option value="andre">André</option>
+                      <option value="pedro">Pedro</option>
+                    </select>
+
+                  </div>
+                </div>
+
+                <!-- COMISSÃO -->
+                <div class="novo-servico-campo">
+                  <label for="novo-servico-comissao">
+                    Comissão do profissional
+                  </label>
+
+                  <div class="novo-servico-input-wrap">
+                    <i class="bx bx-percentage"></i>
+
+                    <input
+                      type="number"
+                      id="novo-servico-comissao"
+                      name="comissao"
+                      placeholder="Ex.: 40%"
+                      min="0"
+                      max="100"
+                      step="0.01"
+                    >
+                  </div>
+                </div>
+
+                <!-- STATUS -->
+                <div class="novo-servico-campo novo-servico-campo-status">
+                  <span class="novo-servico-label">Status</span>
+
+                  <div class="novo-servico-status-linha">
+
+                    <input
+                      class="novo-servico-switch-input"
+                      type="checkbox"
+                      id="novo-servico-status"
+                      name="ativo"
+                      checked
+                    >
+
+                    <label
+                      class="novo-servico-switch"
+                      for="novo-servico-status"
+                      aria-label="Ativar ou desativar serviço"
+                    ></label>
+
+                    <div class="novo-servico-status-texto">
+                      <label for="novo-servico-status">Serviço ativo</label>
+                      <p>O serviço ficará disponível para agendamentos.</p>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- DESCRIÇÃO -->
+            <div class="novo-servico-campo novo-servico-descricao-campo">
+              <label for="novo-servico-descricao">
+                Descrição do serviço <span class="novo-servico-opcional">(opcional)</span>
+              </label>
+
+              <div class="novo-servico-textarea-wrap">
+                <i class="bx bx-file"></i>
+
+                <textarea
+                  id="novo-servico-descricao"
+                  name="descricao"
+                  maxlength="300"
+                  rows="3"
+                  placeholder="Adicione uma breve descrição sobre o serviço..."
+                ></textarea>
+
+                <span class="novo-servico-contador">Máximo de 300 caracteres</span>
+              </div>
+            </div>
+
+            <!-- AGENDAMENTO ONLINE -->
+            <div class="novo-servico-online">
+
+              <div class="novo-servico-online-info">
+                <span class="novo-servico-online-icon">
+                  <i class="bx bx-calendar"></i>
+                </span>
+
+                <div class="novo-servico-online-texto">
+                  <label for="novo-servico-agendamento">
+                    Disponível para agendamento online
+                  </label>
+                  <p>Permitir que clientes agendem este serviço pelo sistema.</p>
+                </div>
+              </div>
+
+              <input
+                class="novo-servico-switch-input"
+                type="checkbox"
+                id="novo-servico-agendamento"
+                name="agendamento_online"
+                checked
+              >
+
+              <label
+                class="novo-servico-switch"
+                for="novo-servico-agendamento"
+                aria-label="Ativar ou desativar agendamento online"
+              ></label>
+
+            </div>
+
+            <!-- BOTÕES -->
+            <div class="novo-servico-acoes">
+
+              <a href="services.html" class="novo-servico-btn-cancelar">
+                <i class="bx bx-x"></i>
+                <span>Cancelar</span>
+              </a>
+
+              <button type="submit" class="novo-servico-btn-salvar">
+                <i class="bx bx-save"></i>
+                <span>Cadastrar Serviço</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>

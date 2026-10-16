@@ -1,262 +1,651 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Barber Select - Avaliações</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="../styles.css">
 </head>
+
 <body>
 
   <div class="app">
+
+    <!-- =====================================
+         MENU LATERAL
+         ===================================== -->
+
     <aside class="sidebar">
+
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
+
       <nav class="nav">
+
         <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
+
         <a href="agenda.html">
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
+
         <a href="clients.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
+
         <a href="barbeiros.html">
           <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
+
         <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
+
         <a href="produtos.html">
           <i class="bx bx-briefcase"></i>
           <span>Produtos</span>
         </a>
+
         <a href="venda.html">
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
+
         <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
+
         <a href="relatorios.html">
           <i class="bx bx-bar-chart-alt-2"></i>
           <span>Relatórios</span>
         </a>
+
         <a class="active" href="avaliacoes.html">
           <i class="bx bx-star"></i>
           <span>Avaliações</span>
         </a>
-        <a href="configuracoes.html">
+
+        <a href="configuracao.html">
           <i class="bx bx-cog"></i>
           <span>Configurações</span>
         </a>
+
       </nav>
+
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
+
     </aside>
 
+    <!-- =====================================
+         CONTEÚDO PRINCIPAL
+         ===================================== -->
+
     <main class="main">
+
+      <!-- CABEÇALHO PADRÃO -->
+
       <header class="topbar">
+
         <div class="head-left">
-          <button class="menu-button hamb" type="button">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
             <i class="bx bx-menu"></i>
           </button>
+
           <div class="title">
             <h1>Avaliações</h1>
-            <p>Acompanhe a satisfação dos clientes</p>
+            <p>Acompanhe a satisfação dos seus clientes</p>
           </div>
+
         </div>
+
         <div class="head-right">
-          <button class="bell" type="button">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
             <i class="bx bx-bell"></i>
-            <span class="badge">5</span>
+            <span class="badge">3</span>
           </button>
+
           <div class="user">
+
             <i class="bx bx-user-circle user-avatar"></i>
+
             <div class="user-info">
               <b>Usuário</b>
               <span>Colaborador</span>
             </div>
+
           </div>
+
         </div>
+
       </header>
 
-      <section class="content">
+      <!-- =====================================
+           PÁGINA AVALIAÇÕES
+           ===================================== -->
 
-        <div class="cards">
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-star"></i>
-              </div>
-              <div>
-                <div class="label">MÉDIA GERAL</div>
-                <div class="value">4.8</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-comment"></i>
-              </div>
-              <div>
-                <div class="label">TOTAL AVALIAÇÕES</div>
-                <div class="value">248</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-happy"></i>
-              </div>
-              <div>
-                <div class="label">AVALIAÇÕES POSITIVAS</div>
-                <div class="value">92%</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-message-alt-dots"></i>
-              </div>
-              <div>
-                <div class="label">NOVAS ESTE MÊS</div>
-                <div class="value">32</div>
-              </div>
-            </div>
-          </article>
+      <section class="content avaliacoes-page">
+
+        <!-- FILTROS SUPERIORES -->
+
+        <div class="avaliacoes-filtros-topo">
+
+          <div class="avaliacoes-periodo">
+
+            <i class="bx bx-calendar"></i>
+
+            <select aria-label="Período das avaliações">
+              <option selected>Últimos 30 dias</option>
+              <option>Últimos 7 dias</option>
+              <option>Últimos 90 dias</option>
+              <option>Este ano</option>
+            </select>
+
+          </div>
+
+          <select
+            class="avaliacoes-filtro-notas"
+            aria-label="Filtrar avaliações"
+          >
+            <option selected>Todas as avaliações</option>
+            <option>5 estrelas</option>
+            <option>4 estrelas</option>
+            <option>3 estrelas</option>
+            <option>2 estrelas</option>
+            <option>1 estrela</option>
+          </select>
+
+          <button class="avaliacoes-btn-exportar" type="button">
+            <i class="bx bx-download"></i>
+            <span>Exportar</span>
+          </button>
+
         </div>
 
-        <div class="dash-grid">
-          <section class="panel panel-pad">
-            <div class="panel-header">
+        <!-- =================================
+             CARDS DE INDICADORES
+             ================================= -->
+
+        <div class="avaliacoes-cards">
+
+          <!-- AVALIAÇÃO MÉDIA -->
+
+          <article class="avaliacoes-card">
+
+            <div class="avaliacoes-card-icone">
+              <i class="bx bx-star"></i>
+            </div>
+
+            <div class="avaliacoes-card-info">
+
+              <span class="avaliacoes-card-titulo">
+                AVALIAÇÃO MÉDIA
+              </span>
+
+              <strong class="avaliacoes-card-valor">
+                4,8
+              </strong>
+
+              <div class="avaliacoes-estrelas" aria-label="5 estrelas">
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+              </div>
+
+              <p class="avaliacoes-card-variacao">
+                <span>
+                  <i class="bx bx-trending-up"></i>
+                  +0,3
+                </span>
+                no período
+              </p>
+
+            </div>
+
+          </article>
+
+          <!-- TOTAL DE AVALIAÇÕES -->
+
+          <article class="avaliacoes-card">
+
+            <div class="avaliacoes-card-icone">
+              <i class="bx bx-message-rounded"></i>
+            </div>
+
+            <div class="avaliacoes-card-info">
+
+              <span class="avaliacoes-card-titulo">
+                TOTAL DE AVALIAÇÕES
+              </span>
+
+              <strong class="avaliacoes-card-valor">
+                328
+              </strong>
+
+              <p class="avaliacoes-card-variacao">
+                <span>
+                  <i class="bx bx-trending-up"></i>
+                  +12%
+                </span>
+                no período
+              </p>
+
+            </div>
+
+          </article>
+
+          <!-- AVALIAÇÕES POSITIVAS -->
+
+          <article class="avaliacoes-card">
+
+            <div class="avaliacoes-card-icone">
+              <i class="bx bx-like"></i>
+            </div>
+
+            <div class="avaliacoes-card-info">
+
+              <span class="avaliacoes-card-titulo">
+                AVALIAÇÕES POSITIVAS
+              </span>
+
+              <strong class="avaliacoes-card-valor">
+                94%
+              </strong>
+
+              <p class="avaliacoes-card-detalhe">
+                309 avaliações
+              </p>
+
+            </div>
+
+          </article>
+
+          <!-- TAXA DE RESPOSTA -->
+
+          <article class="avaliacoes-card">
+
+            <div class="avaliacoes-card-icone">
+              <i class="bx bx-reply"></i>
+            </div>
+
+            <div class="avaliacoes-card-info">
+
+              <span class="avaliacoes-card-titulo">
+                TAXA DE RESPOSTA
+              </span>
+
+              <strong class="avaliacoes-card-valor">
+                87%
+              </strong>
+
+              <p class="avaliacoes-card-detalhe">
+                285 respondidas
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+        <!-- =================================
+             CONTEÚDO INFERIOR
+             ================================= -->
+
+        <div class="avaliacoes-conteudo-grid">
+
+          <!-- =================================
+               AVALIAÇÕES RECENTES
+               ================================= -->
+
+          <section class="avaliacoes-painel avaliacoes-recentes">
+
+            <div class="avaliacoes-recentes-topo">
+
               <h2>AVALIAÇÕES RECENTES</h2>
-            </div>
-            <div style="margin-top: 20px; display: grid; gap: 20px;">
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Rafael Silva</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i></span>
-                </div>
-                <p style="margin: 8px 0; font-size: 14px;">Excelente atendimento! O Carlos é muito profissional e o ambiente é impecável. Recomendo demais!</p>
-                <small style="color: var(--muted);">Serviço: Corte Social • há 2 horas</small>
-              </div>
+              <div class="avaliacoes-recentes-filtros">
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>João Santos</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bx-star"></i></span>
-                </div>
-                <p style="margin: 8px 0; font-size: 14px;">Muito bom, mas demorou um pouco mais do que o esperado. Fora isso, tudo certo.</p>
-                <small style="color: var(--muted);">Serviço: Barba • há 1 dia</small>
-              </div>
+                <div class="avaliacoes-busca">
+                  <i class="bx bx-search"></i>
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Pedro Costa</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i></span>
+                  <input
+                    type="search"
+                    placeholder="Buscar por cliente..."
+                    aria-label="Buscar avaliações por cliente"
+                  >
                 </div>
-                <p style="margin: 8px 0; font-size: 14px;">O melhor barbeiro da região! Combo perfeito, atendimento rápido e qualidade excepcional.</p>
-                <small style="color: var(--muted);">Serviço: Combo • há 2 dias</small>
-              </div>
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Lucas Lima</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i></span>
-                </div>
-                <p style="margin: 8px 0; font-size: 14px;">Atendimento impecável do início ao fim. O espaço é limpo e organizado. Voltarei com certeza!</p>
-                <small style="color: var(--muted);">Serviço: Degradê • há 3 dias</small>
+                <select aria-label="Ordenar avaliações">
+                  <option selected>Mais recentes</option>
+                  <option>Mais antigas</option>
+                  <option>Maior nota</option>
+                  <option>Menor nota</option>
+                </select>
+
               </div>
 
             </div>
+
+            <!-- AVALIAÇÃO 1 -->
+
+            <article class="avaliacoes-item">
+
+              <div class="avaliacoes-cliente">
+
+                <div class="avaliacoes-avatar">MS</div>
+
+                <div class="avaliacoes-cliente-info">
+                  <h3>Mariana Souza</h3>
+                  <span>Hoje, 14:32</span>
+                </div>
+
+              </div>
+
+              <div class="avaliacoes-item-nota">
+
+                <div class="avaliacoes-estrelas" aria-label="5 estrelas">
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                </div>
+
+                <span>Corte + Barba • Carlos</span>
+
+              </div>
+
+              <p class="avaliacoes-comentario">
+                Atendimento excelente!<br>
+                Gostei muito do resultado.
+              </p>
+
+              <button class="avaliacoes-btn-responder" type="button">
+                Responder
+              </button>
+
+            </article>
+
+            <!-- AVALIAÇÃO 2 -->
+
+            <article class="avaliacoes-item">
+
+              <div class="avaliacoes-cliente">
+
+                <div class="avaliacoes-avatar">JP</div>
+
+                <div class="avaliacoes-cliente-info">
+                  <h3>João Pedro</h3>
+                  <span>Ontem, 18:10</span>
+                </div>
+
+              </div>
+
+              <div class="avaliacoes-item-nota">
+
+                <div class="avaliacoes-estrelas" aria-label="5 estrelas">
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                </div>
+
+                <span>Degradê • Lucas</span>
+
+              </div>
+
+              <p class="avaliacoes-comentario">
+                Ambiente agradável e<br>
+                serviço muito bem feito.
+              </p>
+
+              <button class="avaliacoes-btn-responder" type="button">
+                Responder
+              </button>
+
+            </article>
+
+            <!-- AVALIAÇÃO 3 -->
+
+            <article class="avaliacoes-item">
+
+              <div class="avaliacoes-cliente">
+
+                <div class="avaliacoes-avatar">RM</div>
+
+                <div class="avaliacoes-cliente-info">
+                  <h3>Rafael Mendes</h3>
+                  <span>20 mai 2025</span>
+                </div>
+
+              </div>
+
+              <div class="avaliacoes-item-nota">
+
+                <div class="avaliacoes-estrelas" aria-label="4 de 5 estrelas">
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star avaliacoes-estrela-vazia"></i>
+                </div>
+
+                <span>Corte Social • Mateus</span>
+
+              </div>
+
+              <p class="avaliacoes-comentario">
+                Ótimo atendimento,<br>
+                voltarei mais vezes.
+              </p>
+
+              <button class="avaliacoes-btn-responder" type="button">
+                Responder
+              </button>
+
+            </article>
+
+            <!-- AVALIAÇÃO 4 -->
+
+            <article class="avaliacoes-item">
+
+              <div class="avaliacoes-cliente">
+
+                <div class="avaliacoes-avatar">AC</div>
+
+                <div class="avaliacoes-cliente-info">
+                  <h3>Ana Clara</h3>
+                  <span>19 mai 2025</span>
+                </div>
+
+              </div>
+
+              <div class="avaliacoes-item-nota">
+
+                <div class="avaliacoes-estrelas" aria-label="5 estrelas">
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                  <i class="bx bxs-star"></i>
+                </div>
+
+                <span>Corte Feminino • Carlos</span>
+
+              </div>
+
+              <p class="avaliacoes-comentario">
+                Equipe atenciosa e pontual.<br>
+                Recomendo!
+              </p>
+
+              <button class="avaliacoes-btn-responder" type="button">
+                Responder
+              </button>
+
+            </article>
+
           </section>
 
-          <section class="panel panel-pad appointments-panel">
-            <div class="panel-header">
-              <h2>AVALIAÇÃO POR SERVIÇO</h2>
-            </div>
-            <div style="margin-top: 20px; display: grid; gap: 16px;">
+          <!-- =================================
+               PAINÉIS DA DIREITA
+               ================================= -->
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Combo Corte + Barba</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.9</span>
+          <div class="avaliacoes-lateral">
+
+            <!-- DISTRIBUIÇÃO DAS NOTAS -->
+
+            <section class="avaliacoes-painel avaliacoes-distribuicao">
+
+              <h2>DISTRIBUIÇÃO DAS NOTAS</h2>
+
+              <div class="avaliacoes-distribuicao-resumo">
+
+                <strong>4,8</strong>
+
+                <div>
+
+                  <div class="avaliacoes-estrelas" aria-label="5 estrelas">
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                  </div>
+
+                  <span>328 avaliações</span>
+
                 </div>
-                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 98%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
-                </div>
-                <small style="color: var(--muted);">89 avaliações</small>
+
               </div>
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Corte Social</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.8</span>
+              <div class="avaliacoes-distribuicao-lista">
+
+                <div class="avaliacoes-distribuicao-item">
+                  <span>5 estrelas</span>
+                  <div class="avaliacoes-barra">
+                    <div style="width: 78%;"></div>
+                  </div>
+                  <strong>78%</strong>
                 </div>
-                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 96%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
+
+                <div class="avaliacoes-distribuicao-item">
+                  <span>4 estrelas</span>
+                  <div class="avaliacoes-barra">
+                    <div style="width: 16%;"></div>
+                  </div>
+                  <strong>16%</strong>
                 </div>
-                <small style="color: var(--muted);">67 avaliações</small>
+
+                <div class="avaliacoes-distribuicao-item">
+                  <span>3 estrelas</span>
+                  <div class="avaliacoes-barra">
+                    <div style="width: 4%;"></div>
+                  </div>
+                  <strong>4%</strong>
+                </div>
+
+                <div class="avaliacoes-distribuicao-item">
+                  <span>2 estrelas</span>
+                  <div class="avaliacoes-barra">
+                    <div style="width: 1%;"></div>
+                  </div>
+                  <strong>1%</strong>
+                </div>
+
+                <div class="avaliacoes-distribuicao-item">
+                  <span>1 estrela</span>
+                  <div class="avaliacoes-barra">
+                    <div style="width: 1%;"></div>
+                  </div>
+                  <strong>1%</strong>
+                </div>
+
               </div>
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Barba Completa</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.7</span>
+            </section>
+
+            <!-- AVALIAÇÕES POR SERVIÇO -->
+
+            <section class="avaliacoes-painel avaliacoes-por-servico">
+
+              <h2>AVALIAÇÕES POR SERVIÇO</h2>
+
+              <div class="avaliacoes-servico-lista">
+
+                <div class="avaliacoes-servico-item">
+                  <i class="bx bx-cut avaliacoes-servico-icone"></i>
+                  <span>Corte Social</span>
+                  <i class="bx bxs-star avaliacoes-servico-estrela"></i>
+                  <strong>4,9</strong>
                 </div>
-                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 94%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
+
+                <div class="avaliacoes-servico-item">
+                  <i class="bx bx-face avaliacoes-servico-icone"></i>
+                  <span>Barba + Corte</span>
+                  <i class="bx bxs-star avaliacoes-servico-estrela"></i>
+                  <strong>4,8</strong>
                 </div>
-                <small style="color: var(--muted);">45 avaliações</small>
+
+                <div class="avaliacoes-servico-item">
+                  <i class="bx bx-pen avaliacoes-servico-icone"></i>
+                  <span>Degradê</span>
+                  <i class="bx bxs-star avaliacoes-servico-estrela"></i>
+                  <strong>4,8</strong>
+                </div>
+
+                <div class="avaliacoes-servico-item">
+                  <i class="bx bx-cut avaliacoes-servico-icone"></i>
+                  <span>Barba</span>
+                  <i class="bx bxs-star avaliacoes-servico-estrela"></i>
+                  <strong>4,7</strong>
+                </div>
+
               </div>
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Barba Terapêutica</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.9</span>
-                </div>
-                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 98%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
-                </div>
-                <small style="color: var(--muted);">32 avaliações</small>
-              </div>
+            </section>
 
-              <div style="padding: 16px; background: #f8faf8; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <b>Degradê</b>
-                  <span style="color: #c78e36;"><i class="bx bxs-star"></i> 4.6</span>
-                </div>
-                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 92%; height: 100%; background: #c78e36; border-radius: 4px;"></div>
-                </div>
-                <small style="color: var(--muted);">15 avaliações</small>
-              </div>
+          </div>
 
-            </div>
-          </section>
         </div>
 
       </section>
+
     </main>
+
   </div>
 
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

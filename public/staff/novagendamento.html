@@ -1,252 +1,430 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
-</head>
-<body>
-
-  <!-- Estrutura principal da aplicação -->
-  <div class="app">
-
-    <!-- Menu lateral -->
+  <head>
+   <meta charset="utf-8"/>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+   <title>
+    Barber Select - Novo Agendamento
+   </title>
+   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+   <link href="../styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+   <div class="app">
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
-      <div class="brand">
-        <img src="../assets/LOGO.png" alt="Barber Select">
-      </div>
-
-      <!-- Links de navegação do menu -->
-      <nav class="nav">
-        <a class="active" href="dashboard.html">
-          <i class="bx bx-grid-alt"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="agenda.html">
-          <i class="bx bx-calendar"></i>
-          <span>Agenda</span>
-        </a>
-        <a href="clientes.html">
-          <i class="bx bx-user"></i>
-          <span>Clientes</span>
-        </a>
-        <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
-          <span>Barbeiros</span>
-        </a>
-        <a href="servicos.html">
-          <i class="bx bx-cut"></i>
-          <span>Serviços</span>
-        </a>
-        <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
-          <span>Produtos</span>
-        </a>
-        <a href="venda.html">
-          <i class="bx bx-cart"></i>
-          <span>Vendas</span>
-        </a>
-        <a href="financeiro.html">
-          <i class="bx bx-wallet"></i>
-          <span>Financeiro</span>
-        </a>
-        <a href="relatorios.html">
-          <i class="bx bx-bar-chart-alt-2"></i>
-          <span>Relatórios</span>
-        </a>
-        <a href="avaliacoes.html">
-          <i class="bx bx-star"></i>
-          <span>Avaliações</span>
-        </a>
-        <a href="configuracoes.html">
-          <i class="bx bx-cog"></i>
-          <span>Configurações</span>
-        </a>
-      </nav>
-
-      <!-- Botão para sair do sistema -->
-      <button class="logout" type="button">
-        <i class="bx bx-log-out"></i>
-        <span>Sair</span>
-      </button>
+     <div class="brand">
+      <img alt="Barber Select" src="../assets/LOGO.png"/>
+     </div>
+     <nav class="nav">
+      <a href="dashboard.html">
+       <i class="bx bx-grid-alt">
+       </i>
+       <span>
+        Dashboard
+       </span>
+      </a>
+      <a class="active" href="agenda.html">
+       <i class="bx bx-calendar">
+       </i>
+       <span>
+        Agenda
+       </span>
+      </a>
+      <a href="clients.html">
+       <i class="bx bx-user">
+       </i>
+       <span>
+        Clientes
+       </span>
+      </a>
+      <a href="barbeiros.html">
+       <i class="bx bx-user-check">
+       </i>
+       <span>
+        Barbeiros
+       </span>
+      </a>
+      <a href="services.html">
+       <i class="bx bx-cut">
+       </i>
+       <span>
+        Serviços
+       </span>
+      </a>
+      <a href="produtos.html">
+       <i class="bx bx-package">
+       </i>
+       <span>
+        Produtos
+       </span>
+      </a>
+      <a href="venda.html">
+       <i class="bx bx-cart">
+       </i>
+       <span>
+        Vendas
+       </span>
+      </a>
+      <a href="finance.html">
+       <i class="bx bx-wallet">
+       </i>
+       <span>
+        Financeiro
+       </span>
+      </a>
+      <a href="relatorios.html">
+       <i class="bx bx-bar-chart-alt-2">
+       </i>
+       <span>
+        Relatórios
+       </span>
+      </a>
+      <a href="avaliacoes.html">
+       <i class="bx bx-star">
+       </i>
+       <span>
+        Avaliações
+       </span>
+      </a>
+      <a href="configuracoes.html">
+       <i class="bx bx-cog">
+       </i>
+       <span>
+        Configurações
+       </span>
+      </a>
+     </nav>
+     <button class="logout" type="button">
+      <i class="bx bx-log-out">
+      </i>
+      <span>
+       Sair
+      </span>
+     </button>
     </aside>
-
-    <!-- Conteúdo principal do dashboard -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
-      <header class="topbar">
-
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
-        <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
-            <i class="bx bx-menu"></i>
-          </button>
-          <div class="title">
-            <h1>Novo agendamento</h1>
-            <p>Agende um novo atendimento para o seu cliente</p>
-          </div>
-        </div>
-
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
-        <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
-            <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
-          </button>
-          <div class="user">
-            <i class="bx bx-user-circle user-avatar"></i>
-            <div class="user-info">
-              <b>Kenis Cardoso</b>
-              <span>Administrador</span>
-            </div>
-            <i class="bx bx-chevron-down down"></i>
-          </div>
-        </div>
-      </header>
-
-      <div class="caixa">
-        <div>
-          <div class="caixa-titulo">
-            <i class="bx bx-calendar-plus"></i>
-          
-            <div>
-                <h1>Novo agendamento</h1>
-                <p>preencha as informações abaixo para agendar um atendimento.</p>
-            </div>
-            </div>
-            <div class="caixa-agendamentos">     
-                <div class="caixa-dados">
-                  <div class="titulo-caixa">
-                    <h2>Informações do cliente</h2>
-
-                    <button class="btn-novo-cliente">
-                      <i class="bx bx-user-plus"></i>
-                      Novo cliente
-                    </button>
-                  </div>
-
-                  <div class="campo">
-                    <label for="cliente">Cliente</label>
-                    
-
-                    <div >
-                      <i class="bx bx-user"></i>
-                      <select id="cliente">
-                        <option value="">Selecione um cliente</option>
-                        <option value="bruno">Bruno Ferreira</option>
-                        <option value="carlos">Carlos Silva</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="campo">
-                    <label for="observacoes">Observações (opcional)</label>
-
-                    <textarea
-                      id="observacoes"
-                      placeholder="Adicione alguma observação..."
-                    ></textarea>
-                  </div>
-                </div>
-
-                <div class="caixa-dados"> 
-                    <h2>Detalhes do agendamento</h2>
-                    <div class="caixa-detalhes">
-                        <label for="">Serviços</label>
-                        <div>
-                          <i class="bx bx-cut"></i>
-                            <select name="" id="">
-                                <option value="">Corte social</option>
-                                <option value="">Degrade</option>
-                            </select>
-                            <i></i>
-                        </div>
-
-                        <label for="">Barbeiros</label>
-                        <div>
-                          <i class="bx bx-user"></i>
-                            <select name="" id="">
-                                <option value="">Carlos</option>
-                                <option value="">Daniel</option>
-                            </select>
-                            <i></i>
-                        </div>
-                    </div>
-
-                    <div class="caixa-data">
-                        <label for="">Data</label>
-                        <input type="date" name="" id="">
-                    </div>
-
-                    <div class="caixa-horarios">
-                        <label for="">Horarios disponiveis</label>
-                        <div>
-                            <button>08:00</button>
-                            <button>10:00</button>
-                            <button>10:30</button>
-                            <button>13:30</button>
-                            <button>14:00</button>
-                            <button>16:20</button>
-                            <button>18:00</button>
-                            <button>19:30</button>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-
-            <div class="caixa-resumo">
-                <div class="resumo">
-                        <i class="bx bx-calendar-alt"></i>
-                    <div>
-                      <h2>Resumo do agendamento</h2>
-                        <b>cliente</b>
-                        <h3>Bruno ferreira</h3>
-                    </div>
-
-                    <div>
-                        <b>Serviço</b>
-                        <h3>Corte social</h3>
-                    </div>
-
-                    <div>
-                        <b>Data e horario</b>
-                        <h3>20/05/2026</h3>
-                    </div>
-
-                    <div>
-                        <b>Total</b>
-                        <h1>R$ 45,00</h1>
-                    </div>
-                </div>
-            </div>
-
-            <div class="btn-agendamentos">
-                <div>
-                    <button class="btn-cancelar"><i class="bx bx-x"></i> Cancelar</button>
-                </div>
-
-                <div>
-                    <button class="btn-cancelar" ><i class="bx bx-calendar-check"></i> Confirmar agendamento</button>
-                </div>
-            </div>
-        </div>
+     <header class="topbar">
+      <div class="head-left">
+       <button aria-label="Abrir ou fechar menu" class="menu-button hamb" type="button">
+        <i class="bx bx-menu">
+        </i>
+       </button>
+       <div class="title">
+        <h1>
+         Novo Agendamento
+        </h1>
+        <p>
+         Agende um novo atendimento para o seu cliente
+        </p>
+       </div>
       </div>
-          </article>
+      <div class="head-right">
+       <button aria-label="Notificações" class="bell" type="button">
+        <i class="bx bx-bell">
+        </i>
+        <span class="badge">
+         3
+        </span>
+       </button>
+       <div class="user">
+        <i class="bx bx-user-circle user-avatar">
+        </i>
+        <div class="user-info">
+         <b>
+          Kenis Cardoso
+         </b>
+         <span>
+          Administrador
+         </span>
         </div>
+        <i class="bx bx-chevron-down down">
+        </i>
+       </div>
+      </div>
+     </header>
+     <section class="content novo-agendamento-page">
+      <nav aria-label="Navegação" class="novo-breadcrumb">
+       <a href="agenda.html">
+        Agenda
+       </a>
+       <i class="bx bx-chevron-right">
+       </i>
+       <strong>
+        Novo Agendamento
+       </strong>
+      </nav>
+      <div class="novo-shell">
+       <div class="novo-intro">
+        <div class="novo-intro-icon">
+         <i class="bx bx-calendar-plus">
+         </i>
+        </div>
+        <div>
+         <h2>
+          Novo Agendamento
+         </h2>
+         <p>
+          Preencha as informações abaixo para agendar um atendimento.
+         </p>
+        </div>
+       </div>
+       <form action="#" class="novo-form" method="get">
+        <div class="novo-form-grid">
+         <section class="novo-panel">
+          <h3>
+           Informações do cliente
+          </h3>
+          <div class="novo-label-row">
+           <label for="novo-cliente">
+            Cliente
+            <em>
+             *
+            </em>
+           </label>
+           <a class="novo-add-client" href="clients.html">
+            <i class="bx bx-plus">
+            </i>
+            Novo cliente
+           </a>
+          </div>
+          <div class="novo-input-icon">
+           <i class="bx bx-user">
+           </i>
+           <select id="novo-cliente" name="cliente" required="">
+            <option selected="" value="bruno">
+             Bruno Ferreira
+            </option>
+            <option value="matheus">
+             Matheus Oliveira
+            </option>
+            <option value="lucas">
+             Lucas Almeida
+            </option>
+            <option value="pedro">
+             Pedro Santos
+            </option>
+           </select>
+          </div>
+          <div class="novo-selected-client">
+           <div class="novo-avatar">
+            BF
+           </div>
+           <div>
+            <strong>
+             Bruno Ferreira
+            </strong>
+            <span>
+             (62) 99999-1234
+            </span>
+           </div>
+           <i aria-hidden="true" class="bx bx-check-circle">
+           </i>
+          </div>
+          <label class="novo-label" for="novo-observacoes">
+           Observações (opcional)
+          </label>
+          <div class="novo-textarea">
+           <i class="bx bx-file">
+           </i>
+           <textarea id="novo-observacoes" maxlength="300" name="observacoes" placeholder="Adicione alguma observação sobre o atendimento..."></textarea>
+          </div>
+          <p class="novo-counter">
+           0/300
+          </p>
+         </section>
+         <section class="novo-panel">
+          <h3>
+           Detalhes do agendamento
+          </h3>
+          <label class="novo-label" for="novo-servico">
+           Serviço
+           <em>
+            *
+           </em>
+          </label>
+          <div class="novo-input-icon">
+           <i class="bx bx-cut">
+           </i>
+           <select id="novo-servico" name="servico" required="">
+            <option selected="" value="corte-social">
+             Corte Social — R$ 45,00 — 40 min
+            </option>
+            <option value="barba">
+             Barba — R$ 30,00 — 30 min
+            </option>
+            <option value="corte-barba">
+             Corte + Barba — R$ 70,00 — 60 min
+            </option>
+           </select>
+          </div>
+          <label class="novo-label" for="novo-barbeiro">
+           Barbeiro
+           <em>
+            *
+           </em>
+          </label>
+          <div class="novo-input-icon">
+           <i class="bx bx-user">
+           </i>
+           <select id="novo-barbeiro" name="barbeiro" required="">
+            <option selected="" value="carlos">
+             Carlos
+            </option>
+            <option value="marcos">
+             Marcos
+            </option>
+            <option value="rafael">
+             Rafael
+            </option>
+           </select>
+          </div>
+          <div class="novo-double">
+           <div>
+            <label class="novo-label" for="novo-data">
+             Data
+             <em>
+              *
+             </em>
+            </label>
+            <div class="novo-input-icon">
+             <i class="bx bx-calendar">
+             </i>
+             <input id="novo-data" name="data" required="" type="date" value="2025-05-20"/>
+            </div>
+           </div>
+           <div>
+            <label class="novo-label" for="novo-horario">
+             Horário
+             <em>
+              *
+             </em>
+            </label>
+            <div class="novo-input-icon">
+             <i class="bx bx-time-five">
+             </i>
+             <select id="novo-horario" name="horario" required="">
+              <option>
+               08:00
+              </option>
+              <option selected="">
+               09:00
+              </option>
+              <option>
+               10:00
+              </option>
+              <option>
+               10:40
+              </option>
+              <option>
+               14:00
+              </option>
+              <option>
+               15:30
+              </option>
+              <option>
+               17:00
+              </option>
+              <option>
+               18:20
+              </option>
+             </select>
+            </div>
+           </div>
+          </div>
+          <p class="novo-available-title">
+           Horários disponíveis
+          </p>
+          <div aria-label="Horários disponíveis" class="novo-time-slots">
+           <span>
+            08:00
+           </span>
+           <span class="selected">
+            09:00
+           </span>
+           <span>
+            10:00
+           </span>
+           <span>
+            10:40
+           </span>
+           <span>
+            14:00
+           </span>
+           <span>
+            15:30
+           </span>
+           <span>
+            17:00
+           </span>
+           <span>
+            18:20
+           </span>
+          </div>
+         </section>
+        </div>
+        <section aria-label="Resumo do agendamento" class="novo-summary">
+         <div class="novo-summary-heading">
+          <span class="novo-summary-icon">
+           <i class="bx bx-calendar">
+           </i>
+          </span>
+          <h3>
+           Resumo do agendamento
+          </h3>
+         </div>
+         <div class="novo-summary-item">
+          <span>
+           Cliente
+          </span>
+          <strong>
+           Bruno Ferreira
+          </strong>
+         </div>
+         <div class="novo-summary-item">
+          <span>
+           Serviço
+          </span>
+          <strong>
+           Corte Social
+          </strong>
+         </div>
+         <div class="novo-summary-item">
+          <span>
+           Data e horário
+          </span>
+          <strong>
+           20/05/2025 às 09:00
+          </strong>
+         </div>
+         <div class="novo-summary-total">
+          <span>
+           Total
+          </span>
+          <strong>
+           R$ 45,00
+          </strong>
+         </div>
         </section>
-      </section>
+        <div class="novo-actions">
+         <a class="novo-cancel" href="agenda.html">
+          <i class="bx bx-x">
+          </i>
+          Cancelar
+         </a>
+         <button class="novo-confirm" type="submit">
+          <i class="bx bx-calendar-check">
+          </i>
+          Confirmar Agendamento
+         </button>
+        </div>
+       </form>
+      </div>
+     </section>
     </main>
-  </div>
-
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
-</body>
+   </div>
+   <script src="../js/core/shared.js">
+   </script>
+   <script src="../js/staff/staff-app.js">
+   </script>
+  </body>
 </html>

@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barber Select - Usuários</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL PRINCIPAL -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracoes.html" class="active">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO SUPERIOR -->
+
+      <header class="topbar configuracoes-topbar">
+
+        <div class="head-left configuracoes-topbar-esquerda">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="configuracoes-pesquisa">
+            <i class="bx bx-search"></i>
+            <input
+              type="search"
+              placeholder="Pesquisar..."
+              aria-label="Pesquisa geral"
+            >
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+
+            <i class="bx bx-chevron-down configuracoes-user-seta"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- CONFIGURAÇÕES -->
+
+      <section class="content configuracoes-page">
+
+        <div class="configuracoes-cabecalho">
+
+          <i class="bx bx-cog"></i>
+
+          <div>
+            <h1>Configurações</h1>
+            <p>Gerencie as preferências e informações do sistema.</p>
+          </div>
+
+        </div>
+
+        <div class="configuracoes-layout">
+
+          <!-- MENU INTERNO -->
+
+          <aside class="configuracoes-menu">
+
+            <nav aria-label="Seções de configurações">
+
+              <a href="configuracao.html">
+                <i class="bx bx-store"></i>
+                <span>Perfil da Barbearia</span>
+              </a>
+
+              <a
+                href="usuarios.html"
+                class="configuracoes-menu-ativo"
+                aria-current="page"
+              >
+                <i class="bx bx-user"></i>
+                <span>Usuários</span>
+              </a>
+
+              <a href="notificacoes.html">
+                <i class="bx bx-bell"></i>
+                <span>Notificações</span>
+              </a>
+
+              <a href="pagamentos.html">
+                <i class="bx bx-credit-card"></i>
+                <span>Pagamentos</span>
+              </a>
+
+              <a href="integracoes.html">
+                <i class="bx bx-link"></i>
+                <span>Integrações</span>
+              </a>
+
+              <a href="seguranca.html">
+                <i class="bx bx-shield"></i>
+                <span>Segurança</span>
+              </a>
+
+              <a href="backup.html">
+                <i class="bx bx-cloud"></i>
+                <span>Backup</span>
+              </a>
+
+            </nav>
+
+          </aside>
+
+          <!-- PAINEL DE USUÁRIOS -->
+
+          <section class="configuracoes-painel config-usuarios-painel">
+
+            <div class="configuracoes-painel-cabecalho config-usuarios-cabecalho">
+
+              <h2>Usuários</h2>
+              <p>Gerencie os usuários que têm acesso ao sistema.</p>
+
+            </div>
+
+            <!-- INDICADORES -->
+
+            <div class="config-usuarios-indicadores">
+
+              <article class="config-usuarios-indicador">
+
+                <div class="config-usuarios-indicador-icone">
+                  <i class="bx bx-group"></i>
+                </div>
+
+                <div class="config-usuarios-indicador-texto">
+                  <span>Total de usuários</span>
+                  <strong>12</strong>
+                </div>
+
+              </article>
+
+              <article class="config-usuarios-indicador">
+
+                <div class="config-usuarios-indicador-icone">
+                  <i class="bx bx-user"></i>
+                </div>
+
+                <div class="config-usuarios-indicador-texto">
+                  <span>Usuários ativos</span>
+                  <strong>10</strong>
+                </div>
+
+              </article>
+
+              <article class="config-usuarios-indicador">
+
+                <div class="config-usuarios-indicador-icone config-usuarios-icone-inativo">
+                  <i class="bx bx-user-x"></i>
+                </div>
+
+                <div class="config-usuarios-indicador-texto">
+                  <span>Usuários inativos</span>
+                  <strong>2</strong>
+                </div>
+
+              </article>
+
+            </div>
+
+            <!-- FILTROS -->
+
+            <div class="config-usuarios-filtros">
+
+              <div class="config-usuarios-busca">
+
+                <i class="bx bx-search"></i>
+
+                <input
+                  type="search"
+                  placeholder="Pesquisar usuário..."
+                  aria-label="Pesquisar usuário"
+                >
+
+              </div>
+
+              <select
+                class="config-usuarios-select"
+                aria-label="Filtrar por perfil"
+              >
+                <option value="">Todos os perfis</option>
+                <option value="administrador">Administrador</option>
+                <option value="gerente">Gerente</option>
+                <option value="barbeiro">Barbeiro</option>
+                <option value="recepcionista">Recepcionista</option>
+                <option value="financeiro">Financeiro</option>
+              </select>
+
+              <button class="config-usuarios-btn-novo" type="button">
+                <i class="bx bx-plus-circle"></i>
+                <span>Novo usuário</span>
+              </button>
+
+            </div>
+
+            <!-- TABELA -->
+
+            <div class="config-usuarios-tabela-scroll">
+
+              <table class="config-usuarios-tabela">
+
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Perfil</th>
+                    <th>Status</th>
+                    <th>Último acesso</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <!-- USUÁRIO 1 -->
+
+                  <tr>
+
+                    <td>
+                      <div class="config-usuarios-pessoa">
+                        <span class="config-usuarios-avatar avatar-verde">JP</span>
+                        <span>João Pedro</span>
+                      </div>
+                    </td>
+
+                    <td class="config-usuarios-email">
+                      joao.pedro@barberselect.com
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-perfil perfil-admin">
+                        Administrador
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-status status-ativo">
+                        <span></span>
+                        Ativo
+                      </span>
+                    </td>
+
+                    <td>20/05/2025 14:32</td>
+
+                    <td>
+                      <div class="config-usuarios-acoes">
+
+                        <button type="button" class="config-usuarios-editar" aria-label="Editar João Pedro">
+                          <i class="bx bx-pencil"></i>
+                        </button>
+
+                        <button type="button" class="config-usuarios-excluir" aria-label="Excluir João Pedro">
+                          <i class="bx bx-trash"></i>
+                        </button>
+
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <!-- USUÁRIO 2 -->
+
+                  <tr>
+
+                    <td>
+                      <div class="config-usuarios-pessoa">
+                        <span class="config-usuarios-avatar avatar-amarelo">MC</span>
+                        <span>Maria Clara</span>
+                      </div>
+                    </td>
+
+                    <td class="config-usuarios-email">
+                      maria.clara@barberselect.com
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-perfil perfil-gerente">
+                        Gerente
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-status status-ativo">
+                        <span></span>
+                        Ativo
+                      </span>
+                    </td>
+
+                    <td>20/05/2025 11:20</td>
+
+                    <td>
+                      <div class="config-usuarios-acoes">
+
+                        <button type="button" class="config-usuarios-editar" aria-label="Editar Maria Clara">
+                          <i class="bx bx-pencil"></i>
+                        </button>
+
+                        <button type="button" class="config-usuarios-excluir" aria-label="Excluir Maria Clara">
+                          <i class="bx bx-trash"></i>
+                        </button>
+
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <!-- USUÁRIO 3 -->
+
+                  <tr>
+
+                    <td>
+                      <div class="config-usuarios-pessoa">
+                        <span class="config-usuarios-avatar avatar-azul">LS</span>
+                        <span>Lucas Silva</span>
+                      </div>
+                    </td>
+
+                    <td class="config-usuarios-email">
+                      lucas.silva@barberselect.com
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-perfil perfil-barbeiro">
+                        Barbeiro
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-status status-ativo">
+                        <span></span>
+                        Ativo
+                      </span>
+                    </td>
+
+                    <td>19/05/2025 19:45</td>
+
+                    <td>
+                      <div class="config-usuarios-acoes">
+
+                        <button type="button" class="config-usuarios-editar" aria-label="Editar Lucas Silva">
+                          <i class="bx bx-pencil"></i>
+                        </button>
+
+                        <button type="button" class="config-usuarios-excluir" aria-label="Excluir Lucas Silva">
+                          <i class="bx bx-trash"></i>
+                        </button>
+
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <!-- USUÁRIO 4 -->
+
+                  <tr>
+
+                    <td>
+                      <div class="config-usuarios-pessoa">
+                        <span class="config-usuarios-avatar avatar-roxo">RF</span>
+                        <span>Rafael Ferreira</span>
+                      </div>
+                    </td>
+
+                    <td class="config-usuarios-email">
+                      rafael.ferreira@barberselect.com
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-perfil perfil-recepcionista">
+                        Recepcionista
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-status status-inativo">
+                        <span></span>
+                        Inativo
+                      </span>
+                    </td>
+
+                    <td>15/05/2025 10:12</td>
+
+                    <td>
+                      <div class="config-usuarios-acoes">
+
+                        <button type="button" class="config-usuarios-editar" aria-label="Editar Rafael Ferreira">
+                          <i class="bx bx-pencil"></i>
+                        </button>
+
+                        <button type="button" class="config-usuarios-excluir" aria-label="Excluir Rafael Ferreira">
+                          <i class="bx bx-trash"></i>
+                        </button>
+
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <!-- USUÁRIO 5 -->
+
+                  <tr>
+
+                    <td>
+                      <div class="config-usuarios-pessoa">
+                        <span class="config-usuarios-avatar avatar-rosa">CA</span>
+                        <span>Carla Almeida</span>
+                      </div>
+                    </td>
+
+                    <td class="config-usuarios-email">
+                      carla.almeida@barberselect.com
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-perfil perfil-financeiro">
+                        Financeiro
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="config-usuarios-status status-ativo">
+                        <span></span>
+                        Ativo
+                      </span>
+                    </td>
+
+                    <td>20/05/2025 09:18</td>
+
+                    <td>
+                      <div class="config-usuarios-acoes">
+
+                        <button type="button" class="config-usuarios-editar" aria-label="Editar Carla Almeida">
+                          <i class="bx bx-pencil"></i>
+                        </button>
+
+                        <button type="button" class="config-usuarios-excluir" aria-label="Excluir Carla Almeida">
+                          <i class="bx bx-trash"></i>
+                        </button>
+
+                      </div>
+                    </td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <!-- PAGINAÇÃO -->
+
+            <div class="config-usuarios-rodape">
+
+              <p>Mostrando 5 de 12 usuários</p>
+
+              <nav class="config-usuarios-paginacao" aria-label="Paginação de usuários">
+
+                <button type="button" aria-label="Página anterior">
+                  <i class="bx bx-chevron-left"></i>
+                </button>
+
+                <button type="button" class="pagina-ativa" aria-current="page">
+                  1
+                </button>
+
+                <button type="button">2</button>
+                <button type="button">3</button>
+
+                <button type="button" aria-label="Próxima página">
+                  <i class="bx bx-chevron-right"></i>
+                </button>
+
+              </nav>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

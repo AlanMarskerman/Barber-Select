@@ -1,210 +1,340 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <title>Barber Select - Novo Cliente</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="../styles.css">
 </head>
-<body>
 
-  <!-- Estrutura principal da aplicação -->
+<body>
   <div class="app">
 
-    <!-- Menu lateral -->
+    <!-- =========================================
+         MENU LATERAL
+    ========================================== -->
     <aside class="sidebar">
 
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
 
-      <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a class="active" href="dashboard.html">
+
+        <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
+
         <a href="agenda.html">
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
-        <a href="clientes.html">
+
+        <a href="clients.html" class="active" aria-current="page">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
+
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
-        <a href="servicos.html">
+
+        <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
+
         <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
+          <i class="bx bx-package"></i>
           <span>Produtos</span>
         </a>
+
         <a href="venda.html">
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
-        <a href="financeiro.html">
+
+        <a href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
+
         <a href="relatorios.html">
           <i class="bx bx-bar-chart-alt-2"></i>
           <span>Relatórios</span>
         </a>
+
         <a href="avaliacoes.html">
           <i class="bx bx-star"></i>
           <span>Avaliações</span>
         </a>
+
         <a href="configuracoes.html">
           <i class="bx bx-cog"></i>
           <span>Configurações</span>
         </a>
+
       </nav>
 
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
+
     </aside>
 
-    <!-- Conteúdo principal do dashboard -->
+    <!-- =========================================
+         CONTEÚDO PRINCIPAL
+    ========================================== -->
     <main class="main">
 
-      <!-- Cabeçalho superior -->
+      <!-- CABEÇALHO -->
       <header class="topbar">
 
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir ou fechar menu"
+          >
             <i class="bx bx-menu"></i>
           </button>
+
           <div class="title">
             <h1>Novo Cliente</h1>
-            <p>Cadastre um novo cliente na sua barbearia</p>
+            <p>Cadastre um novo cliente na barbearia</p>
           </div>
+
         </div>
 
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
         <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
             <i class="bx bx-bell"></i>
             <span class="badge">3</span>
           </button>
+
           <div class="user">
+
             <i class="bx bx-user-circle user-avatar"></i>
+
             <div class="user-info">
               <b>Kenis Cardoso</b>
               <span>Administrador</span>
             </div>
+
             <i class="bx bx-chevron-down down"></i>
+
           </div>
+
         </div>
+
       </header>
 
-          <!-- ============== Campo ==============-->
+      <!-- =========================================
+           PÁGINA NOVO CLIENTE
+      ========================================== -->
+      <section class="content nc-page">
 
-<div class="cadastro">
+        <div class="nc-panel">
 
-    <header class="cab">
-        <i class="bx bx-user-plus"></i>
+          <!-- TÍTULO DO FORMULÁRIO -->
+          <div class="nc-heading">
 
-        <div>
-            <h1>Novo Cliente</h1>
-            <p>Preencha as informações abaixo para cadastrar um novo cliente.</p>
-        </div>
-    </header>
-
-
-    <div class="cadastro1">
-
-        <!-- NOME -->
-        <label>Nome completo</label>
-
-        <div class="input-icon">
-            <i class="bx bx-user"></i>
-            <input class="elementos" type="text" name="nome" id="nome" placeholder="Digite o nome completo"
-            >
-        </div>
-
-
-        <!-- TELEFONE + DATA -->
-        <div class="linha">
-
-            <div class="campo">
-                <label>Telefone/WhatsApp</label>
-
-                <div class="input-icon">
-                    <i class="bx bx-phone"></i>
-                    <input class="elementos" type="number" name="telefone" id="telefone" placeholder="(00) 00000-0000"
-                    >
-                </div>
+            <div class="nc-heading-icon">
+              <i class="bx bx-user-plus"></i>
             </div>
 
+            <div>
+              <h2>Novo Cliente</h2>
 
-            <div class="campo">
-                <label>Data de nascimento (opcional)</label>
-
-                <div class="input-icon">
-                    <i class="bx bx-calendar"></i>
-                    <input class="elementos" type="date" name="data"
-                    >
-                </div>
+              <p>
+                Preencha as informações abaixo para
+                cadastrar um novo cliente.
+              </p>
             </div>
 
+          </div>
+
+          <!-- =====================================
+               FORMULÁRIO
+          ====================================== -->
+          <form class="nc-form" action="#" method="post">
+
+            <!-- NOME COMPLETO -->
+            <div class="nc-field nc-field-full">
+
+              <label for="cliente-nome">
+                Nome completo
+                <span class="nc-required">*</span>
+              </label>
+
+              <div class="nc-input-wrap">
+
+                <i class="bx bx-user"></i>
+
+                <input
+                  type="text"
+                  id="cliente-nome"
+                  name="nome"
+                  placeholder="Digite o nome completo"
+                  autocomplete="name"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+            <!-- TELEFONE -->
+            <div class="nc-field">
+
+              <label for="cliente-telefone">
+                Telefone / WhatsApp
+                <span class="nc-required">*</span>
+              </label>
+
+              <div class="nc-input-wrap">
+
+                <i class="bx bx-phone"></i>
+
+                <input
+                  type="tel"
+                  id="cliente-telefone"
+                  name="telefone"
+                  placeholder="(00) 00000-0000"
+                  autocomplete="tel"
+                  maxlength="15"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+            <!-- DATA DE NASCIMENTO -->
+            <div class="nc-field">
+
+              <label for="cliente-nascimento">
+                Data de nascimento (opcional)
+              </label>
+
+              <div class="nc-input-wrap">
+
+                <i class="bx bx-calendar"></i>
+
+                <input
+                  type="text"
+                  id="cliente-nascimento"
+                  name="nascimento"
+                  placeholder="dd/mm/aaaa"
+                  inputmode="numeric"
+                  maxlength="10"
+                >
+
+              </div>
+
+            </div>
+
+            <!-- E-MAIL -->
+            <div class="nc-field nc-field-full">
+
+              <label for="cliente-email">
+                E-mail (opcional)
+              </label>
+
+              <div class="nc-input-wrap">
+
+                <i class="bx bx-envelope"></i>
+
+                <input
+                  type="email"
+                  id="cliente-email"
+                  name="email"
+                  placeholder="exemplo@email.com"
+                  autocomplete="email"
+                >
+
+              </div>
+
+            </div>
+
+            <!-- OBSERVAÇÕES -->
+            <div class="nc-field nc-field-full">
+
+              <label for="cliente-observacoes">
+                Observações (opcional)
+              </label>
+
+              <div class="nc-input-wrap nc-textarea-wrap">
+
+                <i class="bx bx-file"></i>
+
+                <textarea
+                  id="cliente-observacoes"
+                  name="observacoes"
+                  placeholder="Adicione alguma observação sobre o cliente..."
+                  maxlength="300"
+                  rows="4"
+                ></textarea>
+
+              </div>
+
+              <span class="nc-counter">0/300</span>
+
+            </div>
+
+            <!-- =====================================
+                 BOTÕES
+            ====================================== -->
+            <div class="nc-actions">
+
+              <a
+                href="clients.html"
+                class="nc-button nc-button-cancel"
+              >
+                <i class="bx bx-x"></i>
+                <span>Cancelar</span>
+              </a>
+
+              <button
+                class="nc-button nc-button-submit"
+                type="submit"
+              >
+                <i class="bx bx-save"></i>
+                <span>Cadastrar cliente</span>
+              </button>
+
+            </div>
+
+          </form>
+
         </div>
 
-
-        <!-- E-MAIL -->
-        <label>E-mail (opcional)</label>
-
-        <div class="input-icon">
-            <i class="bx bx-envelope"></i>
-            <input class="elementos" type="email" name="email" placeholder="exemplo@email.com"
-            >
-        </div>
-
-
-        <!-- OBSERVAÇÕES -->
-        <label>Observações (opcional)</label>
-
-        <div class="input-icon observacao">
-            <i class="bx bx-file-detail"></i>
-
-            <textarea class="elementos1" name="texto" placeholder="Adicione alguma observação sobre o cliente"
-            ></textarea>
-        </div>
-
-
-    <!-- BOTÕES -->
-
-    <form id="formCliente">
-    <div class="linha1">
-
-        <button class="btn12" type="button">
-            <i class="bx bx-x"></i>
-            Cancelar
-        </button>
-
-        <button class="btn1" type="submit">
-            <i class="bx bx-check"></i>
-            Cadastrar cliente
-        </button>
-
-    </div>
-    
       </section>
+
     </main>
+
   </div>
 
-  <!-- JavaScript principal -->
-  <script src="../js/app.js"></script>
+  <!-- SCRIPTS COMPARTILHADOS DO SISTEMA -->
+  <script src="../js/core/shared.js"></script>
+  <script src="../js/staff/staff-app.js"></script>
+
 </body>
 </html>

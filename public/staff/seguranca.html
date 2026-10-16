@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barber Select - Segurança</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL PRINCIPAL -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracoes.html" class="active">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO SUPERIOR -->
+
+      <header class="topbar configuracoes-topbar">
+
+        <div class="head-left configuracoes-topbar-esquerda">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="configuracoes-pesquisa">
+
+            <i class="bx bx-search"></i>
+
+            <input
+              type="search"
+              placeholder="Pesquisar..."
+              aria-label="Pesquisa geral"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+
+            <i class="bx bx-chevron-down configuracoes-user-seta"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- CONFIGURAÇÕES -->
+
+      <section class="content configuracoes-page config-seguranca-page">
+
+        <!-- TÍTULO -->
+
+        <div class="configuracoes-cabecalho">
+
+          <i class="bx bx-cog"></i>
+
+          <div>
+            <h1>Configurações</h1>
+            <p>Gerencie as preferências e informações do sistema.</p>
+          </div>
+
+        </div>
+
+        <!-- LAYOUT INTERNO -->
+
+        <div class="configuracoes-layout config-seguranca-layout">
+
+          <!-- MENU INTERNO -->
+
+          <aside class="configuracoes-menu">
+
+            <nav aria-label="Seções de configurações">
+
+              <a href="configuracao.html">
+                <i class="bx bx-store"></i>
+                <span>Perfil da Barbearia</span>
+              </a>
+
+              <a href="usuarios.html">
+                <i class="bx bx-user"></i>
+                <span>Usuários</span>
+              </a>
+
+              <a href="notificacoes.html">
+                <i class="bx bx-bell"></i>
+                <span>Notificações</span>
+              </a>
+
+              <a href="pagamentos.html">
+                <i class="bx bx-credit-card"></i>
+                <span>Pagamentos</span>
+              </a>
+
+              <a href="integracoes.html">
+                <i class="bx bx-link"></i>
+                <span>Integrações</span>
+              </a>
+
+              <a
+                href="seguranca.html"
+                class="configuracoes-menu-ativo"
+                aria-current="page"
+              >
+                <i class="bx bx-shield"></i>
+                <span>Segurança</span>
+              </a>
+
+              <a href="backup.html">
+                <i class="bx bx-cloud"></i>
+                <span>Backup</span>
+              </a>
+
+            </nav>
+
+          </aside>
+
+          <!-- CONTEÚDO DE SEGURANÇA -->
+
+          <div class="config-seguranca-conteudo">
+
+            <div class="config-seguranca-grid">
+
+              <!-- ALTERAR SENHA -->
+
+              <section class="config-seguranca-card config-seguranca-senha">
+
+                <div class="config-seguranca-card-titulo">
+
+                  <i class="bx bx-key"></i>
+
+                  <div>
+                    <h2>Alterar senha</h2>
+                    <p>Mantenha sua conta segura com uma senha forte.</p>
+                  </div>
+
+                </div>
+
+                <form class="config-seguranca-form-senha">
+
+                  <div class="config-seguranca-campo">
+
+                    <label for="seguranca-senha-atual">
+                      Senha atual
+                    </label>
+
+                    <div class="config-seguranca-input-senha">
+
+                      <input
+                        type="password"
+                        id="seguranca-senha-atual"
+                        name="senha_atual"
+                        placeholder="Digite sua senha atual"
+                        autocomplete="current-password"
+                        required
+                      >
+
+                      <i class="bx bx-show" aria-hidden="true"></i>
+
+                    </div>
+
+                  </div>
+
+                  <div class="config-seguranca-campo">
+
+                    <label for="seguranca-nova-senha">
+                      Nova senha
+                    </label>
+
+                    <div class="config-seguranca-input-senha">
+
+                      <input
+                        type="password"
+                        id="seguranca-nova-senha"
+                        name="nova_senha"
+                        placeholder="Digite a nova senha"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                      >
+
+                      <i class="bx bx-show" aria-hidden="true"></i>
+
+                    </div>
+
+                    <div class="config-seguranca-forca">
+
+                      <div class="config-seguranca-forca-barras">
+                        <span class="ativa"></span>
+                        <span class="ativa"></span>
+                        <span class="ativa"></span>
+                        <span></span>
+                      </div>
+
+                      <span>Senha forte</span>
+
+                    </div>
+
+                  </div>
+
+                  <div class="config-seguranca-campo">
+
+                    <label for="seguranca-confirmar-senha">
+                      Confirmar nova senha
+                    </label>
+
+                    <div class="config-seguranca-input-senha">
+
+                      <input
+                        type="password"
+                        id="seguranca-confirmar-senha"
+                        name="confirmar_senha"
+                        placeholder="Confirme a nova senha"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                      >
+
+                      <i class="bx bx-show" aria-hidden="true"></i>
+
+                    </div>
+
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="config-seguranca-btn-atualizar"
+                  >
+                    <i class="bx bxs-lock"></i>
+                    <span>Atualizar senha</span>
+                  </button>
+
+                </form>
+
+              </section>
+
+              <!-- COLUNA DIREITA -->
+
+              <div class="config-seguranca-coluna-direita">
+
+                <!-- AUTENTICAÇÃO EM DUAS ETAPAS -->
+
+                <section class="config-seguranca-card config-seguranca-autenticacao">
+
+                  <div class="config-seguranca-autenticacao-topo">
+
+                    <div class="config-seguranca-card-titulo">
+
+                      <i class="bx bx-shield-quarter"></i>
+
+                      <div>
+                        <h2>Autenticação em duas etapas</h2>
+                        <p>
+                          Adicione uma camada extra de segurança à sua conta.
+                        </p>
+                      </div>
+
+                    </div>
+
+                    <div class="config-seguranca-autenticacao-status">
+
+                      <label class="config-seguranca-switch">
+
+                        <input
+                          type="checkbox"
+                          name="autenticacao_duas_etapas"
+                          checked
+                          aria-label="Autenticação em duas etapas"
+                        >
+
+                        <span></span>
+
+                      </label>
+
+                      <strong>Ativada</strong>
+
+                    </div>
+
+                  </div>
+
+                  <div class="config-seguranca-autenticacao-info">
+
+                    <div class="config-seguranca-autenticacao-icone">
+                      <i class="bx bx-mobile-alt"></i>
+                    </div>
+
+                    <div>
+
+                      <h3>Sua conta está mais segura!</h3>
+
+                      <p>
+                        A autenticação em duas etapas ajuda a proteger
+                        sua conta contra acessos não autorizados,
+                        exigindo um código de verificação além da sua senha.
+                      </p>
+
+                      <button
+                        type="button"
+                        class="config-seguranca-btn-configurar"
+                      >
+                        <i class="bx bx-cog"></i>
+                        <span>Configurar autenticação</span>
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </section>
+
+                <!-- SESSÕES ATIVAS -->
+
+                <section class="config-seguranca-card config-seguranca-sessoes">
+
+                  <div class="config-seguranca-card-titulo">
+
+                    <i class="bx bx-desktop"></i>
+
+                    <div>
+                      <h2>Sessões ativas</h2>
+                      <p>
+                        Gerencie os dispositivos que estão conectados
+                        à sua conta.
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <div class="config-seguranca-lista-sessoes">
+
+                    <!-- WINDOWS -->
+
+                    <div class="config-seguranca-sessao">
+
+                      <i class="bx bx-laptop config-seguranca-dispositivo"></i>
+
+                      <div class="config-seguranca-sessao-info">
+
+                        <div class="config-seguranca-sessao-nome">
+                          <strong>Windows · Chrome</strong>
+                          <span class="config-seguranca-sessao-atual">
+                            Sessão atual
+                          </span>
+                        </div>
+
+                        <p>
+                          <i class="bx bx-map"></i>
+                          Goiânia, GO · Agora
+                        </p>
+
+                      </div>
+
+                      <button
+                        type="button"
+                        class="config-seguranca-mais"
+                        aria-label="Mais opções da sessão Windows"
+                      >
+                        <i class="bx bx-dots-horizontal-rounded"></i>
+                      </button>
+
+                    </div>
+
+                    <!-- ANDROID -->
+
+                    <div class="config-seguranca-sessao">
+
+                      <i class="bx bx-mobile-alt config-seguranca-dispositivo"></i>
+
+                      <div class="config-seguranca-sessao-info">
+
+                        <div class="config-seguranca-sessao-nome">
+                          <strong>Android · Chrome</strong>
+                        </div>
+
+                        <p>
+                          <i class="bx bx-map"></i>
+                          Goiânia, GO · Hoje às 10:42
+                        </p>
+
+                      </div>
+
+                      <button
+                        type="button"
+                        class="config-seguranca-btn-encerrar"
+                      >
+                        Encerrar
+                      </button>
+
+                      <button
+                        type="button"
+                        class="config-seguranca-mais"
+                        aria-label="Mais opções da sessão Android"
+                      >
+                        <i class="bx bx-dots-horizontal-rounded"></i>
+                      </button>
+
+                    </div>
+
+                    <!-- IPHONE -->
+
+                    <div class="config-seguranca-sessao">
+
+                      <i class="bx bx-mobile config-seguranca-dispositivo"></i>
+
+                      <div class="config-seguranca-sessao-info">
+
+                        <div class="config-seguranca-sessao-nome">
+                          <strong>iPhone · Safari</strong>
+                        </div>
+
+                        <p>
+                          <i class="bx bx-map"></i>
+                          Goiânia, GO · Ontem às 21:15
+                        </p>
+
+                      </div>
+
+                      <button
+                        type="button"
+                        class="config-seguranca-btn-encerrar"
+                      >
+                        Encerrar
+                      </button>
+
+                      <button
+                        type="button"
+                        class="config-seguranca-mais"
+                        aria-label="Mais opções da sessão iPhone"
+                      >
+                        <i class="bx bx-dots-horizontal-rounded"></i>
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </section>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- PRIVACIDADE E ACESSO -->
+
+          <section class="config-seguranca-privacidade">
+
+            <div class="config-seguranca-card-titulo">
+
+              <i class="bx bx-lock-alt"></i>
+
+              <div>
+                <h2>Privacidade e acesso</h2>
+                <p>
+                  Configure opções adicionais de segurança e privacidade.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="config-seguranca-privacidade-opcoes">
+
+              <!-- ALERTAS DE NOVO ACESSO -->
+
+              <div class="config-seguranca-privacidade-item">
+
+                <i class="bx bx-envelope"></i>
+
+                <div class="config-seguranca-privacidade-info">
+
+                  <h3>Alertas de novo acesso</h3>
+
+                  <p>
+                    Receba notificações por e-mail quando um
+                    novo dispositivo acessar sua conta.
+                  </p>
+
+                </div>
+
+                <label class="config-seguranca-switch">
+
+                  <input
+                    type="checkbox"
+                    name="alertas_novo_acesso"
+                    checked
+                    aria-label="Alertas de novo acesso"
+                  >
+
+                  <span></span>
+
+                </label>
+
+              </div>
+
+              <!-- BLOQUEIO APÓS TENTATIVAS -->
+
+              <div class="config-seguranca-privacidade-item">
+
+                <i class="bx bx-shield-quarter"></i>
+
+                <div class="config-seguranca-privacidade-info">
+
+                  <h3>Bloqueio após tentativas</h3>
+
+                  <p>
+                    Bloqueia o acesso temporariamente após
+                    tentativas de login malsucedidas.
+                  </p>
+
+                </div>
+
+                <label class="config-seguranca-switch">
+
+                  <input
+                    type="checkbox"
+                    name="bloqueio_tentativas"
+                    checked
+                    aria-label="Bloqueio após tentativas"
+                  >
+
+                  <span></span>
+
+                </label>
+
+              </div>
+
+              <!-- TEMPO DE SESSÃO -->
+
+              <div class="config-seguranca-privacidade-item">
+
+                <i class="bx bx-time-five"></i>
+
+                <div class="config-seguranca-privacidade-info">
+
+                  <h3>Tempo de sessão</h3>
+
+                  <p>
+                    Tempo que a sessão permanece ativa no dispositivo.
+                  </p>
+
+                </div>
+
+                <select
+                  name="tempo_sessao"
+                  aria-label="Tempo de sessão"
+                >
+                  <option value="15">15 minutos</option>
+                  <option value="30" selected>30 minutos</option>
+                  <option value="60">1 hora</option>
+                  <option value="120">2 horas</option>
+                </select>
+
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

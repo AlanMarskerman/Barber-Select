@@ -1,0 +1,616 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barber Select - Backup</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL PRINCIPAL -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracao.html" class="active">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO SUPERIOR -->
+
+      <header class="topbar configuracoes-topbar">
+
+        <div class="head-left configuracoes-topbar-esquerda">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="configuracoes-pesquisa">
+
+            <i class="bx bx-search"></i>
+
+            <input
+              type="search"
+              placeholder="Pesquisar..."
+              aria-label="Pesquisa geral"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+
+            <i class="bx bx-chevron-down configuracoes-user-seta"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- CONFIGURAÇÕES -->
+
+      <section class="content configuracoes-page config-backup-page">
+
+        <!-- TÍTULO -->
+
+        <div class="configuracoes-cabecalho">
+
+          <i class="bx bx-cog"></i>
+
+          <div>
+            <h1>Configurações</h1>
+            <p>Gerencie as preferências e informações do sistema.</p>
+          </div>
+
+        </div>
+
+        <!-- LAYOUT INTERNO -->
+
+        <div class="configuracoes-layout config-backup-layout">
+
+          <!-- MENU INTERNO -->
+
+          <aside class="configuracoes-menu">
+
+            <nav aria-label="Seções de configurações">
+
+              <a href="configuracao.html">
+                <i class="bx bx-store"></i>
+                <span>Perfil da Barbearia</span>
+              </a>
+
+              <a href="usuarios.html">
+                <i class="bx bx-user"></i>
+                <span>Usuários</span>
+              </a>
+
+              <a href="notificacoes.html">
+                <i class="bx bx-bell"></i>
+                <span>Notificações</span>
+              </a>
+
+              <a href="pagamentos.html">
+                <i class="bx bx-credit-card"></i>
+                <span>Pagamentos</span>
+              </a>
+
+              <a href="integracoes.html">
+                <i class="bx bx-link"></i>
+                <span>Integrações</span>
+              </a>
+
+              <a href="seguranca.html">
+                <i class="bx bx-shield"></i>
+                <span>Segurança</span>
+              </a>
+
+              <a
+                href="backup.html"
+                class="configuracoes-menu-ativo"
+                aria-current="page"
+              >
+                <i class="bx bx-cloud"></i>
+                <span>Backup</span>
+              </a>
+
+            </nav>
+
+          </aside>
+
+          <!-- PAINEL DE BACKUP -->
+
+          <section class="config-backup-painel">
+
+            <div class="config-backup-cabecalho">
+
+              <h2>Backup</h2>
+
+              <p>
+                Gerencie as cópias de segurança dos dados do sistema.
+              </p>
+
+            </div>
+
+            <!-- STATUS DO BACKUP -->
+
+            <section class="config-backup-protegido">
+
+              <div class="config-backup-protegido-info">
+
+                <div class="config-backup-protegido-icone">
+                  <i class="bx bx-cloud-check"></i>
+                </div>
+
+                <div>
+
+                  <h3>Backup protegido</h3>
+
+                  <p>
+                    Último backup realizado hoje às 03:00
+                  </p>
+
+                  <span class="config-backup-status">
+                    <i class="bx bx-check-circle"></i>
+                    Concluído
+                  </span>
+
+                </div>
+
+              </div>
+
+              <button
+                type="button"
+                class="config-backup-btn-principal"
+              >
+                <i class="bx bx-cloud-upload"></i>
+                <span>Fazer backup agora</span>
+              </button>
+
+            </section>
+
+            <!-- INDICADORES -->
+
+            <div class="config-backup-indicadores">
+
+              <article class="config-backup-indicador">
+
+                <div class="config-backup-indicador-icone">
+                  <i class="bx bx-time-five"></i>
+                </div>
+
+                <div>
+                  <p>Último backup</p>
+                  <strong>Hoje, 03:00</strong>
+                </div>
+
+              </article>
+
+              <article class="config-backup-indicador">
+
+                <div class="config-backup-indicador-icone">
+                  <i class="bx bx-calendar"></i>
+                </div>
+
+                <div>
+                  <p>Próximo backup</p>
+                  <strong>Amanhã, 03:00</strong>
+                </div>
+
+              </article>
+
+              <article class="config-backup-indicador">
+
+                <div class="config-backup-indicador-icone">
+                  <i class="bx bx-data"></i>
+                </div>
+
+                <div>
+                  <p>Tamanho total</p>
+                  <strong>2,4 GB</strong>
+                </div>
+
+              </article>
+
+              <article class="config-backup-indicador">
+
+                <div class="config-backup-indicador-icone">
+                  <i class="bx bx-file"></i>
+                </div>
+
+                <div>
+                  <p>Arquivos protegidos</p>
+                  <strong>1.286</strong>
+                </div>
+
+              </article>
+
+            </div>
+
+            <!-- BACKUP AUTOMÁTICO -->
+
+            <section class="config-backup-automatico">
+
+              <div class="config-backup-secao-topo">
+
+                <div class="config-backup-secao-titulo">
+
+                  <i class="bx bx-cog"></i>
+
+                  <div>
+                    <h3>Backup automático</h3>
+                    <p>
+                      Configure o backup automático para manter seus
+                      dados sempre protegidos.
+                    </p>
+                  </div>
+
+                </div>
+
+                <div class="config-backup-automatico-status">
+
+                  <label class="config-backup-switch">
+
+                    <input
+                      type="checkbox"
+                      name="backup_automatico"
+                      checked
+                      aria-label="Backup automático"
+                    >
+
+                    <span></span>
+
+                  </label>
+
+                  <span>Backup automático ativado</span>
+
+                </div>
+
+              </div>
+
+              <form class="config-backup-form">
+
+                <div class="config-backup-campo">
+
+                  <label for="backup-frequencia">
+                    Frequência
+                  </label>
+
+                  <select
+                    id="backup-frequencia"
+                    name="frequencia"
+                  >
+                    <option value="diario" selected>
+                      Diariamente
+                    </option>
+                    <option value="semanal">
+                      Semanalmente
+                    </option>
+                    <option value="mensal">
+                      Mensalmente
+                    </option>
+                  </select>
+
+                </div>
+
+                <div class="config-backup-campo">
+
+                  <label for="backup-horario">
+                    Horário
+                  </label>
+
+                  <div class="config-backup-horario">
+
+                    <i class="bx bx-time-five"></i>
+
+                    <input
+                      type="time"
+                      id="backup-horario"
+                      name="horario"
+                      value="03:00"
+                    >
+
+                  </div>
+
+                </div>
+
+                <div class="config-backup-campo">
+
+                  <label for="backup-retencao">
+                    Manter por
+                  </label>
+
+                  <select
+                    id="backup-retencao"
+                    name="retencao"
+                  >
+                    <option value="7">7 dias</option>
+                    <option value="15">15 dias</option>
+                    <option value="30" selected>30 dias</option>
+                    <option value="60">60 dias</option>
+                    <option value="90">90 dias</option>
+                  </select>
+
+                </div>
+
+                <button
+                  type="submit"
+                  class="config-backup-btn-principal config-backup-btn-salvar"
+                >
+                  <i class="bx bx-save"></i>
+                  <span>Salvar configurações</span>
+                </button>
+
+              </form>
+
+            </section>
+
+            <!-- HISTÓRICO DE BACKUPS -->
+
+            <section class="config-backup-historico">
+
+              <div class="config-backup-secao-titulo">
+
+                <i class="bx bx-history"></i>
+
+                <div>
+                  <h3>Histórico de backups</h3>
+                  <p>
+                    Visualize e gerencie os backups realizados no sistema.
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="config-backup-tabela-container">
+
+                <table class="config-backup-tabela">
+
+                  <thead>
+                    <tr>
+                      <th>Data <i class="bx bx-sort"></i></th>
+                      <th>Tipo <i class="bx bx-sort"></i></th>
+                      <th>Tamanho <i class="bx bx-sort"></i></th>
+                      <th>Status <i class="bx bx-sort"></i></th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    <tr>
+
+                      <td>20/05/2025 03:00</td>
+                      <td>Automático</td>
+                      <td>2,4 GB</td>
+
+                      <td>
+                        <span class="config-backup-status">
+                          <i class="bx bxs-circle"></i>
+                          Concluído
+                        </span>
+                      </td>
+
+                      <td>
+                        <div class="config-backup-acoes">
+
+                          <button
+                            type="button"
+                            class="config-backup-btn-acao"
+                          >
+                            <i class="bx bx-download"></i>
+                            Baixar
+                          </button>
+
+                          <button
+                            type="button"
+                            class="config-backup-btn-acao"
+                          >
+                            <i class="bx bx-reset"></i>
+                            Restaurar
+                          </button>
+
+                        </div>
+                      </td>
+
+                    </tr>
+
+                    <tr>
+
+                      <td>19/05/2025 03:00</td>
+                      <td>Automático</td>
+                      <td>2,3 GB</td>
+
+                      <td>
+                        <span class="config-backup-status">
+                          <i class="bx bxs-circle"></i>
+                          Concluído
+                        </span>
+                      </td>
+
+                      <td>
+                        <div class="config-backup-acoes">
+
+                          <button
+                            type="button"
+                            class="config-backup-btn-acao"
+                          >
+                            <i class="bx bx-download"></i>
+                            Baixar
+                          </button>
+
+                          <button
+                            type="button"
+                            class="config-backup-btn-acao"
+                          >
+                            <i class="bx bx-reset"></i>
+                            Restaurar
+                          </button>
+
+                        </div>
+                      </td>
+
+                    </tr>
+
+                    <tr>
+
+                      <td>18/05/2025 16:42</td>
+                      <td>Manual</td>
+                      <td>2,3 GB</td>
+
+                      <td>
+                        <span class="config-backup-status">
+                          <i class="bx bxs-circle"></i>
+                          Concluído
+                        </span>
+                      </td>
+
+                      <td>
+                        <div class="config-backup-acoes">
+
+                          <button
+                            type="button"
+                            class="config-backup-btn-acao"
+                          >
+                            <i class="bx bx-download"></i>
+                            Baixar
+                          </button>
+
+                          <button
+                            type="button"
+                            class="config-backup-btn-acao"
+                          >
+                            <i class="bx bx-reset"></i>
+                            Restaurar
+                          </button>
+
+                        </div>
+                      </td>
+
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </section>
+
+          </section>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

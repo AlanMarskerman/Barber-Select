@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barber Select - Pagamentos</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL PRINCIPAL -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracao.html" class="active">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO SUPERIOR -->
+
+      <header class="topbar configuracoes-topbar">
+
+        <div class="head-left configuracoes-topbar-esquerda">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="configuracoes-pesquisa">
+            <i class="bx bx-search"></i>
+
+            <input
+              type="search"
+              placeholder="Pesquisar..."
+              aria-label="Pesquisa geral"
+            >
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+
+            <i class="bx bx-chevron-down configuracoes-user-seta"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- CONFIGURAÇÕES -->
+
+      <section class="content configuracoes-page">
+
+        <!-- TÍTULO DA PÁGINA -->
+
+        <div class="configuracoes-cabecalho">
+
+          <i class="bx bx-cog"></i>
+
+          <div>
+            <h1>Configurações</h1>
+            <p>Gerencie as preferências e informações do sistema.</p>
+          </div>
+
+        </div>
+
+        <!-- LAYOUT INTERNO -->
+
+        <div class="configuracoes-layout">
+
+          <!-- MENU INTERNO -->
+
+          <aside class="configuracoes-menu">
+
+            <nav aria-label="Seções de configurações">
+
+              <a href="configuracao.html">
+                <i class="bx bx-store"></i>
+                <span>Perfil da Barbearia</span>
+              </a>
+
+              <a href="usuarios.html">
+                <i class="bx bx-user"></i>
+                <span>Usuários</span>
+              </a>
+
+              <a href="notificacoes.html">
+                <i class="bx bx-bell"></i>
+                <span>Notificações</span>
+              </a>
+
+              <a
+                href="pagamentos.html"
+                class="configuracoes-menu-ativo"
+                aria-current="page"
+              >
+                <i class="bx bx-credit-card"></i>
+                <span>Pagamentos</span>
+              </a>
+
+              <a href="integracoes.html">
+                <i class="bx bx-link"></i>
+                <span>Integrações</span>
+              </a>
+
+              <a href="seguranca.html">
+                <i class="bx bx-shield"></i>
+                <span>Segurança</span>
+              </a>
+
+              <a href="backup.html">
+                <i class="bx bx-cloud"></i>
+                <span>Backup</span>
+              </a>
+
+            </nav>
+
+          </aside>
+
+          <!-- PAINEL DE PAGAMENTOS -->
+
+          <section class="config-pagamentos-painel">
+
+            <div class="config-pagamentos-cabecalho">
+              <h2>Pagamentos</h2>
+              <p>
+                Gerencie as formas de pagamento e cobranças do sistema.
+              </p>
+            </div>
+
+            <!-- INDICADORES FINANCEIROS -->
+
+            <div class="config-pagamentos-indicadores">
+
+              <!-- FATURAMENTO -->
+
+              <article class="config-pagamentos-indicador">
+
+                <div class="config-pagamentos-indicador-topo">
+
+                  <div class="config-pagamentos-indicador-icone">
+                    <i class="bx bx-bar-chart-alt-2"></i>
+                  </div>
+
+                  <div class="config-pagamentos-indicador-dados">
+                    <span>FATURAMENTO NO MÊS</span>
+                    <strong>R$ 42.680,00</strong>
+                  </div>
+
+                </div>
+
+                <div class="config-pagamentos-indicador-rodape">
+                  <span class="config-pagamentos-variacao">
+                    <i class="bx bx-trending-up"></i>
+                    +18%
+                  </span>
+                  <small>em relação ao mês anterior</small>
+                </div>
+
+              </article>
+
+              <!-- PAGAMENTOS RECEBIDOS -->
+
+              <article class="config-pagamentos-indicador">
+
+                <div class="config-pagamentos-indicador-topo">
+
+                  <div class="config-pagamentos-indicador-icone">
+                    <i class="bx bx-wallet"></i>
+                  </div>
+
+                  <div class="config-pagamentos-indicador-dados">
+                    <span>PAGAMENTOS RECEBIDOS</span>
+                    <strong>486</strong>
+                  </div>
+
+                </div>
+
+                <div class="config-pagamentos-indicador-rodape">
+                  <span class="config-pagamentos-variacao">
+                    <i class="bx bx-trending-up"></i>
+                    +12%
+                  </span>
+                  <small>em relação ao mês anterior</small>
+                </div>
+
+              </article>
+
+              <!-- PAGAMENTOS PENDENTES -->
+
+              <article class="config-pagamentos-indicador">
+
+                <div class="config-pagamentos-indicador-topo">
+
+                  <div class="config-pagamentos-indicador-icone">
+                    <i class="bx bx-time-five"></i>
+                  </div>
+
+                  <div class="config-pagamentos-indicador-dados">
+                    <span>PAGAMENTOS PENDENTES</span>
+                    <strong>12</strong>
+                  </div>
+
+                </div>
+
+                <div class="config-pagamentos-indicador-rodape">
+                  <span class="config-pagamentos-variacao">
+                    <i class="bx bx-trending-down"></i>
+                    -25%
+                  </span>
+                  <small>em relação ao mês anterior</small>
+                </div>
+
+              </article>
+
+              <!-- TAXAS -->
+
+              <article class="config-pagamentos-indicador">
+
+                <div class="config-pagamentos-indicador-topo">
+
+                  <div class="config-pagamentos-indicador-icone">
+                    <i class="bx bx-coin-stack"></i>
+                  </div>
+
+                  <div class="config-pagamentos-indicador-dados">
+                    <span>TAXAS</span>
+                    <strong>R$ 1.284,50</strong>
+                  </div>
+
+                </div>
+
+                <div class="config-pagamentos-indicador-rodape">
+                  <span class="config-pagamentos-variacao">
+                    <i class="bx bx-trending-up"></i>
+                    +8%
+                  </span>
+                  <small>em relação ao mês anterior</small>
+                </div>
+
+              </article>
+
+            </div>
+
+            <!-- CONFIGURAÇÕES EDITÁVEIS -->
+
+            <form class="config-pagamentos-formulario">
+
+              <div class="config-pagamentos-colunas">
+
+                <!-- FORMAS DE PAGAMENTO -->
+
+                <section class="config-pagamentos-card">
+
+                  <div class="config-pagamentos-card-cabecalho">
+                    <h3>Formas de pagamento aceitas</h3>
+                    <p>
+                      Escolha quais formas de pagamento estarão disponíveis
+                      na sua barbearia.
+                    </p>
+                  </div>
+
+                  <div class="config-pagamentos-metodos">
+
+                    <!-- PIX -->
+
+                    <div class="config-pagamentos-metodo">
+
+                      <div class="config-pagamentos-metodo-info">
+
+                        <div class="config-pagamentos-metodo-icone">
+                          <i class="bx bx-qr"></i>
+                        </div>
+
+                        <div>
+                          <h4>PIX</h4>
+                          <p>Receba pagamentos instantâneos via PIX.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-pagamentos-switch">
+
+                        <input
+                          type="checkbox"
+                          name="aceitar_pix"
+                          checked
+                          aria-label="Aceitar PIX"
+                        >
+
+                        <span></span>
+
+                      </label>
+
+                    </div>
+
+                    <!-- CARTÃO DE CRÉDITO -->
+
+                    <div class="config-pagamentos-metodo">
+
+                      <div class="config-pagamentos-metodo-info">
+
+                        <div class="config-pagamentos-metodo-icone">
+                          <i class="bx bx-credit-card"></i>
+                        </div>
+
+                        <div>
+                          <h4>Cartão de crédito</h4>
+                          <p>Aceite pagamentos com cartão de crédito.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-pagamentos-switch">
+
+                        <input
+                          type="checkbox"
+                          name="aceitar_credito"
+                          checked
+                          aria-label="Aceitar cartão de crédito"
+                        >
+
+                        <span></span>
+
+                      </label>
+
+                    </div>
+
+                    <!-- CARTÃO DE DÉBITO -->
+
+                    <div class="config-pagamentos-metodo">
+
+                      <div class="config-pagamentos-metodo-info">
+
+                        <div class="config-pagamentos-metodo-icone">
+                          <i class="bx bx-credit-card"></i>
+                        </div>
+
+                        <div>
+                          <h4>Cartão de débito</h4>
+                          <p>Aceite pagamentos com cartão de débito.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-pagamentos-switch">
+
+                        <input
+                          type="checkbox"
+                          name="aceitar_debito"
+                          checked
+                          aria-label="Aceitar cartão de débito"
+                        >
+
+                        <span></span>
+
+                      </label>
+
+                    </div>
+
+                    <!-- DINHEIRO -->
+
+                    <div class="config-pagamentos-metodo">
+
+                      <div class="config-pagamentos-metodo-info">
+
+                        <div class="config-pagamentos-metodo-icone">
+                          <i class="bx bx-dollar-circle"></i>
+                        </div>
+
+                        <div>
+                          <h4>Dinheiro</h4>
+                          <p>Registre pagamentos em dinheiro.</p>
+                        </div>
+
+                      </div>
+
+                      <label class="config-pagamentos-switch">
+
+                        <input
+                          type="checkbox"
+                          name="aceitar_dinheiro"
+                          checked
+                          aria-label="Aceitar dinheiro"
+                        >
+
+                        <span></span>
+
+                      </label>
+
+                    </div>
+
+                  </div>
+
+                </section>
+
+                <!-- CONFIGURAÇÕES DE PAGAMENTO -->
+
+                <section class="config-pagamentos-card">
+
+                  <div class="config-pagamentos-card-cabecalho">
+                    <h3>Configurações de pagamento</h3>
+                    <p>
+                      Ajuste as configurações de recebimento e cobranças.
+                    </p>
+                  </div>
+
+                  <div class="config-pagamentos-campos">
+
+                    <!-- CHAVE PIX -->
+
+                    <div class="config-pagamentos-campo config-pagamentos-campo-completo">
+
+                      <label for="pagamentos-chave-pix">
+                        Chave PIX
+                      </label>
+
+                      <input
+                        type="text"
+                        id="pagamentos-chave-pix"
+                        name="chave_pix"
+                        value="contato@barberselect.com"
+                      >
+
+                    </div>
+
+                    <!-- PARCELAMENTO -->
+
+                    <div class="config-pagamentos-campo">
+
+                      <label for="pagamentos-parcelamento">
+                        Parcelamento máximo
+                      </label>
+
+                      <select
+                        id="pagamentos-parcelamento"
+                        name="parcelamento_maximo"
+                      >
+                        <option value="1">1x</option>
+                        <option value="2">2x</option>
+                        <option value="3" selected>3x</option>
+                        <option value="4">4x</option>
+                        <option value="5">5x</option>
+                        <option value="6">6x</option>
+                        <option value="10">10x</option>
+                        <option value="12">12x</option>
+                      </select>
+
+                    </div>
+
+                    <!-- TAXA DO CARTÃO -->
+
+                    <div class="config-pagamentos-campo">
+
+                      <label for="pagamentos-taxa">
+                        Taxa do cartão
+                      </label>
+
+                      <input
+                        type="text"
+                        id="pagamentos-taxa"
+                        name="taxa_cartao"
+                        value="2,99%"
+                      >
+
+                      <small>
+                        Taxa cobrada sobre pagamentos no cartão
+                        de crédito e débito.
+                      </small>
+
+                    </div>
+
+                  </div>
+
+                  <!-- PAGAMENTO ONLINE -->
+
+                  <div class="config-pagamentos-online">
+
+                    <label class="config-pagamentos-switch">
+
+                      <input
+                        type="checkbox"
+                        name="pagamento_online"
+                        checked
+                        aria-label="Permitir pagamento online"
+                      >
+
+                      <span></span>
+
+                    </label>
+
+                    <div>
+                      <h4>Permitir pagamento online</h4>
+                      <p>
+                        Permite que os clientes paguem online no agendamento.
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <!-- SALVAR -->
+
+                  <div class="config-pagamentos-acoes">
+
+                    <button
+                      type="submit"
+                      class="config-pagamentos-btn-salvar"
+                    >
+                      <i class="bx bx-check"></i>
+                      <span>Salvar alterações</span>
+                    </button>
+
+                  </div>
+
+                </section>
+
+              </div>
+
+            </form>
+
+          </section>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

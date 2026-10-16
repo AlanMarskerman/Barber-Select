@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,109 +9,483 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
 
-      <!-- Links de navegação do menu -->
       <nav class="nav">
-        <a href="dashboard.html">
-          <i class="bx bx-grid-alt"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="agenda.html">
-          <i class="bx bx-calendar"></i>
-          <span>Agenda</span>
-        </a>
-        <a href="clients.html">
-          <i class="bx bx-user"></i>
-          <span>Clientes</span>
-        </a>
-        <a class="active" href="barbeiros.html">
-          <i class="bx bx-user-check"></i>
-          <span>Barbeiros</span>
-        </a>
-        <a href="services.html">
-          <i class="bx bx-cut"></i>
-          <span>Serviços</span>
-        </a>
-        <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
-          <span>Produtos</span>
-        </a>
-        <a href="venda.html">
-          <i class="bx bx-cart"></i>
-          <span>Vendas</span>
-        </a>
-        <a href="finance.html">
-          <i class="bx bx-wallet"></i>
-          <span>Financeiro</span>
-        </a>
-        <a href="relatorios.html">
-          <i class="bx bx-bar-chart-alt-2"></i>
-          <span>Relatórios</span>
-        </a>
-        <a href="avaliacoes.html">
-          <i class="bx bx-star"></i>
-          <span>Avaliações</span>
-        </a>
-        <a href="configuracoes.html">
-          <i class="bx bx-cog"></i>
-          <span>Configurações</span>
-        </a>
+        <a href="dashboard.html"><i class="bx bx-grid-alt"></i><span>Dashboard</span></a>
+        <a href="agenda.html"><i class="bx bx-calendar"></i><span>Agenda</span></a>
+        <a href="clients.html"><i class="bx bx-user"></i><span>Clientes</span></a>
+        <a class="active" href="barbeiros.html"><i class="bx bx-user-check"></i><span>Barbeiros</span></a>
+        <a href="services.html"><i class="bx bx-cut"></i><span>Serviços</span></a>
+        <a href="produtos.html"><i class="bx bx-briefcase"></i><span>Produtos</span></a>
+        <a href="venda.html"><i class="bx bx-cart"></i><span>Vendas</span></a>
+        <a href="finance.html"><i class="bx bx-wallet"></i><span>Financeiro</span></a>
+        <a href="relatorios.html"><i class="bx bx-bar-chart-alt-2"></i><span>Relatórios</span></a>
+        <a href="avaliacoes.html"><i class="bx bx-star"></i><span>Avaliações</span></a>
+        <a href="configuracao.html"><i class="bx bx-cog"></i><span>Configurações</span></a>
       </nav>
 
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+          <button class="menu-button hamb" type="button">
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
             <h1>Barbeiros</h1>
-            <p>Gerencie sua equipe</p>
+            <p>Gerencie os profissionais da sua barbearia</p>
+          </div>
+        </div>
+
+        <div class="head-right">
+          <button class="bell" type="button">
+            <i class="bx bx-bell"></i>
+            <span class="badge">2</span>
+          </button>
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar"></i>
+            <div class="user-info">
+              <b>Kenis cardoso</b>
+              <span>Administrador</span>
+            </div>
           </div>
         </div>
       </header>
 
-      <section class="content">
+      <section class="content barbeiros-page">
 
-        <section class="panel panel-pad" style="max-width: 800px; margin: auto;">
-          <form id="barber-form">
-            <h2>CADASTRAR BARBEIRO</h2>
-            <div style="display: grid; gap: 16px; margin-top: 20px;">
-              <input type="text" placeholder="Nome do barbeiro" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-              <input type="email" placeholder="E-mail" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-              <input type="text" placeholder="Telefone" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-              <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; cursor: pointer;">Cadastrar</button>
+        <!-- CARDS ORIGINAIS DO DASHBOARD -->
+        <div class="cards">
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-group"></i>
+              </div>
+              <div>
+                <div class="label">TOTAL DE BARBEIROS</div>
+                <div class="value" id="barbeiros-total">06</div>
+              </div>
             </div>
-          </form>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-user-check"></i>
+              </div>
+              <div>
+                <div class="label">BARBEIROS ATIVOS</div>
+                <div class="value" id="barbeiros-ativos">04</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-calendar-check"></i>
+              </div>
+              <div>
+                <div class="label">AGENDAMENTOS HOJE</div>
+                <div class="value" id="barbeiros-agendamentos">24</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-star"></i>
+              </div>
+              <div>
+                <div class="label">AVALIAÇÃO MÉDIA</div>
+                <div class="value" id="barbeiros-avaliacao">4,8</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- LISTAGEM DOS BARBEIROS -->
+        <section class="barbeiros-panel">
+          <div class="barbeiros-panel-header">
+            <div>
+              <h2>Equipe de Barbeiros</h2>
+              <p>Visualize e gerencie os profissionais cadastrados</p>
+            </div>
+            <a href="novbarbeiro.html" class="barbeiros-btn-novo">
+              <i class="bx bx-plus"></i>
+              Novo Barbeiro
+            </a>
+          </div>
+
+          <!-- FILTROS -->
+          <div class="barbeiros-filtros">
+            <div class="barbeiros-busca">
+              <i class="bx bx-search"></i>
+              <input
+                type="search"
+                id="barbeiros-pesquisa"
+                placeholder="Buscar barbeiro por nome ou especialidade..."
+                aria-label="Buscar barbeiros"
+              >
+            </div>
+
+            <select id="barbeiros-filtro-status" aria-label="Filtrar por status">
+              <option value="todos">Todos os status</option>
+              <option value="ativo">Ativo</option>
+              <option value="ferias">Férias</option>
+              <option value="inativo">Inativo</option>
+            </select>
+
+            <select id="barbeiros-filtro-especialidade" aria-label="Filtrar por especialidade">
+              <option value="todas">Todas especialidades</option>
+              <option value="corte">Corte</option>
+              <option value="barba">Barba</option>
+              <option value="degrade">Degradê</option>
+              <option value="fade">Fade</option>
+              <option value="infantil">Infantil</option>
+            </select>
+          </div>
+
+          <!-- TABELA COM ROLAGEM VERTICAL INTERNA -->
+          <div class="barbeiros-tabela-wrap">
+            <table class="barbeiros-tabela">
+              <thead>
+                <tr>
+                  <th>PROFISSIONAL</th>
+                  <th>ESPECIALIDADES</th>
+                  <th>CONTATO</th>
+                  <th>HORÁRIO</th>
+                  <th>STATUS</th>
+                  <th>AVALIAÇÃO</th>
+                  <th>AÇÕES</th>
+                </tr>
+              </thead>
+
+              <tbody id="barbeiros-tbody">
+
+                <!-- CARLOS SILVA -->
+                <tr data-status="ativo" data-especialidade="corte barba fade">
+                  <td>
+                    <div class="barbeiros-profissional">
+                      <div class="barbeiros-avatar"><i class="bx bx-user"></i></div>
+                      <div>
+                        <strong>Carlos Silva</strong>
+                        <span>Profissional #001</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-tags">
+                      <span>Corte</span>
+                      <span>Barba</span>
+                      <span>Fade</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-contato">
+                      <span>carlos@email.com</span>
+                      <small>(11) 98765-4321</small>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-horario">
+                      <i class="bx bx-time-five"></i>
+                      08:00 - 18:00
+                    </div>
+                  </td>
+                  <td>
+                    <span class="barbeiros-status ativo">
+                      <i class="bx bxs-circle"></i> Ativo
+                    </span>
+                  </td>
+                  <td>
+                    <span class="barbeiros-rating">
+                      <i class="bx bxs-star"></i> 4,9
+                    </span>
+                  </td>
+                  <td>
+                    <div class="barbeiros-acoes">
+                      <button type="button" class="barbeiros-acao visualizar" title="Visualizar"><i class="bx bx-show"></i></button>
+                      <button type="button" class="barbeiros-acao editar" title="Editar"><i class="bx bx-edit-alt"></i></button>
+                      <button type="button" class="barbeiros-acao excluir" title="Excluir"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- RAFAEL OLIVEIRA -->
+                <tr data-status="ativo" data-especialidade="corte degrade barba">
+                  <td>
+                    <div class="barbeiros-profissional">
+                      <div class="barbeiros-avatar"><i class="bx bx-user"></i></div>
+                      <div>
+                        <strong>Rafael Oliveira</strong>
+                        <span>Profissional #002</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-tags">
+                      <span>Corte</span>
+                      <span>Degradê</span>
+                      <span>Barba</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-contato">
+                      <span>rafael@email.com</span>
+                      <small>(11) 97654-3210</small>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-horario">
+                      <i class="bx bx-time-five"></i>
+                      09:00 - 19:00
+                    </div>
+                  </td>
+                  <td>
+                    <span class="barbeiros-status ativo">
+                      <i class="bx bxs-circle"></i> Ativo
+                    </span>
+                  </td>
+                  <td>
+                    <span class="barbeiros-rating">
+                      <i class="bx bxs-star"></i> 4,8
+                    </span>
+                  </td>
+                  <td>
+                    <div class="barbeiros-acoes">
+                      <button type="button" class="barbeiros-acao visualizar" title="Visualizar"><i class="bx bx-show"></i></button>
+                      <button type="button" class="barbeiros-acao editar" title="Editar"><i class="bx bx-edit-alt"></i></button>
+                      <button type="button" class="barbeiros-acao excluir" title="Excluir"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- LUCAS MENDES -->
+                <tr data-status="ativo" data-especialidade="barba corte">
+                  <td>
+                    <div class="barbeiros-profissional">
+                      <div class="barbeiros-avatar"><i class="bx bx-user"></i></div>
+                      <div>
+                        <strong>Lucas Mendes</strong>
+                        <span>Profissional #003</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-tags">
+                      <span>Barba</span>
+                      <span>Corte</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-contato">
+                      <span>lucas@email.com</span>
+                      <small>(11) 96543-2109</small>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-horario">
+                      <i class="bx bx-time-five"></i>
+                      08:00 - 17:00
+                    </div>
+                  </td>
+                  <td>
+                    <span class="barbeiros-status ativo">
+                      <i class="bx bxs-circle"></i> Ativo
+                    </span>
+                  </td>
+                  <td>
+                    <span class="barbeiros-rating">
+                      <i class="bx bxs-star"></i> 4,7
+                    </span>
+                  </td>
+                  <td>
+                    <div class="barbeiros-acoes">
+                      <button type="button" class="barbeiros-acao visualizar" title="Visualizar"><i class="bx bx-show"></i></button>
+                      <button type="button" class="barbeiros-acao editar" title="Editar"><i class="bx bx-edit-alt"></i></button>
+                      <button type="button" class="barbeiros-acao excluir" title="Excluir"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- ANDRÉ COSTA -->
+                <tr data-status="ferias" data-especialidade="corte infantil">
+                  <td>
+                    <div class="barbeiros-profissional">
+                      <div class="barbeiros-avatar"><i class="bx bx-user"></i></div>
+                      <div>
+                        <strong>André Costa</strong>
+                        <span>Profissional #004</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-tags">
+                      <span>Corte</span>
+                      <span>Infantil</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-contato">
+                      <span>andre@email.com</span>
+                      <small>(11) 95432-1098</small>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-horario">
+                      <i class="bx bx-time-five"></i>
+                      09:00 - 18:00
+                    </div>
+                  </td>
+                  <td>
+                    <span class="barbeiros-status ferias">
+                      <i class="bx bxs-circle"></i> Férias
+                    </span>
+                  </td>
+                  <td>
+                    <span class="barbeiros-rating">
+                      <i class="bx bxs-star"></i> 4,8
+                    </span>
+                  </td>
+                  <td>
+                    <div class="barbeiros-acoes">
+                      <button type="button" class="barbeiros-acao visualizar" title="Visualizar"><i class="bx bx-show"></i></button>
+                      <button type="button" class="barbeiros-acao editar" title="Editar"><i class="bx bx-edit-alt"></i></button>
+                      <button type="button" class="barbeiros-acao excluir" title="Excluir"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- PEDRO ALMEIDA -->
+                <tr data-status="ativo" data-especialidade="degrade fade barba">
+                  <td>
+                    <div class="barbeiros-profissional">
+                      <div class="barbeiros-avatar"><i class="bx bx-user"></i></div>
+                      <div>
+                        <strong>Pedro Almeida</strong>
+                        <span>Profissional #005</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-tags">
+                      <span>Degradê</span>
+                      <span>Fade</span>
+                      <span>Barba</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-contato">
+                      <span>pedro@email.com</span>
+                      <small>(11) 94321-0987</small>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-horario">
+                      <i class="bx bx-time-five"></i>
+                      10:00 - 20:00
+                    </div>
+                  </td>
+                  <td>
+                    <span class="barbeiros-status ativo">
+                      <i class="bx bxs-circle"></i> Ativo
+                    </span>
+                  </td>
+                  <td>
+                    <span class="barbeiros-rating">
+                      <i class="bx bxs-star"></i> 4,9
+                    </span>
+                  </td>
+                  <td>
+                    <div class="barbeiros-acoes">
+                      <button type="button" class="barbeiros-acao visualizar" title="Visualizar"><i class="bx bx-show"></i></button>
+                      <button type="button" class="barbeiros-acao editar" title="Editar"><i class="bx bx-edit-alt"></i></button>
+                      <button type="button" class="barbeiros-acao excluir" title="Excluir"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- BRUNO FERREIRA -->
+                <tr data-status="inativo" data-especialidade="corte barba">
+                  <td>
+                    <div class="barbeiros-profissional">
+                      <div class="barbeiros-avatar"><i class="bx bx-user"></i></div>
+                      <div>
+                        <strong>Bruno Ferreira</strong>
+                        <span>Profissional #006</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-tags">
+                      <span>Corte</span>
+                      <span>Barba</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-contato">
+                      <span>bruno@email.com</span>
+                      <small>(11) 93210-9876</small>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="barbeiros-horario">
+                      <i class="bx bx-time-five"></i>
+                      08:00 - 18:00
+                    </div>
+                  </td>
+                  <td>
+                    <span class="barbeiros-status inativo">
+                      <i class="bx bxs-circle"></i> Inativo
+                    </span>
+                  </td>
+                  <td>
+                    <span class="barbeiros-rating">
+                      <i class="bx bxs-star"></i> 4,6
+                    </span>
+                  </td>
+                  <td>
+                    <div class="barbeiros-acoes">
+                      <button type="button" class="barbeiros-acao visualizar" title="Visualizar"><i class="bx bx-show"></i></button>
+                      <button type="button" class="barbeiros-acao editar" title="Editar"><i class="bx bx-edit-alt"></i></button>
+                      <button type="button" class="barbeiros-acao excluir" title="Excluir"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RODAPÉ -->
+          <div class="barbeiros-footer">
+            <p id="barbeiros-contagem">Mostrando 6 de 6 profissionais</p>
+            <div class="barbeiros-paginacao">
+              <button type="button" aria-label="Página anterior" disabled>
+                <i class="bx bx-chevron-left"></i>
+              </button>
+              <button type="button" class="pagina-ativa" aria-current="page">1</button>
+              <button type="button" aria-label="Próxima página" disabled>
+                <i class="bx bx-chevron-right"></i>
+              </button>
+            </div>
+          </div>
         </section>
 
       </section>
     </main>
   </div>
-
-  <!-- JavaScript -->
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

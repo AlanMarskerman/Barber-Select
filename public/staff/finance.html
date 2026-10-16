@@ -1,259 +1,813 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Barber Select - Financeiro</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="../styles.css">
 </head>
+
 <body>
 
   <div class="app">
+
+    <!-- =====================================
+         MENU LATERAL
+         ===================================== -->
+
     <aside class="sidebar">
+
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
+
       <nav class="nav">
+
         <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
           <span>Dashboard</span>
         </a>
+
         <a href="agenda.html">
           <i class="bx bx-calendar"></i>
           <span>Agenda</span>
         </a>
+
         <a href="clients.html">
           <i class="bx bx-user"></i>
           <span>Clientes</span>
         </a>
+
         <a href="barbeiros.html">
           <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
+
         <a href="services.html">
           <i class="bx bx-cut"></i>
           <span>Serviços</span>
         </a>
+
         <a href="produtos.html">
           <i class="bx bx-briefcase"></i>
           <span>Produtos</span>
         </a>
+
         <a href="venda.html">
           <i class="bx bx-cart"></i>
           <span>Vendas</span>
         </a>
+
         <a class="active" href="finance.html">
           <i class="bx bx-wallet"></i>
           <span>Financeiro</span>
         </a>
+
         <a href="relatorios.html">
           <i class="bx bx-bar-chart-alt-2"></i>
           <span>Relatórios</span>
         </a>
+
         <a href="avaliacoes.html">
           <i class="bx bx-star"></i>
           <span>Avaliações</span>
         </a>
-        <a href="configuracoes.html">
+
+        <a href="configuracao.html">
           <i class="bx bx-cog"></i>
           <span>Configurações</span>
         </a>
+
       </nav>
+
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
+
     </aside>
 
+    <!-- =====================================
+         CONTEÚDO PRINCIPAL
+         ===================================== -->
+
     <main class="main">
+
+      <!-- CABEÇALHO PADRÃO -->
+
       <header class="topbar">
+
         <div class="head-left">
-          <button class="menu-button hamb" type="button">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
             <i class="bx bx-menu"></i>
           </button>
+
           <div class="title">
             <h1>Financeiro</h1>
-            <p>Controle financeiro da sua barbearia</p>
+            <p>Acompanhe as entradas e saídas da sua barbearia</p>
           </div>
+
         </div>
+
         <div class="head-right">
-          <button class="bell" type="button">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
             <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
           </button>
+
           <div class="user">
+
             <i class="bx bx-user-circle user-avatar"></i>
+
             <div class="user-info">
               <b>Usuário</b>
-              <span>Administrador</span>
+              <span>Colaborador</span>
             </div>
+
           </div>
+
         </div>
+
       </header>
 
-      <section class="content">
+      <!-- =====================================
+           PÁGINA FINANCEIRO
+           ===================================== -->
 
-        <div class="cards">
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-wallet"></i>
-              </div>
-              <div>
-                <div class="label">RECEITA DO DIA</div>
-                <div class="value">R$ 1.840</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-line-chart"></i>
-              </div>
-              <div>
-                <div class="label">TOTAL MÊS</div>
-                <div class="value">R$ 42.890</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-pie-chart-alt"></i>
-              </div>
-              <div>
-                <div class="label">TICKET MÉDIO</div>
-                <div class="value">R$ 76,67</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-hand"></i>
-              </div>
-              <div>
-                <div class="label">EM ESPERA</div>
-                <div class="value">R$ 840</div>
-              </div>
-            </div>
-          </article>
-        </div>
+      <section class="content financeiro-page">
 
-        <div class="dash-grid">
-          <section class="panel panel-pad">
-            <div class="panel-header">
-              <h2>TRANSACÇÕES RECENTES</h2>
-              <select class="period-select" aria-label="Filtrar período">
-                <option>Hoje</option>
-                <option>Esta semana</option>
-                <option>Este mês</option>
-                <option>Ano</option>
+        <!-- =================================
+             CARDS DE RESUMO
+             ================================= -->
+
+        <div class="financeiro-resumo-cards">
+
+          <!-- RECEITAS -->
+
+          <article class="financeiro-resumo-card">
+
+            <div class="financeiro-card-icone">
+              <i class="bx bx-up-arrow-alt"></i>
+            </div>
+
+            <div class="financeiro-card-info">
+              <span class="financeiro-card-titulo">Receitas</span>
+              <strong class="financeiro-card-valor">
+                R$ 4.350,00
+              </strong>
+
+              <p class="financeiro-card-comparacao">
+                <span class="financeiro-positivo">+12%</span>
+                em relação ao mês anterior
+              </p>
+            </div>
+
+          </article>
+
+          <!-- DESPESAS -->
+
+          <article class="financeiro-resumo-card">
+
+            <div class="financeiro-card-icone financeiro-icone-despesa">
+              <i class="bx bx-down-arrow-alt"></i>
+            </div>
+
+            <div class="financeiro-card-info">
+              <span class="financeiro-card-titulo">Despesas</span>
+              <strong class="financeiro-card-valor financeiro-valor-despesa">
+                R$ 850,00
+              </strong>
+
+              <p class="financeiro-card-comparacao">
+                <span class="financeiro-negativo">+8%</span>
+                em relação ao mês anterior
+              </p>
+            </div>
+
+          </article>
+
+          <!-- SALDO -->
+
+          <article class="financeiro-resumo-card">
+
+            <div class="financeiro-card-icone">
+              <i class="bx bx-wallet"></i>
+            </div>
+
+            <div class="financeiro-card-info">
+              <span class="financeiro-card-titulo">Saldo do mês</span>
+              <strong class="financeiro-card-valor">
+                R$ 3.500,00
+              </strong>
+            </div>
+
+          </article>
+
+          <!-- PERÍODO -->
+
+          <article class="financeiro-resumo-card financeiro-card-periodo">
+
+            <div class="financeiro-card-icone">
+              <i class="bx bx-calendar-check"></i>
+            </div>
+
+            <div class="financeiro-card-info">
+              <label class="financeiro-card-titulo" for="financeiro-periodo">
+                Período atual
+              </label>
+
+              <select id="financeiro-periodo" aria-label="Selecionar período">
+                <option value="2025-09" selected>Setembro de 2025</option>
+                <option value="2025-08">Agosto de 2025</option>
+                <option value="2025-07">Julho de 2025</option>
+                <option value="2025-06">Junho de 2025</option>
+                <option value="2025-05">Maio de 2025</option>
               </select>
             </div>
-            <div class="table-wrap" style="margin-top: 16px;">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>_data</th>
-                    <th>Descrição</th>
-                    <th>Tipo</th>
-                    <th>Valor</th>
-                    <th>Pagamento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><small>12/10/2026</small></td>
-                    <td><b>Carlos Silva</b><br><small>Corte Social</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 50,00</span></td>
-                    <td>Dinheiro</td>
-                  </tr>
-                  <tr>
-                    <td><small>12/10/2026</small></td>
-                    <td><b>João Santos</b><br><small>Barba</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 40,00</span></td>
-                    <td>PIX</td>
-                  </tr>
-                  <tr>
-                    <td><small>11/10/2026</small></td>
-                    <td><b>Pedro Costa</b><br><small>Combo</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 80,00</span></td>
-                    <td>Crédito</td>
-                  </tr>
-                  <tr>
-                    <td><small>11/10/2026</small></td>
-                    <td><b>Estoque Shampoo</b><br><small>Compra</small></td>
-                    <td>Saída</td>
-                    <td><span class="pill yellow">-R$ 300,00</span></td>
-                    <td>PIX</td>
-                  </tr>
-                  <tr>
-                    <td><small>10/10/2026</small></td>
-                    <td><b>Lucas Oliveira</b><br><small>Corte</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 50,00</span></td>
-                    <td>Dinheiro</td>
-                  </tr>
-                  <tr>
-                    <td><small>10/10/2026</small></td>
-                    <td><b>Rafael Lima</b><br><small>Barba</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 40,00</span></td>
-                    <td>Débito</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
 
-          <section class="panel panel-pad appointments-panel">
-            <div class="panel-header">
-              <h2>RESUMO FINANCEIRO</h2>
-            </div>
-            <div style="margin-top: 20px; display: grid; gap: 16px;">
-              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px; display: flex; justify-content: space-between;">
-                <div>
-                  <small style="color: var(--muted);">ENTRADAS HOJE</small>
-                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 1.840</div>
-                </div>
-                <div style="text-align: right;">
-                  <small style="color: var(--muted);">SAÍDAS HOJE</small>
-                  <div style="font-size: 24px; font-weight: 700; color: var(--yellow);">R$ 300</div>
-                </div>
-              </div>
-              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px; display: flex; justify-content: space-between;">
-                <div>
-                  <small style="color: var(--muted);">ENTRADAS ESTA SEMANA</small>
-                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 8.450</div>
-                </div>
-                <div style="text-align: right;">
-                  <small style="color: var(--muted);">SALDO ATUAL</small>
-                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 12.450</div>
-                </div>
-              </div>
-              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <small style="color: var(--muted);">META DO MÊS</small>
-                  <span style="font-weight: 700; color: var(--green);">R$ 50.000</span>
-                </div>
-                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 85%; height: 100%; background: var(--green); border-radius: 4px;"></div>
-                </div>
-                <small style="color: var(--muted);">Progresso: 85%</small>
-              </div>
-            </div>
-          </section>
+          </article>
+
         </div>
 
+        <!-- =================================
+             GRÁFICOS
+             ================================= -->
+
+        <div class="financeiro-graficos-grid">
+
+          <!-- GRÁFICO DE BARRAS -->
+
+          <section class="financeiro-grafico-card financeiro-grafico-barras-card">
+
+            <div class="financeiro-grafico-cabecalho">
+
+              <div>
+                <h2>Receitas e Despesas</h2>
+                <p>Visualize o resumo financeiro do período</p>
+              </div>
+
+              <div class="financeiro-grafico-legenda">
+
+                <span>
+                  <i class="financeiro-legenda-ponto financeiro-ponto-receita"></i>
+                  Receitas
+                </span>
+
+                <span>
+                  <i class="financeiro-legenda-ponto financeiro-ponto-despesa"></i>
+                  Despesas
+                </span>
+
+              </div>
+
+            </div>
+
+            <div
+              class="financeiro-barras-area"
+              role="img"
+              aria-label="Gráfico ilustrativo de receitas e despesas por semana, com receitas maiores que despesas nas quatro semanas."
+            >
+
+              <!-- ESCALA VERTICAL -->
+
+              <div class="financeiro-barras-escala">
+                <span>R$ 2.000</span>
+                <span>R$ 1.500</span>
+                <span>R$ 1.000</span>
+                <span>R$ 500</span>
+                <span>R$ 0</span>
+              </div>
+
+              <!-- ÁREA DO GRÁFICO -->
+
+              <div class="financeiro-barras-conteudo">
+
+                <div class="financeiro-barras-plotagem">
+
+                  <div class="financeiro-linha-grade financeiro-linha-1"></div>
+                  <div class="financeiro-linha-grade financeiro-linha-2"></div>
+                  <div class="financeiro-linha-grade financeiro-linha-3"></div>
+                  <div class="financeiro-linha-grade financeiro-linha-4"></div>
+                  <div class="financeiro-linha-grade financeiro-linha-5"></div>
+
+                  <!-- SEMANA 1 -->
+
+                  <div class="financeiro-barras-grupo">
+
+                    <div
+                      class="financeiro-barra financeiro-barra-receita"
+                      style="--altura: 52.5%;"
+                      title="Receitas da semana 1: R$ 1.050,00"
+                    ></div>
+
+                    <div
+                      class="financeiro-barra financeiro-barra-despesa"
+                      style="--altura: 15%;"
+                      title="Despesas da semana 1: R$ 300,00"
+                    ></div>
+
+                  </div>
+
+                  <!-- SEMANA 2 -->
+
+                  <div class="financeiro-barras-grupo">
+
+                    <div
+                      class="financeiro-barra financeiro-barra-receita"
+                      style="--altura: 80%;"
+                      title="Receitas da semana 2: R$ 1.600,00"
+                    ></div>
+
+                    <div
+                      class="financeiro-barra financeiro-barra-despesa"
+                      style="--altura: 28%;"
+                      title="Despesas da semana 2: R$ 560,00"
+                    ></div>
+
+                  </div>
+
+                  <!-- SEMANA 3 -->
+
+                  <div class="financeiro-barras-grupo">
+
+                    <div
+                      class="financeiro-barra financeiro-barra-receita"
+                      style="--altura: 67.5%;"
+                      title="Receitas da semana 3: R$ 1.350,00"
+                    ></div>
+
+                    <div
+                      class="financeiro-barra financeiro-barra-despesa"
+                      style="--altura: 30%;"
+                      title="Despesas da semana 3: R$ 600,00"
+                    ></div>
+
+                  </div>
+
+                  <!-- SEMANA 4 -->
+
+                  <div class="financeiro-barras-grupo">
+
+                    <div
+                      class="financeiro-barra financeiro-barra-receita"
+                      style="--altura: 97.5%;"
+                      title="Receitas da semana 4: R$ 1.950,00"
+                    ></div>
+
+                    <div
+                      class="financeiro-barra financeiro-barra-despesa"
+                      style="--altura: 30%;"
+                      title="Despesas da semana 4: R$ 600,00"
+                    ></div>
+
+                  </div>
+
+                </div>
+
+                <div class="financeiro-barras-rotulos">
+                  <span>Semana 1</span>
+                  <span>Semana 2</span>
+                  <span>Semana 3</span>
+                  <span>Semana 4</span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- GRÁFICO DE ROSCA -->
+
+          <section class="financeiro-grafico-card financeiro-grafico-rosca-card">
+
+            <div class="financeiro-grafico-cabecalho">
+
+              <div>
+                <h2>Categorias de despesas</h2>
+                <p>Veja onde seu dinheiro está sendo gasto</p>
+              </div>
+
+            </div>
+
+            <div class="financeiro-rosca-conteudo">
+
+              <div
+                class="financeiro-rosca"
+                role="img"
+                aria-label="Distribuição das despesas: Produtos 40%, Contas fixas 25%, Equipamentos 15%, Marketing 10% e Outros 10%."
+              >
+                <div class="financeiro-rosca-centro">
+                  <strong>R$ 850,00</strong>
+                  <span>Total</span>
+                </div>
+              </div>
+
+              <div class="financeiro-rosca-legenda">
+
+                <div class="financeiro-rosca-legenda-item">
+                  <span>
+                    <i class="financeiro-legenda-ponto financeiro-cor-produtos"></i>
+                    Produtos
+                  </span>
+                  <strong>40%</strong>
+                </div>
+
+                <div class="financeiro-rosca-legenda-item">
+                  <span>
+                    <i class="financeiro-legenda-ponto financeiro-cor-contas"></i>
+                    Contas fixas
+                  </span>
+                  <strong>25%</strong>
+                </div>
+
+                <div class="financeiro-rosca-legenda-item">
+                  <span>
+                    <i class="financeiro-legenda-ponto financeiro-cor-equipamentos"></i>
+                    Equipamentos
+                  </span>
+                  <strong>15%</strong>
+                </div>
+
+                <div class="financeiro-rosca-legenda-item">
+                  <span>
+                    <i class="financeiro-legenda-ponto financeiro-cor-marketing"></i>
+                    Marketing
+                  </span>
+                  <strong>10%</strong>
+                </div>
+
+                <div class="financeiro-rosca-legenda-item">
+                  <span>
+                    <i class="financeiro-legenda-ponto financeiro-cor-outros"></i>
+                    Outros
+                  </span>
+                  <strong>10%</strong>
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+        <!-- =================================
+             MOVIMENTAÇÕES
+             ================================= -->
+
+        <section class="financeiro-movimentacoes">
+
+          <!-- CABEÇALHO E FILTROS -->
+
+          <div class="financeiro-movimentacoes-topo">
+
+            <div class="financeiro-movimentacoes-titulo">
+              <h2>Movimentações</h2>
+              <p>Todas as entradas e saídas registradas</p>
+            </div>
+
+            <div class="financeiro-filtros">
+
+              <div class="financeiro-busca">
+                <i class="bx bx-search"></i>
+
+                <input
+                  type="search"
+                  id="financeiro-busca"
+                  placeholder="Buscar por descrição..."
+                  aria-label="Buscar movimentação"
+                >
+              </div>
+
+              <select
+                id="financeiro-filtro-categoria"
+                aria-label="Filtrar por categoria"
+              >
+                <option value="todas">Todas as categorias</option>
+                <option value="servicos">Serviços</option>
+                <option value="produtos">Produtos</option>
+                <option value="contas-fixas">Contas fixas</option>
+                <option value="equipamentos">Equipamentos</option>
+                <option value="marketing">Marketing</option>
+                <option value="outros">Outros</option>
+              </select>
+
+              <select
+                id="financeiro-filtro-tipo"
+                aria-label="Filtrar por tipo"
+              >
+                <option value="todos">Todos os tipos</option>
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saída</option>
+              </select>
+
+              <a
+                href="nova-movimentacao.html"
+                class="financeiro-btn-nova"
+              >
+                <i class="bx bx-plus"></i>
+                <span>Nova movimentação</span>
+              </a>
+
+            </div>
+
+          </div>
+
+          <!-- TABELA -->
+
+          <div class="financeiro-tabela-wrap">
+
+            <table class="financeiro-tabela">
+
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Tipo</th>
+                  <th>Valor</th>
+                  <th>Forma de pagamento</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <!-- MOVIMENTAÇÃO 1 -->
+
+                <tr>
+                  <td>07/09/2025</td>
+                  <td>Corte – João Silva</td>
+
+                  <td>
+                    <span class="financeiro-categoria financeiro-cat-servicos">
+                      Serviços
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="financeiro-tipo financeiro-tipo-entrada">
+                      <i class="bx bx-up-arrow-alt"></i>
+                      Entrada
+                    </span>
+                  </td>
+
+                  <td>
+                    <strong class="financeiro-valor-entrada">
+                      R$ 35,00
+                    </strong>
+                  </td>
+
+                  <td>Dinheiro</td>
+
+                  <td>
+                    <div class="financeiro-acoes">
+
+                      <button type="button" aria-label="Editar movimentação">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+
+                      <button type="button" aria-label="Mais opções">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- MOVIMENTAÇÃO 2 -->
+
+                <tr>
+                  <td>07/09/2025</td>
+                  <td>Compra de pomadas</td>
+
+                  <td>
+                    <span class="financeiro-categoria financeiro-cat-produtos">
+                      Produtos
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="financeiro-tipo financeiro-tipo-saida">
+                      <i class="bx bx-down-arrow-alt"></i>
+                      Saída
+                    </span>
+                  </td>
+
+                  <td>
+                    <strong class="financeiro-valor-saida">
+                      R$ 120,00
+                    </strong>
+                  </td>
+
+                  <td>Cartão de crédito</td>
+
+                  <td>
+                    <div class="financeiro-acoes">
+
+                      <button type="button" aria-label="Editar movimentação">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+
+                      <button type="button" aria-label="Mais opções">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- MOVIMENTAÇÃO 3 -->
+
+                <tr>
+                  <td>06/09/2025</td>
+                  <td>Barba – Pedro Lima</td>
+
+                  <td>
+                    <span class="financeiro-categoria financeiro-cat-servicos">
+                      Serviços
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="financeiro-tipo financeiro-tipo-entrada">
+                      <i class="bx bx-up-arrow-alt"></i>
+                      Entrada
+                    </span>
+                  </td>
+
+                  <td>
+                    <strong class="financeiro-valor-entrada">
+                      R$ 42,00
+                    </strong>
+                  </td>
+
+                  <td>PIX</td>
+
+                  <td>
+                    <div class="financeiro-acoes">
+
+                      <button type="button" aria-label="Editar movimentação">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+
+                      <button type="button" aria-label="Mais opções">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- MOVIMENTAÇÃO 4 -->
+
+                <tr>
+                  <td>06/09/2025</td>
+                  <td>Conta de água</td>
+
+                  <td>
+                    <span class="financeiro-categoria financeiro-cat-contas">
+                      Contas fixas
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="financeiro-tipo financeiro-tipo-saida">
+                      <i class="bx bx-down-arrow-alt"></i>
+                      Saída
+                    </span>
+                  </td>
+
+                  <td>
+                    <strong class="financeiro-valor-saida financeiro-valor-neutro">
+                      R$ 80,00
+                    </strong>
+                  </td>
+
+                  <td>PIX</td>
+
+                  <td>
+                    <div class="financeiro-acoes">
+
+                      <button type="button" aria-label="Editar movimentação">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+
+                      <button type="button" aria-label="Mais opções">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- MOVIMENTAÇÃO 5 -->
+
+                <tr>
+                  <td>05/09/2025</td>
+                  <td>Venda de shampoo</td>
+
+                  <td>
+                    <span class="financeiro-categoria financeiro-cat-produtos">
+                      Produtos
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="financeiro-tipo financeiro-tipo-entrada">
+                      <i class="bx bx-up-arrow-alt"></i>
+                      Entrada
+                    </span>
+                  </td>
+
+                  <td>
+                    <strong class="financeiro-valor-entrada">
+                      R$ 28,00
+                    </strong>
+                  </td>
+
+                  <td>Cartão de débito</td>
+
+                  <td>
+                    <div class="financeiro-acoes">
+
+                      <button type="button" aria-label="Editar movimentação">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+
+                      <button type="button" aria-label="Mais opções">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <!-- PAGINAÇÃO -->
+
+          <div class="financeiro-tabela-rodape">
+
+            <p>Mostrando 1 a 5 de 24 movimentações</p>
+
+            <nav
+              class="financeiro-paginacao"
+              aria-label="Paginação de movimentações"
+            >
+
+              <button type="button" disabled aria-label="Página anterior">
+                <i class="bx bx-chevron-left"></i>
+              </button>
+
+              <button type="button" class="ativo" aria-current="page">
+                1
+              </button>
+
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button">4</button>
+              <button type="button">5</button>
+
+              <button type="button" aria-label="Próxima página">
+                <i class="bx bx-chevron-right"></i>
+              </button>
+
+            </nav>
+
+          </div>
+
+        </section>
+
       </section>
+
     </main>
+
   </div>
 
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

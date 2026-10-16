@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,10 +11,12 @@
 <body>
 
   <div class="app">
+
     <aside class="sidebar">
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
+
       <nav class="nav">
         <a href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
@@ -55,11 +58,12 @@
           <i class="bx bx-star"></i>
           <span>Avaliações</span>
         </a>
-        <a href="configuracoes.html">
+        <a href="configuracao.html">
           <i class="bx bx-cog"></i>
           <span>Configurações</span>
         </a>
       </nav>
+
       <button class="logout" type="button">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
@@ -67,21 +71,25 @@
     </aside>
 
     <main class="main">
+
       <header class="topbar">
         <div class="head-left">
-          <button class="menu-button hamb" type="button">
+          <button class="menu-button hamb" type="button" aria-label="Menu">
             <i class="bx bx-menu"></i>
           </button>
+
           <div class="title">
             <h1>Serviços</h1>
-            <p>Gerencie os serviços oferecidos pela barbearia</p>
+            <p>Gerencie os serviços oferecidos pela sua barbearia</p>
           </div>
         </div>
+
         <div class="head-right">
-          <button class="bell" type="button">
+          <button class="bell" type="button" aria-label="Notificações">
             <i class="bx bx-bell"></i>
             <span class="badge">1</span>
           </button>
+
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
@@ -92,171 +100,359 @@
         </div>
       </header>
 
-      <section class="content">
+      <section class="content servicos-page">
 
+        <!-- CARDS: MESMAS CLASSES DO DASHBOARD -->
         <div class="cards">
+
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
                 <i class="bx bx-cut"></i>
               </div>
               <div>
-                <div class="label">SERVIÇOS ATIVOS</div>
-                <div class="value">8</div>
+                <div class="label">TOTAL DE SERVIÇOS</div>
+                <div class="value">18</div>
+                <div class="servicos-card-info servicos-info-verde">
+                  <i class="bx bxs-circle"></i>
+                  <span>15 ativos</span>
+                </div>
               </div>
             </div>
           </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-cart"></i>
-              </div>
-              <div>
-                <div class="label">MELHOR AVALIADO</div>
-                <div class="value">Combo</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-diamond"></i>
-              </div>
-              <div>
-                <div class="label">SERVIÇO DE LUXO</div>
-                <div class="value">Premium</div>
-              </div>
-            </div>
-          </article>
+
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
                 <i class="bx bx-star"></i>
               </div>
               <div>
-                <div class="label">MÉDIA AVALIAÇÃO</div>
-                <div class="value">4.8</div>
+                <div class="label">SERVIÇO MAIS AGENDADO</div>
+                <div class="value">Corte Social</div>
+                <div class="servicos-card-info">
+                  186 agendamentos
+                </div>
               </div>
             </div>
           </article>
-        </div>
 
-        <div class="dash-grid">
-          <section class="panel panel-pad">
-            <div class="panel-header">
-              <h2>NOVO SERVIÇO</h2>
-            </div>
-            <form id="service-form" style="margin-top: 20px;">
-              <div style="display: grid; gap: 16px;">
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Nome do Serviço</label>
-                  <input type="text" required placeholder="Ex: Corte Social" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Descrição</label>
-                  <textarea rows="3" placeholder="Descrição do serviço" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;"></textarea>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Preço (R$)</label>
-                    <input type="number" step="0.01" required placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Duração (min)</label>
-                    <input type="number" required placeholder="30" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Categoria</label>
-                  <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                    <option value="corte">Corte de Cabelo</option>
-                    <option value="barba">Barba</option>
-                    <option value="combo">Combo</option>
-                    <option value="luxo">Serviço Premium</option>
-                    <option value="adicional">Adicional</option>
-                  </select>
-                </div>
-                <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer;">
-                  <i class="bx bx-plus"></i> Cadastrar Serviço
-                </button>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-dollar-circle"></i>
               </div>
-            </form>
-          </section>
+              <div>
+                <div class="label">PREÇO MÉDIO</div>
+                <div class="value">R$ 52,40</div>
+                <div class="servicos-card-info">
+                  <i class="bx bx-trending-up servicos-info-verde"></i>
+                  <strong class="servicos-info-verde">+4%</strong>
+                  <span>no período</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-          <section class="panel panel-pad appointments-panel">
-            <div class="panel-header">
-              <h2>SERVIÇOS ATIVOS</h2>
-              <a class="view-all" href="services.html">Ver todos</a>
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle">
+                <i class="bx bx-time-five"></i>
+              </div>
+              <div>
+                <div class="label">TEMPO MÉDIO</div>
+                <div class="value">42 min</div>
+                <div class="servicos-card-info">
+                  por atendimento
+                </div>
+              </div>
             </div>
-            <div class="table-wrap" style="margin-top: 16px;">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td><b>Corte Social</b><br><small>45 min</small></td>
-                    <td>R$ 50,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Barba Completa</b><br><small>30 min</small></td>
-                    <td>R$ 40,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Combo Corte + Barba</b><br><small>60 min</small></td>
-                    <td>R$ 80,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Barba Terapêutica</b><br><small>40 min</small></td>
-                    <td>R$ 55,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Corte Degradê</b><br><small>40 min</small></td>
-                    <td>R$ 55,00</td>
-                    <td><span class="pill yellow">Pausado</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
+          </article>
+
         </div>
+
+        <!-- PAINEL DE SERVIÇOS -->
+        <section class="servicos-panel">
+
+          <div class="servicos-panel-topo">
+
+            <div class="servicos-panel-titulo">
+              <h2>SERVIÇOS CADASTRADOS</h2>
+              <p>Visualize, edite ou cadastre os serviços da barbearia.</p>
+            </div>
+
+            <div class="servicos-filtros">
+
+              <div class="servicos-campo-busca">
+                <i class="bx bx-search"></i>
+                <input
+                  type="search"
+                  id="servicos-busca"
+                  placeholder="Buscar por serviço..."
+                  aria-label="Buscar por serviço"
+                >
+              </div>
+
+              <select id="servicos-categoria" aria-label="Filtrar por categoria">
+                <option value="todas">Todas as categorias</option>
+                <option value="cabelo">Cabelo</option>
+                <option value="barba">Barba</option>
+                <option value="combo">Combo</option>
+                <option value="estetica">Estética</option>
+                <option value="tratamento">Tratamento</option>
+              </select>
+
+              <select id="servicos-status" aria-label="Filtrar por status">
+                <option value="todos">Todos os status</option>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+              </select>
+
+              <a class="servicos-btn-novo" href="novservice.html">
+                <i class="bx bx-plus"></i>
+                <span>Novo Serviço</span>
+              </a>
+
+            </div>
+          </div>
+
+          <!-- TABELA -->
+          <div class="servicos-tabela-wrap">
+            <table class="servicos-tabela">
+
+              <colgroup>
+                <col class="servicos-col-nome">
+                <col class="servicos-col-categoria">
+                <col class="servicos-col-duracao">
+                <col class="servicos-col-preco">
+                <col class="servicos-col-agendamentos">
+                <col class="servicos-col-status">
+                <col class="servicos-col-acoes">
+              </colgroup>
+
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Categoria</th>
+                  <th>Duração</th>
+                  <th>Preço</th>
+                  <th>Agendamentos</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>
+                    <div class="servicos-nome">
+                      <span class="servicos-icone">
+                        <i class="bx bx-cut"></i>
+                      </span>
+                      <strong>Corte Social</strong>
+                    </div>
+                  </td>
+                  <td class="servicos-texto-suave">Cabelo</td>
+                  <td class="servicos-texto-suave">40 min</td>
+                  <td>R$ 45,00</td>
+                  <td>186</td>
+                  <td>
+                    <span class="servicos-status ativo">Ativo</span>
+                  </td>
+                  <td>
+                    <div class="servicos-acoes">
+                      <button type="button" class="servicos-acao visualizar" title="Visualizar Corte Social" aria-label="Visualizar Corte Social">
+                        <i class="bx bx-show"></i>
+                      </button>
+                      <button type="button" class="servicos-acao editar" title="Editar Corte Social" aria-label="Editar Corte Social">
+                        <i class="bx bx-pencil"></i>
+                      </button>
+                      <button type="button" class="servicos-acao excluir" title="Excluir Corte Social" aria-label="Excluir Corte Social">
+                        <i class="bx bx-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="servicos-nome">
+                      <span class="servicos-icone">
+                        <i class="bx bx-razor"></i>
+                      </span>
+                      <strong>Barba</strong>
+                    </div>
+                  </td>
+                  <td class="servicos-texto-suave">Barba</td>
+                  <td class="servicos-texto-suave">30 min</td>
+                  <td>R$ 35,00</td>
+                  <td>76</td>
+                  <td>
+                    <span class="servicos-status ativo">Ativo</span>
+                  </td>
+                  <td>
+                    <div class="servicos-acoes">
+                      <button type="button" class="servicos-acao visualizar" title="Visualizar Barba" aria-label="Visualizar Barba"><i class="bx bx-show"></i></button>
+                      <button type="button" class="servicos-acao editar" title="Editar Barba" aria-label="Editar Barba"><i class="bx bx-pencil"></i></button>
+                      <button type="button" class="servicos-acao excluir" title="Excluir Barba" aria-label="Excluir Barba"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="servicos-nome">
+                      <span class="servicos-icone">
+                        <i class="bx bx-cut"></i>
+                      </span>
+                      <strong>Barba + Corte</strong>
+                    </div>
+                  </td>
+                  <td class="servicos-texto-suave">Combo</td>
+                  <td class="servicos-texto-suave">60 min</td>
+                  <td>R$ 70,00</td>
+                  <td>142</td>
+                  <td>
+                    <span class="servicos-status ativo">Ativo</span>
+                  </td>
+                  <td>
+                    <div class="servicos-acoes">
+                      <button type="button" class="servicos-acao visualizar" title="Visualizar Barba + Corte" aria-label="Visualizar Barba + Corte"><i class="bx bx-show"></i></button>
+                      <button type="button" class="servicos-acao editar" title="Editar Barba + Corte" aria-label="Editar Barba + Corte"><i class="bx bx-pencil"></i></button>
+                      <button type="button" class="servicos-acao excluir" title="Excluir Barba + Corte" aria-label="Excluir Barba + Corte"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="servicos-nome">
+                      <span class="servicos-icone">
+                        <i class="bx bx-cut"></i>
+                      </span>
+                      <strong>Degradê</strong>
+                    </div>
+                  </td>
+                  <td class="servicos-texto-suave">Cabelo</td>
+                  <td class="servicos-texto-suave">50 min</td>
+                  <td>R$ 55,00</td>
+                  <td>118</td>
+                  <td>
+                    <span class="servicos-status ativo">Ativo</span>
+                  </td>
+                  <td>
+                    <div class="servicos-acoes">
+                      <button type="button" class="servicos-acao visualizar" title="Visualizar Degradê" aria-label="Visualizar Degradê"><i class="bx bx-show"></i></button>
+                      <button type="button" class="servicos-acao editar" title="Editar Degradê" aria-label="Editar Degradê"><i class="bx bx-pencil"></i></button>
+                      <button type="button" class="servicos-acao excluir" title="Excluir Degradê" aria-label="Excluir Degradê"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="servicos-nome">
+                      <span class="servicos-icone">
+                        <i class="bx bx-sparkles"></i>
+                      </span>
+                      <strong>Sobrancelha</strong>
+                    </div>
+                  </td>
+                  <td class="servicos-texto-suave">Estética</td>
+                  <td class="servicos-texto-suave">20 min</td>
+                  <td>R$ 25,00</td>
+                  <td>20</td>
+                  <td>
+                    <span class="servicos-status ativo">Ativo</span>
+                  </td>
+                  <td>
+                    <div class="servicos-acoes">
+                      <button type="button" class="servicos-acao visualizar" title="Visualizar Sobrancelha" aria-label="Visualizar Sobrancelha"><i class="bx bx-show"></i></button>
+                      <button type="button" class="servicos-acao editar" title="Editar Sobrancelha" aria-label="Editar Sobrancelha"><i class="bx bx-pencil"></i></button>
+                      <button type="button" class="servicos-acao excluir" title="Excluir Sobrancelha" aria-label="Excluir Sobrancelha"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="servicos-nome">
+                      <span class="servicos-icone">
+                        <i class="bx bx-cut"></i>
+                      </span>
+                      <strong>Corte Infantil</strong>
+                    </div>
+                  </td>
+                  <td class="servicos-texto-suave">Cabelo</td>
+                  <td class="servicos-texto-suave">35 min</td>
+                  <td>R$ 40,00</td>
+                  <td>54</td>
+                  <td>
+                    <span class="servicos-status ativo">Ativo</span>
+                  </td>
+                  <td>
+                    <div class="servicos-acoes">
+                      <button type="button" class="servicos-acao visualizar" title="Visualizar Corte Infantil" aria-label="Visualizar Corte Infantil"><i class="bx bx-show"></i></button>
+                      <button type="button" class="servicos-acao editar" title="Editar Corte Infantil" aria-label="Editar Corte Infantil"><i class="bx bx-pencil"></i></button>
+                      <button type="button" class="servicos-acao excluir" title="Excluir Corte Infantil" aria-label="Excluir Corte Infantil"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="servicos-nome">
+                      <span class="servicos-icone">
+                        <i class="bx bx-droplet"></i>
+                      </span>
+                      <strong>Hidratação Capilar</strong>
+                    </div>
+                  </td>
+                  <td class="servicos-texto-suave">Tratamento</td>
+                  <td class="servicos-texto-suave">45 min</td>
+                  <td>R$ 65,00</td>
+                  <td>31</td>
+                  <td>
+                    <span class="servicos-status inativo">Inativo</span>
+                  </td>
+                  <td>
+                    <div class="servicos-acoes">
+                      <button type="button" class="servicos-acao visualizar" title="Visualizar Hidratação Capilar" aria-label="Visualizar Hidratação Capilar"><i class="bx bx-show"></i></button>
+                      <button type="button" class="servicos-acao editar" title="Editar Hidratação Capilar" aria-label="Editar Hidratação Capilar"><i class="bx bx-pencil"></i></button>
+                      <button type="button" class="servicos-acao excluir" title="Excluir Hidratação Capilar" aria-label="Excluir Hidratação Capilar"><i class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RODAPÉ E PAGINAÇÃO -->
+          <div class="servicos-rodape">
+
+            <p>Mostrando 1-7 de 18 serviços</p>
+
+            <div class="servicos-paginacao">
+              <button type="button" aria-label="Página anterior" disabled>
+                <i class="bx bx-chevron-left"></i>
+              </button>
+              <button type="button" class="pagina-ativa" aria-current="page">1</button>
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button" aria-label="Próxima página">
+                <i class="bx bx-chevron-right"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </section>
 
       </section>
+
     </main>
   </div>
 
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
 </body>
 </html>

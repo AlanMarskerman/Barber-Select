@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barber Select - Integrações</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL PRINCIPAL -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img src="../assets/LOGO.png" alt="Barber Select">
+      </div>
+
+      <nav class="nav">
+
+        <a href="dashboard.html">
+          <i class="bx bx-grid-alt"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="agenda.html">
+          <i class="bx bx-calendar"></i>
+          <span>Agenda</span>
+        </a>
+
+        <a href="clients.html">
+          <i class="bx bx-user"></i>
+          <span>Clientes</span>
+        </a>
+
+        <a href="barbeiros.html">
+          <i class="bx bx-user-check"></i>
+          <span>Barbeiros</span>
+        </a>
+
+        <a href="services.html">
+          <i class="bx bx-cut"></i>
+          <span>Serviços</span>
+        </a>
+
+        <a href="produtos.html">
+          <i class="bx bx-package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="venda.html">
+          <i class="bx bx-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="finance.html">
+          <i class="bx bx-wallet"></i>
+          <span>Financeiro</span>
+        </a>
+
+        <a href="relatorios.html">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Relatórios</span>
+        </a>
+
+        <a href="avaliacoes.html">
+          <i class="bx bx-star"></i>
+          <span>Avaliações</span>
+        </a>
+
+        <a href="configuracoes.html" class="active">
+          <i class="bx bx-cog"></i>
+          <span>Configurações</span>
+        </a>
+
+      </nav>
+
+      <button class="logout" type="button">
+        <i class="bx bx-log-out"></i>
+        <span>Sair</span>
+      </button>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO SUPERIOR -->
+
+      <header class="topbar configuracoes-topbar">
+
+        <div class="head-left configuracoes-topbar-esquerda">
+
+          <button
+            class="menu-button hamb"
+            type="button"
+            aria-label="Abrir menu"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
+
+          <div class="configuracoes-pesquisa">
+            <i class="bx bx-search"></i>
+            <input
+              type="search"
+              placeholder="Pesquisar..."
+              aria-label="Pesquisa geral"
+            >
+          </div>
+
+        </div>
+
+        <div class="head-right">
+
+          <button
+            class="bell"
+            type="button"
+            aria-label="Notificações"
+          >
+            <i class="bx bx-bell"></i>
+            <span class="badge">3</span>
+          </button>
+
+          <div class="user">
+
+            <i class="bx bx-user-circle user-avatar"></i>
+
+            <div class="user-info">
+              <b>Kenis Cardoso</b>
+              <span>Administrador</span>
+            </div>
+
+            <i class="bx bx-chevron-down configuracoes-user-seta"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- CONFIGURAÇÕES -->
+
+      <section class="content configuracoes-page">
+
+        <!-- TÍTULO -->
+
+        <div class="configuracoes-cabecalho">
+
+          <i class="bx bx-cog"></i>
+
+          <div>
+            <h1>Configurações</h1>
+            <p>Gerencie as preferências e informações do sistema.</p>
+          </div>
+
+        </div>
+
+        <!-- LAYOUT INTERNO -->
+
+        <div class="configuracoes-layout">
+
+          <!-- MENU INTERNO -->
+
+          <aside class="configuracoes-menu">
+
+            <nav aria-label="Seções de configurações">
+
+              <a href="configuracao.html">
+                <i class="bx bx-store"></i>
+                <span>Perfil da Barbearia</span>
+              </a>
+
+              <a href="usuarios.html">
+                <i class="bx bx-user"></i>
+                <span>Usuários</span>
+              </a>
+
+              <a href="notificacoes.html">
+                <i class="bx bx-bell"></i>
+                <span>Notificações</span>
+              </a>
+
+              <a href="pagamentos.html">
+                <i class="bx bx-credit-card"></i>
+                <span>Pagamentos</span>
+              </a>
+
+              <a
+                href="integracoes.html"
+                class="configuracoes-menu-ativo"
+                aria-current="page"
+              >
+                <i class="bx bx-link"></i>
+                <span>Integrações</span>
+              </a>
+
+              <a href="seguranca.html">
+                <i class="bx bx-shield"></i>
+                <span>Segurança</span>
+              </a>
+
+              <a href="backup.html">
+                <i class="bx bx-cloud"></i>
+                <span>Backup</span>
+              </a>
+
+            </nav>
+
+          </aside>
+
+          <!-- PAINEL DE INTEGRAÇÕES -->
+
+          <section class="config-integracoes-painel">
+
+            <div class="config-integracoes-cabecalho">
+
+              <h2>Integrações</h2>
+
+              <p>
+                Conecte o sistema às ferramentas usadas pela sua barbearia.
+              </p>
+
+            </div>
+
+            <!-- CARDS DE INTEGRAÇÕES -->
+
+            <div class="config-integracoes-grid">
+
+              <!-- GOOGLE AGENDA -->
+
+              <article class="config-integracoes-card">
+
+                <div class="config-integracoes-card-corpo">
+
+                  <div class="config-integracoes-logo">
+                    <img
+                      src="https://cdn.simpleicons.org/googlecalendar"
+                      alt="Google Agenda"
+                    >
+                  </div>
+
+                  <div class="config-integracoes-card-info">
+
+                    <h3>Google Agenda</h3>
+
+                    <p>
+                      Sincronize seus agendamentos com o Google Agenda.
+                    </p>
+
+                    <span class="config-integracoes-status status-conectado">
+                      <span></span>
+                      Conectado
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="config-integracoes-btn config-integracoes-btn-configurar"
+                >
+                  <i class="bx bx-cog"></i>
+                  <span>Configurar</span>
+                </button>
+
+              </article>
+
+              <!-- WHATSAPP -->
+
+              <article class="config-integracoes-card">
+
+                <div class="config-integracoes-card-corpo">
+
+                  <div class="config-integracoes-logo">
+                    <img
+                      src="https://cdn.simpleicons.org/whatsapp/25D366"
+                      alt="WhatsApp"
+                    >
+                  </div>
+
+                  <div class="config-integracoes-card-info">
+
+                    <h3>WhatsApp</h3>
+
+                    <p>
+                      Envie confirmações, lembretes e notificações automáticas.
+                    </p>
+
+                    <span class="config-integracoes-status status-conectado">
+                      <span></span>
+                      Conectado
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="config-integracoes-btn config-integracoes-btn-configurar"
+                >
+                  <i class="bx bx-cog"></i>
+                  <span>Configurar</span>
+                </button>
+
+              </article>
+
+              <!-- INSTAGRAM -->
+
+              <article class="config-integracoes-card">
+
+                <div class="config-integracoes-card-corpo">
+
+                  <div class="config-integracoes-logo">
+                    <img
+                      src="https://cdn.simpleicons.org/instagram/E4405F"
+                      alt="Instagram"
+                    >
+                  </div>
+
+                  <div class="config-integracoes-card-info">
+
+                    <h3>Instagram</h3>
+
+                    <p>
+                      Divulgue seus serviços, receba mensagens e agende
+                      diretamente pelo Instagram.
+                    </p>
+
+                    <span class="config-integracoes-status status-desconectado">
+                      <span></span>
+                      Desconectado
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="config-integracoes-btn config-integracoes-btn-conectar"
+                >
+                  <i class="bx bx-link"></i>
+                  <span>Conectar</span>
+                </button>
+
+              </article>
+
+              <!-- MERCADO PAGO -->
+
+              <article class="config-integracoes-card">
+
+                <div class="config-integracoes-card-corpo">
+
+                  <div class="config-integracoes-logo">
+                    <img
+                      src="https://cdn.simpleicons.org/mercadopago/009EE3"
+                      alt="Mercado Pago"
+                    >
+                  </div>
+
+                  <div class="config-integracoes-card-info">
+
+                    <h3>Mercado Pago</h3>
+
+                    <p>
+                      Receba pagamentos online de forma segura e automatizada.
+                    </p>
+
+                    <span class="config-integracoes-status status-conectado">
+                      <span></span>
+                      Conectado
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="config-integracoes-btn config-integracoes-btn-configurar"
+                >
+                  <i class="bx bx-cog"></i>
+                  <span>Configurar</span>
+                </button>
+
+              </article>
+
+              <!-- GOOGLE MEU NEGÓCIO -->
+
+              <article class="config-integracoes-card">
+
+                <div class="config-integracoes-card-corpo">
+
+                  <div class="config-integracoes-logo">
+                    <img
+                      src="https://cdn.simpleicons.org/google/4285F4"
+                      alt="Google Meu Negócio"
+                    >
+                  </div>
+
+                  <div class="config-integracoes-card-info">
+
+                    <h3>Google Meu Negócio</h3>
+
+                    <p>
+                      Exiba sua barbearia no Google e atraia mais clientes.
+                    </p>
+
+                    <span class="config-integracoes-status status-desconectado">
+                      <span></span>
+                      Desconectado
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="config-integracoes-btn config-integracoes-btn-conectar"
+                >
+                  <i class="bx bx-link"></i>
+                  <span>Conectar</span>
+                </button>
+
+              </article>
+
+              <!-- WEBHOOKS -->
+
+              <article class="config-integracoes-card">
+
+                <div class="config-integracoes-card-corpo">
+
+                  <div class="config-integracoes-logo config-integracoes-webhook-icone">
+                    <i class="bx bx-git-branch"></i>
+                  </div>
+
+                  <div class="config-integracoes-card-info">
+
+                    <h3>Webhooks</h3>
+
+                    <p>
+                      Integre com outros sistemas usando webhooks em tempo real.
+                    </p>
+
+                    <span class="config-integracoes-status status-conectado">
+                      <span></span>
+                      Ativo
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="config-integracoes-btn config-integracoes-btn-configurar"
+                >
+                  <i class="bx bx-cog"></i>
+                  <span>Gerenciar</span>
+                </button>
+
+              </article>
+
+            </div>
+
+            <!-- API BARBER SELECT -->
+
+            <section class="config-integracoes-api">
+
+              <div class="config-integracoes-api-icone">
+                <i class="bx bx-code-alt"></i>
+              </div>
+
+              <div class="config-integracoes-api-conteudo">
+
+                <h3>API do Barber Select</h3>
+
+                <p>
+                  Utilize nossa API para integrar o sistema com outras ferramentas.
+                </p>
+
+                <div class="config-integracoes-api-campos">
+
+                  <div class="config-integracoes-chave">
+
+                    <label for="config-api-chave">
+                      Chave da API
+                    </label>
+
+                    <div class="config-integracoes-chave-visual">
+
+                      <input
+                        id="config-api-chave"
+                        type="text"
+                        value="bsk_live_************************a3f7"
+                        readonly
+                        aria-label="Chave da API mascarada"
+                      >
+
+                      <i class="bx bx-show" aria-hidden="true"></i>
+
+                    </div>
+
+                  </div>
+
+                  <div class="config-integracoes-api-acoes">
+
+                    <button
+                      type="button"
+                      class="config-integracoes-btn-api config-integracoes-btn-copiar"
+                    >
+                      <i class="bx bx-copy"></i>
+                      <span>Copiar chave</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="config-integracoes-btn-api config-integracoes-btn-gerar"
+                    >
+                      <i class="bx bx-refresh"></i>
+                      <span>Gerar nova chave</span>
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </section>
+
+          </section>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>
