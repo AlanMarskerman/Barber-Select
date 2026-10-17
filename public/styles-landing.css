@@ -109,13 +109,13 @@ ul {
 
 .btn-secondary {
   background: transparent;
-  color: var(--green);
-  border: 2px solid var(--green);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
 .btn-secondary:hover {
-  background: var(--green);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--gold);
 }
 
 .btn-large {
@@ -133,8 +133,7 @@ ul {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgb(32, 70, 10);
-  backdrop-filter: blur(10px);
+  background: var(--green);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
@@ -173,11 +172,12 @@ ul {
 }
 
 .btn-login {
-  color: var(--green);
+  color: #fff;
   background: transparent;
 }
 
 .btn-login:hover {
+  color: var(--gold);
   background: rgba(23, 63, 54, 0.1);
 }
 
@@ -261,6 +261,11 @@ ul {
   color: var(--gold);
 }
 
+/* Eyebrow dourado mais claro para contraste no fundo escuro do hero */
+.hero .eyebrow {
+  color: #e0b356;
+}
+
 .hero-description {
   font-size: clamp(1.1rem, 2vw, 1.3rem);
   line-height: 1.7;
@@ -287,7 +292,7 @@ ul {
 .section-header {
   text-align: center;
   max-width: 700px;
-  margin: 0 auto 60px;
+  margin: 0 auto 48px;
 }
 
 .section-header h2 {
@@ -542,7 +547,6 @@ ul {
   height: 50px;
   width: auto;
   margin-bottom: 20px;
-  filter: brightness(0) invert(1);
 }
 
 .footer-brand p {
@@ -666,4 +670,42 @@ ul {
   .benefit-card {
     padding: 30px 20px;
   }
+}
+
+/* ========================================
+   REFINAMENTOS VISUAIS
+   ======================================== */
+
+/* Seleção de texto */
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* Foco visível para acessibilidade */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Suporte a redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Ajuste de scroll para cabeçalho fixo */
+:target {
+  scroll-margin-top: 80px;
+}
+
+/* Melhoras tipográficas */
+body {
+  text-rendering: optimizeLegibility;
 }

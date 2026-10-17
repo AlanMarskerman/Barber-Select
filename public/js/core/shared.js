@@ -1,46 +1,8 @@
 // js/core/shared.js
-// Lógica comum a todas as páginas internas (sidebar, sessão, logout, refresh token, requireAuth robusto)
+// Sistema de autenticação simplificado e robusto
 
 (function () {
   'use strict';
-
-  // ===========================
-  // CONFIGURAÇÕES DE AUTENTICAÇÃO
-  // ===========================
-
-  // Mapeamento de roles para suas respectivas áreas
-  const ROLE_DESTINATIONS = {
-    client: '/client/home.html',
-    staff: '/staff/dashboard.html',
-    admin: '/staff/dashboard.html'
-  };
-
-  // Páginas que requerem role específica
-  const PROTECTED_PAGES = {
-    // Páginas exclusivas do admin
-    'finance.html': ['admin'],
-    'relatorios.html': ['admin'],
-    'configuracoes.html': ['admin'],
-
-    // Páginas acessíveis por staff e admin
-    'dashboard.html': ['staff', 'admin'],
-    'appointments.html': ['staff', 'admin'],
-    'agenda.html': ['staff', 'admin'],
-    'clients.html': ['staff', 'admin'],
-    'clientes.html': ['staff', 'admin'],
-    'services.html': ['staff', 'admin'],
-    'servicos.html': ['staff', 'admin'],
-    'produtos.html': ['staff', 'admin'],
-    'venda.html': ['staff', 'admin'],
-    'avaliacoes.html': ['staff', 'admin'],
-    'barbeiros.html': ['staff', 'admin'],
-    'settings.html': ['staff', 'admin'],
-
-    // Páginas do cliente
-    'home.html': ['client'],
-    'request.html': ['client'],
-    'profile.html': ['client']
-  };
 
   // ===========================
   // GERENCIAMENTO DE SESSÃO
@@ -65,16 +27,8 @@
   }
 
   function redirectToLogin() {
-    const currentPath = window.location.pathname;
-
-    // Determina qual página de login usar baseado no path atual
-    if (currentPath.includes('/client/')) {
-      window.location.href = '../pages/login.html';
-    } else if (currentPath.includes('/staff/')) {
-      window.location.href = '../pages/login.html';
-    } else {
-      window.location.href = '/pages/login.html';
-    }
+    // Sempre redireciona para /pages/login.html (caminho absoluto)
+    window.location.href = '/pages/login.html';
   }
 
   // ===========================
@@ -114,7 +68,6 @@
   async function authenticatedFetch(url, options = {}) {
     const { accessToken } = getSession();
 
-    // Primeira tentativa com o token atual
     let response = await fetch(url, {
       ...options,
       headers: {
@@ -123,28 +76,21 @@
       }
     });
 
-    // Se o token expirou, tenta renovar e fazer a requisição novamente
+    // Se o token expirou (401), tenta renovar
     if (response.status === 401) {
-      const data = await response.clone().json().catch(() => ({}));
+      const refreshed = await refreshAccessToken();
 
-      if (data.code === 'TOKEN_EXPIRED') {
-        const refreshed = await refreshAccessToken();
-
-        if (refreshed) {
-          const { accessToken: newToken } = getSession();
-          response = await fetch(url, {
-            ...options,
-            headers: {
-              ...options.headers,
-              Authorization: `Bearer ${newToken}`
-            }
-          });
-        } else {
-          clearSession();
-          redirectToLogin();
-          return null;
-        }
+      if (refreshed) {
+        const { accessToken: newToken } = getSession();
+        response = await fetch(url, {
+          ...options,
+          headers: {
+            ...options.headers,
+            Authorization: `Bearer ${newToken}`
+          }
+        });
       } else {
+        // Não conseguiu renovar, limpa e vai para login
         clearSession();
         redirectToLogin();
         return null;
@@ -155,10 +101,10 @@
   }
 
   // ===========================
-  // SISTEMA DE AUTENTICAÇÃO ROBUSTO
+  // VERIFICAÇÃO DE AUTENTICAÇÃO SIMPLES
   // ===========================
 
-  async function requireAuth(expectedRoles) {
+  function requireAuth(expectedRoles) {
     const session = getSession();
     const { accessToken, role } = session;
 
@@ -170,99 +116,19 @@
       return false;
     }
 
-    // Determina a página atual
-    const pathname = window.location.pathname;
-    const currentPage = pathname.substring(pathname.lastIndexOf('/') + 1) || 'index.html';
-
-    // Verifica se a página tem restrição de role
-    const pageRoles = PROTECTED_PAGES[currentPage];
-
-    if (pageRoles) {
-      // Se expectedRoles foi fornecido, usa ele. Senão usa o mapeamento da página.
-      const allowedRoles = expectedRoles || pageRoles;
-
-      // Valida no servidor para garantir máxima segurança
-      try {
-        const response = await fetch('/auth/validate-access', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-          },
-          body: JSON.stringify({ requiredRoles: allowedRoles })
-        });
-
-        if (!response.ok) {
-          console.warn(`[Auth] Acesso negado para role '${role}' na página '${currentPage}'.`);
-
-          // Redireciona para a página apropriada baseada no role do usuário
-          const destination = ROLE_DESTINATIONS[role];
-          if (destination) {
-            window.location.href = destination;
-          } else {
-            clearSession();
-            redirectToLogin();
-          }
-          return false;
-        }
-      } catch (error) {
-        console.error('[Auth] Erro ao validar acesso no servidor:', error);
-        // Em caso de erro na validação, usa a validação local como fallback
-        if (!allowedRoles.includes(role)) {
-          console.warn(`[Auth] Acesso negado (validação local). Role '${role}' não autorizado.`);
-          const destination = ROLE_DESTINATIONS[role];
-          if (destination) {
-            window.location.href = destination;
-          } else {
-            clearSession();
-            redirectToLogin();
-          }
-          return false;
-        }
-      }
-    }
-
-    // Valida sessão com o servidor (verificação assíncrona)
-    validateSession();
-
-    return true;
-  }
-
-  // Valida sessão no servidor
-  async function validateSession() {
-    const { accessToken, refreshToken } = getSession();
-
-    if (!accessToken) return;
-
-    try {
-      const response = await fetch('/auth/session', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-
-      if (!response.ok) {
-        // Se a sessão for inválida, tenta renovar o token antes de redirecionar
-        console.warn('[Auth] Sessão inválida no servidor. Tentando renovar token...');
-
-        if (refreshToken) {
-          const refreshed = await refreshAccessToken();
-          if (refreshed) {
-            console.log('[Auth] Token renovado com sucesso.');
-            return; // Token renovado, sessão válida
-          }
-        }
-
-        // Só limpa e redireciona se não conseguir renovar
-        console.warn('[Auth] Não foi possível renovar o token. Redirecionando para login.');
+    // Se expectedRoles foi fornecido, valida se o role do usuário está autorizado
+    if (expectedRoles) {
+      const allowedRoles = Array.isArray(expectedRoles) ? expectedRoles : [expectedRoles];
+      
+      if (!allowedRoles.includes(role)) {
+        console.warn(`[Auth] Role '${role}' não autorizado.`);
         clearSession();
         redirectToLogin();
+        return false;
       }
-    } catch (error) {
-      console.error('[Auth] Erro ao validar sessão:', error);
-      // Em caso de erro de rede, não redireciona automaticamente
-      // O usuário pode estar em uma conexão instável
     }
+
+    return true;
   }
 
   // ===========================
@@ -291,13 +157,37 @@
     `;
 
     document.body.appendChild(container);
+
+    // Adiciona listeners para os botões após criar o modal
+    const cancelBtn = document.getElementById('modal-cancel');
+    const confirmBtn = document.getElementById('modal-confirm');
+
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', () => hideLogoutModal());
+    }
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', async () => {
+        confirmBtn.disabled = true;
+        confirmBtn.classList.add('logout-processing');
+        await performLogout();
+        // Se o logout falhar, reabilita o botão
+        confirmBtn.disabled = false;
+        confirmBtn.classList.remove('logout-processing');
+      });
+    }
+
+    // Adiciona logs para debugging
+    console.log('[Logout] Modal criado e listeners configurados');
   }
 
   function showLogoutModal() {
     if (!document.getElementById('logout-modal-container')) {
       createLogoutModal();
     }
-    document.getElementById('logout-modal').classList.add('active');
+    const modal = document.getElementById('logout-modal');
+    if (modal) {
+      modal.classList.add('active');
+    }
   }
 
   function hideLogoutModal() {
@@ -324,61 +214,26 @@
           }
         });
       } catch (error) {
-        console.error('Erro ao fazer logout:', error);
-        // Mesmo com erro no servidor, continua com o logout local
+        console.error('Erro ao fazer logout no servidor:', error);
+        // Mesmo com erro, continua com logout local
       }
     }
 
-    // Limpa a sessão local e redireciona
+    // Limpa a sessão local
     clearSession();
-    window.location.href = '../index.html';
+
+    // SEMPRE redireciona para /pages/login.html
+    window.location.href = '/pages/login.html';
   }
 
   async function logout() {
     // Mostra o modal de confirmação
     showLogoutModal();
 
-    // Configura os botões do modal
-    const modal = document.getElementById('logout-modal');
-    const cancelBtn = document.getElementById('modal-cancel');
-    const confirmBtn = document.getElementById('modal-confirm');
+    console.log('[Logout] Modal de logout exibido - aguarde a confirmação');
 
-    // Função de cleanup para evitar listeners duplicados
-    const cleanup = () => {
-      hideLogoutModal();
-      cancelBtn?.removeEventListener('click', handleCancel);
-      confirmBtn?.removeEventListener('click', handleConfirm);
-    };
-
-    const handleCancel = () => {
-      cleanup();
-      // Usuário cancelou
-    };
-
-    const handleConfirm = async () => {
-      // Adiciona feedback visual
-      confirmBtn.classList.add('logout-processing');
-      confirmBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Saindo...';
-
-      await performLogout();
-      cleanup();
-    };
-
-    // Remove listeners antigos para evitar duplicação
-    const newCancelBtn = cancelBtn.cloneNode(true);
-    const newConfirmBtn = confirmBtn.cloneNode(true);
-    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
-    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-
-    newCancelBtn.addEventListener('click', () => {
-      hideLogoutModal();
-    });
-
-    newConfirmBtn.addEventListener('click', async () => {
-      newConfirmBtn.classList.add('logout-processing');
-      newConfirmBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Saindo...';
-      await performLogout();
-    });
+    // Log adicional para debugging
+    console.log('[Logout] Botões do modal devem ser configurados automaticamente em createLogoutModal');
   }
 
   // ===========================
@@ -392,12 +247,12 @@
     refreshAccessToken,
     authenticatedFetch,
     requireAuth,
-    logout,
-    validateSession
+    logout
   };
 
-  // Mantém compatibilidade com código existente
+  // Compatibilidade com código existente
   window.getSession = getSession;
+  window.clearSession = clearSession;
   window.clearSessionAndRedirect = function() {
     clearSession();
     redirectToLogin();
