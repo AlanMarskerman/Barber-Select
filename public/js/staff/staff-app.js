@@ -1,12 +1,22 @@
 // js/staff/staff-app.js
 // Lógica consolidada para todas as páginas da Área do Colaborador e Admin
 
-(function () {
+(async function () {
   'use strict';
 
   // ===========================
   // VERIFICAÇÃO DE AUTENTICAÇÃO
   // ===========================
+
+  // Aguarda o DOM estar pronto antes de verificar autenticação
+  // Isso evita loops de redirecionamento quando a página ainda está carregando
+  await new Promise(resolve => {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', resolve);
+    } else {
+      resolve();
+    }
+  });
 
   // Identificação da página atual
   const pathname = window.location.pathname;
@@ -19,41 +29,37 @@
   const requiresAdmin = ADMIN_ONLY_PAGES.includes(currentPage);
 
   // AUTENTICAÇÃO ROBUSTA: Impede acesso não autorizado
-  // Validação síncrona primeiro (rápida)
   const session = getSession();
   const { accessToken, role } = session;
 
+  // Se não há token, redireciona para login
   if (!accessToken) {
+    console.warn('[Auth] Nenhum token encontrado no staff-app. Redirecionando para login.');
     clearSessionAndRedirect();
+    return;
   }
 
-  // Validação assíncrona com o servidor para máxima segurança
-  async function verifyAccess() {
-    if (requiresAdmin) {
-      // Página exclusiva de admin - valida no servidor
-      const hasAccess = await requireAuth(['admin']);
-      if (!hasAccess) {
-        return; // requireAuth já redirecionou
-      }
-    } else {
-      // Páginas acessíveis por staff e admin - valida no servidor
-      const hasAccess = await requireAuth(['staff', 'admin']);
-      if (!hasAccess) {
-        return; // requireAuth já redirecionou
-      }
-    }
+  // Valida o acesso no servidor de forma síncrona
+  let hasAccess = false;
 
-    // Se passou na validação, inicializa a página
-    initPage();
+  if (requiresAdmin) {
+    // Página exclusiva de admin - valida no servidor
+    hasAccess = requireAuth(['admin']);
+  } else {
+    // Páginas acessíveis por staff e admin - valida no servidor
+    hasAccess = requireAuth(['staff', 'admin']);
   }
 
-  // Se houver sessão, valida o acesso
-  if (accessToken) {
-    verifyAccess();
+  // Se falhou na validação, requireAuth já redirecionou
+  if (!hasAccess) {
+    console.warn('[Auth] Acesso negado. Redirecionando.');
+    return;
   }
+
+  console.log('[Staff App] Autenticação validada com sucesso');
 
   // ===========================
-  // INICIALIZAÇÃO DA PÁGINA
+  // INICIALIZAÇÃO DA PÁGINA (só roda se passou na autenticação)
   // ===========================
 
   function initPage() {
@@ -128,9 +134,13 @@
     function setupLogoutHandlers() {
       const logoutButtons = document.querySelectorAll('.logout');
 
+      console.log('[Staff App] Encontrados', logoutButtons.length, 'botões de logout');
+
       logoutButtons.forEach(button => {
+        console.log('[Staff App] Configurando handler para botão de logout:', button);
         button.addEventListener('click', async (e) => {
           e.preventDefault();
+          console.log('[Staff App] Botão de logout clicado - chamando logout()');
           // Usa a função logout() do shared.js que já tem confirmação visual
           await logout();
         });
@@ -180,15 +190,14 @@
     // INICIALIZAÇÃO
     // ===========================
 
-    document.addEventListener('DOMContentLoaded', () => {
-      updateUserInfo();
-      setActiveNavLink();
-      setupLogoutHandlers();
-      setupMobileMenu();
+    // Como já aguardamos o DOM carregar no início do script, executamos diretamente
+    updateUserInfo();
+    setActiveNavLink();
+    setupLogoutHandlers();
+    setupMobileMenu();
 
-      // Handlers específicos de cada página
-      initPageSpecificHandlers();
-    });
+    // Handlers específicos de cada página
+    initPageSpecificHandlers();
 
     // ===========================
     // HANDLERS ESPECÍFICOS DAS PÁGINAS
@@ -338,5 +347,8 @@
       alert(`Ver detalhes do cliente ${id} (em desenvolvimento)`);
     };
   } // Fim da função initPage()
+
+  // Chama initPage após autenticação bem-sucedida
+  initPage();
 
 })();

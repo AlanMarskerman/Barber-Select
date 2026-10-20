@@ -2,39 +2,51 @@
 // Lógica consolidada para todas as páginas da Área do Cliente
 
 (function () {
-  // 1. Verificação de autenticação para o perfil cliente
-  requireAuth("client");
+  'use strict';
 
-  // 2. Identificação da página atual pelo nome do arquivo na URL
-  const pathname = window.location.pathname;
-  const currentPage = pathname.substring(pathname.lastIndexOf("/") + 1) || "home.html";
+  // ===========================
+  // VERIFICAÇÃO DE AUTENTICAÇÃO
+  // ===========================
 
-  // 3. Mapeamento de títulos das páginas
-  const pageTitles = {
-    "home.html": "Minha área",
-    "request.html": "Solicitar horário",
-    "profile.html": "Meu perfil",
-    "settings.html": "Configurações",
-  };
+  // Usamos DOMContentLoaded para garantir que a página esteja completamente carregada
+  // antes de verificar a autenticação, evitando loops de redirecionamento
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Verificação de autenticação para o perfil cliente
+    const isAuthenticated = requireAuth("client");
 
-  const title = pageTitles[currentPage] || "Área do Cliente";
+    if (!isAuthenticated) {
+      // Se não autenticado, requireAuth já redirecionou para login
+      return;
+    }
 
-  // 4. Renderização padrão de layout
-  renderSidebar("client", currentPage);
-  renderTopbar(title, "client");
+    console.log('[Client App] Autenticação validada com sucesso');
 
-  // 5. Handlers de formulários específicos de cada tela do cliente
-  document.addEventListener("DOMContentLoaded", () => {
-    // Handler para o botão de logout
+    // 2. Identificação da página atual pelo nome do arquivo na URL
+    const pathname = window.location.pathname;
+    const currentPage = pathname.substring(pathname.lastIndexOf("/") + 1) || "home.html";
+
+    // 3. Mapeamento de títulos das páginas
+    const pageTitles = {
+      "home.html": "Minha área",
+      "request.html": "Solicitar horário",
+      "profile.html": "Meu perfil",
+      "settings.html": "Configurações",
+    };
+
+    const title = pageTitles[currentPage] || "Área do Cliente";
+
+    // 4. Handler para o botão de logout (área do cliente)
     const logoutButton = document.querySelector(".client-logout .logout");
     if (logoutButton) {
+      console.log('[Client App] Configurando handler de logout');
       logoutButton.addEventListener("click", async (e) => {
         e.preventDefault();
+        console.log('[Client App] Logout iniciado');
         await logout(); // Usa a função logout() do shared.js que já tem confirmação visual
       });
     }
 
-    // Tela de Perfil
+    // 5. Tela de Perfil
     const profileForm = document.getElementById("profile-form");
     if (profileForm) {
       profileForm.addEventListener("submit", async (event) => {
@@ -43,7 +55,7 @@
       });
     }
 
-    // Tela de Agendamento
+    // 6. Tela de Agendamento
     const requestForm = document.getElementById("request-form");
     if (requestForm) {
       requestForm.addEventListener("submit", async (event) => {
@@ -51,5 +63,12 @@
         alert("Solicitação de agendamento enviada com sucesso!");
       });
     }
+
+    console.log('[Client App] Inicialização completa');
+  });
+
+  // Adiciona uma verificação extra para debugging
+  window.addEventListener('error', (error) => {
+    console.error('[Client App Error]', error.message);
   });
 })();
