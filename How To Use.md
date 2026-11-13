@@ -119,6 +119,12 @@ Copy-Item .env.example .env
 
 Depois, edite o `.env` com os valores locais necessários.
 
+## 4.1. Credenciais de Acesso e Debug (Database Seeding)
+
+Para maior segurança (eliminando a necessidade de credenciais estáticas em texto claro no arquivo `.env`), o sistema agora realiza o **seeding automático** de contas de acesso padrão no banco de dados MySQL na primeira inicialização (caso a tabela `staff_users` esteja vazia).
+
+Consulte o arquivo **`CREDENCIAIS-DEBUG.md`** na raiz do projeto para visualizar os e-mails e senhas padrão de Administrador e Colaborador para testes e desenvolvimento.
+
 ## 5. Iniciar o servidor
 
 Depois de instalar as dependências, execute na raiz do projeto:

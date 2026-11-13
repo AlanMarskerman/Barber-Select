@@ -53,6 +53,7 @@ function createStaffAuth({
       return next();
     }
     const login = identity.trim();
+    const normalizedLogin = login.includes("@") ? login.toLowerCase() : login;
 
     try {
       await ensureStaffTable(getPool);
@@ -61,7 +62,7 @@ function createStaffAuth({
       // Com "@" é e-mail; sem "@" é nome de usuário. Os dois funcionam.
       const [rows] = await getPool().query(
         `SELECT id, name, email, password_hash, role, active FROM staff_users WHERE ${column} = ? LIMIT 1`,
-        [login],
+        [normalizedLogin],
       );
       // ${column} vem do código acima (só "email" ou "username"), nunca do
       // usuário. O valor digitado entra pelo "?", que impede SQL Injection.
@@ -120,6 +121,7 @@ function createStaffAuth({
       name: row.name,
       email: row.email,
       username: row.username,
+      phone: row.phone || "",
       role: row.role,
       active: Boolean(row.active),
       createdAt: row.created_at,
@@ -130,7 +132,7 @@ function createStaffAuth({
     if (!body || typeof body !== "object") {
       return { error: "Dados inválidos." };
     }
-    const { name, email, username, password, role } = body;
+    const { name, email, username, phone, password, role } = body;
 
     if (typeof name !== "string" || name.trim().length < 3 || name.trim().length > 100) {
       return { error: "Nome inválido." };
@@ -148,6 +150,18 @@ function createStaffAuth({
     }
     // O usuário é opcional. Não aceita "@", para nunca ser confundido com e-mail.
 
+    let cleanPhone = null;
+    if (phone !== undefined && phone !== null && phone !== "") {
+      if (typeof phone !== "string" || phone.trim().length > 20) {
+        return { error: "Telefone inválido." };
+      }
+      const phoneDigits = phone.replace(/\D/g, "").length;
+      if (phoneDigits < 10 || phoneDigits > 11) {
+        return { error: "Telefone inválido. Informe DDD e número." };
+      }
+      cleanPhone = phone.trim();
+    }
+
     if (typeof password !== "string" || password.length < 8) {
       return { error: "A senha deve ter pelo menos 8 caracteres." };
     }
@@ -162,7 +176,7 @@ function createStaffAuth({
     }
 
     return {
-      value: { name: name.trim(), email: email.trim(), username: cleanUsername, password, role: cleanRole },
+      value: { name: name.trim(), email: email.trim().toLowerCase(), username: cleanUsername, phone: cleanPhone, password, role: cleanRole },
     };
   }
 
@@ -173,7 +187,7 @@ function createStaffAuth({
     if (parsed.error) {
       return res.status(400).json({ error: parsed.error });
     }
-    const { name, email, username, password, role } = parsed.value;
+    const { name, email, username, phone, password, role } = parsed.value;
 
     try {
       await ensureStaffTable(getPool);
@@ -188,12 +202,12 @@ function createStaffAuth({
 
       const passwordHash = await bcrypt.hash(password, 10);
       const [result] = await pool.query(
-        "INSERT INTO staff_users (name, email, username, password_hash, role) VALUES (?, ?, ?, ?, ?)",
-        [name, email, username, passwordHash, role],
+        "INSERT INTO staff_users (name, email, username, phone, password_hash, role) VALUES (?, ?, ?, ?, ?, ?)",
+        [name, email, username, phone, passwordHash, role],
       );
 
       const [rows] = await pool.query(
-        "SELECT id, name, email, username, role, active, created_at FROM staff_users WHERE id = ?",
+        "SELECT id, name, email, username, phone, role, active, created_at FROM staff_users WHERE id = ?",
         [result.insertId],
       );
       return res.status(201).json({ staff: toApi(rows[0]) });
@@ -212,7 +226,7 @@ function createStaffAuth({
     try {
       await ensureStaffTable(getPool);
       const [rows] = await getPool().query(
-        "SELECT id, name, email, username, role, active, created_at FROM staff_users ORDER BY created_at DESC, id DESC",
+        "SELECT id, name, email, username, phone, role, active, created_at FROM staff_users ORDER BY created_at DESC, id DESC",
       );
       return res.json({ staff: rows.map(toApi) });
     } catch (error) {
@@ -237,7 +251,7 @@ function createStaffAuth({
       const pool = getPool();
 
       const [found] = await pool.query(
-        "SELECT id, name, email, username, role, active, created_at FROM staff_users WHERE id = ?",
+        "SELECT id, name, email, username, phone, role, active, created_at FROM staff_users WHERE id = ?",
         [id],
       );
       if (found.length === 0) {
@@ -273,7 +287,7 @@ function createStaffAuth({
       // para de funcionar, sem esperar os 15 minutos acabarem.
 
       const [rows] = await pool.query(
-        "SELECT id, name, email, username, role, active, created_at FROM staff_users WHERE id = ?",
+        "SELECT id, name, email, username, phone, role, active, created_at FROM staff_users WHERE id = ?",
         [id],
       );
       return res.json({ staff: toApi(rows[0]) });

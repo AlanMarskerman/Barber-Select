@@ -286,6 +286,26 @@ app.use("/api/staff-users", staffRouter);
 const createClientsRouter = require("./features/clientes-mysql/clients-routes");
 app.use("/api/clients", createClientsRouter({ authenticate, getPool }));
 
+// Catálogo de serviços. Agendamentos futuros devem guardar snapshots do preço e da duração.
+const createServicesRouter = require("./features/servicos-mysql/services-routes");
+app.use("/api/services", createServicesRouter({ authenticate, getPool }));
+
+// Módulo de agendamentos (agenda-mysql).
+const createAppointmentsRouter = require("./features/agenda-mysql/appointments-routes");
+app.use("/api/appointments", createAppointmentsRouter({ authenticate, getPool }));
+
+// Módulo de produtos (produtos-mysql).
+const createProductsRouter = require("./features/produtos-mysql/products-routes");
+app.use("/api/products", createProductsRouter({ authenticate, getPool }));
+
+// Módulo financeiro (financeiro-mysql).
+const createFinanceRouter = require("./features/financeiro-mysql/finance-routes");
+app.use("/api/finance", createFinanceRouter({ authenticate, getPool }));
+
+// Módulo de vendas (vendas-mysql).
+const createSalesRouter = require("./features/vendas-mysql/sales-routes");
+app.use("/api/sales", createSalesRouter({ authenticate, getPool }));
+
 app.post(
   "/auth/login/cliente",
   loginLimiter,

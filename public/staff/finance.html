@@ -3,10 +3,270 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Financeiro</title>
+  <title>Financeiro & Caixa | Barber-Select</title>
+
+  <link rel="icon" type="image/png" href="../assets/LOGO.png">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../styles-logout.css">
+
+  <style>
+    :root {
+      --ink: #0e1513;
+      --paper: #f7f3ec;
+      --panel: #fffdf8;
+      --line: #e0d8cc;
+      --muted: #6b665c;
+      --green: #173f36;
+      --green2: #1e5247;
+      --green-light: #e6f0ed;
+      --gold: #c78e36;
+      --gold-soft: #f0dfbf;
+      --gold-glow: rgba(199, 142, 54, 0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 16px 48px rgba(14, 21, 19, 0.08);
+    }
+
+    .finance-page {
+      padding: 32px;
+      background: var(--paper);
+      min-height: calc(100vh - 80px);
+      font-family: var(--font);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--line);
+      box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: var(--gold);
+    }
+
+    .card .stat {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .card .icon-circle {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--green-light);
+      color: var(--green);
+      border-radius: 14px;
+      font-size: 26px;
+    }
+
+    .card .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .card .value {
+      font-family: var(--display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--line);
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .panel-header h2 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      color: var(--ink);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-weight: 700;
+      font-size: 13px;
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 14px;
+      background: var(--paper);
+      color: var(--ink);
+      transition: all 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--green);
+      background: #fff;
+      box-shadow: 0 0 0 3px var(--green-alpha);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--green);
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: var(--green2);
+      transform: translateY(-2px);
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .modern-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .modern-table th {
+      background: var(--paper);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 14px 16px;
+      border-bottom: 1.5px solid var(--line);
+    }
+
+    .modern-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      vertical-align: middle;
+    }
+
+    .modern-table tbody tr:hover {
+      background: rgba(230, 240, 237, 0.3);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .pill.entrada {
+      background: rgba(40, 200, 64, 0.12);
+      color: #218c32;
+    }
+
+    .pill.saida {
+      background: rgba(165, 72, 59, 0.12);
+      color: #a5483b;
+    }
+
+    .btn-action {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: rgba(165, 72, 59, 0.1);
+      color: #a5483b;
+      border-color: #a5483b;
+    }
+
+    @media (max-width: 1024px) {
+      .dash-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -74,178 +334,151 @@
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
-            <h1>Financeiro</h1>
-            <p>Controle financeiro da sua barbearia</p>
+            <h1>Gestão Financeira & Caixa</h1>
+            <p>Controle de entradas, saídas e saldo em tempo real</p>
           </div>
         </div>
         <div class="head-right">
-          <button class="bell" type="button">
-            <i class="bx bx-bell"></i>
-          </button>
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Usuário</b>
-              <span>Administrador</span>
+              <b>Administrador</b>
+              <span>Admin / Owner</span>
             </div>
           </div>
         </div>
       </header>
 
-      <section class="content">
+      <section class="content finance-page">
 
+        <!-- Cards de Estatísticas -->
         <div class="cards">
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
+                <i class="bx bx-trending-up"></i>
+              </div>
+              <div>
+                <div class="label">Total Entradas</div>
+                <div class="value" id="stat-entradas" style="color: #218c32;">R$ 0</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle" style="color: #a5483b; background: rgba(165,72,59,0.1);">
+                <i class="bx bx-trending-down"></i>
+              </div>
+              <div>
+                <div class="label">Total Saídas</div>
+                <div class="value" id="stat-saidas" style="color: #a5483b;">R$ 0</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="stat">
+              <div class="icon-circle" style="color: var(--gold); background: var(--gold-glow);">
                 <i class="bx bx-wallet"></i>
               </div>
               <div>
-                <div class="label">RECEITA DO DIA</div>
-                <div class="value">R$ 1.840</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-line-chart"></i>
-              </div>
-              <div>
-                <div class="label">TOTAL MÊS</div>
-                <div class="value">R$ 42.890</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-pie-chart-alt"></i>
-              </div>
-              <div>
-                <div class="label">TICKET MÉDIO</div>
-                <div class="value">R$ 76,67</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-hand"></i>
-              </div>
-              <div>
-                <div class="label">EM ESPERA</div>
-                <div class="value">R$ 840</div>
+                <div class="label">Saldo em Caixa</div>
+                <div class="value" id="stat-saldo">R$ 0</div>
               </div>
             </div>
           </article>
         </div>
 
         <div class="dash-grid">
-          <section class="panel panel-pad">
+          <!-- Formulário Nova Transação -->
+          <section class="panel">
             <div class="panel-header">
-              <h2>TRANSACÇÕES RECENTES</h2>
-              <select class="period-select" aria-label="Filtrar período">
-                <option>Hoje</option>
-                <option>Esta semana</option>
-                <option>Este mês</option>
-                <option>Ano</option>
-              </select>
+              <h2>Nova Transação</h2>
             </div>
-            <div class="table-wrap" style="margin-top: 16px;">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>_data</th>
-                    <th>Descrição</th>
-                    <th>Tipo</th>
-                    <th>Valor</th>
-                    <th>Pagamento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><small>12/10/2026</small></td>
-                    <td><b>Carlos Silva</b><br><small>Corte Social</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 50,00</span></td>
-                    <td>Dinheiro</td>
-                  </tr>
-                  <tr>
-                    <td><small>12/10/2026</small></td>
-                    <td><b>João Santos</b><br><small>Barba</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 40,00</span></td>
-                    <td>PIX</td>
-                  </tr>
-                  <tr>
-                    <td><small>11/10/2026</small></td>
-                    <td><b>Pedro Costa</b><br><small>Combo</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 80,00</span></td>
-                    <td>Crédito</td>
-                  </tr>
-                  <tr>
-                    <td><small>11/10/2026</small></td>
-                    <td><b>Estoque Shampoo</b><br><small>Compra</small></td>
-                    <td>Saída</td>
-                    <td><span class="pill yellow">-R$ 300,00</span></td>
-                    <td>PIX</td>
-                  </tr>
-                  <tr>
-                    <td><small>10/10/2026</small></td>
-                    <td><b>Lucas Oliveira</b><br><small>Corte</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 50,00</span></td>
-                    <td>Dinheiro</td>
-                  </tr>
-                  <tr>
-                    <td><small>10/10/2026</small></td>
-                    <td><b>Rafael Lima</b><br><small>Barba</small></td>
-                    <td>Entrada</td>
-                    <td><span class="pill green">+R$ 40,00</span></td>
-                    <td>Débito</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <form id="finance-form">
+              <div class="form-group">
+                <label for="description">Descrição *</label>
+                <input type="text" id="description" required placeholder="Ex: Corte de Cabelo / Compra de Insumos">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="type">Tipo *</label>
+                  <select id="type" required>
+                    <option value="entrada">Entrada (Receita)</option>
+                    <option value="saida">Saída (Despesa)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="amount">Valor * (R$)</label>
+                  <input type="number" id="amount" step="0.01" required placeholder="0.00">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="category">Categoria</label>
+                  <select id="category">
+                    <option value="Serviços">Serviços</option>
+                    <option value="Produtos">Produtos</option>
+                    <option value="Fornecedores">Fornecedores</option>
+                    <option value="Aluguel & Contas">Aluguel & Contas</option>
+                    <option value="Outros">Outros</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="payment_method">Forma de Pagamento</label>
+                  <select id="payment_method">
+                    <option value="PIX">PIX</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    <option value="Cartão de Débito">Cartão de Débito</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="transaction_date">Data *</label>
+                <input type="date" id="transaction_date" required>
+              </div>
+
+              <button type="submit" class="btn-submit">
+                <i class="bx bx-plus"></i> Registrar Transação
+              </button>
+            </form>
           </section>
 
-          <section class="panel panel-pad appointments-panel">
+          <!-- Tabela de Transações -->
+          <section class="panel">
             <div class="panel-header">
-              <h2>RESUMO FINANCEIRO</h2>
+              <h2>Transações Registradas</h2>
+              <div style="display: flex; gap: 10px;">
+                <select id="filter-type" style="padding: 8px 12px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 13px;">
+                  <option value="">Todos os tipos</option>
+                  <option value="entrada">Entradas</option>
+                  <option value="saida">Saídas</option>
+                </select>
+                <input type="search" id="search-tx" placeholder="Buscar..." style="padding: 8px 12px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 13px; width: 160px;">
+              </div>
             </div>
-            <div style="margin-top: 20px; display: grid; gap: 16px;">
-              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px; display: flex; justify-content: space-between;">
-                <div>
-                  <small style="color: var(--muted);">ENTRADAS HOJE</small>
-                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 1.840</div>
-                </div>
-                <div style="text-align: right;">
-                  <small style="color: var(--muted);">SAÍDAS HOJE</small>
-                  <div style="font-size: 24px; font-weight: 700; color: var(--yellow);">R$ 300</div>
-                </div>
-              </div>
-              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px; display: flex; justify-content: space-between;">
-                <div>
-                  <small style="color: var(--muted);">ENTRADAS ESTA SEMANA</small>
-                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 8.450</div>
-                </div>
-                <div style="text-align: right;">
-                  <small style="color: var(--muted);">SALDO ATUAL</small>
-                  <div style="font-size: 24px; font-weight: 700; color: #0d5e39;">R$ 12.450</div>
-                </div>
-              </div>
-              <div style="padding: 16px; background: #e6f1e9; border-radius: 8px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <small style="color: var(--muted);">META DO MÊS</small>
-                  <span style="font-weight: 700; color: var(--green);">R$ 50.000</span>
-                </div>
-                <div style="width: 100%; background: #ddd; height: 8px; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 85%; height: 100%; background: var(--green); border-radius: 4px;"></div>
-                </div>
-                <small style="color: var(--muted);">Progresso: 85%</small>
-              </div>
+
+            <div class="table-container">
+              <table class="modern-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Valor</th>
+                    <th>Pagamento</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="finance-tbody">
+                  <!-- Preenchido via API -->
+                </tbody>
+              </table>
             </div>
           </section>
         </div>
@@ -256,5 +489,171 @@
 
   <script src="../js/core/shared.js"></script>
   <script src="../js/staff/staff-app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = sessionStorage.getItem("accessToken");
+      if (!token) {
+        window.location.href = "../pages/login.html";
+        return;
+      }
+
+      const todayStr = new Date().toISOString().split("T")[0];
+      document.getElementById("transaction_date").value = todayStr;
+
+      const financeForm = document.getElementById("finance-form");
+      const tbody = document.getElementById("finance-tbody");
+      const searchInput = document.getElementById("search-tx");
+      const filterType = document.getElementById("filter-type");
+
+      async function loadTransactions() {
+        try {
+          const search = searchInput.value;
+          const type = filterType.value;
+          let url = `/api/finance?`;
+          if (search) url += `search=${encodeURIComponent(search)}&`;
+          if (type) url += `type=${encodeURIComponent(type)}`;
+
+          const res = await fetch(url, {
+            headers: { "Authorization": `Bearer ${token}` }
+          });
+
+          if (!res.ok) {
+            if (res.status === 401) {
+              window.location.href = "../pages/login.html";
+              return;
+            }
+            throw new Error("Erro ao carregar transações");
+          }
+
+          const transactions = await res.json();
+          renderTransactions(transactions);
+          updateStats(transactions);
+        } catch (err) {
+          console.error("Erro:", err);
+        }
+      }
+
+      function renderTransactions(list) {
+        tbody.innerHTML = "";
+
+        if (list.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px; color: var(--muted);">Nenhuma transação encontrada.</td></tr>`;
+          return;
+        }
+
+        list.forEach(tx => {
+          const isEntrada = tx.type === 'entrada';
+          const formattedDate = new Date(tx.transaction_date).toLocaleDateString('pt-BR');
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><small>${formattedDate}</small></td>
+            <td>
+              <strong>${escapeHtml(tx.description)}</strong>
+            </td>
+            <td>${escapeHtml(tx.category)}</td>
+            <td>
+              <span class="pill ${tx.type}">
+                ${isEntrada ? '+' : '-'}R$ ${Number(tx.amount).toFixed(2)}
+              </span>
+            </td>
+            <td>${escapeHtml(tx.payment_method)}</td>
+            <td>
+              <button class="btn-action" title="Excluir Transação" onclick="deleteTransaction(${tx.id})">
+                <i class="bx bx-trash"></i>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      function updateStats(list) {
+        let totalEntradas = 0;
+        let totalSaidas = 0;
+
+        list.forEach(tx => {
+          const amt = Number(tx.amount);
+          if (tx.type === 'entrada') {
+            totalEntradas += amt;
+          } else {
+            totalSaidas += amt;
+          }
+        });
+
+        const saldo = totalEntradas - totalSaidas;
+
+        document.getElementById("stat-entradas").textContent = `R$ ${totalEntradas.toFixed(2)}`;
+        document.getElementById("stat-saidas").textContent = `R$ ${totalSaidas.toFixed(2)}`;
+        document.getElementById("stat-saldo").textContent = `R$ ${saldo.toFixed(2)}`;
+      }
+
+      function escapeHtml(str) {
+        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+
+      window.deleteTransaction = async function(id) {
+        if (!confirm("Tem certeza que deseja excluir esta transação?")) return;
+        try {
+          const res = await fetch(`/api/finance/${id}`, {
+            method: "DELETE",
+            headers: { "Authorization": `Bearer ${token}` }
+          });
+          if (res.ok) {
+            loadTransactions();
+          } else {
+            alert("Erro ao excluir transação.");
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      financeForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const description = document.getElementById("description").value;
+        const type = document.getElementById("type").value;
+        const amount = document.getElementById("amount").value;
+        const category = document.getElementById("category").value;
+        const payment_method = document.getElementById("payment_method").value;
+        const transaction_date = document.getElementById("transaction_date").value;
+
+        try {
+          const res = await fetch("/api/finance", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              description,
+              type,
+              amount: Number(amount),
+              category,
+              payment_method,
+              transaction_date
+            })
+          });
+
+          if (res.ok) {
+            financeForm.reset();
+            document.getElementById("transaction_date").value = todayStr;
+            loadTransactions();
+          } else {
+            const errData = await res.json();
+            alert(errData.error || "Erro ao registrar transação.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Erro de conexão ao registrar transação.");
+        }
+      });
+
+      searchInput.addEventListener("input", loadTransactions);
+      filterType.addEventListener("change", loadTransactions);
+
+      loadTransactions();
+    });
+  </script>
 </body>
 </html>

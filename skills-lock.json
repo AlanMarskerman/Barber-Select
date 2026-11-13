@@ -1,0 +1,107 @@
+{
+  "version": 2,
+  "skills": {
+    "animated-infographic": {
+      "source": "iart-ai/data-animation-skills",
+      "sourceType": "github",
+      "skillPath": "skills/animated-infographic/SKILL.md",
+      "computedHash": "8581dfd7d12292d16baab6194b70dedab98099222f24e679ce63590de2a7ba75"
+    },
+    "banner-design": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/banner-design/SKILL.md",
+      "computedHash": "4b22f6f48afc6fcd72e6f3ae106a4dca11b33b88221efded1f5c62d8f9afb50d"
+    },
+    "brand": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/brand/SKILL.md",
+      "computedHash": "d5619310b76bd204efd2f8b3832f72b5a2899712be0ab94d1b4b671271419c54"
+    },
+    "caption-animation": {
+      "source": "iart-ai/tiktok-video-skills",
+      "sourceType": "github",
+      "skillPath": "skills/caption-animation/SKILL.md",
+      "computedHash": "85e2df35826e3dda204d0dd9f1238d649eebcc1037dd8c6ee924304c19eed6e8"
+    },
+    "chart-animation": {
+      "source": "iart-ai/data-animation-skills",
+      "sourceType": "github",
+      "skillPath": "skills/chart-animation/SKILL.md",
+      "computedHash": "32b27babec7201892b2c4dfb620c98c707db5f1a47fdcb0426088b53c5da2a70"
+    },
+    "code-review-skill": {
+      "source": "awesome-skills/code-review-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "f2725b0f6247a5cfc876198c64c9b14a06edc733f57d1007cbfe37c6bcca5d93"
+    },
+    "countdown-video": {
+      "source": "iart-ai/tiktok-video-skills",
+      "sourceType": "github",
+      "skillPath": "skills/countdown-video/SKILL.md",
+      "computedHash": "0880e2c2c689a9b19d72946e75d04b1e3e780aa8877cae43ec11738bb9a367b1"
+    },
+    "design": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/design/SKILL.md",
+      "computedHash": "029cd8e3c45bab68f017e8aeaa18edd8c980e63445ce3915d64e7b5f5bb11be6"
+    },
+    "design-system": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/design-system/SKILL.md",
+      "computedHash": "9efdc106c73d8d298b5a90d55c56995840a37f754fb9d498d14e6562bdaadc23"
+    },
+    "design-taste-frontend": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/taste-skill/SKILL.md",
+      "computedHash": "b10eab0a9684cd09cf34c31ef04a3bf530a5f4404422f9c520d42372d670c7fc"
+    },
+    "lower-thirds": {
+      "source": "iart-ai/tiktok-video-skills",
+      "sourceType": "github",
+      "skillPath": "skills/lower-thirds/SKILL.md",
+      "computedHash": "dac7be08c227707dcb0b248cb9b720fbbdea207bf1c68efe461f6d842e616ab5"
+    },
+    "presentation-video": {
+      "source": "iart-ai/data-animation-skills",
+      "sourceType": "github",
+      "skillPath": "skills/presentation-video/SKILL.md",
+      "computedHash": "52eec9811ecea03a77026da27d1ec873ee702a4e54116d845cac26d473a1fbb4"
+    },
+    "short-form-video": {
+      "source": "iart-ai/tiktok-video-skills",
+      "sourceType": "github",
+      "skillPath": "skills/short-form-video/SKILL.md",
+      "computedHash": "f55f26c6bb88e7391044300c8db24e732a7ba3e4f632b392201526fdf7a87e86"
+    },
+    "slides": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/slides/SKILL.md",
+      "computedHash": "059825b15a508a5f1533ab646f968ffcbcdbb8eadd76c2d122151bfbcf19d287"
+    },
+    "svg-diagram": {
+      "source": "bybit-exchange/svg-diagram",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "fb3915f696e95ac349844e6a2162d1dd73833e5f5023ae7419a18d5b8c9ac63d"
+    },
+    "ui-styling": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-styling/SKILL.md",
+      "computedHash": "a598d8ad69832a394d4040e4c94e4b9c7b8daf2b1fdca050929058f7b70bc816"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "ff6863fc7c1be035b294703b2e7c90b2197548985ca4cb98f58740a7e84dc0cc"
+    }
+  }
+}

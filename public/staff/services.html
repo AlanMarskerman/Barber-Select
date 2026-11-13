@@ -3,66 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Serviços</title>
+  <meta name="theme-color" content="#062d1f">
+  <title>Serviços | Barber Select</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../styles-services.css">
   <link rel="stylesheet" href="../styles-logout.css">
 </head>
 <body>
-
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
-      <nav class="nav">
-        <a href="dashboard.html">
-          <i class="bx bx-grid-alt"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="agenda.html">
-          <i class="bx bx-calendar"></i>
-          <span>Agenda</span>
-        </a>
-        <a href="clients.html">
-          <i class="bx bx-user"></i>
-          <span>Clientes</span>
-        </a>
-        <a href="barbeiros.html">
-          <i class="bx bx-user-check"></i>
-          <span>Barbeiros</span>
-        </a>
-        <a class="active" href="services.html">
-          <i class="bx bx-cut"></i>
-          <span>Serviços</span>
-        </a>
-        <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
-          <span>Produtos</span>
-        </a>
-        <a href="venda.html">
-          <i class="bx bx-cart"></i>
-          <span>Vendas</span>
-        </a>
-        <a href="finance.html">
-          <i class="bx bx-wallet"></i>
-          <span>Financeiro</span>
-        </a>
-        <a href="relatorios.html">
-          <i class="bx bx-bar-chart-alt-2"></i>
-          <span>Relatórios</span>
-        </a>
-        <a href="avaliacoes.html">
-          <i class="bx bx-star"></i>
-          <span>Avaliações</span>
-        </a>
-        <a href="configuracoes.html">
-          <i class="bx bx-cog"></i>
-          <span>Configurações</span>
-        </a>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="dashboard.html"><i class="bx bx-grid-alt" aria-hidden="true"></i><span>Dashboard</span></a>
+        <a href="agenda.html"><i class="bx bx-calendar" aria-hidden="true"></i><span>Agenda</span></a>
+        <a href="clients.html"><i class="bx bx-user" aria-hidden="true"></i><span>Clientes</span></a>
+        <a href="barbeiros.html"><i class="bx bx-user-check" aria-hidden="true"></i><span>Barbeiros</span></a>
+        <a class="active" href="services.html" aria-current="page"><i class="bx bx-cut" aria-hidden="true"></i><span>Serviços</span></a>
+        <a href="produtos.html"><i class="bx bx-briefcase" aria-hidden="true"></i><span>Produtos</span></a>
+        <a href="venda.html"><i class="bx bx-cart" aria-hidden="true"></i><span>Vendas</span></a>
+        <a href="finance.html"><i class="bx bx-wallet" aria-hidden="true"></i><span>Financeiro</span></a>
+        <a href="relatorios.html"><i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i><span>Relatórios</span></a>
+        <a href="avaliacoes.html"><i class="bx bx-star" aria-hidden="true"></i><span>Avaliações</span></a>
+        <a href="configuracoes.html"><i class="bx bx-cog" aria-hidden="true"></i><span>Configurações</span></a>
       </nav>
       <button class="logout" type="button">
-        <i class="bx bx-log-out"></i>
+        <i class="bx bx-log-out" aria-hidden="true"></i>
         <span>Sair</span>
       </button>
     </aside>
@@ -70,21 +38,17 @@
     <main class="main">
       <header class="topbar">
         <div class="head-left">
-          <button class="menu-button hamb" type="button">
-            <i class="bx bx-menu"></i>
+          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+            <i class="bx bx-menu" aria-hidden="true"></i>
           </button>
           <div class="title">
             <h1>Serviços</h1>
-            <p>Gerencie os serviços oferecidos pela barbearia</p>
+            <p>Organize seu catálogo e prepare os horários para agendamento</p>
           </div>
         </div>
         <div class="head-right">
-          <button class="bell" type="button">
-            <i class="bx bx-bell"></i>
-            <span class="badge">1</span>
-          </button>
           <div class="user">
-            <i class="bx bx-user-circle user-avatar"></i>
+            <i class="bx bx-user-circle user-avatar" aria-hidden="true"></i>
             <div class="user-info">
               <b>Usuário</b>
               <span>Colaborador</span>
@@ -93,166 +57,144 @@
         </div>
       </header>
 
-      <section class="content">
+      <section class="content services-page" aria-label="Gerenciamento de serviços">
+        <section class="services-hero">
+          <div class="services-hero-copy">
+            <span class="services-eyebrow"><i class="bx bx-cut" aria-hidden="true"></i> CATÁLOGO DA BARBEARIA</span>
+            <h2>Seu próximo agendamento começa aqui.</h2>
+            <p>Cadastre serviços com preço e duração definidos. Essas informações poderão ser usadas na escolha do serviço e no cálculo dos horários disponíveis.</p>
+          </div>
+          <div class="services-hero-icon" aria-hidden="true"><i class="bx bx-calendar-check"></i></div>
+        </section>
 
-        <div class="cards">
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-cut"></i>
-              </div>
+        <div class="services-workspace">
+          <section class="panel services-form-panel" aria-labelledby="service-form-title">
+            <div class="services-section-heading">
+              <div class="services-heading-icon" aria-hidden="true"><i class="bx bx-plus"></i></div>
               <div>
-                <div class="label">SERVIÇOS ATIVOS</div>
-                <div class="value">8</div>
+                <span class="services-kicker">CATÁLOGO</span>
+                <h2 id="service-form-title">Novo serviço</h2>
+                <p>Os campos com <span class="services-required-mark">*</span> são obrigatórios.</p>
               </div>
             </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-cart"></i>
-              </div>
-              <div>
-                <div class="label">MELHOR AVALIADO</div>
-                <div class="value">Combo</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-diamond"></i>
-              </div>
-              <div>
-                <div class="label">SERVIÇO DE LUXO</div>
-                <div class="value">Premium</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-star"></i>
-              </div>
-              <div>
-                <div class="label">MÉDIA AVALIAÇÃO</div>
-                <div class="value">4.8</div>
-              </div>
-            </div>
-          </article>
-        </div>
 
-        <div class="dash-grid">
-          <section class="panel panel-pad">
-            <div class="panel-header">
-              <h2>NOVO SERVIÇO</h2>
-            </div>
-            <form id="service-form" style="margin-top: 20px;">
-              <div style="display: grid; gap: 16px;">
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Nome do Serviço</label>
-                  <input type="text" required placeholder="Ex: Corte Social" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+            <form id="service-form" class="services-form" novalidate>
+              <div class="services-field">
+                <label for="service-name">Nome do serviço <span class="services-required-mark">*</span></label>
+                <div class="services-input-wrap">
+                  <i class="bx bx-edit-alt" aria-hidden="true"></i>
+                  <input id="service-name" name="name" type="text" minlength="2" maxlength="100" placeholder="Ex.: Corte degradê" required>
                 </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Descrição</label>
-                  <textarea rows="3" placeholder="Descrição do serviço" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;"></textarea>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Preço (R$)</label>
-                    <input type="number" step="0.01" required placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Duração (min)</label>
-                    <input type="number" required placeholder="30" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                  </div>
-                </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Categoria</label>
-                  <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                    <option value="corte">Corte de Cabelo</option>
+              </div>
+
+              <div class="services-field">
+                <label for="service-description">Descrição <span class="services-optional">(opcional)</span></label>
+                <textarea id="service-description" name="description" rows="3" maxlength="500" placeholder="Explique brevemente o que está incluído no serviço"></textarea>
+                <small>Até 500 caracteres. A descrição pode ajudar o cliente a escolher na tela de agendamento.</small>
+              </div>
+
+              <div class="services-field">
+                <label for="service-category">Categoria <span class="services-required-mark">*</span></label>
+                <div class="services-select-wrap">
+                  <i class="bx bx-category-alt" aria-hidden="true"></i>
+                  <select id="service-category" name="category" required>
+                    <option value="" selected disabled>Selecione uma categoria</option>
+                    <option value="corte">Cabelo</option>
                     <option value="barba">Barba</option>
                     <option value="combo">Combo</option>
-                    <option value="luxo">Serviço Premium</option>
-                    <option value="adicional">Adicional</option>
+                    <option value="tratamento">Tratamento</option>
+                    <option value="acabamento">Acabamento</option>
                   </select>
                 </div>
-                <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer;">
-                  <i class="bx bx-plus"></i> Cadastrar Serviço
-                </button>
               </div>
+
+              <div class="services-form-row">
+                <div class="services-field">
+                  <label for="service-price">Preço <span class="services-required-mark">*</span></label>
+                  <div class="services-input-wrap services-prefix-wrap">
+                    <span class="services-prefix" aria-hidden="true">R$</span>
+                    <input id="service-price" name="price" type="number" min="0.01" max="99999.99" step="0.01" inputmode="decimal" placeholder="0,00" required>
+                  </div>
+                </div>
+                <div class="services-field">
+                  <label for="service-duration">Duração <span class="services-required-mark">*</span></label>
+                  <div class="services-input-wrap services-suffix-wrap">
+                    <i class="bx bx-time-five" aria-hidden="true"></i>
+                    <input id="service-duration" name="durationMinutes" type="number" min="5" max="600" step="5" inputmode="numeric" placeholder="30" required>
+                    <span class="services-suffix">min</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="services-booking-hint">
+                <i class="bx bx-calendar-event" aria-hidden="true"></i>
+                <p><strong>Preparado para a agenda:</strong> a duração será usada futuramente para reservar o tempo correto na grade de horários.</p>
+              </div>
+
+              <p id="service-form-message" class="services-form-message" role="status" aria-live="polite"></p>
+              <button class="services-submit" type="submit">
+                <i class="bx bx-plus-circle" aria-hidden="true"></i>
+                <span>Cadastrar serviço</span>
+              </button>
             </form>
           </section>
 
-          <section class="panel panel-pad appointments-panel">
-            <div class="panel-header">
-              <h2>SERVIÇOS ATIVOS</h2>
-              <a class="view-all" href="services.html">Ver todos</a>
+          <section class="panel services-catalog-panel" aria-labelledby="services-list-title">
+            <div class="services-catalog-heading">
+              <div>
+                <span class="services-kicker">SEUS SERVIÇOS</span>
+                <h2 id="services-list-title">Catálogo cadastrado</h2>
+                <p>Gerencie os serviços que poderão ser oferecidos aos clientes.</p>
+              </div>
+              <span id="services-count" class="services-count"><i class="bx bx-loader-alt bx-spin" aria-hidden="true"></i> Carregando</span>
             </div>
-            <div class="table-wrap" style="margin-top: 16px;">
-              <table class="table">
-                <tbody>
+
+            <div class="services-toolbar">
+              <label class="services-search" for="services-search">
+                <i class="bx bx-search" aria-hidden="true"></i>
+                <input id="services-search" type="search" placeholder="Buscar serviço..." autocomplete="off">
+              </label>
+              <label class="services-filter" for="services-category-filter">
+                <span class="sr-only">Filtrar por categoria</span>
+                <select id="services-category-filter">
+                  <option value="">Todas as categorias</option>
+                  <option value="corte">Cabelo</option>
+                  <option value="barba">Barba</option>
+                  <option value="combo">Combo</option>
+                  <option value="tratamento">Tratamento</option>
+                  <option value="acabamento">Acabamento</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="services-table-wrap">
+              <table class="services-table">
+                <thead>
                   <tr>
-                    <td><b>Corte Social</b><br><small>45 min</small></td>
-                    <td>R$ 50,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
+                    <th scope="col">Serviço</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Duração</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="sr-only">Ações</span></th>
                   </tr>
+                </thead>
+                <tbody id="services-list">
                   <tr>
-                    <td><b>Barba Completa</b><br><small>30 min</small></td>
-                    <td>R$ 40,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Combo Corte + Barba</b><br><small>60 min</small></td>
-                    <td>R$ 80,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Barba Terapêutica</b><br><small>40 min</small></td>
-                    <td>R$ 55,00</td>
-                    <td><span class="pill green">Ativo</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><b>Corte Degradê</b><br><small>40 min</small></td>
-                    <td>R$ 55,00</td>
-                    <td><span class="pill yellow">Pausado</span></td>
-                    <td>
-                      <div style="display: flex; gap: 8px;">
-                        <button class="btn-icon" title="Editar"><i class="bx bx-edit"></i></button>
-                        <button class="btn-icon" title="Excluir"><i class="bx bx-trash"></i></button>
+                    <td colspan="6">
+                      <div class="services-empty-state">
+                        <i class="bx bx-loader-alt bx-spin" aria-hidden="true"></i>
+                        <strong>Carregando catálogo</strong>
+                        <span>Buscando os serviços cadastrados.</span>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <p class="services-catalog-footnote"><i class="bx bx-info-circle" aria-hidden="true"></i> Serviços inativos não deverão aparecer para novos agendamentos; registros já utilizados poderão continuar associados ao histórico.</p>
           </section>
         </div>
-
       </section>
     </main>
   </div>

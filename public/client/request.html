@@ -3,53 +3,483 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles-legacy.css" />
-    <title>Barber-Select | Solicitar horário</title>
+    <title>Novo Agendamento | Área do Cliente - Barber-Select</title>
+
+    <link rel="icon" type="image/png" href="../assets/LOGO.png" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles-logout.css" />
+
+    <style>
+      :root {
+        --ink: #0e1513;
+        --paper: #f7f3ec;
+        --panel: #fffdf8;
+        --line: #e0d8cc;
+        --muted: #6b665c;
+        --green: #173f36;
+        --green2: #1e5247;
+        --green-light: #e6f0ed;
+        --gold: #c78e36;
+        --gold-soft: #f0dfbf;
+        --gold-glow: rgba(199, 142, 54, 0.12);
+        --radius: 16px;
+        --radius-sm: 10px;
+        --shadow: 0 16px 48px rgba(14, 21, 19, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "DM Sans", system-ui, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .client-app {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar Desktop */
+      .client-sidebar {
+        width: 280px;
+        background: var(--green);
+        color: #fff;
+        padding: 32px 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+      }
+
+      .client-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .client-brand img {
+        height: 38px;
+        width: auto;
+      }
+
+      .client-brand span {
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      .client-brand span .highlight {
+        color: var(--gold);
+      }
+
+      .client-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+      }
+
+      .client-nav a {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        color: rgba(255, 255, 255, 0.75);
+        border-radius: var(--radius-sm);
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.2s;
+        text-decoration: none;
+      }
+
+      .client-nav a:hover,
+      .client-nav a.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .client-nav a i {
+        font-size: 20px;
+      }
+
+      .client-logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: transparent;
+        border: none;
+        color: #e57373;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: var(--radius-sm);
+        transition: background 0.2s;
+        width: 100%;
+        text-align: left;
+      }
+
+      .client-logout-btn:hover {
+        background: rgba(229, 115, 115, 0.15);
+      }
+
+      /* Main Content */
+      .client-main {
+        flex: 1;
+        margin-left: 280px;
+        padding: 40px;
+        max-width: 900px;
+      }
+
+      .client-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 36px;
+      }
+
+      .welcome-text h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+
+      .welcome-text p {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .panel {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--line);
+        padding: 36px;
+        box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+      }
+
+      .panel h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--ink);
+        margin-bottom: 24px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 8px;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--green);
+        background: #fff;
+        box-shadow: 0 0 0 3px var(--green-alpha);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 16px;
+        background: var(--green);
+        color: #fff;
+        font-weight: 700;
+        font-size: 16px;
+        border: none;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        box-shadow: 0 4px 16px rgba(23, 63, 54, 0.25);
+        margin-top: 10px;
+      }
+
+      .btn-primary:hover {
+        background: var(--green2);
+        transform: translateY(-2px);
+      }
+
+      /* Mobile Navigation Bar */
+      .mobile-bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-top: 1.5px solid var(--line);
+        padding: 10px 20px;
+        justify-content: space-around;
+        z-index: 1000;
+      }
+
+      .mobile-bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .mobile-bottom-nav a.active {
+        color: var(--green);
+      }
+
+      .mobile-bottom-nav a i {
+        font-size: 22px;
+      }
+
+      @media (max-width: 900px) {
+        .client-sidebar {
+          display: none;
+        }
+
+        .client-main {
+          margin-left: 0;
+          padding: 20px 16px 80px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+
+        .mobile-bottom-nav {
+          display: flex;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="app">
-      <div class="shell">
-        <aside class="sidebar" id="sidebar"></aside>
-        <div class="main">
-          <header class="topbar">
-            <h1 id="topbar-title">Solicitar horário</h1>
-            <div class="muted" id="topbar-role"></div>
-          </header>
-          <main class="content">
-            <div class="page-head">
-              <div>
-                <div class="eyebrow">Agendamento</div>
-                <h2>Solicitar horário</h2>
-                <p class="muted">Seu pedido vai para a fila interna.</p>
+    <div class="client-app">
+      <!-- Sidebar Desktop -->
+      <aside class="client-sidebar">
+        <div>
+          <div class="client-brand">
+            <img src="../assets/LOGO.png" alt="Barber-Select" />
+            <span>Barber<span class="highlight">Select</span></span>
+          </div>
+
+          <nav class="client-nav">
+            <a href="home.html">
+              <i class="bx bx-home-alt"></i>
+              <span>Início</span>
+            </a>
+            <a href="request.html" class="active">
+              <i class="bx bx-calendar-plus"></i>
+              <span>Novo Agendamento</span>
+            </a>
+            <a href="profile.html">
+              <i class="bx bx-user"></i>
+              <span>Meu Perfil</span>
+            </a>
+            <a href="settings.html">
+              <i class="bx bx-cog"></i>
+              <span>Configurações</span>
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <button class="client-logout-btn logout" type="button" onclick="sessionStorage.clear(); window.location.href='/pages/login.html';">
+            <i class="bx bx-log-out"></i>
+            <span>Sair da conta</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="client-main">
+        <header class="client-topbar">
+          <div class="welcome-text">
+            <h1>Agendar Horário</h1>
+            <p>Escolha o serviço, profissional e horário ideal</p>
+          </div>
+        </header>
+
+        <section class="panel">
+          <h2>Novo Agendamento</h2>
+          <form id="request-form">
+            <div class="form-group">
+              <label for="service_select">Serviço *</label>
+              <select id="service_select" required>
+                <option value="">Selecione o serviço...</option>
+                <option value="Corte Degradê|55.00">Corte Degradê - R$ 55,00 (30 min)</option>
+                <option value="Barba Completa|40.00">Barba Completa - R$ 40,00 (30 min)</option>
+                <option value="Corte + Barba|85.00">Corte + Barba - R$ 85,00 (50 min)</option>
+                <option value="Acabamento|25.00">Acabamento - R$ 25,00 (20 min)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="staff_name">Profissional Preferido *</label>
+              <select id="staff_name" required>
+                <option value="">Qualquer profissional disponível</option>
+                <option value="Carlos">Carlos</option>
+                <option value="Marcos">Marcos</option>
+                <option value="Rafael">Rafael</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="appointment_date">Data do Atendimento *</label>
+                <input type="date" id="appointment_date" required />
+              </div>
+
+              <div class="form-group">
+                <label for="appointment_time">Horário *</label>
+                <input type="time" id="appointment_time" required />
               </div>
             </div>
-            <div class="card">
-              <form class="form" id="request-form">
-                <div class="field">
-                  <label>Serviço</label><input required />
-                </div>
-                <div class="field">
-                  <label>Profissional</label><input required />
-                </div>
-                <div class="field">
-                  <label>Data</label><input type="date" required />
-                </div>
-                <div class="field">
-                  <label>Horário</label><input type="time" required />
-                </div>
-                <div class="field">
-                  <label>Observações</label><textarea></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit">
-                  Enviar solicitação
-                </button>
-              </form>
+
+            <div class="form-group">
+              <label for="notes">Observações</label>
+              <input type="text" id="notes" placeholder="Ex: Prefiro máquina 2 nas laterais" />
             </div>
-          </main>
-        </div>
-      </div>
+
+            <button type="submit" class="btn-primary">
+              <i class="bx bx-calendar-check"></i> Confirmar e Enviar para Agenda
+            </button>
+          </form>
+        </section>
+      </main>
     </div>
-    <script src="/js/core/shared.js" defer></script>
-    <script src="/js/client/client-app.js" defer></script>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+      <a href="home.html">
+        <i class="bx bx-home-alt"></i>
+        <span>Início</span>
+      </a>
+      <a href="request.html" class="active">
+        <i class="bx bx-calendar-plus"></i>
+        <span>Agendar</span>
+      </a>
+      <a href="profile.html">
+        <i class="bx bx-user"></i>
+        <span>Perfil</span>
+      </a>
+      <a href="settings.html">
+        <i class="bx bx-cog"></i>
+        <span>Ajustes</span>
+      </a>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="../js/core/shared.js"></script>
+    <script src="../js/client/client-app.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const token = sessionStorage.getItem("accessToken");
+        const identity = sessionStorage.getItem("identity") || "Cliente";
+        if (!token) {
+          window.location.href = "../pages/login.html";
+          return;
+        }
+
+        const todayStr = new Date().toISOString().split("T")[0];
+        document.getElementById("appointment_date").value = todayStr;
+
+        const form = document.getElementById("request-form");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const serviceRaw = document.getElementById("service_select").value;
+          const [service_name, service_price] = serviceRaw.split("|");
+          const staff_name = document.getElementById("staff_name").value || "Carlos";
+          const appointment_date = document.getElementById("appointment_date").value;
+          const appointment_time = document.getElementById("appointment_time").value;
+          const notes = document.getElementById("notes").value;
+          const client_phone = "(62) 99999-9999";
+
+          try {
+            const res = await fetch("/api/appointments", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                client_name: identity,
+                client_phone,
+                service_name,
+                service_price: Number(service_price),
+                staff_name,
+                appointment_date,
+                appointment_time,
+                status: "confirmado",
+                notes
+              })
+            });
+
+            if (res.ok) {
+              alert("Agendamento realizado com sucesso! Já está visível na agenda da barbearia.");
+              window.location.href = "home.html";
+            } else {
+              const errData = await res.json();
+              alert(errData.error || "Erro ao realizar agendamento.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Erro de conexão ao realizar agendamento.");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

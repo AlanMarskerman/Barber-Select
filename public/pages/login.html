@@ -3,11 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | Barber-Select</title>
+    <title>Entrar | Barber-Select</title>
 
-    <!-- Biblioteca de ícones -->
+    <link rel="icon" type="image/png" href="../assets/LOGO.png" />
+
+    <!-- Ícones -->
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
       rel="stylesheet"
     />
 
@@ -16,105 +26,101 @@
   </head>
 
   <body>
-    <!-- Tela completa de login -->
     <div class="auth-container">
-      <!-- Painel verde da esquerda -->
+      <!-- Painel Esquerdo -->
       <div class="auth-panel">
         <img
           src="../assets/TELA_DE_FUNDO.png"
           alt="Fundo decorativo de barbearia"
           class="auth-background"
         />
+        <div class="auth-overlay"></div>
 
-        <!-- Conteúdo exibido sobre o fundo verde -->
         <div class="auth-panel-content">
-          <!-- Logo Barber Select -->
           <div class="auth-logo">
             <img
               src="../assets/LOGO.png"
-              alt="Barber-Select"
+              alt="Barber-Select Logo"
               class="logo-image"
             />
           </div>
 
-          <!-- Texto principal -->
           <div class="auth-panel-text">
             <h1>
               Gestão inteligente<br />
-              <span>para sua barbearia</span>
+              <span class="highlight">para sua barbearia</span>
             </h1>
             <p>
-              Mais organização, mais clientes,<br />
-              mais crescimento para o seu negócio.
+              Mais organização, mais clientes, mais crescimento para o seu negócio em uma plataforma unificada.
             </p>
           </div>
 
-          <!-- Benefícios do sistema -->
           <div class="auth-benefits">
             <div class="auth-benefit">
-              <i class="bx bx-calendar benefit-icon"></i>
+              <div class="benefit-icon">
+                <i class="bx bx-calendar-check"></i>
+              </div>
               <div>
-                <h3>Tudo em um só lugar</h3>
-                <span>Clientes, equipe e gestão conectados.</span>
+                <h3>Agendamento 24/7</h3>
+                <span>Clientes e equipe perfeitamente sincronizados.</span>
               </div>
             </div>
 
             <div class="auth-benefit">
-              <i class="bx bx-bar-chart-alt-2 benefit-icon"></i>
+              <div class="benefit-icon">
+                <i class="bx bx-line-chart"></i>
+              </div>
               <div>
-                <h3>Acesso personalizado</h3>
-                <span>Sua área é identificada automaticamente.</span>
+                <h3>Gestão em Tempo Real</h3>
+                <span>Controle financeiro e relatórios na palma da mão.</span>
               </div>
             </div>
 
             <div class="auth-benefit">
-              <i class="bx bx-network-chart benefit-icon"></i>
+              <div class="benefit-icon">
+                <i class="bx bx-shield-quarter"></i>
+              </div>
               <div>
-                <h3>Simples e seguro</h3>
-                <span>Entre usando seu e-mail e senha.</span>
+                <h3>Segurança Avançada</h3>
+                <span>Acesso protegido com autenticação JWT.</span>
               </div>
             </div>
           </div>
 
-          <!-- Frase final -->
           <div class="auth-tagline">
-            <p>Barbearia mais forte<br />todos os dias</p>
+            <p>Barbearia mais forte todos os dias</p>
           </div>
         </div>
       </div>
 
-      <!-- Caixa branca do login -->
+      <!-- Caixa Direita / Formulário de Login -->
       <div class="auth-box">
-        <!-- Link voltar -->
         <a href="../index.html" class="back-link">
           <i class="bx bx-arrow-back"></i>
-          Voltar ao início
+          Voltar à página inicial
         </a>
 
-        <!-- Título -->
         <div class="auth-header">
           <h1>Bem-vindo de volta</h1>
-          <p>Entre com seus dados para acessar o sistema.</p>
+          <p>Entre com seus dados para acessar o painel.</p>
         </div>
 
-        <!-- Formulário -->
         <form class="auth-form" id="unified-login-form">
-          <!-- Campo de e-mail/usuário -->
           <div class="form-group">
-            <label for="identity">E-mail ou usuário</label>
+            <label for="identity">E-mail ou Usuário</label>
             <div class="input-wrapper">
               <i class="bx bx-envelope input-icon"></i>
               <input
                 type="text"
                 id="identity"
                 name="identity"
-                placeholder="Digite seu e-mail ou usuário"
+                placeholder="Ex: cliente, colaborador ou admin"
                 required
+                autocomplete="username"
               />
             </div>
           </div>
 
-          <!-- Campo de senha -->
           <div class="form-group">
             <label for="password">Senha</label>
             <div class="input-wrapper">
@@ -125,58 +131,53 @@
                 name="password"
                 placeholder="Digite sua senha"
                 required
+                autocomplete="current-password"
               />
-              <i class="bx bx-show eye-icon" id="toggle-password"></i>
+              <i class="bx bx-show eye-icon" id="toggle-password" role="button" aria-label="Mostrar senha"></i>
             </div>
           </div>
 
-          <!-- Lembrar de mim e recuperação de senha -->
           <div class="form-options">
             <label class="checkbox-label">
               <input type="checkbox" id="remember-me" />
               Lembrar de mim
             </label>
-            <a href="#" class="forgot-password">Esqueci minha senha</a>
+            <a href="#" class="forgot-password">Esqueceu a senha?</a>
           </div>
 
-          <!-- Mensagem de erro/sucesso -->
           <div id="auth-message" class="auth-message"></div>
 
-          <!-- Botão de entrar -->
           <button type="submit" class="btn-submit">
-            <span>Entrar</span>
+            <span>Entrar no Sistema</span>
             <i class="bx bx-right-arrow-alt"></i>
           </button>
 
-          <!-- Separador dos logins sociais -->
           <div class="auth-divider">
-            <span>Ou continue com</span>
+            <span>ou acesso rápido</span>
           </div>
 
-          <!-- Botões Google e Microsoft -->
           <div class="social-login">
-            <button type="button" class="btn-social" disabled>
+            <button type="button" class="btn-social" disabled title="Em breve">
               <i class="bx bxl-google"></i>
               Google
             </button>
-            <button type="button" class="btn-social" disabled>
+            <button type="button" class="btn-social" disabled title="Em breve">
               <i class="bx bxl-microsoft"></i>
               Microsoft
             </button>
           </div>
         </form>
 
-        <!-- Link para cadastro -->
         <div class="auth-footer">
           <p>
-            Ainda não possui uma conta?
-            <a href="cadastro.html">Criar conta</a>
+            Ainda não tem uma conta?
+            <a href="cadastro.html">Cadastre sua barbearia</a>
           </p>
         </div>
       </div>
     </div>
 
-    <!-- Script de autenticação unificada -->
+    <!-- Script de autenticação -->
     <script src="../js/auth/auth-manager.js"></script>
   </body>
 </html>

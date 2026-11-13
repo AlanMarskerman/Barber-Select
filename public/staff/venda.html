@@ -1,225 +1,653 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Vendas</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="../styles-logout.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vendas & Caixa | Barber-Select</title>
 
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="../assets/LOGO.png" alt="Barber Select">
-      </div>
-      <nav class="nav">
-        <a href="dashboard.html">
-          <i class="bx bx-grid-alt"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="agenda.html">
-          <i class="bx bx-calendar"></i>
-          <span>Agenda</span>
-        </a>
-        <a href="clients.html">
-          <i class="bx bx-user"></i>
-          <span>Clientes</span>
-        </a>
-        <a href="barbeiros.html">
-          <i class="bx bx-user-check"></i>
-          <span>Barbeiros</span>
-        </a>
-        <a href="services.html">
-          <i class="bx bx-cut"></i>
-          <span>Serviços</span>
-        </a>
-        <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
-          <span>Produtos</span>
-        </a>
-        <a class="active" href="venda.html">
-          <i class="bx bx-cart"></i>
-          <span>Vendas</span>
-        </a>
-        <a href="finance.html">
-          <i class="bx bx-wallet"></i>
-          <span>Financeiro</span>
-        </a>
-        <a href="relatorios.html">
-          <i class="bx bx-bar-chart-alt-2"></i>
-          <span>Relatórios</span>
-        </a>
-        <a href="avaliacoes.html">
-          <i class="bx bx-star"></i>
-          <span>Avaliações</span>
-        </a>
-        <a href="configuracoes.html">
-          <i class="bx bx-cog"></i>
-          <span>Configurações</span>
-        </a>
-      </nav>
-      <button class="logout" type="button">
-        <i class="bx bx-log-out"></i>
-        <span>Sair</span>
-      </button>
-    </aside>
+    <link rel="icon" type="image/png" href="../assets/LOGO.png" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../styles-logout.css" />
 
-    <main class="main">
-      <header class="topbar">
-        <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
-            <i class="bx bx-menu"></i>
-          </button>
-          <div class="title">
-            <h1>Vendas</h1>
-            <p>Registre vendas e acompanhe o faturamento</p>
+    <style>
+      :root {
+        --ink: #0e1513;
+        --paper: #f7f3ec;
+        --panel: #fffdf8;
+        --line: #e0d8cc;
+        --muted: #6b665c;
+        --green: #173f36;
+        --green2: #1e5247;
+        --green-light: #e6f0ed;
+        --gold: #c78e36;
+        --gold-soft: #f0dfbf;
+        --gold-glow: rgba(199, 142, 54, 0.12);
+        --radius: 16px;
+        --radius-sm: 10px;
+        --shadow: 0 16px 48px rgba(14, 21, 19, 0.08);
+      }
+
+      .venda-page {
+        padding: 32px;
+        background: var(--paper);
+        min-height: calc(100vh - 80px);
+        font-family: var(--font);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+      }
+
+      .card {
+        background: #fff;
+        padding: 24px;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--line);
+        box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+        border-color: var(--gold);
+      }
+
+      .card .stat {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .card .icon-circle {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--green-light);
+        color: var(--green);
+        border-radius: 14px;
+        font-size: 26px;
+      }
+
+      .card .label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .card .value {
+        font-family: var(--display);
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .dash-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: 28px;
+        align-items: start;
+      }
+
+      .panel {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--line);
+        padding: 28px;
+        box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .panel-header h2 {
+        font-family: var(--display);
+        font-size: 1.3rem;
+        color: var(--ink);
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      .form-group label {
+        font-weight: 700;
+        font-size: 13px;
+        display: block;
+        margin-bottom: 6px;
+        color: var(--ink);
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-family: var(--font);
+        font-size: 14px;
+        background: var(--paper);
+        color: var(--ink);
+        transition: all 0.2s;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--green);
+        background: #fff;
+        box-shadow: 0 0 0 3px var(--green-alpha);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .btn-submit {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: var(--radius-sm);
+        background: var(--green);
+        color: white;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: background 0.2s, transform 0.2s;
+      }
+
+      .btn-submit:hover {
+        background: var(--green2);
+        transform: translateY(-2px);
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      .modern-table th {
+        background: var(--paper);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 14px 16px;
+        border-bottom: 1.5px solid var(--line);
+      }
+
+      .modern-table td {
+        padding: 16px;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink);
+        vertical-align: middle;
+      }
+
+      .modern-table tbody tr:hover {
+        background: rgba(230, 240, 237, 0.3);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .pill.pago {
+        background: rgba(40, 200, 64, 0.12);
+        color: #218c32;
+      }
+
+      .pill.pendente {
+        background: rgba(199, 142, 54, 0.15);
+        color: #9c6c1f;
+      }
+
+      .btn-action {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        border: 1.5px solid var(--line);
+        background: #fff;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-action:hover {
+        background: rgba(165, 72, 59, 0.1);
+        color: #a5483b;
+        border-color: #a5483b;
+      }
+
+      @media (max-width: 1024px) {
+        .dash-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <img src="../assets/LOGO.png" alt="Barber Select" />
+        </div>
+        <nav class="nav">
+          <a href="dashboard.html">
+            <i class="bx bx-grid-alt"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="agenda.html">
+            <i class="bx bx-calendar"></i>
+            <span>Agenda</span>
+          </a>
+          <a href="clients.html">
+            <i class="bx bx-user"></i>
+            <span>Clientes</span>
+          </a>
+          <a href="barbeiros.html">
+            <i class="bx bx-user-check"></i>
+            <span>Barbeiros</span>
+          </a>
+          <a href="services.html">
+            <i class="bx bx-cut"></i>
+            <span>Serviços</span>
+          </a>
+          <a href="produtos.html">
+            <i class="bx bx-briefcase"></i>
+            <span>Produtos</span>
+          </a>
+          <a class="active" href="venda.html">
+            <i class="bx bx-cart"></i>
+            <span>Vendas</span>
+          </a>
+          <a href="finance.html">
+            <i class="bx bx-wallet"></i>
+            <span>Financeiro</span>
+          </a>
+          <a href="relatorios.html">
+            <i class="bx bx-bar-chart-alt-2"></i>
+            <span>Relatórios</span>
+          </a>
+          <a href="avaliacoes.html">
+            <i class="bx bx-star"></i>
+            <span>Avaliações</span>
+          </a>
+          <a href="configuracoes.html">
+            <i class="bx bx-cog"></i>
+            <span>Configurações</span>
+          </a>
+        </nav>
+        <button class="logout" type="button">
+          <i class="bx bx-log-out"></i>
+          <span>Sair</span>
+        </button>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="head-left">
+            <button
+              class="menu-button hamb"
+              type="button"
+              aria-label="Abrir ou fechar menu"
+            >
+              <i class="bx bx-menu"></i>
+            </button>
+            <div class="title">
+              <h1>PDV & Vendas</h1>
+              <p>Registro de vendas integrado ao fluxo financeiro e estoque</p>
+            </div>
           </div>
-        </div>
-        <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
-            <i class="bx bx-bell"></i>
-            <span class="badge">2</span>
-          </button>
-          <div class="user">
-            <i class="bx bx-user-circle user-avatar"></i>
-            <div class="user-info">
-              <b>Usuário</b>
-              <span>Colaborador</span>
+          <div class="head-right">
+            <div class="user">
+              <i class="bx bx-user-circle user-avatar"></i>
+              <div class="user-info">
+                <b>Colaborador</b>
+                <span>Staff</span>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <section class="content">
-
-        <div class="cards">
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-dollar-circle"></i>
-              </div>
-              <div>
-                <div class="label">FATURAMENTO HOJE</div>
-                <div class="value">R$ 1.840</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-trending-up"></i>
-              </div>
-              <div>
-                <div class="label">VENDAS HOJE</div>
-                <div class="value">24</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-cart-alt"></i>
-              </div>
-              <div>
-                <div class="label">TICKET MÉDIO</div>
-                <div class="value">R$ 76,67</div>
-              </div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-package"></i>
-              </div>
-              <div>
-                <div class="label">PRODUTOS VENDIDOS</div>
-                <div class="value">18</div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="dash-grid">
-          <section class="panel panel-pad">
-            <h2>NOVA VENDA</h2>
-            <form id="sale-form" style="margin-top: 20px;">
-              <div style="display: grid; gap: 16px;">
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Cliente</label>
-                  <input type="text" placeholder="Nome ou ID do cliente" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+        <section class="content venda-page">
+          <!-- Cards de Resumo -->
+          <div class="cards">
+            <article class="card">
+              <div class="stat">
+                <div class="icon-circle" style="color: var(--gold); background: var(--gold-glow);">
+                  <i class="bx bx-dollar-circle"></i>
                 </div>
                 <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Produto/Serviço</label>
-                  <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                    <option>Selecione</option>
-                    <option>Corte Social - R$ 50</option>
-                    <option>Barba - R$ 40</option>
-                    <option>Barba + Corte - R$ 80</option>
-                    <option>Shampoo - R$ 20</option>
-                    <option>Gel - R$ 30</option>
-                  </select>
+                  <div class="label">Total Vendas</div>
+                  <div class="value" id="stat-total-vendas">R$ 0</div>
                 </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Valor</label>
-                  <input type="number" step="0.01" placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                </div>
-                <div>
-                  <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">Forma de Pagamento</label>
-                  <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                    <option>Dinheiro</option>
-                    <option>Crédito</option>
-                    <option>Débito</option>
-                    <option>Pix</option>
-                  </select>
-                </div>
-                <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; font-weight: 700; cursor: pointer;">Registrar Venda</button>
               </div>
-            </form>
-          </section>
+            </article>
 
-          <section class="panel panel-pad appointments-panel">
-            <h2>ÚLTIMAS VENDAS</h2>
-            <div class="table-wrap" style="margin-top: 16px;">
-              <table class="table" style="font-size: 12px;">
-                <tbody>
-                  <tr>
-                    <td><b>Carlos Silva</b></td>
-                    <td>Corte + Barba</td>
-                    <td>R$ 80,00</td>
-                    <td><span class="pill green">Pago</span></td>
-                  </tr>
-                  <tr>
-                    <td><b>João Santos</b></td>
-                    <td>Corte Social</td>
-                    <td>R$ 50,00</td>
-                    <td><span class="pill green">Pago</span></td>
-                  </tr>
-                  <tr>
-                    <td><b>Pedro Costa</b></td>
-                    <td>Shampoo + Gel</td>
-                    <td>R$ 50,00</td>
-                    <td><span class="pill green">Pago</span></td>
-                  </tr>
-                  <tr>
-                    <td><b>Marco Oliveira</b></td>
-                    <td>Barba</td>
-                    <td>R$ 40,00</td>
-                    <td><span class="pill yellow">Pendente</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
+            <article class="card">
+              <div class="stat">
+                <div class="icon-circle">
+                  <i class="bx bx-cart-alt"></i>
+                </div>
+                <div>
+                  <div class="label">Qtd. Vendas</div>
+                  <div class="value" id="stat-qtd">0</div>
+                </div>
+              </div>
+            </article>
 
-      </section>
-    </main>
-  </div>
+            <article class="card">
+              <div class="stat">
+                <div class="icon-circle">
+                  <i class="bx bx-line-chart"></i>
+                </div>
+                <div>
+                  <div class="label">Ticket Médio</div>
+                  <div class="value" id="stat-ticket">R$ 0</div>
+                </div>
+              </div>
+            </article>
+          </div>
 
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
-</body>
+          <div class="dash-grid">
+            <!-- Formulário Nova Venda -->
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Nova Venda / Caixa</h2>
+              </div>
+              <form id="sale-form">
+                <div class="form-group">
+                  <label for="client_name">Cliente *</label>
+                  <input
+                    type="text"
+                    id="client_name"
+                    required
+                    placeholder="Ex: Carlos Silva"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="item_name">Item (Serviço ou Produto) *</label>
+                  <input
+                    type="text"
+                    id="item_name"
+                    required
+                    placeholder="Ex: Corte Degradê + Pomada Modeladora"
+                  />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="amount">Valor * (R$)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      id="amount"
+                      required
+                      placeholder="0.00"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="payment_method">Forma de Pagamento</label>
+                    <select id="payment_method">
+                      <option value="PIX">PIX</option>
+                      <option value="Dinheiro">Dinheiro</option>
+                      <option value="Crédito">Cartão de Crédito</option>
+                      <option value="Débito">Cartão de Débito</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="status">Status do Pagamento</label>
+                    <select id="status">
+                      <option value="Pago">Pago (Lança no Financeiro)</option>
+                      <option value="Pendente">Pendente</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="sale_date">Data *</label>
+                    <input type="date" id="sale_date" required />
+                  </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                  <i class="bx bx-check-shield"></i> Registrar Venda
+                </button>
+              </form>
+            </section>
+
+            <!-- Tabela de Vendas -->
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Histórico de Vendas</h2>
+                <div style="width: 200px;">
+                  <input type="search" id="search-sale" placeholder="Buscar venda..." style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 13px;" />
+                </div>
+              </div>
+
+              <div class="table-container">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Cliente</th>
+                      <th>Item / Serviço</th>
+                      <th>Valor</th>
+                      <th>Pagamento</th>
+                      <th>Status</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sales-tbody">
+                    <!-- Preenchido via API -->
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/core/shared.js"></script>
+    <script src="../js/staff/staff-app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const token = sessionStorage.getItem("accessToken");
+        if (!token) {
+          window.location.href = "../pages/login.html";
+          return;
+        }
+
+        const todayStr = new Date().toISOString().split("T")[0];
+        document.getElementById("sale_date").value = todayStr;
+
+        const saleForm = document.getElementById("sale-form");
+        const tbody = document.getElementById("sales-tbody");
+        const searchInput = document.getElementById("search-sale");
+
+        async function loadSales() {
+          try {
+            const search = searchInput.value;
+            let url = `/api/sales?`;
+            if (search) url += `search=${encodeURIComponent(search)}`;
+
+            const res = await fetch(url, {
+              headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!res.ok) {
+              if (res.status === 401) {
+                window.location.href = "../pages/login.html";
+                return;
+              }
+              throw new Error("Erro ao carregar vendas");
+            }
+
+            const sales = await res.json();
+            renderSales(sales);
+            updateStats(sales);
+          } catch (err) {
+            console.error("Erro:", err);
+          }
+        }
+
+        function renderSales(list) {
+          tbody.innerHTML = "";
+
+          if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: var(--muted);">Nenhuma venda registrada.</td></tr>`;
+            return;
+          }
+
+          list.forEach(s => {
+            const isPago = s.status.toLowerCase() === 'pago';
+            const formattedDate = new Date(s.sale_date).toLocaleDateString('pt-BR');
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td><small>${formattedDate}</small></td>
+              <td><strong>${escapeHtml(s.client_name)}</strong></td>
+              <td>${escapeHtml(s.item_name)}</td>
+              <td><strong>R$ ${Number(s.amount).toFixed(2)}</strong></td>
+              <td>${escapeHtml(s.payment_method)}</td>
+              <td><span class="pill ${isPago ? 'pago' : 'pendente'}">${s.status}</span></td>
+              <td>
+                <button class="btn-action" title="Excluir Venda" onclick="deleteSale(${s.id})">
+                  <i class="bx bx-trash"></i>
+                </button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+
+        function updateStats(list) {
+          const totalVendas = list.filter(s => s.status.toLowerCase() === 'pago').reduce((acc, s) => acc + Number(s.amount), 0);
+          const qtd = list.length;
+          const ticketMedio = qtd > 0 ? totalVendas / qtd : 0;
+
+          document.getElementById("stat-total-vendas").textContent = `R$ ${totalVendas.toFixed(2)}`;
+          document.getElementById("stat-qtd").textContent = qtd;
+          document.getElementById("stat-ticket").textContent = `R$ ${ticketMedio.toFixed(2)}`;
+        }
+
+        function escapeHtml(str) {
+          return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        window.deleteSale = async function(id) {
+          if (!confirm("Tem certeza que deseja excluir esta venda?")) return;
+          try {
+            const res = await fetch(`/api/sales/${id}`, {
+              method: "DELETE",
+              headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (res.ok) {
+              loadSales();
+            } else {
+              alert("Erro ao excluir venda.");
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        };
+
+        saleForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const client_name = document.getElementById("client_name").value;
+          const item_name = document.getElementById("item_name").value;
+          const amount = document.getElementById("amount").value;
+          const payment_method = document.getElementById("payment_method").value;
+          const status = document.getElementById("status").value;
+          const sale_date = document.getElementById("sale_date").value;
+
+          try {
+            const res = await fetch("/api/sales", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                client_name,
+                item_name,
+                amount: Number(amount),
+                payment_method,
+                status,
+                sale_date
+              })
+            });
+
+            if (res.ok) {
+              saleForm.reset();
+              document.getElementById("sale_date").value = todayStr;
+              loadSales();
+            } else {
+              const errData = await res.json();
+              alert(errData.error || "Erro ao registrar venda.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Erro de conexão ao registrar venda.");
+          }
+        });
+
+        searchInput.addEventListener("input", loadSales);
+
+        loadSales();
+      });
+    </script>
+  </body>
 </html>

@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS staff_users (
   name VARCHAR(100) NOT NULL,
   email VARCHAR(150) NOT NULL UNIQUE,
   username VARCHAR(30) NULL UNIQUE,
+  phone VARCHAR(20) NULL,
   password_hash VARCHAR(255) NOT NULL,
   role ENUM('staff', 'admin') NOT NULL,
   active TINYINT(1) NOT NULL DEFAULT 1,

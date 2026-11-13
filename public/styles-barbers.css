@@ -1,0 +1,539 @@
+/* Página de gestão da equipe — mantém a identidade visual do Barber Select. */
+body:has(.barber-page) {
+  min-height: 100vh;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body:has(.barber-page) .main {
+  min-height: 100vh;
+  height: auto;
+  overflow: visible;
+}
+.admin-only-label {
+  color: #8b6825;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.barber-page {
+  display: grid;
+  gap: 20px;
+  padding-bottom: 36px;
+}
+
+.barber-intro {
+  position: relative;
+  display: flex;
+  min-height: 190px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid #174a35;
+  border-radius: 16px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(214, 165, 58, 0.23), transparent 26%),
+    linear-gradient(115deg, #062d1f 0%, #0a5535 68%, #0b6b3f 100%);
+}
+
+.barber-intro-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+.barber-eyebrow,
+.barber-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.barber-eyebrow {
+  color: #eed18c;
+}
+
+.barber-eyebrow i {
+  font-size: 16px;
+}
+
+.barber-intro h2 {
+  max-width: 620px;
+  margin-top: 13px;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.14;
+  letter-spacing: -0.035em;
+}
+
+.barber-intro p {
+  max-width: 600px;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.barber-intro-mark {
+  display: grid;
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
+  place-items: center;
+  margin-right: clamp(4px, 4vw, 54px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 32px;
+  color: #f1d48e;
+  background: rgba(255, 255, 255, 0.08);
+  transform: rotate(4deg);
+}
+
+.barber-intro-mark i {
+  font-size: 58px;
+}
+
+.barber-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(230px, 0.75fr);
+  align-items: start;
+  gap: 18px;
+}
+
+.barber-form-panel,
+.barber-list-panel {
+  padding: clamp(20px, 2.5vw, 30px);
+}
+
+.barber-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 21px;
+  border-bottom: 1px solid #eee9e2;
+}
+
+.barber-heading-icon,
+.barber-aside-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  place-items: center;
+  border-radius: 13px;
+  color: var(--green);
+  background: var(--green-soft);
+}
+
+.barber-heading-icon i,
+.barber-aside-icon i {
+  font-size: 25px;
+}
+
+.barber-kicker {
+  color: #92702f;
+  font-size: 10px;
+}
+
+.barber-section-heading h2,
+.barber-list-heading h2 {
+  margin-top: 5px;
+  color: #171a18;
+  font-size: clamp(19px, 1.8vw, 23px);
+  line-height: 1.25;
+}
+
+.barber-section-heading p,
+.barber-list-heading p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.barber-form {
+  display: grid;
+  gap: 17px;
+  margin-top: 22px;
+}
+
+.barber-field {
+  min-width: 0;
+}
+
+.barber-field label {
+  display: block;
+  margin-bottom: 7px;
+  color: #303631;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.barber-field label > span:first-child,
+.barber-required-note span {
+  color: #b33c35;
+}
+
+.barber-optional {
+  color: #7c847e;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.barber-input-wrap {
+  position: relative;
+}
+
+.barber-input-wrap > i {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  color: #7b857e;
+  font-size: 18px;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.barber-input-wrap input {
+  display: block;
+  width: 100%;
+  min-height: 45px;
+  padding: 11px 13px 11px 41px;
+  border: 1px solid #dddcd5;
+  border-radius: 9px;
+  outline: 0;
+  color: #202722;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.barber-input-wrap input::placeholder {
+  color: #a0a69f;
+}
+
+.barber-input-wrap input:focus {
+  border-color: #278357;
+  box-shadow: 0 0 0 3px rgba(39, 131, 87, 0.13);
+}
+
+.barber-input-wrap input:focus-visible {
+  outline: 0;
+}
+
+.barber-field small {
+  display: block;
+  margin-top: 6px;
+  color: #737c75;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.barber-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.barber-security-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 13px;
+  border: 1px solid #e6eee8;
+  border-radius: 9px;
+  color: #38664a;
+  background: #f4f8f4;
+}
+
+.barber-security-note i {
+  flex: 0 0 auto;
+  font-size: 19px;
+}
+
+.barber-security-note p {
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.barber-form-message {
+  min-height: 0;
+  color: #a33e36;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.barber-form-message:empty {
+  display: none;
+}
+
+.barber-form-message.is-success {
+  color: #177443;
+}
+
+.barber-submit:disabled {
+  cursor: wait;
+  opacity: 0.76;
+  transform: none;
+}
+
+.barber-submit:disabled:hover {
+  box-shadow: 0 5px 12px rgba(6, 75, 43, 0.15);
+  transform: none;
+}
+
+.barber-submit {
+  display: flex;
+  min-height: 47px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 9px;
+  color: #fff;
+  background: linear-gradient(100deg, #064b2b, #0b6b3f);
+  box-shadow: 0 5px 12px rgba(6, 75, 43, 0.15);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.barber-submit:hover {
+  background: linear-gradient(100deg, #0b5b36, #0f7a48);
+  box-shadow: 0 7px 15px rgba(6, 75, 43, 0.2);
+  transform: translateY(-1px);
+}
+
+.barber-submit:focus-visible {
+  outline: 3px solid rgba(11, 107, 63, 0.25);
+  outline-offset: 3px;
+}
+
+.barber-submit i {
+  font-size: 19px;
+}
+
+.barber-required-note {
+  margin-top: -8px;
+  color: #737c75;
+  font-size: 10px;
+  text-align: right;
+}
+
+.barber-aside {
+  display: grid;
+  gap: 14px;
+}
+
+.barber-aside-card {
+  padding: 20px;
+  border: 1px solid #e8e1d7;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.barber-aside-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 15px;
+  border-radius: 11px;
+}
+
+.barber-aside-icon i {
+  font-size: 22px;
+}
+
+.barber-aside-card h3 {
+  color: #202722;
+  font-size: 14px;
+}
+
+.barber-aside-card p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.barber-aside-card-muted {
+  background: #faf8f4;
+}
+
+.barber-list-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.barber-list-tag {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid #f0dfbc;
+  border-radius: 99px;
+  color: #8b6825;
+  background: #fff9ed;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.barber-list-tag i {
+  font-size: 15px;
+}
+
+.barber-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.barber-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.barber-table th {
+  padding: 12px 13px;
+  border-top: 1px solid #eee9e2;
+  border-bottom: 1px solid #eee9e2;
+  color: #737c75;
+  background: #faf9f6;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.barber-table td {
+  padding: 13px;
+  border-bottom: 1px solid #f0ede8;
+  color: #343a35;
+  font-size: 12px;
+}
+
+.barber-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.barber-status.is-active {
+  color: #167042;
+  background: #e8f5ec;
+}
+
+.barber-status.is-inactive {
+  color: #9c6a12;
+  background: #fff3d9;
+}
+
+.barber-empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 25px 12px 18px;
+  color: #747d76;
+  text-align: center;
+}
+
+.barber-empty-state > i {
+  margin-bottom: 3px;
+  color: #8da595;
+  font-size: 31px;
+}
+
+.barber-empty-state strong {
+  color: #333b35;
+  font-size: 13px;
+}
+
+.barber-empty-state span {
+  max-width: 430px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1000px) {
+  .barber-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .barber-aside {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .barber-page {
+    gap: 15px;
+    padding-top: 14px;
+  }
+
+  .barber-intro {
+    min-height: 0;
+    padding: 25px 22px;
+  }
+
+  .barber-intro-mark {
+    width: 74px;
+    height: 74px;
+    flex-basis: 74px;
+    margin-right: 0;
+    border-radius: 22px;
+  }
+
+  .barber-intro-mark i {
+    font-size: 39px;
+  }
+
+  .barber-form-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .barber-list-heading {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .barber-intro {
+    padding: 22px 18px;
+  }
+
+  .barber-intro-mark {
+    display: none;
+  }
+
+  .barber-aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .barber-form-panel,
+  .barber-list-panel {
+    padding: 18px 15px;
+  }
+
+  .barber-section-heading {
+    gap: 11px;
+  }
+
+  .barber-list-tag {
+    white-space: normal;
+  }
+}

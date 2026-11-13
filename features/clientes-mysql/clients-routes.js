@@ -1,92 +1,75 @@
-// features/clientes-mysql/clients-routes.js
-// Rotas dos CLIENTES para a tela de Clientes do colaborador/admin
-// (/staff/clients.html):
-//   GET   /api/clients             -> lista os clientes e os números dos cards;
-//   PATCH /api/clients/:id/status  -> inativa ou reativa um cliente.
-// Este arquivo NÃO é um servidor. Ele exporta uma função que devolve um
-// "Router" (um conjunto de rotas) para o server.js plugar em /api/clients.
-// Assim as rotas rodam dentro do server.js (porta 3000), com o mesmo login e
-// as mesmas sessões do resto do projeto.
-
 const express = require("express");
-// Express: framework que o projeto já usa. Aqui só precisamos do Router.
 
 const STAFF_ROLES = ["staff", "admin"];
-// Quem pode ver e inativar clientes: colaborador e administrador.
-// Um cliente logado NÃO pode ver nem alterar os outros clientes.
-
 const MAX_CLIENTS = 500;
-// Teto de linhas devolvidas de uma vez, para a resposta não crescer sem fim.
 
 function createClientsRouter({ authenticate, getPool }) {
-  // O server.js entrega duas peças (em vez de importarmos direto):
-  // - authenticate: confere o token e a sessão do usuário;
-  // - getPool: devolve a conexão com o MySQL.
-
   const router = express.Router();
 
-  // ---------- Coluna "active" ----------
+  let columnsReady = null;
 
-  let columnReady = null;
-
-  function ensureActiveColumn() {
-    // "Inativar" precisa de uma coluna active na tabela clients (1 = ativo,
-    // 0 = inativo). Quem já tinha a tabela criada não tem essa coluna, então
-    // na primeira chamada conferimos e criamos se faltar. Todo cliente que já
-    // existe nasce ativo (DEFAULT 1). Guardamos a promessa para fazer isso uma
-    // única vez, mesmo com várias requisições ao mesmo tempo.
-    if (!columnReady) {
-      columnReady = (async () => {
+  async function ensureClientColumns() {
+    if (!columnsReady) {
+      columnsReady = (async () => {
         const pool = getPool();
-        const [[found]] = await pool.query(
-          "SELECT COUNT(*) AS n FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'clients' AND COLUMN_NAME = 'active'",
-        );
-        if (Number(found.n) === 0) {
-          await pool.query("ALTER TABLE clients ADD COLUMN active TINYINT(1) NOT NULL DEFAULT 1");
+        const colsToAddToClients = [
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS active TINYINT(1) NOT NULL DEFAULT 1",
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS birthdate DATE NULL",
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS cpf VARCHAR(20) NULL",
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS fav_barber VARCHAR(50) NULL",
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS hair_style VARCHAR(100) NULL",
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS beard_style VARCHAR(100) NULL",
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS skin_notes VARCHAR(300) NULL",
+          "ALTER TABLE clients ADD COLUMN IF NOT EXISTS loyalty_points INT NOT NULL DEFAULT 12"
+        ];
+
+        for (const sql of colsToAddToClients) {
+          try {
+            await pool.query(sql);
+          } catch (e) {
+            // Ignora se a coluna já existir ou falha de versão do ALTER TABLE ADD COLUMN IF NOT EXISTS
+          }
         }
       })().catch((error) => {
-        columnReady = null;
-        // Se falhou (ex.: MySQL fora do ar), tenta de novo na próxima chamada.
+        columnsReady = null;
         throw error;
       });
     }
-    return columnReady;
+    return columnsReady;
   }
 
   function toApi(row) {
-    // Converte uma linha do banco para o formato JSON que o front recebe.
-    // password_hash nunca entra aqui: o hash da senha não sai do servidor.
     return {
       id: row.id,
       name: row.name,
       email: row.email,
       phone: row.phone,
+      birthdate: row.birthdate || null,
+      cpf: row.cpf || null,
+      favBarber: row.fav_barber || null,
+      hairStyle: row.hair_style || null,
+      beardStyle: row.beard_style || null,
+      skinNotes: row.skin_notes || null,
+      loyaltyPoints: row.loyalty_points || 12,
       active: Boolean(row.active),
-      // active vem do banco como 0 ou 1; Boolean() transforma em false/true.
       createdAt: row.created_at,
     };
   }
 
-  // ---------- GET /api/clients ----------
-
+  // GET /api/clients (Staff/Admin)
   router.get("/", authenticate(STAFF_ROLES), async (req, res) => {
-    // authenticate(STAFF_ROLES) roda ANTES: sem token válido de colaborador
-    // ou admin, a resposta já é 401/403 e o código abaixo nem executa.
     try {
-      await ensureActiveColumn();
+      await ensureClientColumns();
       const pool = getPool();
 
       const [rows] = await pool.query(
-        "SELECT id, name, email, phone, active, created_at FROM clients ORDER BY created_at DESC, id DESC LIMIT ?",
+        "SELECT id, name, email, phone, birthdate, cpf, fav_barber, hair_style, beard_style, skin_notes, loyalty_points, active, created_at FROM clients ORDER BY created_at DESC, id DESC LIMIT ?",
         [MAX_CLIENTS],
       );
-      // Escolhemos as colunas uma a uma (password_hash fica de fora).
 
       const [[summary]] = await pool.query(
         "SELECT COUNT(*) AS total, COALESCE(SUM(active = 1), 0) AS active, COALESCE(SUM(created_at >= NOW() - INTERVAL 30 DAY), 0) AS recent FROM clients",
       );
-      // Uma segunda consulta conta TODOS os clientes (não só os 500 da lista):
-      // o total, quantos estão ativos e quantos chegaram nos últimos 30 dias.
 
       return res.json({
         clients: rows.map(toApi),
@@ -94,7 +77,6 @@ function createClientsRouter({ authenticate, getPool }) {
           total: Number(summary.total),
           active: Number(summary.active),
           newLast30Days: Number(summary.recent),
-          // Number(): o MySQL pode devolver contagens como texto.
         },
       });
     } catch (error) {
@@ -103,11 +85,139 @@ function createClientsRouter({ authenticate, getPool }) {
     }
   });
 
-  // ---------- PATCH /api/clients/:id/status ----------
+  // GET /api/clients/me (Cliente logado busca seus próprios dados)
+  router.get("/me", authenticate(["client"]), async (req, res) => {
+    try {
+      await ensureClientColumns();
+      const pool = getPool();
+      const clientEmail = req.user.identity;
 
+      const [rows] = await pool.query(
+        "SELECT id, name, email, phone, birthdate, cpf, fav_barber, hair_style, beard_style, skin_notes, loyalty_points, active, created_at FROM clients WHERE email = ? LIMIT 1",
+        [clientEmail]
+      );
+
+      if (rows.length === 0) {
+        return res.status(404).json({ error: "Cliente não encontrado." });
+      }
+
+      return res.json(toApi(rows[0]));
+    } catch (error) {
+      console.error("Erro ao buscar perfil do cliente:", error);
+      return res.status(500).json({ error: "Erro ao buscar perfil." });
+    }
+  });
+
+  // PUT /api/clients/me (Cliente logado atualiza seus próprios dados e preferências)
+  router.put("/me", authenticate(["client"]), async (req, res) => {
+    try {
+      await ensureClientColumns();
+      const pool = getPool();
+      const clientEmail = req.user.identity;
+
+      const { name, phone, birthdate, cpf, favBarber, hairStyle, beardStyle, skinNotes } = req.body;
+
+      if (!name || !phone) {
+        return res.status(400).json({ error: "Nome e telefone são obrigatórios." });
+      }
+
+      await pool.query(
+        `UPDATE clients SET name = ?, phone = ?, birthdate = ?, cpf = ?, fav_barber = ?, hair_style = ?, beard_style = ?, skin_notes = ? WHERE email = ?`,
+        [
+          name.trim(),
+          phone.trim(),
+          birthdate || null,
+          cpf || null,
+          favBarber || null,
+          hairStyle || null,
+          beardStyle || null,
+          skinNotes || null,
+          clientEmail
+        ]
+      );
+
+      const [updated] = await pool.query(
+        "SELECT id, name, email, phone, birthdate, cpf, fav_barber, hair_style, beard_style, skin_notes, loyalty_points, active, created_at FROM clients WHERE email = ? LIMIT 1",
+        [clientEmail]
+      );
+
+      return res.json(toApi(updated[0]));
+    } catch (error) {
+      console.error("Erro ao atualizar perfil do cliente:", error);
+      return res.status(500).json({ error: "Erro ao atualizar perfil." });
+    }
+  });
+
+  // GET /api/clients/me/export (LGPD: Direito de Portabilidade e Acesso a Dados)
+  router.get("/me/export", authenticate(["client"]), async (req, res) => {
+    try {
+      await ensureClientColumns();
+      const pool = getPool();
+      const clientEmail = req.user.identity;
+
+      const [rows] = await pool.query(
+        "SELECT * FROM clients WHERE email = ? LIMIT 1",
+        [clientEmail]
+      );
+
+      if (rows.length === 0) {
+        return res.status(404).json({ error: "Cliente não encontrado." });
+      }
+
+      const clientData = rows[0];
+      delete clientData.password_hash; // Segurança: nunca exportar hash de senha
+
+      const [appointments] = await pool.query(
+        "SELECT * FROM appointments WHERE client_id = ? OR client_phone = ?",
+        [clientData.id, clientData.phone]
+      );
+
+      return res.json({
+        exportDate: new Date().toISOString(),
+        platform: "Barber Select LGPD Compliance",
+        holder: clientData.name,
+        profile: clientData,
+        appointments: appointments
+      });
+    } catch (error) {
+      console.error("Erro ao exportar dados LGPD:", error);
+      return res.status(500).json({ error: "Erro ao exportar dados." });
+    }
+  });
+
+  // DELETE /api/clients/me (LGPD: Direito ao Esquecimento / Anonimização)
+  router.delete("/me", authenticate(["client"]), async (req, res) => {
+    try {
+      await ensureClientColumns();
+      const pool = getPool();
+      const clientEmail = req.user.identity;
+
+      const [rows] = await pool.query(
+        "SELECT id FROM clients WHERE email = ? LIMIT 1",
+        [clientEmail]
+      );
+
+      if (rows.length === 0) {
+        return res.status(404).json({ error: "Cliente não encontrado." });
+      }
+
+      const clientId = rows[0].id;
+      const anonymousEmail = `deleted_${clientId}_${Date.now()}@anonymized.local`;
+
+      await pool.query(
+        `UPDATE clients SET name = 'Usuário Anonimizado', email = ?, phone = '00000000000', cpf = NULL, birthdate = NULL, skin_notes = NULL, active = 0 WHERE id = ?`,
+        [anonymousEmail, clientId]
+      );
+
+      return res.json({ message: "Dados anonimizados e conta encerrada com sucesso conforme diretrizes da LGPD." });
+    } catch (error) {
+      console.error("Erro ao anonimizar cliente (LGPD):", error);
+      return res.status(500).json({ error: "Erro ao processar exclusão de dados." });
+    }
+  });
+
+  // PATCH /api/clients/:id/status (Staff/Admin inativa ou reativa cliente)
   router.patch("/:id/status", authenticate(STAFF_ROLES), async (req, res) => {
-    // Inativa ou reativa um cliente. Nada é apagado: o cadastro, o histórico e
-    // o login continuam existindo. É só uma marca de "cliente parado".
     const id = Number(req.params.id);
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({ error: "Identificador inválido." });
@@ -117,20 +227,17 @@ function createClientsRouter({ authenticate, getPool }) {
     if (typeof active !== "boolean") {
       return res.status(400).json({ error: "Informe active como verdadeiro ou falso." });
     }
-    // Exigimos true/false de verdade. Texto como "sim" ou número é recusado.
 
     try {
-      await ensureActiveColumn();
+      await ensureClientColumns();
       const pool = getPool();
 
       await pool.query("UPDATE clients SET active = ? WHERE id = ?", [active ? 1 : 0, id]);
 
       const [rows] = await pool.query(
-        "SELECT id, name, email, phone, active, created_at FROM clients WHERE id = ?",
+        "SELECT id, name, email, phone, birthdate, cpf, fav_barber, hair_style, beard_style, skin_notes, loyalty_points, active, created_at FROM clients WHERE id = ?",
         [id],
       );
-      // Relemos o cliente depois de gravar. Assim a resposta é sempre o estado
-      // real do banco, e um id que não existe vira 404 abaixo.
       if (rows.length === 0) {
         return res.status(404).json({ error: "Cliente não encontrado." });
       }

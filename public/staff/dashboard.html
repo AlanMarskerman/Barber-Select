@@ -3,25 +3,386 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Dashboard</title>
+  <title>Dashboard | Barber-Select</title>
+
+  <link rel="icon" type="image/png" href="../assets/LOGO.png">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../styles-logout.css">
+
+  <style>
+    :root {
+      --ink: #0e1513;
+      --paper: #f7f3ec;
+      --panel: #fffdf8;
+      --line: #e0d8cc;
+      --muted: #6b665c;
+      --green: #173f36;
+      --green2: #1e5247;
+      --green-light: #e6f0ed;
+      --gold: #c78e36;
+      --gold-soft: #f0dfbf;
+      --gold-glow: rgba(199, 142, 54, 0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 16px 48px rgba(14, 21, 19, 0.08);
+    }
+
+    .dashboard-page {
+      padding: 32px;
+      background: var(--paper);
+      min-height: calc(100vh - 80px);
+      font-family: var(--font);
+    }
+
+    /* Cards de Estatísticas */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--line);
+      box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: var(--gold);
+    }
+
+    .card .stat {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .card .icon-circle {
+      width: 54px;
+      height: 54px;
+      min-width: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--green-light);
+      color: var(--green);
+      border-radius: 14px;
+      font-size: 26px;
+    }
+
+    .card .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .card .value {
+      font-family: var(--display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .card .trend {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .card .trend b {
+      color: #218c32;
+      font-weight: 700;
+    }
+
+    /* Grid do Dashboard */
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--line);
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .panel-header h2 {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .period-select {
+      padding: 8px 12px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 13px;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    /* Gráfico */
+    .linechart svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .chart-grid line {
+      stroke: var(--line);
+      stroke-dasharray: 4 4;
+      opacity: 0.6;
+    }
+
+    .chart-y-labels text,
+    .chart-x-labels text {
+      font-size: 11px;
+      fill: var(--muted);
+      font-family: var(--font);
+    }
+
+    .chart-area {
+      fill: url(#dashboardArea);
+    }
+
+    .chart-line {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chart-points circle {
+      fill: var(--gold);
+      stroke: #fff;
+      stroke-width: 2;
+    }
+
+    .week-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .week-summary small {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      display: block;
+    }
+
+    .week-summary b {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      color: var(--ink);
+    }
+
+    .week-summary span {
+      font-size: 12px;
+      font-weight: 700;
+      color: #218c32;
+    }
+
+    /* Tabela de Próximos Agendamentos */
+    .appointments-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .appointments-table td {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+      font-size: 13px;
+    }
+
+    .appointments-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .appointments-table .time {
+      font-weight: 700;
+      color: var(--green);
+      background: var(--green-light);
+      padding: 6px 10px;
+      border-radius: var(--radius-xs);
+    }
+
+    .appointments-table b {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .appointments-table small {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+    }
+
+    .appointments-table .barber {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .pill.green {
+      background: rgba(40, 200, 64, 0.12);
+      color: #218c32;
+    }
+
+    .pill.yellow {
+      background: rgba(199, 142, 54, 0.15);
+      color: #9c6c1f;
+    }
+
+    .view-all {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      transition: color 0.2s;
+    }
+
+    .view-all:hover {
+      color: var(--green2);
+      text-decoration: underline;
+    }
+
+    /* Atalhos Rápidos */
+    .quick {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--line);
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+    }
+
+    .quick h2 {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .quick-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .quick-item:hover {
+      background: #fff;
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(199, 142, 54, 0.15);
+    }
+
+    .quick-item .sq {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--green);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 22px;
+    }
+
+    .quick-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quick-text b {
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .quick-text span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1024px) {
+      .dash-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
+    <!-- Sidebar -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
 
-      <!-- Links de navegação do menu -->
       <nav class="nav">
         <a class="active" href="dashboard.html">
           <i class="bx bx-grid-alt"></i>
@@ -36,7 +397,7 @@
           <span>Clientes</span>
         </a>
         <a href="barbeiros.html">
-          <i class="bx bx-user"></i>
+          <i class="bx bx-user-check"></i>
           <span>Barbeiros</span>
         </a>
         <a href="services.html">
@@ -69,31 +430,25 @@
         </a>
       </nav>
 
-      <!-- Botão para sair do sistema -->
-      <button class="logout" type="button">
+      <button class="logout" type="button" aria-label="Sair da conta">
         <i class="bx bx-log-out"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal do dashboard -->
+    <!-- Main Content -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
-
-        <!-- Lado esquerdo do cabeçalho: menu e título -->
         <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
+          <button class="menu-button hamb" type="button" aria-label="Menu">
             <i class="bx bx-menu"></i>
           </button>
           <div class="title">
-            <h1>Dashboard</h1>
-            <p>Visão geral da sua barbearia</p>
+            <h1>Dashboard Executivo</h1>
+            <p>Métricas e visão geral da barbearia</p>
           </div>
         </div>
 
-        <!-- Lado direito do cabeçalho: notificações e usuário -->
         <div class="head-right">
           <button class="bell" type="button" aria-label="Notificações">
             <i class="bx bx-bell"></i>
@@ -102,25 +457,15 @@
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
             <div class="user-info">
-              <b>Kenis Cardoso</b>
-              <span>Administrador</span>
+              <b>Colaborador</b>
+              <span>Staff</span>
             </div>
-            <i class="bx bx-chevron-down down"></i>
           </div>
         </div>
       </header>
 
-      <!-- Área de conteúdo do dashboard -->
-      <section class="content">
-
-        <!-- Seletor de data -->
-        <div class="page-date">
-          <select aria-label="Selecionar data do dashboard">
-            <option>Hoje, 20 de maio de 2025</option>
-          </select>
-        </div>
-
-        <!-- Cards de resumo -->
+      <section class="content dashboard-page">
+        <!-- Cards de Resumo -->
         <div class="cards">
           <article class="card">
             <div class="stat">
@@ -128,7 +473,7 @@
                 <i class="bx bx-group"></i>
               </div>
               <div>
-                <div class="label">ATENDIMENTOS HOJE</div>
+                <div class="label">Atendimentos Hoje</div>
                 <div class="value">18</div>
               </div>
             </div>
@@ -137,14 +482,15 @@
               <span>em relação a ontem</span>
             </div>
           </article>
+
           <article class="card">
             <div class="stat">
-              <div class="icon-circle">
+              <div class="icon-circle" style="color: var(--gold); background: var(--gold-glow);">
                 <i class="bx bx-dollar-circle"></i>
               </div>
               <div>
-                <div class="label">FATURAMENTO HOJE</div>
-                <div class="value">R$ 1.840,00</div>
+                <div class="label">Faturamento Hoje</div>
+                <div class="value">R$ 1.840</div>
               </div>
             </div>
             <div class="trend">
@@ -152,13 +498,14 @@
               <span>em relação a ontem</span>
             </div>
           </article>
+
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
                 <i class="bx bx-calendar"></i>
               </div>
               <div>
-                <div class="label">AGENDAMENTOS</div>
+                <div class="label">Agendamentos</div>
                 <div class="value">24</div>
               </div>
             </div>
@@ -167,14 +514,15 @@
               <span>em relação a ontem</span>
             </div>
           </article>
+
           <article class="card">
             <div class="stat">
               <div class="icon-circle">
                 <i class="bx bx-line-chart"></i>
               </div>
               <div>
-                <div class="label">TICKET MÉDIO</div>
-                <div class="value">R$ 76,67</div>
+                <div class="label">Ticket Médio</div>
+                <div class="value">R$ 76,60</div>
               </div>
             </div>
             <div class="trend">
@@ -184,14 +532,13 @@
           </article>
         </div>
 
-        <!-- Área com gráfico e próximos agendamentos -->
+        <!-- Grid de Gráfico e Agendamentos -->
         <div class="dash-grid">
-
-          <!-- Painel de faturamento semanal -->
-          <section class="panel panel-pad revenue-panel">
+          <!-- Gráfico Semanal -->
+          <section class="panel revenue-panel">
             <div class="panel-header">
-              <h2>FATURAMENTO SEMANAL</h2>
-              <select class="period-select" aria-label="Período do faturamento">
+              <h2>Faturamento Semanal</h2>
+              <select class="period-select" aria-label="Período">
                 <option>Esta semana</option>
               </select>
             </div>
@@ -199,8 +546,8 @@
               <svg class="svg-chart dashboard-chart" viewBox="0 0 760 300" role="img" aria-label="Faturamento semanal">
                 <defs>
                   <linearGradient id="dashboardArea" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stop-color="#0b5a37" stop-opacity="0.22"></stop>
-                    <stop offset="100%" stop-color="#0b5a37" stop-opacity="0.02"></stop>
+                    <stop offset="0%" stop-color="#173f36" stop-opacity="0.25"></stop>
+                    <stop offset="100%" stop-color="#173f36" stop-opacity="0.01"></stop>
                   </linearGradient>
                 </defs>
                 <g class="chart-grid">
@@ -246,85 +593,77 @@
                 <small>Total da semana</small>
                 <b>R$ 11.780,00</b>
               </div>
-              <span>↗ +18% &nbsp; em relação à semana anterior</span>
+              <span>↗ +18% vs semana anterior</span>
             </div>
           </section>
 
-          <!-- Painel de próximos agendamentos -->
-          <section class="panel panel-pad appointments-panel">
+          <!-- Próximos Agendamentos -->
+          <section class="panel appointments-panel">
             <div class="panel-header">
-              <h2>PRÓXIMOS AGENDAMENTOS</h2>
+              <h2>Próximos Agendamentos</h2>
               <a class="view-all" href="agenda.html">Ver todos</a>
             </div>
-            <div class="table-wrap">
-              <table class="table appointments-table">
-                <tbody>
-                  <tr>
-                    <td><span class="time">09:00</span></td>
-                    <td><b>Bruno Ferreira</b><br><small>Corte Social</small></td>
-                    <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
-                    <td><span class="pill green">Confirmado</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="time">10:30</span></td>
-                    <td><b>Gabriel Santos</b><br><small>Barba + Corte</small></td>
-                    <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
-                    <td><span class="pill green">Confirmado</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="time">14:00</span></td>
-                    <td><b>Rafael Silva</b><br><small>Degradê</small></td>
-                    <td><span class="barber"><i class="bx bx-user-circle"></i>Mateus</span></td>
-                    <td><span class="pill yellow">Pendente</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="time">15:30</span></td>
-                    <td><b>André Lima</b><br><small>Corte Social</small></td>
-                    <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
-                    <td><span class="pill green">Confirmado</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="time">17:00</span></td>
-                    <td><b>Felipe Almeida</b><br><small>Barba</small></td>
-                    <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
-                    <td><span class="pill yellow">Pendente</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class="appointments-table">
+              <tbody>
+                <tr>
+                  <td><span class="time">09:00</span></td>
+                  <td><b>Bruno Ferreira</b><small>Corte Social</small></td>
+                  <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
+                  <td><span class="pill green">Confirmado</span></td>
+                </tr>
+                <tr>
+                  <td><span class="time">10:30</span></td>
+                  <td><b>Gabriel Santos</b><small>Barba + Corte</small></td>
+                  <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
+                  <td><span class="pill green">Confirmado</span></td>
+                </tr>
+                <tr>
+                  <td><span class="time">14:00</span></td>
+                  <td><b>Rafael Silva</b><small>Degradê</small></td>
+                  <td><span class="barber"><i class="bx bx-user-circle"></i>Mateus</span></td>
+                  <td><span class="pill yellow">Pendente</span></td>
+                </tr>
+                <tr>
+                  <td><span class="time">15:30</span></td>
+                  <td><b>André Lima</b><small>Corte Social</small></td>
+                  <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
+                  <td><span class="pill green">Confirmado</span></td>
+                </tr>
+              </tbody>
+            </table>
           </section>
         </div>
 
-        <!-- Atalhos rápidos -->
-        <section class="panel quick">
-          <h2>ATALHOS RÁPIDOS</h2>
+        <!-- Atalhos Rápidos -->
+        <section class="quick">
+          <h2>Atalhos Rápidos</h2>
           <div class="quick-grid">
             <button class="quick-item" type="button" onclick="location.href='agenda.html'">
               <span class="sq"><i class="bx bx-calendar-plus"></i></span>
               <span class="quick-text">
-                <b>Novo Agendamento</b>
-                <span>Agendar um novo atendimento</span>
+                <b>Nova Agenda</b>
+                <span>Gerenciar agendamentos</span>
               </span>
             </button>
-            <button class="quick-item" type="button" onclick="location.href='novo-cliente.html'">
+            <button class="quick-item" type="button" onclick="location.href='clients.html'">
               <span class="sq"><i class="bx bx-user-plus"></i></span>
               <span class="quick-text">
                 <b>Novo Cliente</b>
-                <span>Cadastrar um novo cliente</span>
+                <span>Cadastrar cliente</span>
               </span>
             </button>
-            <button class="quick-item" type="button" onclick="location.href='novo-produto.html'">
-              <span class="sq"><i class="bx bx-shopping-bag"></i></span>
+            <button class="quick-item" type="button" onclick="location.href='services.html'">
+              <span class="sq"><i class="bx bx-cut"></i></span>
               <span class="quick-text">
-                <b>Cadastrar Produto</b>
-                <span>Adicionar novo produto</span>
+                <b>Serviços</b>
+                <span>Gerenciar catálogo</span>
               </span>
             </button>
             <button class="quick-item" type="button" onclick="location.href='venda.html'">
               <span class="sq"><i class="bx bx-dollar-circle"></i></span>
               <span class="quick-text">
                 <b>Nova Venda</b>
-                <span>Registrar uma venda</span>
+                <span>Registrar caixa</span>
               </span>
             </button>
           </div>
@@ -333,7 +672,6 @@
     </main>
   </div>
 
-  <!-- JavaScript principal -->
   <script src="../js/core/shared.js"></script>
   <script src="../js/staff/staff-app.js"></script>
 </body>

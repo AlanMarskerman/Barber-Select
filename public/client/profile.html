@@ -3,68 +3,632 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles-legacy.css" />
-    <title>Barber-Select | Meu perfil</title>
+    <title>Meu Perfil Completo | Área do Cliente - Barber-Select</title>
+
+    <link rel="icon" type="image/png" href="../assets/LOGO.png" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles-logout.css" />
+
+    <style>
+      :root {
+        --ink: #0e1513;
+        --paper: #f7f3ec;
+        --panel: #fffdf8;
+        --line: #e0d8cc;
+        --muted: #6b665c;
+        --green: #173f36;
+        --green2: #1e5247;
+        --green-light: #e6f0ed;
+        --gold: #c78e36;
+        --gold-soft: #f0dfbf;
+        --gold-glow: rgba(199, 142, 54, 0.12);
+        --radius: 16px;
+        --radius-sm: 10px;
+        --shadow: 0 16px 48px rgba(14, 21, 19, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "DM Sans", system-ui, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .client-app {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar Desktop */
+      .client-sidebar {
+        width: 280px;
+        background: var(--green);
+        color: #fff;
+        padding: 32px 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+      }
+
+      .client-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .client-brand img {
+        height: 38px;
+        width: auto;
+      }
+
+      .client-brand span {
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      .client-brand span .highlight {
+        color: var(--gold);
+      }
+
+      .client-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+      }
+
+      .client-nav a {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        color: rgba(255, 255, 255, 0.75);
+        border-radius: var(--radius-sm);
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.2s;
+        text-decoration: none;
+      }
+
+      .client-nav a:hover,
+      .client-nav a.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .client-nav a i {
+        font-size: 20px;
+      }
+
+      .client-logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: transparent;
+        border: none;
+        color: #e57373;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: var(--radius-sm);
+        transition: background 0.2s;
+        width: 100%;
+        text-align: left;
+      }
+
+      .client-logout-btn:hover {
+        background: rgba(229, 115, 115, 0.15);
+      }
+
+      /* Main Content */
+      .client-main {
+        flex: 1;
+        margin-left: 280px;
+        padding: 40px;
+        max-width: 1100px;
+      }
+
+      .client-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 36px;
+      }
+
+      .welcome-text h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+
+      .welcome-text p {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .profile-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+
+      .panel {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--line);
+        padding: 32px;
+        box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+      }
+
+      .panel.full-width {
+        grid-column: span 2;
+      }
+
+      .panel h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.35rem;
+        color: var(--ink);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .panel h2 i {
+        color: var(--gold);
+        font-size: 24px;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        background: var(--paper);
+        color: var(--ink);
+        transition: all 0.2s;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--green);
+        background: #fff;
+        box-shadow: 0 0 0 3px var(--green-alpha);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 14px;
+        background: var(--green);
+        color: #fff;
+        font-weight: 700;
+        font-size: 15px;
+        border: none;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        box-shadow: 0 4px 16px rgba(23, 63, 54, 0.25);
+        margin-top: 10px;
+      }
+
+      .btn-primary:hover {
+        background: var(--green2);
+        transform: translateY(-2px);
+      }
+
+      .vip-badge-box {
+        background: linear-gradient(135deg, var(--green) 0%, var(--green2) 100%);
+        color: #fff;
+        padding: 24px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .vip-info b {
+        font-size: 1.2rem;
+        font-family: "Playfair Display", serif;
+        display: block;
+        margin-bottom: 4px;
+        color: var(--gold-soft);
+      }
+
+      .vip-info span {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .vip-score {
+        font-family: "Playfair Display", serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--gold);
+      }
+
+      /* Mobile Navigation Bar */
+      .mobile-bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-top: 1.5px solid var(--line);
+        padding: 10px 20px;
+        justify-content: space-around;
+        z-index: 1000;
+      }
+
+      .mobile-bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .mobile-bottom-nav a.active {
+        color: var(--green);
+      }
+
+      .mobile-bottom-nav a i {
+        font-size: 22px;
+      }
+
+      @media (max-width: 900px) {
+        .client-sidebar {
+          display: none;
+        }
+
+        .client-main {
+          margin-left: 0;
+          padding: 20px 16px 80px;
+        }
+
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .panel.full-width {
+          grid-column: span 1;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+
+        .mobile-bottom-nav {
+          display: flex;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="app">
-      <div class="shell">
-        <aside class="sidebar" id="sidebar"></aside>
-        <div class="main">
-          <header class="topbar">
-            <h1 id="topbar-title">Meu perfil</h1>
-            <div class="muted" id="topbar-role"></div>
-          </header>
-          <main class="content">
-            <div class="page-head">
-              <div>
-                <div class="eyebrow">Dados pessoais</div>
-                <h2>Meu perfil</h2>
-                <p class="muted">Edite informações básicas.</p>
-              </div>
-            </div>
-            <div class="card">
-              <form class="form" id="profile-form">
-                <div class="field">
-                  <label for="full-name">Nome completo</label>
-                  <input
-                    id="full-name"
-                    name="fullName"
-                    type="text"
-                    value="Rafael Almeida"
-                    required
-                  />
-                </div>
+    <div class="client-app">
+      <!-- Sidebar Desktop -->
+      <aside class="client-sidebar">
+        <div>
+          <div class="client-brand">
+            <img src="../assets/LOGO.png" alt="Barber-Select" />
+            <span>Barber<span class="highlight">Select</span></span>
+          </div>
 
-                <div class="field">
-                  <label for="phone">Telefone</label>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value="(11) 98888-1200"
-                    required
-                  />
-                </div>
-
-                <div class="field">
-                  <label for="email">E-mail</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value="rafael@email.com"
-                    required
-                  />
-                </div>
-                <button class="btn btn-primary" type="submit">Salvar</button>
-              </form>
-            </div>
-          </main>
+          <nav class="client-nav">
+            <a href="home.html">
+              <i class="bx bx-home-alt"></i>
+              <span>Início</span>
+            </a>
+            <a href="request.html">
+              <i class="bx bx-calendar-plus"></i>
+              <span>Novo Agendamento</span>
+            </a>
+            <a href="profile.html" class="active">
+              <i class="bx bx-user"></i>
+              <span>Meu Perfil</span>
+            </a>
+            <a href="settings.html">
+              <i class="bx bx-cog"></i>
+              <span>Configurações</span>
+            </a>
+          </nav>
         </div>
-      </div>
+
+        <div>
+          <button class="client-logout-btn logout" type="button" onclick="sessionStorage.clear(); window.location.href='/pages/login.html';">
+            <i class="bx bx-log-out"></i>
+            <span>Sair da conta</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="client-main">
+        <header class="client-topbar">
+          <div class="welcome-text">
+            <h1>Meu Perfil & Preferências</h1>
+            <p>Gerencie seus dados cadastrais, estilo e benefícios VIP</p>
+          </div>
+        </header>
+
+        <form id="robust-profile-form">
+          <div class="profile-grid">
+            <!-- Painel 1: Dados Pessoais -->
+            <section class="panel">
+              <h2><i class="bx bx-user-circle"></i> Dados Pessoais</h2>
+
+              <div class="form-group">
+                <label for="full-name">Nome Completo *</label>
+                <input id="full-name" type="text" required placeholder="Seu nome completo" />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Telefone / WhatsApp *</label>
+                  <input id="phone" type="tel" required placeholder="(62) 99999-9999" />
+                </div>
+                <div class="form-group">
+                  <label for="cpf">CPF</label>
+                  <input id="cpf" type="text" placeholder="000.000.000-00" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">E-mail de Acesso (Não editável)</label>
+                <input id="email" type="email" disabled style="opacity: 0.7; cursor: not-allowed;" />
+              </div>
+
+              <div class="form-group">
+                <label for="birthdate">Data de Nascimento</label>
+                <input id="birthdate" type="date" />
+              </div>
+            </section>
+
+            <!-- Painel 2: Preferências de Estilo & Barbeiro -->
+            <section class="panel">
+              <h2><i class="bx bx-cut"></i> Preferências de Estilo</h2>
+
+              <div class="form-group">
+                <label for="fav_barber">Profissional Favorito</label>
+                <select id="fav_barber">
+                  <option value="Qualquer">Qualquer profissional disponível</option>
+                  <option value="Carlos">Carlos</option>
+                  <option value="Marcos">Marcos</option>
+                  <option value="Rafael">Rafael</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="hair_style">Estilo de Cabelo Frequente</label>
+                <select id="hair_style">
+                  <option value="Degradê (Fade)">Degradê (Fade)</option>
+                  <option value="Social Clássico">Social Clássico</option>
+                  <option value="Militar / Máquina">Militar / Máquina</option>
+                  <option value="Pompadour / Topete">Pompadour / Topete</option>
+                  <option value="Longo / Desfiado">Longo / Desfiado</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="beard_style">Estilo de Barba</label>
+                <select id="beard_style">
+                  <option value="Barba Completa Alinhada">Barba Completa Alinhada</option>
+                  <option value="Barba Desenhada na Navalha">Barba Desenhada na Navalha</option>
+                  <option value="Cavanhaque">Cavanhaque</option>
+                  <option value="Raramente uso barba">Raramente uso barba</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="skin_notes">Observações / Sensibilidade na Pele</label>
+                <textarea id="skin_notes" rows="2" placeholder="Ex: Pele sensível a navalha, prefiro máquina"></textarea>
+              </div>
+            </section>
+
+            <!-- Painel 3: Programa Fidelidade & Vantagens -->
+            <section class="panel">
+              <h2><i class="bx bx-award"></i> Benefícios & Fidelidade</h2>
+
+              <div class="vip-badge-box">
+                <div class="vip-info">
+                  <b>Status: Cliente VIP Ouro</b>
+                  <span>Acumule pontos a cada corte realizado</span>
+                </div>
+                <div class="vip-score" id="loyalty-display">12 pts</div>
+              </div>
+
+              <div style="background: var(--paper); padding: 16px; border-radius: var(--radius-sm); border: 1.5px dashed var(--line);">
+                <b style="font-size: 13px; display: block; margin-bottom: 4px; color: var(--green);">Cupom Ativo Disponível:</b>
+                <span style="font-size: 14px; font-weight: 700; color: var(--gold);">BARBER15OFF</span> — 15% de desconto no seu próximo combo corte + barba.
+              </div>
+            </section>
+
+            <!-- Painel 4: Segurança & Senha -->
+            <section class="panel">
+              <h2><i class="bx bx-lock-alt"></i> Segurança da Conta</h2>
+
+              <div class="form-group">
+                <label for="current_password">Senha Atual</label>
+                <input id="current_password" type="password" placeholder="********" />
+              </div>
+
+              <div class="form-group">
+                <label for="new_password">Nova Senha</label>
+                <input id="new_password" type="password" placeholder="Mínimo de 6 caracteres" />
+              </div>
+            </section>
+
+            <!-- Botão Salvar Global -->
+            <div class="panel full-width" style="padding: 24px; text-align: center;">
+              <button type="submit" class="btn-primary" style="max-width: 320px; margin: 0 auto;">
+                <i class="bx bx-save"></i> Salvar Todas as Alterações
+              </button>
+            </div>
+          </div>
+        </form>
+      </main>
     </div>
-    <script src="/js/core/shared.js" defer></script>
-    <script src="/js/client/client-app.js" defer></script>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+      <a href="home.html">
+        <i class="bx bx-home-alt"></i>
+        <span>Início</span>
+      </a>
+      <a href="request.html">
+        <i class="bx bx-calendar-plus"></i>
+        <span>Agendar</span>
+      </a>
+      <a href="profile.html" class="active">
+        <i class="bx bx-user"></i>
+        <span>Perfil</span>
+      </a>
+      <a href="settings.html">
+        <i class="bx bx-cog"></i>
+        <span>Ajustes</span>
+      </a>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="../js/core/shared.js"></script>
+    <script src="../js/client/client-app.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const token = sessionStorage.getItem("accessToken");
+        if (!token) {
+          window.location.href = "../pages/login.html";
+          return;
+        }
+
+        // Carregar dados reais do cliente logado da API
+        try {
+          const res = await fetch("/api/clients/me", {
+            headers: { "Authorization": `Bearer ${token}` }
+          });
+
+          if (res.ok) {
+            const client = await res.json();
+            document.getElementById("full-name").value = client.name || "";
+            document.getElementById("email").value = client.email || "";
+            document.getElementById("phone").value = client.phone || "";
+            document.getElementById("cpf").value = client.cpf || "";
+            if (client.birthdate) {
+              document.getElementById("birthdate").value = client.birthdate.split("T")[0];
+            }
+            if (client.favBarber) document.getElementById("fav_barber").value = client.favBarber;
+            if (client.hairStyle) document.getElementById("hair_style").value = client.hairStyle;
+            if (client.beardStyle) document.getElementById("beard_style").value = client.beardStyle;
+            if (client.skinNotes) document.getElementById("skin_notes").value = client.skinNotes;
+            if (client.loyaltyPoints !== undefined) {
+              document.getElementById("loyalty-display").textContent = `${client.loyaltyPoints} pts`;
+            }
+          }
+        } catch (err) {
+          console.error("Erro ao carregar perfil:", err);
+        }
+
+        document.getElementById("robust-profile-form").addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById("full-name").value;
+          const phone = document.getElementById("phone").value;
+          const cpf = document.getElementById("cpf").value;
+          const birthdate = document.getElementById("birthdate").value;
+          const favBarber = document.getElementById("fav_barber").value;
+          const hairStyle = document.getElementById("hair_style").value;
+          const beardStyle = document.getElementById("beard_style").value;
+          const skinNotes = document.getElementById("skin_notes").value;
+
+          try {
+            const res = await fetch("/api/clients/me", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                name,
+                phone,
+                cpf,
+                birthdate: birthdate || null,
+                favBarber,
+                hairStyle,
+                beardStyle,
+                skinNotes
+              })
+            });
+
+            if (res.ok) {
+              alert("Perfil e preferências atualizados e salvos no banco de dados com sucesso!");
+            } else {
+              const errData = await res.json();
+              alert(errData.error || "Erro ao atualizar perfil.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Erro de conexão ao salvar perfil.");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

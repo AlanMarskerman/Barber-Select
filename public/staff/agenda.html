@@ -1,434 +1,957 @@
-```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Agenda</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="../styles-logout.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda & Atendimentos | Barber-Select</title>
 
-  <div class="app">
+    <link rel="icon" type="image/png" href="../assets/LOGO.png" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../styles-logout.css" />
+    <style>
+      /* Estilos refinados específicos da Agenda Interativa */
+      :root {
+        --ink: #0e1513;
+        --paper: #f7f3ec;
+        --panel: #fffdf8;
+        --line: #e0d8cc;
+        --muted: #6b665c;
+        --green: #173f36;
+        --green2: #1e5247;
+        --green-light: #e6f0ed;
+        --gold: #c78e36;
+        --gold-soft: #f0dfbf;
+        --gold-glow: rgba(199, 142, 54, 0.12);
+        --radius: 16px;
+        --radius-sm: 10px;
+        --shadow: 0 16px 48px rgba(14, 21, 19, 0.08);
+      }
 
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="../assets/LOGO.png" alt="Barber Select">
-      </div>
+      .agenda-page {
+        padding: 32px;
+        background: var(--paper);
+        min-height: calc(100vh - 80px);
+        font-family: var(--font);
+      }
 
-      <nav class="nav">
-        <a href="dashboard.html">
-          <i class="bx bx-grid-alt"></i>
-          <span>Dashboard</span>
-        </a>
-        <a class="active" href="agenda.html">
-          <i class="bx bx-calendar"></i>
-          <span>Agenda</span>
-        </a>
-        <a href="clients.html">
-          <i class="bx bx-user"></i>
-          <span>Clientes</span>
-        </a>
-        <a href="barbeiros.html">
-          <i class="bx bx-user-check"></i>
-          <span>Barbeiros</span>
-        </a>
-        <a href="services.html">
-          <i class="bx bx-cut"></i>
-          <span>Serviços</span>
-        </a>
-        <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
-          <span>Produtos</span>
-        </a>
-        <a href="venda.html">
-          <i class="bx bx-cart"></i>
-          <span>Vendas</span>
-        </a>
-        <a href="finance.html">
-          <i class="bx bx-wallet"></i>
-          <span>Financeiro</span>
-        </a>
-        <a href="relatorios.html">
-          <i class="bx bx-bar-chart-alt-2"></i>
-          <span>Relatórios</span>
-        </a>
-        <a href="avaliacoes.html">
-          <i class="bx bx-star"></i>
-          <span>Avaliações</span>
-        </a>
-        <a href="configuracoes.html">
-          <i class="bx bx-cog"></i>
-          <span>Configurações</span>
-        </a>
-      </nav>
+      .agenda-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+      }
 
-      <button class="logout" type="button">
-        <i class="bx bx-log-out"></i>
-        <span>Sair</span>
-      </button>
-    </aside>
+      .agenda-card {
+        background: #fff;
+        padding: 24px;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
 
-    <main class="main">
+      .agenda-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+        border-color: var(--gold);
+      }
 
-      <header class="topbar">
-        <div class="head-left">
-          <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
-            <i class="bx bx-menu"></i>
-          </button>
+      .agenda-card .stat-info .label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
 
-          <div class="title">
-            <h1>Agenda</h1>
-            <p>Gerencie os agendamentos da sua barbearia</p>
+      .agenda-card .stat-info .value {
+        font-family: var(--display);
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .agenda-card .icon-box {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--green-light);
+        color: var(--green);
+        border-radius: 14px;
+        font-size: 26px;
+      }
+
+      .agenda-layout {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 28px;
+        align-items: start;
+      }
+
+      .agenda-sidebar-panel {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--line);
+        padding: 24px;
+        box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .filter-date-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .filter-date-group label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .filter-date-group input,
+      .filter-date-group select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-family: var(--font);
+        font-size: 14px;
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      .filter-date-group input:focus,
+      .filter-date-group select:focus {
+        outline: none;
+        border-color: var(--green);
+        background: #fff;
+      }
+
+      .agenda-main-content {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--line);
+        padding: 28px;
+        box-shadow: 0 4px 20px rgba(14, 21, 19, 0.03);
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .agenda-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .agenda-header-row h2 {
+        font-family: var(--display);
+        font-size: 1.5rem;
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+
+      .agenda-header-row p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .btn-primary-custom {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--green);
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+      }
+
+      .btn-primary-custom:hover {
+        background: var(--green2);
+        transform: translateY(-2px);
+      }
+
+      .agenda-filters-bar {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .agenda-search-box {
+        flex: 1;
+        min-width: 220px;
+        position: relative;
+      }
+
+      .agenda-search-box i {
+        position: absolute;
+        top: 50%;
+        left: 14px;
+        transform: translateY(-50%);
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .agenda-search-box input {
+        width: 100%;
+        padding: 10px 14px 10px 42px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-family: var(--font);
+        font-size: 14px;
+        background: #fff;
+      }
+
+      .agenda-search-box input:focus {
+        outline: none;
+        border-color: var(--green);
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 14px;
+      }
+
+      .modern-table th {
+        background: var(--paper);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 14px 16px;
+        border-bottom: 1.5px solid var(--line);
+      }
+
+      .modern-table td {
+        padding: 16px;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink);
+        vertical-align: middle;
+      }
+
+      .modern-table tbody tr:hover {
+        background: rgba(230, 240, 237, 0.3);
+      }
+
+      .client-info strong {
+        display: block;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .client-info span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .badge-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+
+      .badge-status.confirmado {
+        background: rgba(40, 200, 64, 0.12);
+        color: #218c32;
+      }
+
+      .badge-status.pendente {
+        background: rgba(199, 142, 54, 0.15);
+        color: #9c6c1f;
+      }
+
+      .badge-status.cancelado {
+        background: rgba(165, 72, 59, 0.12);
+        color: var(--error);
+      }
+
+      .badge-status.concluido {
+        background: rgba(30, 82, 71, 0.15);
+        color: var(--green);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn-action {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-action:hover {
+        background: var(--paper);
+        color: var(--ink);
+        border-color: var(--green);
+      }
+
+      .btn-action.delete:hover {
+        background: rgba(165, 72, 59, 0.1);
+        color: var(--error);
+        border-color: var(--error);
+      }
+
+      /* Modal */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(14, 21, 19, 0.6);
+        backdrop-filter: blur(4px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 20px;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal-card {
+        background: #fff;
+        border-radius: var(--radius);
+        width: 100%;
+        max-width: 520px;
+        padding: 32px;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+        animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      @keyframes modalIn {
+        from { opacity: 0; transform: translateY(16px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-header h3 {
+        font-family: var(--display);
+        font-size: 1.4rem;
+        color: var(--ink);
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .modal-close:hover {
+        color: var(--ink);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .form-group-full {
+        grid-column: span 2;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-group label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .form-group input,
+      .form-group select {
+        padding: 12px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-family: var(--font);
+        font-size: 14px;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--green);
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 8px;
+      }
+
+      .btn-secondary-custom {
+        padding: 12px 20px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--line);
+        background: #fff;
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .btn-secondary-custom:hover {
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      @media (max-width: 900px) {
+        .agenda-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <img src="../assets/LOGO.png" alt="Barber Select" />
+        </div>
+
+        <nav class="nav">
+          <a href="dashboard.html">
+            <i class="bx bx-grid-alt"></i>
+            <span>Dashboard</span>
+          </a>
+          <a class="active" href="agenda.html">
+            <i class="bx bx-calendar"></i>
+            <span>Agenda</span>
+          </a>
+          <a href="clients.html">
+            <i class="bx bx-user"></i>
+            <span>Clientes</span>
+          </a>
+          <a href="barbeiros.html">
+            <i class="bx bx-user-check"></i>
+            <span>Barbeiros</span>
+          </a>
+          <a href="services.html">
+            <i class="bx bx-cut"></i>
+            <span>Serviços</span>
+          </a>
+          <a href="produtos.html">
+            <i class="bx bx-briefcase"></i>
+            <span>Produtos</span>
+          </a>
+          <a href="venda.html">
+            <i class="bx bx-cart"></i>
+            <span>Vendas</span>
+          </a>
+          <a href="finance.html">
+            <i class="bx bx-wallet"></i>
+            <span>Financeiro</span>
+          </a>
+          <a href="relatorios.html">
+            <i class="bx bx-bar-chart-alt-2"></i>
+            <span>Relatórios</span>
+          </a>
+          <a href="avaliacoes.html">
+            <i class="bx bx-star"></i>
+            <span>Avaliações</span>
+          </a>
+          <a href="configuracoes.html">
+            <i class="bx bx-cog"></i>
+            <span>Configurações</span>
+          </a>
+        </nav>
+
+        <button class="logout" type="button">
+          <i class="bx bx-log-out"></i>
+          <span>Sair</span>
+        </button>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="head-left">
+            <button class="menu-button hamb" type="button" aria-label="Menu">
+              <i class="bx bx-menu"></i>
+            </button>
+            <div class="title">
+              <h1>Agenda Inteligente</h1>
+              <p>Gerenciamento em tempo real conectado ao banco de dados</p>
+            </div>
           </div>
-        </div>
 
-        <div class="head-right">
-          <button class="bell" type="button" aria-label="Notificações">
-            <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
-          </button>
-
-          <div class="user">
-            <i class="bx bx-user-circle user-avatar"></i>
-            <div class="user-info">
-              <b>Usuário</b>
-              <span>Colaborador</span>
+          <div class="head-right">
+            <div class="user">
+              <i class="bx bx-user-circle user-avatar"></i>
+              <div class="user-info">
+                <b id="user-name-display">Equipe</b>
+                <span>Staff / Admin</span>
+              </div>
             </div>
-            <i class="bx bx-chevron-down down"></i>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <section class="content agenda-page">
-
-        <div class="cards agenda-cards">
-
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-calendar"></i>
+        <section class="content agenda-page">
+          <!-- Cards de Resumo -->
+          <div class="agenda-cards">
+            <div class="agenda-card">
+              <div class="stat-info">
+                <div class="label">Agendamentos Hoje</div>
+                <div class="value" id="stat-total">0</div>
               </div>
-              <div>
-                <div class="label">AGENDAMENTOS HOJE</div>
-                <div class="value">24</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +8%</b>
-              <span>em relação a ontem</span>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-time-five"></i>
-              </div>
-              <div>
-                <div class="label">HORÁRIOS DISPONÍVEIS</div>
-                <div class="value">12</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +15%</b>
-              <span>em relação a hoje</span>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-group"></i>
-              </div>
-              <div>
-                <div class="label">CLIENTES DO DIA</div>
-                <div class="value">18</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +6%</b>
-              <span>em relação a ontem</span>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="stat">
-              <div class="icon-circle">
-                <i class="bx bx-cut"></i>
-              </div>
-              <div>
-                <div class="label">SERVIÇO MAIS AGENDADO</div>
-                <div class="value">Corte</div>
-              </div>
-            </div>
-            <div class="trend">
-              <b>↗ +12%</b>
-              <span>em relação à semana passada</span>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="agenda-layout">
-
-          <aside class="agenda-calendario">
-
-            <div class="agenda-cal-header">
-              <div>
-                <h2>Outubro de 2026</h2>
-              </div>
-
-              <div class="agenda-mes-controle">
-                <button type="button" aria-label="Mês anterior">
-                  <i class="bx bx-chevron-left"></i>
-                </button>
-                <button type="button" aria-label="Próximo mês">
-                  <i class="bx bx-chevron-right"></i>
-                </button>
-              </div>
+              <div class="icon-box"><i class="bx bx-calendar-check"></i></div>
             </div>
 
-            <div class="agenda-cal-grid">
-              <span class="dia-semana">Dom</span>
-              <span class="dia-semana">Seg</span>
-              <span class="dia-semana">Ter</span>
-              <span class="dia-semana">Qua</span>
-              <span class="dia-semana">Qui</span>
-              <span class="dia-semana">Sex</span>
-              <span class="dia-semana">Sáb</span>
-
-              <span class="dia-vazio"></span>
-              <span class="dia-vazio"></span>
-              <span class="dia-vazio"></span>
-
-              <button type="button" class="dia">1</button>
-              <button type="button" class="dia">2</button>
-              <button type="button" class="dia">3</button>
-              <button type="button" class="dia">4</button>
-              <button type="button" class="dia">5</button>
-              <button type="button" class="dia">6</button>
-              <button type="button" class="dia">7</button>
-              <button type="button" class="dia">8</button>
-              <button type="button" class="dia selecionado">9</button>
-              <button type="button" class="dia">10</button>
-              <button type="button" class="dia">11</button>
-              <button type="button" class="dia">12</button>
-              <button type="button" class="dia">13</button>
-              <button type="button" class="dia">14</button>
-              <button type="button" class="dia">15</button>
-              <button type="button" class="dia">16</button>
-              <button type="button" class="dia">17</button>
-              <button type="button" class="dia">18</button>
-              <button type="button" class="dia">19</button>
-              <button type="button" class="dia">20</button>
-              <button type="button" class="dia">21</button>
-              <button type="button" class="dia">22</button>
-              <button type="button" class="dia">23</button>
-              <button type="button" class="dia">24</button>
-              <button type="button" class="dia">25</button>
-              <button type="button" class="dia">26</button>
-              <button type="button" class="dia">27</button>
-              <button type="button" class="dia">28</button>
-              <button type="button" class="dia">29</button>
-              <button type="button" class="dia">30</button>
-              <button type="button" class="dia">31</button>
+            <div class="agenda-card">
+              <div class="stat-info">
+                <div class="label">Confirmados</div>
+                <div class="value" id="stat-confirmados">0</div>
+              </div>
+              <div class="icon-box" style="color: #218c32; background: rgba(40,200,64,0.1);"><i class="bx bx-check-double"></i></div>
             </div>
 
-            <div class="agenda-resumo">
-              <h3>Hoje, 09 de outubro</h3>
-              <p class="agenda-resumo-subtitulo">Resumo dos atendimentos</p>
-
-              <div class="agenda-resumo-item">
-                <span class="agenda-resumo-icone">
-                  <i class="bx bx-calendar-check"></i>
-                </span>
-                <div>
-                  <strong>24</strong>
-                  <span>Agendamentos</span>
-                </div>
+            <div class="agenda-card">
+              <div class="stat-info">
+                <div class="label">Pendentes</div>
+                <div class="value" id="stat-pendentes">0</div>
               </div>
-
-              <div class="agenda-resumo-item">
-                <span class="agenda-resumo-icone">
-                  <i class="bx bx-time-five"></i>
-                </span>
-                <div>
-                  <strong>12</strong>
-                  <span>Horários disponíveis</span>
-                </div>
-              </div>
-
-              <div class="agenda-resumo-item">
-                <span class="agenda-resumo-icone">
-                  <i class="bx bx-x-circle"></i>
-                </span>
-                <div>
-                  <strong>3</strong>
-                  <span>Cancelamentos</span>
-                </div>
-              </div>
-
-              <div class="agenda-resumo-item">
-                <span class="agenda-resumo-icone">
-                  <i class="bx bx-group"></i>
-                </span>
-                <div>
-                  <strong>18</strong>
-                  <span>Clientes atendidos</span>
-                </div>
-              </div>
+              <div class="icon-box" style="color: #9c6c1f; background: rgba(199,142,54,0.1);"><i class="bx bx-time"></i></div>
             </div>
 
-          </aside>
+            <div class="agenda-card">
+              <div class="stat-info">
+                <div class="label">Faturamento Previsto</div>
+                <div class="value" id="stat-faturamento">R$ 0</div>
+              </div>
+              <div class="icon-box" style="color: var(--gold); background: var(--gold-glow);"><i class="bx bx-wallet"></i></div>
+            </div>
+          </div>
 
-          <div class="agenda-lista">
+          <!-- Layout Principal -->
+          <div class="agenda-layout">
+            <!-- Sidebar com Filtros -->
+            <div class="agenda-sidebar-panel">
+              <h3 style="font-family: var(--display); font-size: 1.2rem; color: var(--ink);">Filtrar Agenda</h3>
 
-            <div class="agenda-lista-header">
-              <div>
-                <h2>Agendamentos do dia</h2>
-                <p>Sexta-feira, 09 de outubro de 2026</p>
+              <div class="filter-date-group">
+                <label for="filter-date">Data do Atendimento</label>
+                <input type="date" id="filter-date" />
               </div>
 
-              <button class="agenda-btn-novo" type="button">
-                <i class="bx bx-plus"></i>
-                <span>Novo agendamento</span>
+              <div class="filter-date-group">
+                <label for="filter-staff">Barbeiro / Colaborador</label>
+                <select id="filter-staff">
+                  <option value="">Todos os profissionais</option>
+                  <option value="Carlos">Carlos</option>
+                  <option value="Marcos">Marcos</option>
+                  <option value="Rafael">Rafael</option>
+                </select>
+              </div>
+
+              <div class="filter-date-group">
+                <label for="filter-status">Status do Agendamento</label>
+                <select id="filter-status">
+                  <option value="">Todos os status</option>
+                  <option value="confirmado">Confirmado</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="cancelado">Cancelado</option>
+                  <option value="concluido">Concluído</option>
+                </select>
+              </div>
+
+              <button class="btn-primary-custom" id="btn-reset-filters" style="width: 100%; justify-content: center; background: var(--muted);">
+                <i class="bx bx-reset"></i> Limpar Filtros
               </button>
             </div>
 
-            <div class="agenda-filtros">
-              <label class="agenda-busca">
-                <i class="bx bx-search"></i>
-                <input
-                  type="search"
-                  placeholder="Buscar cliente, serviço ou barbeiro"
-                  aria-label="Buscar agendamentos"
-                >
-              </label>
+            <!-- Lista e Tabela de Agendamentos -->
+            <div class="agenda-main-content">
+              <div class="agenda-header-row">
+                <div>
+                  <h2 id="table-title">Atendimentos</h2>
+                  <p id="table-subtitle">Exibindo agendamentos sincronizados</p>
+                </div>
 
-              <select aria-label="Filtrar por barbeiro">
-                <option value="">Todos os barbeiros</option>
-                <option value="carlos">Carlos</option>
-                <option value="marcos">Marcos</option>
-                <option value="rafael">Rafael</option>
-              </select>
+                <button class="btn-primary-custom" id="btn-open-modal">
+                  <i class="bx bx-plus"></i>
+                  <span>Novo Agendamento</span>
+                </button>
+              </div>
 
-              <select aria-label="Filtrar por status">
-                <option value="">Todos os status</option>
-                <option value="confirmado">Confirmado</option>
-                <option value="pendente">Pendente</option>
-                <option value="cancelado">Cancelado</option>
-              </select>
+              <div class="agenda-filters-bar">
+                <div class="agenda-search-box">
+                  <i class="bx bx-search"></i>
+                  <input type="search" id="search-input" placeholder="Buscar por cliente, serviço ou telefone..." />
+                </div>
+              </div>
+
+              <div class="table-container">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>Horário</th>
+                      <th>Cliente</th>
+                      <th>Serviço</th>
+                      <th>Profissional</th>
+                      <th>Valor</th>
+                      <th>Status</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="appointments-tbody">
+                    <!-- Preenchido via JavaScript dinamicamente -->
+                  </tbody>
+                </table>
+              </div>
             </div>
-
-            <div class="agenda-tabela-wrap">
-              <table class="agenda-tabela">
-                <thead>
-                  <tr>
-                    <th>Horário</th>
-                    <th>Cliente</th>
-                    <th>Serviço</th>
-                    <th>Barbeiro</th>
-                    <th>Valor</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td><span class="agenda-horario">09:00</span></td>
-                    <td><div class="agenda-cliente"><strong>Bruno Ferreira</strong><span>(61) 91579-6423</span></div></td>
-                    <td>Corte social</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Carlos</span></div></td>
-                    <td class="agenda-valor">R$ 50,00</td>
-                    <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Bruno Ferreira"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Bruno Ferreira"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="agenda-horario">09:30</span></td>
-                    <td><div class="agenda-cliente"><strong>Matheus Oliveira</strong><span>(62) 98123-4567</span></div></td>
-                    <td>Corte degradê</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Marcos</span></div></td>
-                    <td class="agenda-valor">R$ 45,00</td>
-                    <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Matheus Oliveira"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Matheus Oliveira"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="agenda-horario">10:00</span></td>
-                    <td><div class="agenda-cliente"><strong>Lucas Almeida</strong><span>(62) 98765-4321</span></div></td>
-                    <td>Barba</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Carlos</span></div></td>
-                    <td class="agenda-valor">R$ 30,00</td>
-                    <td><span class="agenda-status pendente">Pendente</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Lucas Almeida"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Lucas Almeida"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="agenda-horario">10:30</span></td>
-                    <td><div class="agenda-cliente"><strong>Pedro Santos</strong><span>(62) 97654-3210</span></div></td>
-                    <td>Corte + barba</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Marcos</span></div></td>
-                    <td class="agenda-valor">R$ 70,00</td>
-                    <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Pedro Santos"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Pedro Santos"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="agenda-horario">11:00</span></td>
-                    <td><div class="agenda-cliente"><strong>Gabriel Costa</strong><span>(62) 96543-2109</span></div></td>
-                    <td>Corte na máquina</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Rafael</span></div></td>
-                    <td class="agenda-valor">R$ 35,00</td>
-                    <td><span class="agenda-status cancelado">Cancelado</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Gabriel Costa"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Gabriel Costa"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="agenda-horario">13:00</span></td>
-                    <td><div class="agenda-cliente"><strong>Rafael Mendes</strong><span>(62) 99456-7812</span></div></td>
-                    <td>Acabamento</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Carlos</span></div></td>
-                    <td class="agenda-valor">R$ 20,00</td>
-                    <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Rafael Mendes"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Rafael Mendes"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="agenda-horario">14:00</span></td>
-                    <td><div class="agenda-cliente"><strong>André Ribeiro</strong><span>(62) 98234-5678</span></div></td>
-                    <td>Corte social</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Marcos</span></div></td>
-                    <td class="agenda-valor">R$ 50,00</td>
-                    <td><span class="agenda-status pendente">Pendente</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para André Ribeiro"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de André Ribeiro"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="agenda-horario">15:00</span></td>
-                    <td><div class="agenda-cliente"><strong>Felipe Martins</strong><span>(62) 99123-4560</span></div></td>
-                    <td>Corte + barba</td>
-                    <td><div class="agenda-barbeiro"><i class="bx bx-user-circle"></i><span>Rafael</span></div></td>
-                    <td class="agenda-valor">R$ 70,00</td>
-                    <td><span class="agenda-status confirmado">Confirmado</span></td>
-                    <td class="btn-edit"><div class="agenda-acoes"><button class="agenda-acao" type="button" aria-label="Mais ações para Felipe Martins"><i class="bx bx-dots-vertical-rounded"></i></button><button class="agenda-acao" type="button" aria-label="Editar agendamento de Felipe Martins"><i class="bx bx-edit-alt"></i></button></div></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
           </div>
-        </div>
-      </section>
-    </main>
-  </div>
+        </section>
+      </main>
+    </div>
 
-  <script src="../js/core/shared.js"></script>
-  <script src="../js/staff/staff-app.js"></script>
-</body>
+    <!-- Modal Novo Agendamento -->
+    <div class="modal-overlay" id="appointment-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Novo Agendamento</h3>
+          <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+
+        <form id="appointment-form" class="form-grid">
+          <div class="form-group">
+            <label for="client_name">Nome do Cliente *</label>
+            <input type="text" id="client_name" required placeholder="Ex: Roberto Carlos" />
+          </div>
+
+          <div class="form-group">
+            <label for="client_phone">Telefone / WhatsApp *</label>
+            <input type="text" id="client_phone" required placeholder="(62) 99999-9999" />
+          </div>
+
+          <div class="form-group">
+            <label for="service_select">Serviço *</label>
+            <select id="service_select" required>
+              <option value="">Selecione o serviço...</option>
+              <option value="Corte Degradê|55.00">Corte Degradê - R$ 55,00</option>
+              <option value="Barba Completa|40.00">Barba Completa - R$ 40,00</option>
+              <option value="Corte + Barba|85.00">Corte + Barba - R$ 85,00</option>
+              <option value="Acabamento|25.00">Acabamento - R$ 25,00</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="staff_name">Profissional *</label>
+            <select id="staff_name" required>
+              <option value="">Selecione o barbeiro...</option>
+              <option value="Carlos">Carlos</option>
+              <option value="Marcos">Marcos</option>
+              <option value="Rafael">Rafael</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="appointment_date">Data *</label>
+            <input type="date" id="appointment_date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="appointment_time">Horário *</label>
+            <input type="time" id="appointment_time" required />
+          </div>
+
+          <div class="form-group form-group-full">
+            <label for="notes">Observações</label>
+            <input type="text" id="notes" placeholder="Ex: Cliente prefere máquina 2 nas laterais" />
+          </div>
+
+          <div class="modal-footer form-group-full">
+            <button type="button" class="btn-secondary-custom" id="modal-cancel">Cancelar</button>
+            <button type="submit" class="btn-primary-custom">Salvar Agendamento</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/core/shared.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const token = sessionStorage.getItem("accessToken");
+        if (!token) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Definir data de hoje no input de filtro
+        const todayStr = new Date().toISOString().split("T")[0];
+        const dateInput = document.getElementById("filter-date");
+        dateInput.value = todayStr;
+        document.getElementById("appointment_date").value = todayStr;
+
+        const tbody = document.getElementById("appointments-tbody");
+        const modal = document.getElementById("appointment-modal");
+        const btnOpenModal = document.getElementById("btn-open-modal");
+        const modalClose = document.getElementById("modal-close");
+        const modalCancel = document.getElementById("modal-cancel");
+        const appointmentForm = document.getElementById("appointment-form");
+
+        // Abrir/Fechar Modal
+        btnOpenModal.addEventListener("click", () => modal.classList.add("active"));
+        modalClose.addEventListener("click", () => modal.classList.remove("active"));
+        modalCancel.addEventListener("click", () => modal.classList.remove("active"));
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) modal.classList.remove("active");
+        });
+
+        // Buscar agendamentos da API
+        async function loadAppointments() {
+          try {
+            const dateVal = dateInput.value;
+            const staffVal = document.getElementById("filter-staff").value;
+            const statusVal = document.getElementById("filter-status").value;
+            const searchVal = document.getElementById("search-input").value;
+
+            let url = `/api/appointments?`;
+            if (dateVal) url += `date=${encodeURIComponent(dateVal)}&`;
+            if (staffVal) url += `staff=${encodeURIComponent(staffVal)}&`;
+            if (statusVal) url += `status=${encodeURIComponent(statusVal)}&`;
+            if (searchVal) url += `search=${encodeURIComponent(searchVal)}`;
+
+            const res = await fetch(url, {
+              headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!res.ok) {
+              if (res.status === 401) {
+                window.location.href = "login.html";
+                return;
+              }
+              throw new Error("Erro ao carregar agendamentos");
+            }
+
+            const data = await res.json();
+            renderAppointments(data);
+            updateStats(data);
+          } catch (err) {
+            console.error("Erro:", err);
+          }
+        }
+
+        function renderAppointments(list) {
+          tbody.innerHTML = "";
+
+          if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--muted);">Nenhum agendamento encontrado para os filtros selecionados.</td></tr>`;
+            return;
+          }
+
+          list.forEach(app => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td><strong>${app.appointment_time.substring(0, 5)}</strong></td>
+              <td>
+                <div class="client-info">
+                  <strong>${escapeHtml(app.client_name)}</strong>
+                  <span>${escapeHtml(app.client_phone)}</span>
+                </div>
+              </td>
+              <td>${escapeHtml(app.service_name)}</td>
+              <td>${escapeHtml(app.staff_name)}</td>
+              <td><strong>R$ ${Number(app.service_price).toFixed(2)}</strong></td>
+              <td><span class="badge-status ${app.status}">${app.status}</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button class="btn-action" title="Concluir / Confirmar" onclick="updateStatus(${app.id}, '${app.status === 'confirmado' ? 'concluido' : 'confirmado'}')">
+                    <i class="bx bx-check"></i>
+                  </button>
+                  <button class="btn-action delete" title="Excluir" onclick="deleteAppointment(${app.id})">
+                    <i class="bx bx-trash"></i>
+                  </button>
+                </div>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+
+        function updateStats(list) {
+          const total = list.length;
+          const confirmados = list.filter(a => a.status === 'confirmado' || a.status === 'concluido').length;
+          const pendentes = list.filter(a => a.status === 'pendente').length;
+          const faturamento = list.filter(a => a.status !== 'cancelado').reduce((acc, curr) => acc + Number(curr.service_price), 0);
+
+          document.getElementById("stat-total").textContent = total;
+          document.getElementById("stat-confirmados").textContent = confirmados;
+          document.getElementById("stat-pendentes").textContent = pendentes;
+          document.getElementById("stat-faturamento").textContent = `R$ ${faturamento.toFixed(0)}`;
+        }
+
+        function escapeHtml(str) {
+          return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // Funções globais para ações na tabela
+        window.updateStatus = async function(id, newStatus) {
+          try {
+            const res = await fetch(`/api/appointments/${id}/status`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({ status: newStatus })
+            });
+
+            if (res.ok) {
+              loadAppointments();
+            } else {
+              alert("Erro ao atualizar status.");
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        };
+
+        window.deleteAppointment = async function(id) {
+          if (!confirm("Tem certeza que deseja excluir este agendamento?")) return;
+          try {
+            const res = await fetch(`/api/appointments/${id}`, {
+              method: "DELETE",
+              headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (res.ok) {
+              loadAppointments();
+            } else {
+              alert("Erro ao excluir agendamento.");
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        };
+
+        // Eventos de filtro
+        dateInput.addEventListener("change", loadAppointments);
+        document.getElementById("filter-staff").addEventListener("change", loadAppointments);
+        document.getElementById("filter-status").addEventListener("change", loadAppointments);
+        document.getElementById("search-input").addEventListener("input", loadAppointments);
+
+        document.getElementById("btn-reset-filters").addEventListener("click", () => {
+          dateInput.value = todayStr;
+          document.getElementById("filter-staff").value = "";
+          document.getElementById("filter-status").value = "";
+          document.getElementById("search-input").value = "";
+          loadAppointments();
+        });
+
+        // Salvar novo agendamento
+        appointmentForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const client_name = document.getElementById("client_name").value;
+          const client_phone = document.getElementById("client_phone").value;
+          const serviceRaw = document.getElementById("service_select").value;
+          const [service_name, service_price] = serviceRaw.split("|");
+          const staff_name = document.getElementById("staff_name").value;
+          const appointment_date = document.getElementById("appointment_date").value;
+          const appointment_time = document.getElementById("appointment_time").value;
+          const notes = document.getElementById("notes").value;
+
+          try {
+            const res = await fetch("/api/appointments", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                client_name,
+                client_phone,
+                service_name,
+                service_price: Number(service_price),
+                staff_name,
+                appointment_date,
+                appointment_time,
+                status: "confirmado",
+                notes
+              })
+            });
+
+            if (res.ok) {
+              modal.classList.remove("active");
+              appointmentForm.reset();
+              document.getElementById("appointment_date").value = todayStr;
+              loadAppointments();
+            } else {
+              const errData = await res.json();
+              alert(errData.error || "Erro ao criar agendamento.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Erro de conexão ao salvar agendamento.");
+          }
+        });
+
+        // Carregamento inicial
+        loadAppointments();
+      });
+    </script>
+  </body>
 </html>
-```

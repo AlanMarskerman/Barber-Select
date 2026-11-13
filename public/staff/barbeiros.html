@@ -3,114 +3,192 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Select - Barbeiros</title>
+  <meta name="theme-color" content="#062d1f">
+  <title>Barbeiros | Barber Select</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../styles-barbers.css">
   <link rel="stylesheet" href="../styles-logout.css">
 </head>
 <body>
-
-  <!-- Estrutura principal da aplicação -->
   <div class="app">
-
-    <!-- Menu lateral -->
     <aside class="sidebar">
-
-      <!-- Logo da Barber Select -->
       <div class="brand">
         <img src="../assets/LOGO.png" alt="Barber Select">
       </div>
 
-      <!-- Links de navegação do menu -->
-      <nav class="nav">
-        <a href="dashboard.html">
-          <i class="bx bx-grid-alt"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="agenda.html">
-          <i class="bx bx-calendar"></i>
-          <span>Agenda</span>
-        </a>
-        <a href="clients.html">
-          <i class="bx bx-user"></i>
-          <span>Clientes</span>
-        </a>
-        <a class="active" href="barbeiros.html">
-          <i class="bx bx-user-check"></i>
-          <span>Barbeiros</span>
-        </a>
-        <a href="services.html">
-          <i class="bx bx-cut"></i>
-          <span>Serviços</span>
-        </a>
-        <a href="produtos.html">
-          <i class="bx bx-briefcase"></i>
-          <span>Produtos</span>
-        </a>
-        <a href="venda.html">
-          <i class="bx bx-cart"></i>
-          <span>Vendas</span>
-        </a>
-        <a href="finance.html">
-          <i class="bx bx-wallet"></i>
-          <span>Financeiro</span>
-        </a>
-        <a href="relatorios.html">
-          <i class="bx bx-bar-chart-alt-2"></i>
-          <span>Relatórios</span>
-        </a>
-        <a href="avaliacoes.html">
-          <i class="bx bx-star"></i>
-          <span>Avaliações</span>
-        </a>
-        <a href="configuracoes.html">
-          <i class="bx bx-cog"></i>
-          <span>Configurações</span>
-        </a>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="dashboard.html"><i class="bx bx-grid-alt" aria-hidden="true"></i><span>Dashboard</span></a>
+        <a href="agenda.html"><i class="bx bx-calendar" aria-hidden="true"></i><span>Agenda</span></a>
+        <a href="clients.html"><i class="bx bx-user" aria-hidden="true"></i><span>Clientes</span></a>
+        <a class="active" href="barbeiros.html" aria-current="page"><i class="bx bx-user-check" aria-hidden="true"></i><span>Barbeiros</span></a>
+        <a href="services.html"><i class="bx bx-cut" aria-hidden="true"></i><span>Serviços</span></a>
+        <a href="produtos.html"><i class="bx bx-briefcase" aria-hidden="true"></i><span>Produtos</span></a>
+        <a href="venda.html"><i class="bx bx-cart" aria-hidden="true"></i><span>Vendas</span></a>
+        <a href="finance.html"><i class="bx bx-wallet" aria-hidden="true"></i><span>Financeiro</span></a>
+        <a href="relatorios.html"><i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i><span>Relatórios</span></a>
+        <a href="avaliacoes.html"><i class="bx bx-star" aria-hidden="true"></i><span>Avaliações</span></a>
+        <a href="configuracoes.html"><i class="bx bx-cog" aria-hidden="true"></i><span>Configurações</span></a>
       </nav>
 
-      <!-- Botão para sair do sistema -->
       <button class="logout" type="button">
-        <i class="bx bx-log-out"></i>
+        <i class="bx bx-log-out" aria-hidden="true"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- Conteúdo principal -->
     <main class="main">
-
-      <!-- Cabeçalho superior -->
       <header class="topbar">
         <div class="head-left">
           <button class="menu-button hamb" type="button" aria-label="Abrir ou fechar menu">
-            <i class="bx bx-menu"></i>
+            <i class="bx bx-menu" aria-hidden="true"></i>
           </button>
           <div class="title">
-            <h1>Barbeiros</h1>
-            <p>Gerencie sua equipe</p>
+            <h1>Equipe de barbeiros</h1>
+            <p>Cadastre e acompanhe os profissionais da barbearia <span class="admin-only-label">• Administração</span></p>
+          </div>
+        </div>
+        <div class="head-right">
+          <div class="user">
+            <i class="bx bx-user-circle user-avatar" aria-hidden="true"></i>
+            <div class="user-info">
+              <b>Usuário</b>
+              <span>Administrador</span>
+            </div>
           </div>
         </div>
       </header>
 
-      <section class="content">
-
-        <section class="panel panel-pad" style="max-width: 800px; margin: auto;">
-          <form id="barber-form">
-            <h2>CADASTRAR BARBEIRO</h2>
-            <div style="display: grid; gap: 16px; margin-top: 20px;">
-              <input type="text" placeholder="Nome do barbeiro" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-              <input type="email" placeholder="E-mail" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-              <input type="text" placeholder="Telefone" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-              <button type="submit" style="padding: 12px; border: 0; border-radius: 8px; background: #064b2b; color: white; cursor: pointer;">Cadastrar</button>
-            </div>
-          </form>
+      <section class="content barber-page" aria-label="Gerenciamento de barbeiros">
+        <section class="barber-intro">
+          <div class="barber-intro-copy">
+            <span class="barber-eyebrow"><i class="bx bx-cut" aria-hidden="true"></i> GESTÃO DA EQUIPE</span>
+            <h2>Um time forte começa com um bom cadastro.</h2>
+            <p>Crie o acesso individual do profissional. Na próxima etapa, os dados deste formulário serão enviados ao servidor e salvos com segurança.</p>
+          </div>
+          <div class="barber-intro-mark" aria-hidden="true"><i class="bx bx-user-plus"></i></div>
         </section>
 
+        <div class="barber-layout">
+          <section class="panel panel-pad barber-form-panel" aria-labelledby="barber-form-title">
+            <div class="barber-section-heading">
+              <div class="barber-heading-icon" aria-hidden="true"><i class="bx bx-user-plus"></i></div>
+              <div>
+                <span class="barber-kicker">NOVO PROFISSIONAL</span>
+                <h2 id="barber-form-title">Cadastrar barbeiro</h2>
+                <p>Preencha os dados para criar a conta de acesso do barbeiro.</p>
+              </div>
+            </div>
+
+            <form id="barber-form" class="barber-form" novalidate>
+              <div class="barber-field">
+                <label for="barber-name">Nome completo <span aria-hidden="true">*</span></label>
+                <div class="barber-input-wrap">
+                  <i class="bx bx-user" aria-hidden="true"></i>
+                  <input id="barber-name" name="name" type="text" autocomplete="name" minlength="3" maxlength="100" placeholder="Ex.: João da Silva" required>
+                </div>
+              </div>
+
+              <div class="barber-field">
+                <label for="barber-email">E-mail de acesso <span aria-hidden="true">*</span></label>
+                <div class="barber-input-wrap">
+                  <i class="bx bx-envelope" aria-hidden="true"></i>
+                  <input id="barber-email" name="email" type="email" autocomplete="email" maxlength="150" placeholder="nome@barbearia.com.br" required>
+                </div>
+                <small>Este será o e-mail usado pelo barbeiro para entrar no sistema.</small>
+              </div>
+
+              <div class="barber-field">
+                <label for="barber-phone">Telefone <span class="barber-optional">(opcional)</span></label>
+                <div class="barber-input-wrap">
+                  <i class="bx bx-phone" aria-hidden="true"></i>
+                  <input id="barber-phone" name="phone" type="tel" autocomplete="tel" maxlength="20" placeholder="(11) 99999-9999">
+                </div>
+              </div>
+
+              <div class="barber-form-row">
+                <div class="barber-field">
+                  <label for="barber-password">Senha inicial <span aria-hidden="true">*</span></label>
+                  <div class="barber-input-wrap">
+                    <i class="bx bx-lock-alt" aria-hidden="true"></i>
+                    <input id="barber-password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="Mínimo de 8 caracteres" required>
+                  </div>
+                </div>
+                <div class="barber-field">
+                  <label for="barber-password-confirm">Confirmar senha <span aria-hidden="true">*</span></label>
+                  <div class="barber-input-wrap">
+                    <i class="bx bx-lock" aria-hidden="true"></i>
+                    <input id="barber-password-confirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="Digite a senha novamente" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="barber-security-note">
+                <i class="bx bx-shield-quarter" aria-hidden="true"></i>
+                <p>A senha será protegida no servidor; ela não deve ser compartilhada por este painel.</p>
+              </div>
+
+              <p id="barber-form-message" class="barber-form-message" role="status" aria-live="polite"></p>
+
+              <button class="barber-submit" type="submit">
+                <i class="bx bx-user-plus" aria-hidden="true"></i>
+                <span>Cadastrar barbeiro</span>
+              </button>
+              <p class="barber-required-note"><span aria-hidden="true">*</span> Campos obrigatórios</p>
+            </form>
+          </section>
+
+          <aside class="barber-aside" aria-label="Informações do cadastro">
+            <section class="barber-aside-card">
+              <div class="barber-aside-icon" aria-hidden="true"><i class="bx bx-key"></i></div>
+              <h3>Acesso individual</h3>
+              <p>Cada profissional terá sua própria conta e poderá entrar usando o e-mail e a senha cadastrados.</p>
+            </section>
+            <section class="barber-aside-card barber-aside-card-muted">
+              <div class="barber-aside-icon" aria-hidden="true"><i class="bx bx-list-check"></i></div>
+              <h3>Equipe cadastrada</h3>
+              <p>A equipe poderá ser consultada nesta página após o cadastro.</p>
+            </section>
+          </aside>
+        </div>
+
+        <section class="panel panel-pad barber-list-panel" aria-labelledby="barber-list-title">
+          <div class="barber-list-heading">
+            <div>
+              <span class="barber-kicker">PROFISSIONAIS</span>
+              <h2 id="barber-list-title">Barbeiros cadastrados</h2>
+              <p>Consulte todos os profissionais cadastrados e o status de acesso de cada um.</p>
+            </div>
+            <span id="barbers-count" class="barber-list-tag"><i class="bx bx-loader-alt bx-spin" aria-hidden="true"></i> Carregando</span>
+          </div>
+          <div class="barber-table-wrap">
+            <table class="barber-table">
+              <thead>
+                <tr>
+                  <th scope="col">Profissional</th>
+                  <th scope="col">E-mail de acesso</th>
+                  <th scope="col">Telefone</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="barbers-list">
+                <tr>
+                  <td colspan="4">
+                    <div class="barber-empty-state">
+                      <i class="bx bx-loader-alt bx-spin" aria-hidden="true"></i>
+                      <strong>Carregando profissionais</strong>
+                      <span>Aguarde enquanto buscamos os registros cadastrados.</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </section>
     </main>
   </div>
 
-  <!-- JavaScript -->
   <script src="../js/core/shared.js"></script>
   <script src="../js/staff/staff-app.js"></script>
 </body>
