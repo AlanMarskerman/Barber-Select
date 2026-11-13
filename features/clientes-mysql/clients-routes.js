@@ -56,6 +56,31 @@ function createClientsRouter({ authenticate, getPool }) {
     };
   }
 
+  function isValidCPF(cpf) {
+    if (!cpf || String(cpf).trim() === "") return true;
+    const cleanCpf = String(cpf).replace(/\D/g, "");
+    if (cleanCpf.length !== 11) return false;
+    if (/^(\d)\1{10}$/.test(cleanCpf)) return false;
+
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += parseInt(cleanCpf.charAt(i)) * (10 - i);
+    }
+    let rev = 11 - (sum % 11);
+    if (rev === 10 || rev === 11) rev = 0;
+    if (rev !== parseInt(cleanCpf.charAt(9))) return false;
+
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+      sum += parseInt(cleanCpf.charAt(i)) * (11 - i);
+    }
+    rev = 11 - (sum % 11);
+    if (rev === 10 || rev === 11) rev = 0;
+    if (rev !== parseInt(cleanCpf.charAt(10))) return false;
+
+    return true;
+  }
+
   // GET /api/clients (Staff/Admin)
   router.get("/", authenticate(STAFF_ROLES), async (req, res) => {
     try {
@@ -119,6 +144,10 @@ function createClientsRouter({ authenticate, getPool }) {
 
       if (!name || !phone) {
         return res.status(400).json({ error: "Nome e telefone são obrigatórios." });
+      }
+
+      if (cpf && !isValidCPF(cpf)) {
+        return res.status(400).json({ error: "CPF inválido." });
       }
 
       await pool.query(

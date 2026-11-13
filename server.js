@@ -20,10 +20,43 @@ if (!JWT_SECRET || JWT_SECRET.length < 32) {
   throw new Error("JWT_SECRET ausente ou fraco no arquivo .env.");
 }
 
+app.set("trust proxy", 1);
+
 // Armazenamento em memória para sessões ativas e tokens bloqueados
-// Em produção, use Redis ou banco de dados
 const activeSessions = new Map(); // userId -> { refreshToken, createdAt, lastUsed }
 const tokenBlacklist = new Set(); // tokens invalidados
+const failedLogins = new Map(); // identity -> { count, lockedUntil }
+
+const LOCKOUT_MAX_ATTEMPTS = 5;
+const LOCKOUT_TIME_MS = 15 * 60 * 1000; // 15 minutos
+
+function checkLockout(identity) {
+  const record = failedLogins.get(identity);
+  if (!record) return false;
+  if (Date.now() > record.lockedUntil) {
+    failedLogins.delete(identity);
+    return false;
+  }
+  return record.count >= LOCKOUT_MAX_ATTEMPTS;
+}
+
+function recordFailedAttempt(identity) {
+  const now = Date.now();
+  let record = failedLogins.get(identity);
+  if (!record || now > record.lockedUntil) {
+    record = { count: 1, lockedUntil: now + LOCKOUT_TIME_MS };
+  } else {
+    record.count++;
+    if (record.count >= LOCKOUT_MAX_ATTEMPTS) {
+      record.lockedUntil = now + LOCKOUT_TIME_MS;
+    }
+  }
+  failedLogins.set(identity, record);
+}
+
+function clearFailedAttempts(identity) {
+  failedLogins.delete(identity);
+}
 
 app.disable("x-powered-by");
 
@@ -34,7 +67,7 @@ app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 30, // Aumentado para 30 tentativas para desenvolvimento local
+  max: 10, // Reduzido para 10 tentativas por IP
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -213,6 +246,16 @@ function authenticate(requiredRoles = []) {
   };
 }
 
+function checkLockoutMiddleware(req, res, next) {
+  const { identity } = req.body;
+  if (identity && checkLockout(identity)) {
+    return res.status(429).json({
+      error: "Conta temporariamente bloqueada por excesso de tentativas incorretas. Tente novamente em 15 minutos.",
+    });
+  }
+  next();
+}
+
 function handleLogin(role, loginEnv, passwordEnv) {
   return (req, res) => {
     const { identity, password } = req.body;
@@ -228,11 +271,14 @@ function handleLogin(role, loginEnv, passwordEnv) {
     }
 
     if (identity !== expectedLogin || password !== expectedPassword) {
+      recordFailedAttempt(identity);
       console.warn(`Falha de login para o papel: ${role}`);
       return res.status(401).json({
         error: "Usuário ou senha incorretos.",
       });
     }
+
+    clearFailedAttempts(identity);
 
     const userId = generateUserId(role, identity);
     const accessToken = createAccessToken(userId, role, identity);
@@ -309,6 +355,7 @@ app.use("/api/sales", createSalesRouter({ authenticate, getPool }));
 app.post(
   "/auth/login/cliente",
   loginLimiter,
+  checkLockoutMiddleware,
   validateLoginInput,
   handleLogin("client", "CLIENT_LOGIN", "CLIENT_PASSWORD"),
 );
@@ -316,6 +363,7 @@ app.post(
 app.post(
   "/auth/login/colaborador",
   loginLimiter,
+  checkLockoutMiddleware,
   validateLoginInput,
   handleLogin("staff", "STAFF_LOGIN", "STAFF_PASSWORD"),
 );
@@ -323,6 +371,7 @@ app.post(
 app.post(
   "/auth/login/admin",
   loginLimiter,
+  checkLockoutMiddleware,
   validateLoginInput,
   handleLogin("admin", "ADMIN_LOGIN", "ADMIN_PASSWORD"),
 );
@@ -332,6 +381,7 @@ app.post(
 app.post(
   "/auth/login/unified",
   loginLimiter,
+  checkLockoutMiddleware,
   validateLoginInput,
   clientLogin,
   staffLogin,
@@ -356,6 +406,7 @@ app.post(
 
       // Se as credenciais batem, autentica
       if (identity === expectedLogin && password === expectedPassword) {
+        clearFailedAttempts(identity);
         const userId = generateUserId(profile.role, identity);
         const accessToken = createAccessToken(userId, profile.role, identity);
         const refreshToken = createRefreshToken(userId, profile.role, identity);
@@ -381,6 +432,7 @@ app.post(
     }
 
     // Se nenhum perfil autenticou
+    recordFailedAttempt(identity);
     console.warn(`Falha de login unificado para: ${identity}`);
     return res.status(401).json({
       error: "Usuário ou senha incorretos.",
@@ -388,7 +440,7 @@ app.post(
   }
 );
 
-// Endpoint para refresh token
+// Endpoint para refresh token (com Token Rotation)
 app.post("/auth/refresh", (req, res) => {
   const { refreshToken } = req.body;
 
@@ -419,18 +471,25 @@ app.post("/auth/refresh", (req, res) => {
       });
     }
 
-    // Gera novo access token
+    // Gera novo access token e novo refresh token (Token Rotation)
     const newAccessToken = createAccessToken(
       decoded.userId,
       decoded.role,
       decoded.identity
     );
+    const newRefreshToken = createRefreshToken(
+      decoded.userId,
+      decoded.role,
+      decoded.identity
+    );
 
-    // Atualiza timestamp
+    // Atualiza o refresh token na sessão ativa (invalida o anterior)
+    userSession.refreshToken = newRefreshToken;
     userSession.lastUsed = Date.now();
 
     return res.json({
       accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
       expiresIn: 15 * 60, // 15 minutos em segundos
     });
   } catch (error) {

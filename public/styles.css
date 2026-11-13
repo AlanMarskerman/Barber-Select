@@ -28,7 +28,6 @@ body {
   font-family: Inter, Arial, sans-serif;
   background: var(--background);
   color: var(--text);
-  overflow: hidden;
 }
 
 button,

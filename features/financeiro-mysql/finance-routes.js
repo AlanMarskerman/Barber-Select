@@ -69,6 +69,10 @@ function createFinanceRouter({ authenticate, getPool }) {
         return res.status(400).json({ error: "Descrição, tipo, valor e data são obrigatórios." });
       }
 
+      if (Number(amount) <= 0) {
+        return res.status(400).json({ error: "O valor da transação deve ser maior que zero." });
+      }
+
       const [result] = await pool.query(
         `INSERT INTO transactions (description, category, type, amount, payment_method, transaction_date)
          VALUES (?, ?, ?, ?, ?, ?)`,

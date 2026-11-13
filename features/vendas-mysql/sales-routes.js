@@ -77,6 +77,11 @@ function createSalesRouter({ authenticate, getPool }) {
         return res.status(400).json({ error: "Cliente, item, valor e data são obrigatórios." });
       }
 
+      if (Number(amount) <= 0) {
+        connection.release();
+        return res.status(400).json({ error: "O valor da venda deve ser maior que zero." });
+      }
+
       const saleStatus = status || "Pago";
 
       await connection.beginTransaction();

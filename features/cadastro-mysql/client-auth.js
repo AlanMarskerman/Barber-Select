@@ -112,9 +112,9 @@ function createClientAuth({
       await ensureStaffTable(getPool);
       const [staffRows] = await getPool().query("SELECT 1 FROM staff_users WHERE email = ? LIMIT 1", [email]);
       if (staffRows.length > 0) {
-        return res.status(409).json({ error: "E-mail já cadastrado." });
+        // Prevenção de User Enumeration: Retorna sucesso genérico para não revelar se o e-mail existe na equipe
+        return res.status(201).json({ message: "Cadastro realizado com sucesso." });
       }
-      // O e-mail de um colaborador ou dono não pode virar cadastro de cliente.
 
       const passwordHash = await bcrypt.hash(password, 10);
       // Gera o hash da senha. O 10 é o "custo": quanto maior, mais lento e mais
@@ -125,14 +125,13 @@ function createClientAuth({
         [name, email, phone, passwordHash],
       );
       // Os "?" são preenchidos com os valores do array de forma segura, o que
-      // impede SQL Injection. Não conferimos antes se o e-mail existe: a coluna
-      // email é UNIQUE, então o próprio MySQL recusa o duplicado (e é à prova de
-      // dois cadastros simultâneos com o mesmo e-mail).
+      // impede SQL Injection.
 
       return res.status(201).json({ message: "Cadastro realizado com sucesso." });
     } catch (error) {
       if (error.code === "ER_DUP_ENTRY") {
-        return res.status(409).json({ error: "E-mail já cadastrado." });
+        // Prevenção de User Enumeration: Retorna sucesso genérico para não expor duplicidade de e-mail
+        return res.status(201).json({ message: "Cadastro realizado com sucesso." });
       }
       console.error("Erro ao cadastrar cliente:", error);
       return res.status(500).json({ error: "Erro interno ao cadastrar." });

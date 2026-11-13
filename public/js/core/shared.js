@@ -57,6 +57,9 @@
 
       const data = await response.json();
       sessionStorage.setItem('accessToken', data.accessToken);
+      if (data.refreshToken) {
+        sessionStorage.setItem('refreshToken', data.refreshToken);
+      }
       return true;
     } catch (error) {
       console.error('Erro ao renovar token:', error);
