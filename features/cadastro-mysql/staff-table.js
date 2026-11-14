@@ -30,11 +30,20 @@ function ensureStaffTable(getPool) {
           await pool.query("ALTER TABLE staff_users ADD COLUMN phone VARCHAR(20) NULL AFTER username");
         }
 
-        // Se a tabela estiver vazia, cria contas padrão de admin e staff automaticamente (Database Seeding)
+        // Se a tabela estiver vazia, cria contas padrão apenas se explicitamente habilitado em ambiente de desenvolvimento (P0-06)
         const [rows] = await pool.query("SELECT COUNT(*) AS total FROM staff_users");
-        if (Number(rows[0].total) === 0) {
-          const adminHash = await bcrypt.hash("AdminPassword2026!", 10);
-          const staffHash = await bcrypt.hash("StaffPassword2026!", 10);
+        const allowSeed = process.env.ALLOW_DEFAULT_SEED === "true";
+        if (Number(rows[0].total) === 0 && allowSeed) {
+          const adminPass = process.env.SEED_ADMIN_PASSWORD;
+          const staffPass = process.env.SEED_STAFF_PASSWORD || adminPass;
+
+          if (!adminPass || adminPass.length < 8) {
+            console.warn("[Seed] SEED_ADMIN_PASSWORD não configurada ou muito curta (mínimo 8 caracteres). Pulando seeding de contas.");
+            return;
+          }
+
+          const adminHash = await bcrypt.hash(adminPass, 12);
+          const staffHash = await bcrypt.hash(staffPass, 12);
 
           await pool.query(
             `INSERT INTO staff_users (name, email, username, phone, password_hash, role, active) VALUES (?, ?, ?, ?, ?, ?, 1)`,
@@ -42,7 +51,7 @@ function ensureStaffTable(getPool) {
           );
           await pool.query(
             `INSERT INTO staff_users (name, email, username, phone, password_hash, role, active) VALUES (?, ?, ?, ?, ?, ?, 1)`,
-            ["Barbeiro Teste", "staff@barberselect.local", "staff", "11988888888", staffHash, "staff"]
+            ["Profissional Equipe", "staff@barberselect.local", "staff", "11988888888", staffHash, "staff"]
           );
           console.log("[Seed] Contas padrão de admin e staff criadas com sucesso no banco de dados.");
         }

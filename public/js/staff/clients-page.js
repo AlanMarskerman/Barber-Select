@@ -1,214 +1,234 @@
 // public/js/staff/clients-page.js
 // Tela de Clientes (colaborador/admin): lista os clientes cadastrados no MySQL
 // (GET /api/clients), preenche os cards de resumo e permite INATIVAR ou
-// REATIVAR um cliente (PATCH /api/clients/:id/status) sem apagar nada.
+// REATIVAR um cliente (PATCH /api/clients/:id/status) de forma segura e sem inline handlers.
 //
-// Depende de dois scripts que a página carrega ANTES dele:
-// - /js/core/shared.js: fornece authenticatedFetch() (fetch com o token de
-//   login e renovação automática) e logout();
-// - /js/staff/staff-app.js: exige login de colaborador/admin na página.
-//
-// Todo texto vindo da API entra na tela com textContent (nunca innerHTML),
-// para que um nome com "<" ou aspas não vire código na página.
+// Depende de:
+// - /js/core/shared.js: authenticatedFetch(), logout(), requireAuth()
+// - /js/staff/staff-app.js: estrutura base da aplicação
 
 (function () {
-  const tbody = document.getElementById("clients-body");
-  if (!tbody) return;
-  // Se a página não tiver a tabela esperada, não faz nada.
+  "use strict";
 
-  const searchInput = document.getElementById("client-search");
-  const statusFilter = document.getElementById("client-status-filter");
-  const message = document.getElementById("clients-message");
+  document.addEventListener("DOMContentLoaded", () => {
+    const tbody = document.getElementById("clients-tbody") || document.getElementById("clients-body");
+    if (!tbody) return;
 
-  const dateFormat = new Intl.DateTimeFormat("pt-BR");
-  // Formata datas no padrão brasileiro: 10/10/2026.
+    const searchInput = document.getElementById("search-client") || document.getElementById("client-search");
+    const statusFilter = document.getElementById("client-status-filter");
+    const message = document.getElementById("clients-message");
 
-  let clients = [];
-  // Lista de clientes da última resposta da API.
+    const dateFormat = new Intl.DateTimeFormat("pt-BR");
+    let clients = [];
 
-  const logoutButton = document.querySelector(".logout");
-  if (logoutButton) logoutButton.addEventListener("click", logout);
-  // O botão "Sair" do mockup não tinha ação; ligamos ao logout() do shared.js.
+    // ---------- Utilitários ----------
 
-  // ---------- Utilitários ----------
-
-  function makeElement(tag, text, className) {
-    const element = document.createElement(tag);
-    if (text !== undefined) element.textContent = text;
-    if (className) element.className = className;
-    return element;
-  }
-
-  function setText(id, text) {
-    const element = document.getElementById(id);
-    if (element) element.textContent = text;
-  }
-
-  function showMessage(text, type) {
-    message.textContent = text;
-    message.className = `cli-message ${type}`;
-    message.hidden = false;
-  }
-
-  function hideMessage() {
-    message.hidden = true;
-    message.textContent = "";
-  }
-
-  // ---------- Cards de resumo ----------
-
-  function updateCards(summary) {
-    setText("cli-total", String(summary.total));
-    setText("cli-new", String(summary.newLast30Days));
-    setText("cli-active", String(summary.active));
-    const percent = summary.total > 0 ? Math.round((summary.active / summary.total) * 100) : 0;
-    setText("cli-active-pct", `${percent}%`);
-    // Percentual de clientes ativos sobre o total.
-  }
-
-  function updateCardsFromList() {
-    // Depois de inativar/reativar, recalcula só o que mudou, sem nova consulta.
-    const active = clients.filter((client) => client.active).length;
-    setText("cli-active", String(active));
-    const total = Number(document.getElementById("cli-total").textContent) || clients.length;
-    setText("cli-active-pct", `${total > 0 ? Math.round((active / total) * 100) : 0}%`);
-  }
-
-  // ---------- Tabela ----------
-
-  function renderEmpty(text) {
-    tbody.replaceChildren();
-    const row = document.createElement("tr");
-    const cell = makeElement("td", text, "cli-empty");
-    cell.colSpan = 5;
-    row.appendChild(cell);
-    tbody.appendChild(row);
-  }
-
-  function buildRow(client) {
-    const row = document.createElement("tr");
-    if (!client.active) row.className = "is-inactive";
-
-    const nameCell = document.createElement("td");
-    nameCell.appendChild(makeElement("b", client.name));
-    nameCell.appendChild(document.createElement("br"));
-    nameCell.appendChild(makeElement("small", client.email));
-
-    const phoneCell = makeElement("td", client.phone, "num");
-
-    const date = new Date(client.createdAt);
-    const dateCell = makeElement("td", Number.isNaN(date.getTime()) ? "—" : dateFormat.format(date), "num");
-
-    const statusCell = document.createElement("td");
-    statusCell.appendChild(
-      makeElement("span", client.active ? "Ativo" : "Inativo", client.active ? "pill green" : "pill yellow"),
-    );
-
-    const actionsCell = makeElement("td", undefined, "actions");
-    const toggleButton = makeElement(
-      "button",
-      client.active ? "Inativar" : "Reativar",
-      client.active ? "cli-btn cli-btn-danger" : "cli-btn",
-    );
-    toggleButton.type = "button";
-    toggleButton.addEventListener("click", () => changeStatus(client, !client.active));
-    actionsCell.appendChild(toggleButton);
-
-    row.append(nameCell, phoneCell, dateCell, statusCell, actionsCell);
-    return row;
-  }
-
-  function render() {
-    const term = searchInput.value.trim().toLowerCase();
-    const filter = statusFilter.value;
-    // Busca simples na própria tela, por nome, e-mail ou telefone, junto com o
-    // filtro de situação (todos / ativos / inativos).
-
-    const visible = clients.filter((client) => {
-      if (filter === "active" && !client.active) return false;
-      if (filter === "inactive" && client.active) return false;
-      return [client.name, client.email, client.phone].some((field) => String(field).toLowerCase().includes(term));
-    });
-
-    if (clients.length === 0) {
-      renderEmpty("Nenhum cliente cadastrado ainda.");
-    } else if (visible.length === 0) {
-      renderEmpty("Nenhum cliente encontrado para esse filtro.");
-    } else {
-      tbody.replaceChildren(...visible.map(buildRow));
+    function makeElement(tag, text, className) {
+      const element = document.createElement(tag);
+      if (text !== undefined && text !== null) element.textContent = text;
+      if (className) element.className = className;
+      return element;
     }
-  }
 
-  // ---------- Chamadas à API ----------
-
-  async function readJson(response) {
-    try {
-      return await response.json();
-    } catch (error) {
-      return {};
-      // Resposta sem JSON: segue com objeto vazio.
+    function setText(id, text) {
+      const element = document.getElementById(id);
+      if (element) element.textContent = text;
     }
-  }
 
-  async function loadClients() {
-    try {
-      const response = await authenticatedFetch("/api/clients");
-      if (!response) return;
-      // null = sessão expirou (o shared.js já mandou para o login).
-
-      const data = await readJson(response);
-
-      if (!response.ok) {
-        renderEmpty("Não foi possível carregar os clientes.");
-        showMessage(data.error || "Não foi possível carregar os clientes.", "error");
-        return;
-      }
-
-      clients = data.clients || [];
-      updateCards(data.summary || { total: clients.length, active: 0, newLast30Days: 0 });
-      render();
-    } catch (error) {
-      console.error("Erro ao carregar clientes:", error);
-      renderEmpty("Não foi possível carregar os clientes.");
-      showMessage("Não foi possível conectar ao servidor.", "error");
+    function showMessage(text, type) {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `cli-message ${type}`;
+      message.hidden = false;
     }
-  }
 
-  async function changeStatus(client, makeActive) {
-    if (!makeActive && !window.confirm(`Inativar "${client.name}"? O cadastro continua salvo e pode ser reativado depois.`)) {
-      return;
+    function hideMessage() {
+      if (!message) return;
+      message.hidden = true;
+      message.textContent = "";
     }
-    hideMessage();
 
-    try {
-      const response = await authenticatedFetch(`/api/clients/${client.id}/status`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ active: makeActive }),
+    // ---------- Cards de resumo ----------
+
+    function updateCards(summary) {
+      const total = summary.total || 0;
+      const active = summary.active || 0;
+      const recent = summary.newLast30Days || 0;
+
+      setText("clients-total", String(total));
+      setText("cli-total", String(total));
+
+      setText("clients-active", String(active));
+      setText("cli-active", String(active));
+
+      setText("clients-recent", String(recent));
+      setText("cli-new", String(recent));
+
+      const percent = total > 0 ? Math.round((active / total) * 100) : 0;
+      setText("cli-active-pct", `${percent}%`);
+    }
+
+    function updateCardsFromList() {
+      const active = clients.filter((c) => c.active).length;
+      setText("clients-active", String(active));
+      setText("cli-active", String(active));
+
+      const total = clients.length;
+      setText("clients-total", String(total));
+      setText("cli-total", String(total));
+
+      const percent = total > 0 ? Math.round((active / total) * 100) : 0;
+      setText("cli-active-pct", `${percent}%`);
+    }
+
+    // ---------- Tabela ----------
+
+    function renderEmpty(text) {
+      tbody.replaceChildren();
+      const row = document.createElement("tr");
+      const cell = makeElement("td", text, "empty-cell");
+      cell.colSpan = 6;
+      cell.style.textAlign = "center";
+      cell.style.padding = "40px";
+      cell.style.color = "var(--muted, #666)";
+      row.appendChild(cell);
+      tbody.appendChild(row);
+    }
+
+    function buildRow(client) {
+      const row = document.createElement("tr");
+      if (!client.active) row.className = "is-inactive";
+
+      // 1. Nome
+      const nameCell = document.createElement("td");
+      nameCell.appendChild(makeElement("strong", client.name));
+
+      // 2. E-mail
+      const emailCell = document.createElement("td");
+      emailCell.textContent = client.email || "—";
+
+      // 3. Telefone
+      const phoneCell = document.createElement("td");
+      phoneCell.textContent = client.phone || "—";
+
+      // 4. Status
+      const statusCell = document.createElement("td");
+      const statusPill = makeElement(
+        "span",
+        client.active ? "Ativo" : "Inativo",
+        `pill ${client.active ? "ativo" : "inativo"}`
+      );
+      statusCell.appendChild(statusPill);
+
+      // 5. Data de Cadastro
+      const dateCell = document.createElement("td");
+      const date = client.createdAt ? new Date(client.createdAt) : null;
+      const formattedDate = date && !Number.isNaN(date.getTime()) ? dateFormat.format(date) : "—";
+      const smallDate = makeElement("small", formattedDate);
+      dateCell.appendChild(smallDate);
+
+      // 6. Ações (Inativar/Reativar com addEventListener limpo - sem inline handler)
+      const actionsCell = document.createElement("td");
+      const toggleButton = makeElement(
+        "button",
+        client.active ? "Inativar" : "Reativar",
+        "btn-action"
+      );
+      toggleButton.type = "button";
+      toggleButton.addEventListener("click", () => changeStatus(client, !client.active));
+      actionsCell.appendChild(toggleButton);
+
+      row.append(nameCell, emailCell, phoneCell, statusCell, dateCell, actionsCell);
+      return row;
+    }
+
+    function render() {
+      const term = searchInput ? searchInput.value.trim().toLowerCase() : "";
+      const filter = statusFilter ? statusFilter.value : "all";
+
+      const visible = clients.filter((client) => {
+        if (filter === "active" && !client.active) return false;
+        if (filter === "inactive" && client.active) return false;
+        if (!term) return true;
+        return (
+          (client.name && client.name.toLowerCase().includes(term)) ||
+          (client.email && client.email.toLowerCase().includes(term)) ||
+          (client.phone && client.phone.includes(term))
+        );
       });
-      if (!response) return;
 
-      const data = await readJson(response);
+      if (clients.length === 0) {
+        renderEmpty("Nenhum cliente cadastrado.");
+      } else if (visible.length === 0) {
+        renderEmpty("Nenhum cliente encontrado com os filtros aplicados.");
+      } else {
+        tbody.replaceChildren(...visible.map(buildRow));
+      }
+    }
 
-      if (!response.ok) {
-        showMessage(data.error || "Não foi possível alterar o cliente.", "error");
+    // ---------- Chamadas à API ----------
+
+    async function loadClients() {
+      try {
+        const response = await authenticatedFetch("/api/clients");
+        if (!response) return;
+
+        if (!response.ok) {
+          renderEmpty("Não foi possível carregar os clientes.");
+          showMessage("Não foi possível carregar os clientes.", "error");
+          return;
+        }
+
+        const data = await response.json();
+        clients = data.clients || [];
+        updateCards(data.summary || { total: clients.length, active: 0, newLast30Days: 0 });
+        render();
+      } catch (error) {
+        console.error("Erro ao carregar clientes:", error);
+        renderEmpty("Erro ao carregar lista de clientes.");
+        showMessage("Não foi possível conectar ao servidor.", "error");
+      }
+    }
+
+    async function changeStatus(client, makeActive) {
+      if (
+        !makeActive &&
+        !window.confirm(`Deseja inativar o cliente "${client.name}"? O cadastro continuará salvo no sistema.`)
+      ) {
         return;
       }
+      hideMessage();
 
-      client.active = data.client.active;
-      // Atualiza o cliente na lista local com o que o servidor gravou.
-      updateCardsFromList();
-      render();
-      showMessage(client.active ? "Cliente reativado." : "Cliente inativado.", "success");
-    } catch (error) {
-      console.error("Erro ao alterar cliente:", error);
-      showMessage("Não foi possível conectar ao servidor.", "error");
+      try {
+        const response = await authenticatedFetch(`/api/clients/${client.id}/status`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ active: makeActive }),
+        });
+        if (!response) return;
+
+        if (!response.ok) {
+          alert("Não foi possível alterar o status do cliente.");
+          return;
+        }
+
+        const data = await response.json();
+        client.active = data.active;
+        updateCardsFromList();
+        render();
+      } catch (error) {
+        console.error("Erro ao alterar status do cliente:", error);
+        alert("Erro ao conectar com o servidor.");
+      }
     }
-  }
 
-  searchInput.addEventListener("input", render);
-  statusFilter.addEventListener("change", render);
+    if (searchInput) {
+      searchInput.addEventListener("input", render);
+    }
+    if (statusFilter) {
+      statusFilter.addEventListener("change", render);
+    }
 
-  loadClients();
-  // Ao abrir a página, carrega a lista.
+    loadClients();
+  });
 })();

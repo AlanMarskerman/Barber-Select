@@ -9,7 +9,7 @@
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..405,400;0,9..405,500;0,9..405,700;1,9..405,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../styles-logout.css">
@@ -346,106 +346,6 @@
 
   <script src="../js/core/shared.js"></script>
   <script src="../js/staff/staff-app.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) {
-        window.location.href = "../pages/login.html";
-        return;
-      }
-
-      const tbody = document.getElementById("clients-tbody");
-      const searchInput = document.getElementById("search-client");
-      let allClients = [];
-
-      async function loadClients() {
-        try {
-          const res = await fetch("/api/clients", {
-            headers: { "Authorization": `Bearer ${token}` }
-          });
-
-          if (!res.ok) {
-            if (res.status === 401) {
-              window.location.href = "../pages/login.html";
-              return;
-            }
-            throw new Error("Erro ao carregar clientes");
-          }
-
-          const data = await res.json();
-          allClients = data.clients || [];
-          renderClients(allClients);
-
-          document.getElementById("clients-active").textContent = data.summary?.active || 0;
-          document.getElementById("clients-total").textContent = data.summary?.total || 0;
-          document.getElementById("clients-recent").textContent = data.summary?.newLast30Days || 0;
-        } catch (err) {
-          console.error("Erro:", err);
-          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--error);">Erro ao carregar lista de clientes.</td></tr>`;
-        }
-      }
-
-      function renderClients(list) {
-        const search = searchInput.value.toLowerCase();
-        const filtered = list.filter(c =>
-          c.name.toLowerCase().includes(search) || c.email.toLowerCase().includes(search) || c.phone.includes(search)
-        );
-
-        tbody.innerHTML = "";
-
-        if (filtered.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--muted);">Nenhum cliente encontrado.</td></tr>`;
-          return;
-        }
-
-        filtered.forEach(c => {
-          const formattedDate = c.createdAt ? new Date(c.createdAt).toLocaleDateString('pt-BR') : '-';
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><strong>${escapeHtml(c.name)}</strong></td>
-            <td>${escapeHtml(c.email)}</td>
-            <td>${escapeHtml(c.phone)}</td>
-            <td><span class="pill ${c.active ? 'ativo' : 'inativo'}">${c.active ? 'Ativo' : 'Inativo'}</span></td>
-            <td><small>${formattedDate}</small></td>
-            <td>
-              <button class="btn-action" onclick="toggleClientStatus(${c.id}, ${!c.active})">
-                ${c.active ? 'Inativar' : 'Ativar'}
-              </button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      }
-
-      function escapeHtml(str) {
-        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      }
-
-      window.toggleClientStatus = async function(id, newActive) {
-        try {
-          const res = await fetch(`/api/clients/${id}/status`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({ active: newActive })
-          });
-
-          if (res.ok) {
-            loadClients();
-          } else {
-            alert("Erro ao alterar status do cliente.");
-          }
-        } catch (err) {
-          console.error(err);
-        }
-      };
-
-      searchInput.addEventListener("input", () => renderClients(allClients));
-
-      loadClients();
-    });
-  </script>
+  <script src="../js/staff/clients-page.js"></script>
 </body>
 </html>

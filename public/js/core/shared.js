@@ -32,42 +32,49 @@
   }
 
   // ===========================
-  // REFRESH TOKEN AUTOMÁTICO
+  // ===========================
+  // REFRESH TOKEN AUTOMÁTICO (Single-Flight)
   // ===========================
 
+  let _refreshPromise = null;
+
   async function refreshAccessToken() {
-    const { refreshToken } = getSession();
+    if (_refreshPromise) return _refreshPromise;
 
-    if (!refreshToken) {
-      return false;
-    }
+    _refreshPromise = (async () => {
+      const { refreshToken } = getSession();
+      if (!refreshToken) return false;
 
-    try {
-      const response = await fetch('/auth/refresh', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ refreshToken })
-      });
+      try {
+        const response = await fetch('/auth/refresh', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ refreshToken })
+        });
 
-      if (!response.ok) {
+        if (!response.ok) return false;
+
+        const data = await response.json();
+        sessionStorage.setItem('accessToken', data.accessToken);
+        if (data.refreshToken) {
+          sessionStorage.setItem('refreshToken', data.refreshToken);
+        }
+        if (data.expiresIn) {
+          sessionStorage.setItem('expiresAt', String(Date.now() + data.expiresIn * 1000));
+        }
+        return true;
+      } catch (error) {
+        console.error('Erro ao renovar token:', error);
         return false;
+      } finally {
+        _refreshPromise = null;
       }
+    })();
 
-      const data = await response.json();
-      sessionStorage.setItem('accessToken', data.accessToken);
-      if (data.refreshToken) {
-        sessionStorage.setItem('refreshToken', data.refreshToken);
-      }
-      return true;
-    } catch (error) {
-      console.error('Erro ao renovar token:', error);
-      return false;
-    }
+    return _refreshPromise;
   }
 
-  // Wrapper para fetch com refresh automático
+  // Wrapper para fetch com refresh automático (Race condition safe)
   async function authenticatedFetch(url, options = {}) {
     const { accessToken } = getSession();
 
@@ -79,8 +86,8 @@
       }
     });
 
-    // Se o token expirou (401), tenta renovar
     if (response.status === 401) {
+      const staleToken = accessToken;
       const refreshed = await refreshAccessToken();
 
       if (refreshed) {
@@ -93,15 +100,33 @@
           }
         });
       } else {
-        // Não conseguiu renovar, limpa e vai para login
-        clearSession();
-        redirectToLogin();
+        if (getSession().accessToken === staleToken) {
+          clearSession();
+          redirectToLogin();
+        }
         return null;
       }
     }
 
     return response;
   }
+
+  // Renovação proativa a cada 30s se o token estiver prestes a expirar (60s antes)
+  setInterval(() => {
+    const exp = Number(sessionStorage.getItem('expiresAt') || 0);
+    if (exp && Date.now() > exp - 60_000 && getSession().refreshToken) {
+      refreshAccessToken();
+    }
+  }, 30_000);
+
+  // ===========================
+  // ESCAPING HTML ROBUSTO (P1-01)
+  // ===========================
+
+  const ESCAPE_MAP = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  window.escapeHtml = function(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (c) => ESCAPE_MAP[c]);
+  };
 
   // ===========================
   // VERIFICAÇÃO DE AUTENTICAÇÃO SIMPLES
@@ -148,12 +173,12 @@
         <div class="logout-modal">
           <div class="logout-modal-header">
             <i class="bx bx-log-out"></i>
-            <h3>Sair do Sistema</h3>
-            <p>Tem certeza que deseja encerrar sua sessão?</p>
+            <h3>Sair da conta</h3>
+            <p>Você vai sair da sua conta. Deseja continuar?</p>
           </div>
           <div class="logout-modal-footer">
             <button class="cancel-btn" id="modal-cancel">Cancelar</button>
-            <button class="confirm-btn" id="modal-confirm"><i class="bx bx-log-out"></i> Sair</button>
+            <button class="confirm-btn" id="modal-confirm"><i class="bx bx-log-out"></i> Sair da conta</button>
           </div>
         </div>
       </div>
@@ -178,9 +203,6 @@
         confirmBtn.classList.remove('logout-processing');
       });
     }
-
-    // Adiciona logs para debugging
-    console.log('[Logout] Modal criado e listeners configurados');
   }
 
   function showLogoutModal() {
@@ -232,11 +254,6 @@
   async function logout() {
     // Mostra o modal de confirmação
     showLogoutModal();
-
-    console.log('[Logout] Modal de logout exibido - aguarde a confirmação');
-
-    // Log adicional para debugging
-    console.log('[Logout] Botões do modal devem ser configurados automaticamente em createLogoutModal');
   }
 
   // ===========================

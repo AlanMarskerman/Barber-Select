@@ -232,23 +232,8 @@
         }
       }
 
-      // Produtos: Handler de formulário de novo produto
-      const productForm = document.getElementById('product-form');
-      if (productForm) {
-        productForm.addEventListener('submit', handleProductSubmit);
-      }
-
-      // Vendas: Handler de formulário de nova venda
-      const saleForm = document.getElementById('sale-form');
-      if (saleForm) {
-        saleForm.addEventListener('submit', handleSaleSubmit);
-      }
-
-      // Agendamentos
-      const appointmentForm = document.getElementById('appointment-form');
-      if (appointmentForm) {
-        appointmentForm.addEventListener('submit', handleAppointmentSubmit);
-      }
+      // Nota: os formulários de Produtos, Vendas e Agendamentos são tratados
+      // nativamente em suas respectivas páginas (produtos.html, venda.html, agenda.html).
     }
 
     // ===========================
@@ -679,27 +664,9 @@
       e.target.reset();
     }
 
-    async function handleSaleSubmit(e) {
-      e.preventDefault();
-      alert('Venda registrada com sucesso! (Funcionalidade em desenvolvimento)');
-      e.target.reset();
-    }
-
-    async function handleAppointmentSubmit(e) {
-      e.preventDefault();
-      alert('Agendamento criado com sucesso! (Funcionalidade em desenvolvimento)');
-      e.target.reset();
-    }
-
     // ===========================
     // UTILITÁRIOS
     // ===========================
-
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
 
     // Exporta funções globais se necessário
     window.viewClient = function(id) {

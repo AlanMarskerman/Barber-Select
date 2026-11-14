@@ -10,10 +10,15 @@
 // e dono só nascem por aqui, criados por um admin logado.
 
 const express = require("express");
+const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 // bcryptjs: guarda a senha como "hash" (nunca em texto puro) e compara a senha
 // digitada com o hash guardado.
 const { ensureStaffTable } = require("./staff-table");
+
+function hashToken(token) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
 
 const DUMMY_HASH = bcrypt.hashSync("senha-falsa-para-igualar-o-tempo", 10);
 // Hash "de mentira" para o login gastar o mesmo tempo quando o usuário existe
@@ -85,7 +90,7 @@ function createStaffAuth({
       const refreshToken = createRefreshToken(userId, user.role, user.email);
 
       activeSessions.set(userId, {
-        refreshToken,
+        refreshTokenHash: hashToken(refreshToken),
         createdAt: Date.now(),
         lastUsed: Date.now(),
         identity: user.email,
@@ -200,7 +205,7 @@ function createStaffAuth({
       // O mesmo e-mail não pode ser cliente e equipe ao mesmo tempo: o login
       // não saberia quem é.
 
-      const passwordHash = await bcrypt.hash(password, 10);
+      const passwordHash = await bcrypt.hash(password, 12);
       const [result] = await pool.query(
         "INSERT INTO staff_users (name, email, username, phone, password_hash, role) VALUES (?, ?, ?, ?, ?, ?)",
         [name, email, username, phone, passwordHash, role],

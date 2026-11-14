@@ -124,8 +124,9 @@ function createServicesRouter({ authenticate, getPool }) {
 
   const SERVICE_COLUMNS = "id, name, description, category, price, duration_minutes, active, created_at, updated_at";
 
-  router.get("/", authenticate(STAFF_ROLES), async (req, res) => {
-    const activeOnly = req.query.active === "true";
+  router.get("/", authenticate(), async (req, res) => {
+    const isClient = req.user && !STAFF_ROLES.includes(req.user.role);
+    const activeOnly = isClient || req.query.active === "true";
     try {
       await ensureCatalogReady();
       const [rows] = await getPool().query(
@@ -135,6 +136,9 @@ function createServicesRouter({ authenticate, getPool }) {
       return res.json({ services: rows.map(toApi) });
     } catch (error) {
       console.error("Erro ao listar serviços:", error);
+      if (error.code === "ECONNREFUSED" || error.code === "ER_ACCESS_DENIED_ERROR") {
+        return res.status(503).json({ error: "O sistema está temporariamente indisponível. Tente em alguns instantes." });
+      }
       return res.status(500).json({ error: "Erro interno ao listar serviços." });
     }
   });

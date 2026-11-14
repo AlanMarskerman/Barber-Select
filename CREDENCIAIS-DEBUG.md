@@ -1,21 +1,57 @@
 # Credenciais de Debug e Acesso Padrão — Barber Select
 
-Este documento lista as contas padrão criadas automaticamente pelo sistema (via *database seeding*) no primeiro acesso ou inicialização do banco de dados MySQL.
+Este documento lista as contas de teste disponíveis no ambiente de desenvolvimento.
 
-## 🔐 Contas Padrão (Ambiente de Desenvolvimento / Debug)
+## Como funciona o login
 
-### 1. Administrador (Dono)
-* **E-mail / Usuário**: `admin@barberselect.local` ou `admin`
-* **Senha**: `AdminPassword2026!`
-* **Perfil**: `admin` (Acesso completo a todas as áreas, relatórios, configurações e gestão de equipe).
+O endpoint `/auth/login/unified` consulta **apenas o MySQL** (tabelas `clients` e
+`staff_users`). As variáveis `CLIENT_LOGIN` / `STAFF_LOGIN` / `ADMIN_LOGIN` do
+`.env` **não são mais usadas** — foram removidas pela refatoração de segurança
+(commit `994fd3d`) justamente para eliminar a porta traseira apontada na auditoria.
 
-### 2. Colaborador (Staff / Barbeiro)
-* **E-mail / Usuário**: `staff@barberselect.local` ou `staff`
-* **Senha**: `StaffPassword2026!`
-* **Perfil**: `staff` (Acesso à agenda, atendimento e PDV).
+O login aceita e-mail **ou** username, conforme a tabela:
 
-### 3. Cliente de Teste
-Você pode se cadastrar livremente na página de cadastro (`/pages/cadastro.html`) para testar a Área do Cliente.
+- `clients` → só por e-mail (o `clientLogin` ignora identidades sem `@`).
+- `staff_users` → por e-mail ou username (coluna `username`).
+
+## Contas atuais no banco `barber_select`
+
+| Perfil | E-mail / Usuário | Senha | Origem |
+|---|---|---|---|
+| Admin | `admin@barberselect.local` ou `admin` | `AdminPassword2026!` | Seed `staff-table.js` |
+| Staff | `staff@barberselect.local` ou `staff` | `StaffPassword2026!` | Seed `staff-table.js` |
+| Cliente | `cliente@barberselect.local` | `ClientePassword2026!` | Criado manualmente (este doc) |
+
+> **Não use** `cliente` / `colaborador` / `admin` com `123456` — essas são as
+> credenciais legadas do `.env` que **não funcionam mais** no login unificado.
+
+## Recriando as contas seed
+
+O seeding automático só roda se **ambos** estiverem definidos no `.env`:
+
+```
+ALLOW_DEFAULT_SEED=true
+SEED_ADMIN_PASSWORD=<senha>=8+ caracteres
+```
+
+Com `staff_users` vazio, o servidor cria admin + staff com essas senhas na
+primeira requisição que tocar a tabela. Sem isso, crie as contas à mão:
+
+```sql
+INSERT INTO staff_users (name, email, username, phone, password_hash, role, active)
+VALUES ('Administrador Master', 'admin@barberselect.local', 'admin', '11999999999',
+        '<bcrypt de AdminPassword2026!>', 'admin', 1);
+```
+
+Para criar um cliente de teste, use a página `/pages/cadastro.html` ou a API:
+
+```
+POST /api/register
+{ "name": "Cliente de Teste", "email": "cliente@barberselect.local",
+  "phone": "11999999999", "password": "ClientePassword2026!" }
+```
 
 ---
-*Nota: Estas credenciais são injetadas automaticamente caso a tabela `staff_users` esteja vazia, garantindo que o sistema funcione imediatamente sem dependência de variáveis de ambiente estáticas no `.env`.*
+*Nota: estas contas são para ambiente de desenvolvimento. Nunca commite senhas
+reais nem reative o fallback do `.env` em produção — isso viola a LGPD e
+reintroduz a porta traseira documentada na auditoria.*

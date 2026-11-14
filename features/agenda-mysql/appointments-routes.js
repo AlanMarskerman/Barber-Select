@@ -1,4 +1,6 @@
 const express = require("express");
+const { STAFF_ROLES } = require("../shared/roles");
+const { escapeLike } = require("../shared/validation");
 
 async function ensureTable(pool) {
   await pool.query(`
@@ -19,7 +21,9 @@ async function ensureTable(pool) {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       INDEX idx_appointment_date (appointment_date),
-      INDEX idx_appointment_status (status)
+      INDEX idx_appointment_status (status),
+      INDEX idx_appointment_client (client_id),
+      INDEX idx_staff_datetime (staff_id, appointment_date, appointment_time)
     );
   `);
 }
@@ -34,9 +38,14 @@ async function ensureTransactionsTable(pool) {
       amount DECIMAL(10,2) NOT NULL,
       payment_method VARCHAR(50) NOT NULL DEFAULT 'PIX',
       transaction_date DATE NOT NULL,
+      source_type VARCHAR(20) NULL,
+      source_id INT NULL,
       active TINYINT(1) NOT NULL DEFAULT 1,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      INDEX idx_transaction_date (transaction_date),
+      INDEX idx_transaction_type (type),
+      INDEX idx_transactions_source (source_type, source_id)
     );
   `);
 }
@@ -44,34 +53,51 @@ async function ensureTransactionsTable(pool) {
 function createAppointmentsRouter({ authenticate, getPool }) {
   const router = express.Router();
 
-  // Listar agendamentos (com filtros opcionais por data, staff, status)
+  // Listar agendamentos (Staff vê tudo; Cliente vê apenas os próprios)
   router.get("/", authenticate(), async (req, res) => {
     try {
       const pool = getPool();
       await ensureTable(pool);
 
-      const { date, staff, status, search } = req.query;
-      let query = "SELECT * FROM appointments WHERE 1=1";
+      const isStaff = req.user && STAFF_ROLES.includes(req.user.role);
       const params = [];
+      let query = "SELECT * FROM appointments WHERE 1=1";
 
-      if (date) {
-        query += " AND appointment_date = ?";
-        params.push(date);
-      }
+      if (!isStaff) {
+        // Busca o ID do cliente autenticado
+        const [clientRows] = await pool.query(
+          "SELECT id, phone FROM clients WHERE email = ? LIMIT 1",
+          [req.user.identity]
+        );
+        if (clientRows.length === 0) {
+          return res.json([]);
+        }
+        const client = clientRows[0];
+        query += " AND (client_id = ? OR (client_id IS NULL AND client_phone = ?))";
+        params.push(client.id, client.phone);
+      } else {
+        const { date, staff, status, search } = req.query;
 
-      if (staff) {
-        query += " AND staff_name LIKE ?";
-        params.push(`%${staff}%`);
-      }
+        if (date) {
+          query += " AND appointment_date = ?";
+          params.push(date);
+        }
 
-      if (status) {
-        query += " AND status = ?";
-        params.push(status);
-      }
+        if (staff) {
+          query += " AND staff_name LIKE ?";
+          params.push(`%${escapeLike(staff)}%`);
+        }
 
-      if (search) {
-        query += " AND (client_name LIKE ? OR service_name LIKE ? OR client_phone LIKE ?)";
-        params.push(`%${search}%`, `%${search}%`, `%${search}%`);
+        if (status) {
+          query += " AND status = ?";
+          params.push(status);
+        }
+
+        if (search) {
+          query += " AND (client_name LIKE ? OR service_name LIKE ? OR client_phone LIKE ?)";
+          const escaped = `%${escapeLike(search)}%`;
+          params.push(escaped, escaped, escaped);
+        }
       }
 
       query += " ORDER BY appointment_date ASC, appointment_time ASC";
@@ -80,18 +106,22 @@ function createAppointmentsRouter({ authenticate, getPool }) {
       return res.json(rows);
     } catch (err) {
       console.error("Erro ao listar agendamentos:", err);
+      if (err.code === "ECONNREFUSED" || err.code === "ER_ACCESS_DENIED_ERROR") {
+        return res.status(503).json({ error: "O sistema está temporariamente indisponível. Tente em alguns instantes." });
+      }
       return res.status(500).json({ error: "Erro ao listar agendamentos." });
     }
   });
 
-  // Criar novo agendamento com prevenção de double-booking (transação ACID + lock)
+  // Criar novo agendamento com prevenção de double-booking e resolução de preço no servidor
   router.post("/", authenticate(), async (req, res) => {
     const pool = getPool();
     const connection = await pool.getConnection();
     try {
       await ensureTable(pool);
 
-      const {
+      const isStaff = req.user && STAFF_ROLES.includes(req.user.role);
+      let {
         client_name,
         client_phone,
         client_id,
@@ -104,26 +134,87 @@ function createAppointmentsRouter({ authenticate, getPool }) {
         appointment_time,
         status,
         notes
-      } = req.body;
+      } = req.body ?? {};
 
-      if (!client_name || !client_phone || !service_name || service_price === undefined || !staff_name || !appointment_date || !appointment_time) {
-        connection.release();
+      // Se for cliente comum, força dados do cadastro dele
+      if (!isStaff) {
+        const [clientRows] = await connection.query(
+          "SELECT id, name, phone FROM clients WHERE email = ? LIMIT 1",
+          [req.user.identity]
+        );
+        if (clientRows.length === 0) {
+          return res.status(403).json({ error: "Cadastro de cliente não encontrado." });
+        }
+        const client = clientRows[0];
+        client_id = client.id;
+        client_name = client.name;
+        client_phone = client.phone;
+        status = "pendente"; // Clientes sempre iniciam como pendente
+      }
+
+      if (!client_name || !client_phone || (!service_name && !service_id) || !staff_name || !appointment_date || !appointment_time) {
         return res.status(400).json({ error: "Campos obrigatórios ausentes para o agendamento." });
       }
 
       await connection.beginTransaction();
 
-      // Verificar conflito de horário (double-booking) para o mesmo profissional na mesma data e horário
-      const [existing] = await connection.query(
-        `SELECT id FROM appointments
-         WHERE staff_name = ? AND appointment_date = ? AND appointment_time = ? AND status != 'cancelado'
-         LIMIT 1 FOR UPDATE`,
-        [staff_name, appointment_date, appointment_time]
-      );
+      // Resolução de preço e serviço no servidor a partir do catálogo (X-07)
+      let resolvedPrice = null;
+      let resolvedServiceName = service_name;
+
+      if (service_id) {
+        const [svcRows] = await connection.query(
+          "SELECT id, name, price FROM services WHERE id = ? AND active = 1 LIMIT 1",
+          [Number(service_id)]
+        );
+        if (svcRows.length > 0) {
+          resolvedPrice = Number(svcRows[0].price);
+          resolvedServiceName = svcRows[0].name;
+        }
+      }
+
+      if (resolvedPrice === null && service_name) {
+        const [svcRows] = await connection.query(
+          "SELECT id, name, price FROM services WHERE name = ? AND active = 1 LIMIT 1",
+          [service_name]
+        );
+        if (svcRows.length > 0) {
+          resolvedPrice = Number(svcRows[0].price);
+          resolvedServiceName = svcRows[0].name;
+          service_id = svcRows[0].id;
+        }
+      }
+
+      if (resolvedPrice === null) {
+        if (service_price !== undefined && Number.isFinite(Number(service_price)) && Number(service_price) > 0) {
+          resolvedPrice = Number(service_price);
+        } else {
+          await connection.rollback();
+          return res.status(400).json({ error: "Serviço inválido ou sem preço cadastrado." });
+        }
+      }
+
+      // Normaliza staff_name e staff_id
+      const cleanStaffName = String(staff_name).trim();
+      const numStaffId = staff_id ? Number(staff_id) : null;
+
+      // Verificar conflito de horário (double-booking) usando lock FOR UPDATE (X-08)
+      let conflictQuery = `
+        SELECT id FROM appointments
+         WHERE (staff_name = ? ${numStaffId ? "OR staff_id = ?" : ""})
+           AND appointment_date = ?
+           AND appointment_time = ?
+           AND status != 'cancelado'
+         LIMIT 1 FOR UPDATE
+      `;
+      const conflictParams = numStaffId
+        ? [cleanStaffName, numStaffId, appointment_date, appointment_time]
+        : [cleanStaffName, appointment_date, appointment_time];
+
+      const [existing] = await connection.query(conflictQuery, conflictParams);
 
       if (existing.length > 0) {
         await connection.rollback();
-        connection.release();
         return res.status(409).json({ error: "Este profissional já possui um agendamento neste horário." });
       }
 
@@ -133,17 +224,17 @@ function createAppointmentsRouter({ authenticate, getPool }) {
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           client_id || null,
-          client_name,
-          client_phone,
-          service_id || null,
-          service_name,
-          service_price,
-          staff_id || null,
-          staff_name,
+          String(client_name).trim().slice(0, 100),
+          String(client_phone).trim().slice(0, 20),
+          service_id ? Number(service_id) : null,
+          String(resolvedServiceName).trim().slice(0, 100),
+          resolvedPrice.toFixed(2),
+          numStaffId || null,
+          cleanStaffName.slice(0, 100),
           appointment_date,
           appointment_time,
-          status || 'pendente',
-          notes || ''
+          status || "pendente",
+          notes ? String(notes).trim().slice(0, 500) : ""
         ]
       );
 
@@ -154,36 +245,39 @@ function createAppointmentsRouter({ authenticate, getPool }) {
     } catch (err) {
       await connection.rollback();
       console.error("Erro ao criar agendamento:", err);
+      if (err.code === "ECONNREFUSED" || err.code === "ER_ACCESS_DENIED_ERROR") {
+        return res.status(503).json({ error: "O sistema está temporariamente indisponível. Tente em alguns instantes." });
+      }
       return res.status(500).json({ error: "Erro ao criar agendamento." });
     } finally {
       connection.release();
     }
   });
 
-  // Atualizar status do agendamento (se concluído, gera receita automática no financeiro via transação ACID)
-  router.put("/:id/status", authenticate(), async (req, res) => {
+  // Atualizar status do agendamento (Restrito a Staff e Admin)
+  router.put("/:id/status", authenticate(STAFF_ROLES), async (req, res) => {
     const pool = getPool();
     const connection = await pool.getConnection();
     try {
       await ensureTable(pool);
       await ensureTransactionsTable(pool);
 
-      const { id } = req.params;
-      const { status } = req.body;
+      const id = Number(req.params.id);
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({ error: "Identificador inválido." });
+      }
 
-      const validStatuses = ['confirmado', 'pendente', 'cancelado', 'concluido'];
+      const { status } = req.body ?? {};
+      const validStatuses = ["confirmado", "pendente", "cancelado", "concluido"];
       if (!validStatuses.includes(status)) {
-        connection.release();
         return res.status(400).json({ error: "Status inválido." });
       }
 
       await connection.beginTransaction();
 
-      // Buscar agendamento atual para verificar valores se for concluir
       const [current] = await connection.query("SELECT * FROM appointments WHERE id = ? FOR UPDATE", [id]);
       if (current.length === 0) {
         await connection.rollback();
-        connection.release();
         return res.status(404).json({ error: "Agendamento não encontrado." });
       }
 
@@ -191,16 +285,26 @@ function createAppointmentsRouter({ authenticate, getPool }) {
 
       await connection.query("UPDATE appointments SET status = ? WHERE id = ?", [status, id]);
 
-      // Se passou para concluído e antes não era, gera transação financeira de entrada
-      if (status === 'concluido' && appData.status !== 'concluido') {
+      // Integridade financeira (X-06):
+      // 1. Se passou para concluído e antes não era, gera transação financeira rastreada
+      if (status === "concluido" && appData.status !== "concluido") {
         await connection.query(
-          `INSERT INTO transactions (description, category, type, amount, payment_method, transaction_date)
-           VALUES (?, 'Serviços', 'entrada', ?, 'PIX', ?)`,
+          `INSERT INTO transactions (description, category, type, amount, payment_method, transaction_date, source_type, source_id)
+           VALUES (?, 'Serviços', 'entrada', ?, 'PIX', ?, 'appointment', ?)`,
           [
             `Atendimento: ${appData.service_name} (${appData.client_name}) - Prof: ${appData.staff_name}`,
             appData.service_price,
-            appData.appointment_date
+            appData.appointment_date,
+            id
           ]
+        );
+      }
+
+      // 2. Se mudou de concluído para outro status (reversão/cancelamento), desativa o lançamento financeiro
+      if (status !== "concluido" && appData.status === "concluido") {
+        await connection.query(
+          "UPDATE transactions SET active = 0 WHERE source_type = 'appointment' AND source_id = ? AND active = 1",
+          [id]
         );
       }
 
@@ -211,29 +315,55 @@ function createAppointmentsRouter({ authenticate, getPool }) {
     } catch (err) {
       await connection.rollback();
       console.error("Erro ao atualizar status:", err);
+      if (err.code === "ECONNREFUSED" || err.code === "ER_ACCESS_DENIED_ERROR") {
+        return res.status(503).json({ error: "O sistema está temporariamente indisponível. Tente em alguns instantes." });
+      }
       return res.status(500).json({ error: "Erro ao atualizar status do agendamento." });
     } finally {
       connection.release();
     }
   });
 
-  // Excluir agendamento
-  router.delete("/:id", authenticate(), async (req, res) => {
+  // Excluir agendamento (Restrito a Staff e Admin)
+  router.delete("/:id", authenticate(STAFF_ROLES), async (req, res) => {
+    const pool = getPool();
+    const connection = await pool.getConnection();
     try {
-      const pool = getPool();
       await ensureTable(pool);
+      await ensureTransactionsTable(pool);
 
-      const { id } = req.params;
-      const [result] = await pool.query("DELETE FROM appointments WHERE id = ?", [id]);
+      const id = Number(req.params.id);
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({ error: "Identificador inválido." });
+      }
+
+      await connection.beginTransaction();
+
+      const [result] = await connection.query("DELETE FROM appointments WHERE id = ?", [id]);
 
       if (result.affectedRows === 0) {
+        await connection.rollback();
         return res.status(404).json({ error: "Agendamento não encontrado." });
       }
 
+      // Estorna lançamento financeiro caso existisse (X-06)
+      await connection.query(
+        "UPDATE transactions SET active = 0 WHERE source_type = 'appointment' AND source_id = ? AND active = 1",
+        [id]
+      );
+
+      await connection.commit();
+
       return res.json({ message: "Agendamento excluído com sucesso." });
     } catch (err) {
+      await connection.rollback();
       console.error("Erro ao excluir agendamento:", err);
+      if (err.code === "ECONNREFUSED" || err.code === "ER_ACCESS_DENIED_ERROR") {
+        return res.status(503).json({ error: "O sistema está temporariamente indisponível. Tente em alguns instantes." });
+      }
       return res.status(500).json({ error: "Erro ao excluir agendamento." });
+    } finally {
+      connection.release();
     }
   });
 

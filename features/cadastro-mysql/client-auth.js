@@ -11,6 +11,7 @@
 // refresh e logout que os outros perfis já usam.
 
 const express = require("express");
+const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 // bcryptjs: transforma a senha em um "hash" (nunca guardamos a senha em texto
 // puro) e compara a senha digitada com o hash guardado no banco.
@@ -18,6 +19,10 @@ const { ensureStaffTable } = require("./staff-table");
 // Usada para conferir se o e-mail já pertence a alguém da equipe.
 const rateLimit = require("express-rate-limit");
 // express-rate-limit: limita quantas vezes alguém pode chamar a rota de cadastro.
+
+function hashToken(token) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
 
 const DUMMY_HASH = bcrypt.hashSync("senha-falsa-para-igualar-o-tempo", 10);
 // Um hash "de mentira", calculado uma vez quando o servidor liga. Serve para o
@@ -116,9 +121,8 @@ function createClientAuth({
         return res.status(201).json({ message: "Cadastro realizado com sucesso." });
       }
 
-      const passwordHash = await bcrypt.hash(password, 10);
-      // Gera o hash da senha. O 10 é o "custo": quanto maior, mais lento e mais
-      // seguro. Só o hash vai para o banco.
+      const passwordHash = await bcrypt.hash(password, 12);
+      // Gera o hash da senha com custo 12 (OWASP recommendation). Só o hash vai para o banco.
 
       await getPool().query(
         "INSERT INTO clients (name, email, phone, password_hash) VALUES (?, ?, ?, ?)",
@@ -179,7 +183,7 @@ function createClientAuth({
       const refreshToken = createRefreshToken(userId, "client", client.email);
 
       activeSessions.set(userId, {
-        refreshToken,
+        refreshTokenHash: hashToken(refreshToken),
         createdAt: Date.now(),
         lastUsed: Date.now(),
         identity: client.email,

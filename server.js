@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const { ipKeyGenerator } = require("express-rate-limit");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
@@ -12,37 +13,56 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, "public");
 const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || JWT_SECRET + "_refresh";
+let JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const JWT_ISSUER = "barber-select-api";
 const JWT_AUDIENCE = "barber-select-app";
 
-if (!JWT_SECRET || JWT_SECRET.length < 32) {
-  throw new Error("JWT_SECRET ausente ou fraco no arquivo .env.");
+const PLACEHOLDERS = new Set([
+  "Insira uma chave de alta aleatoriedade aqui",
+  "CHANGE_ME_GENERATE_WITH_openssl_rand_base64_48",
+]);
+
+if (!JWT_SECRET || JWT_SECRET.length < 32 || PLACEHOLDERS.has(JWT_SECRET)) {
+  throw new Error("JWT_SECRET ausente, fraco (< 32 chars) ou com valor de exemplo no arquivo .env.");
+}
+
+// Se JWT_REFRESH_SECRET estiver ausente ou for igual ao access secret, deriva chave HMAC distinta de 64 caracteres
+if (!JWT_REFRESH_SECRET || JWT_REFRESH_SECRET === JWT_SECRET || PLACEHOLDERS.has(JWT_REFRESH_SECRET)) {
+  JWT_REFRESH_SECRET = crypto.createHmac("sha256", JWT_SECRET).update("barber_select_refresh_key_derivation").digest("hex");
 }
 
 app.set("trust proxy", 1);
 
-// Armazenamento em memória para sessões ativas e tokens bloqueados
-const activeSessions = new Map(); // userId -> { refreshToken, createdAt, lastUsed }
-const tokenBlacklist = new Set(); // tokens invalidados
-const failedLogins = new Map(); // identity -> { count, lockedUntil }
+// Armazenamento em memória para sessões ativas e tokens bloqueados (com jti e hash)
+const activeSessions = new Map(); // userId -> { refreshTokenHash, createdAt, lastUsed, identity, role }
+const tokenBlacklist = new Map(); // jti -> expMs (X-04)
+const failedLogins = new Map(); // lockoutKey -> { count, lockedUntil }
 
 const LOCKOUT_MAX_ATTEMPTS = 5;
 const LOCKOUT_TIME_MS = 15 * 60 * 1000; // 15 minutos
 
-function checkLockout(identity) {
-  const record = failedLogins.get(identity);
+function lockoutKey(req) {
+  const body = req.body ?? {};
+  const identity = typeof body.identity === "string" ? body.identity.trim().toLowerCase() : "anonymous";
+  const ip = req.ip || req.socket.remoteAddress || "unknown";
+  return `${ip}::${identity}`;
+}
+
+function checkLockout(req) {
+  const key = lockoutKey(req);
+  const record = failedLogins.get(key);
   if (!record) return false;
   if (Date.now() > record.lockedUntil) {
-    failedLogins.delete(identity);
+    failedLogins.delete(key);
     return false;
   }
   return record.count >= LOCKOUT_MAX_ATTEMPTS;
 }
 
-function recordFailedAttempt(identity) {
+function recordFailedAttempt(req) {
+  const key = lockoutKey(req);
   const now = Date.now();
-  let record = failedLogins.get(identity);
+  let record = failedLogins.get(key);
   if (!record || now > record.lockedUntil) {
     record = { count: 1, lockedUntil: now + LOCKOUT_TIME_MS };
   } else {
@@ -51,261 +71,50 @@ function recordFailedAttempt(identity) {
       record.lockedUntil = now + LOCKOUT_TIME_MS;
     }
   }
-  failedLogins.set(identity, record);
+  failedLogins.set(key, record);
 }
 
-function clearFailedAttempts(identity) {
-  failedLogins.delete(identity);
+function clearFailedAttempts(req) {
+  const key = lockoutKey(req);
+  failedLogins.delete(key);
 }
 
 app.disable("x-powered-by");
-
 app.use(helmet());
-
 app.use(express.json({ limit: "100kb" }));
-app.use(express.urlencoded({ extended: true, limit: "100kb" }));
+app.use(express.urlencoded({ extended: false, limit: "100kb" }));
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10, // Reduzido para 10 tentativas por IP
+  max: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  message: {
-    error: "Muitas tentativas. Tente novamente em 15 minutos.",
-  },
+  keyGenerator: (req) => ipKeyGenerator(req),
+  message: { error: "Muitas tentativas. Tente novamente em 15 minutos." },
 });
 
-app.use(express.static(PUBLIC_DIR));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(PUBLIC_DIR, "index.html"));
+const refreshLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => ipKeyGenerator(req),
 });
 
-app.get("/api/health", (req, res) => {
-  res.json({
-    ok: true,
-    message: "Servidor Barber-Select funcionando.",
-  });
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => ipKeyGenerator(req),
 });
 
-function validateLoginInput(req, res, next) {
-  const { identity, password } = req.body;
+app.use("/api/", apiLimiter);
 
-  if (
-    typeof identity !== "string" ||
-    typeof password !== "string" ||
-    identity.length < 1 ||
-    identity.length > 100 ||
-    password.length < 1 ||
-    password.length > 200
-  ) {
-    return res.status(400).json({
-      error: "Dados de login inválidos.",
-    });
-  }
-
-  next();
-}
-
-// Gera um ID único de usuário baseado em role + identity
-function generateUserId(role, identity) {
-  return crypto
-    .createHash("sha256")
-    .update(`${role}:${identity}`)
-    .digest("hex")
-    .substring(0, 16);
-}
-
-// Cria access token (curta duração)
-function createAccessToken(userId, role, identity) {
-  return jwt.sign(
-    {
-      userId,
-      role,
-      identity,
-      type: "access"
-    },
-    JWT_SECRET,
-    {
-      expiresIn: "15m", // 15 minutos
-      issuer: JWT_ISSUER,
-      audience: JWT_AUDIENCE,
-    }
-  );
-}
-
-// Cria refresh token (longa duração)
-function createRefreshToken(userId, role, identity) {
-  return jwt.sign(
-    {
-      userId,
-      role,
-      identity,
-      type: "refresh",
-      jti: crypto.randomBytes(16).toString("hex") // ID único do token
-    },
-    JWT_REFRESH_SECRET,
-    {
-      expiresIn: "7d", // 7 dias
-      issuer: JWT_ISSUER,
-      audience: JWT_AUDIENCE,
-    }
-  );
-}
-
-// Limpa sessões expiradas (executar periodicamente)
-function cleanupExpiredSessions() {
-  const now = Date.now();
-  const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
-
-  for (const [userId, session] of activeSessions.entries()) {
-    if (now - session.lastUsed > SEVEN_DAYS) {
-      activeSessions.delete(userId);
-    }
-  }
-}
-
-// Limpa tokens da blacklist expirados
-function cleanupBlacklist() {
-  // Tokens JWT expiram naturalmente, então podemos limpar a blacklist periodicamente
-  // Para simplificar, vamos limpar tudo após 15 minutos (tempo de expiração do access token)
-  if (tokenBlacklist.size > 1000) {
-    tokenBlacklist.clear();
-  }
-}
-
-// Executar limpeza a cada hora
-setInterval(() => {
-  cleanupExpiredSessions();
-  cleanupBlacklist();
-}, 60 * 60 * 1000);
-
-function authenticate(requiredRoles = []) {
-  return (req, res, next) => {
-    const authorization = req.headers.authorization || "";
-    const [scheme, token] = authorization.split(" ");
-
-    if (scheme !== "Bearer" || !token) {
-      return res.status(401).json({
-        error: "Autenticação obrigatória.",
-      });
-    }
-
-    // Verifica se o token está na blacklist (logout)
-    if (tokenBlacklist.has(token)) {
-      return res.status(401).json({
-        error: "Sessão encerrada. Faça login novamente.",
-      });
-    }
-
-    try {
-      const decoded = jwt.verify(token, JWT_SECRET, {
-        issuer: JWT_ISSUER,
-        audience: JWT_AUDIENCE,
-      });
-
-      // Garante que é um access token
-      if (decoded.type !== "access") {
-        return res.status(401).json({
-          error: "Tipo de token inválido.",
-        });
-      }
-
-      // Verifica se a sessão do usuário ainda é válida
-      const userSession = activeSessions.get(decoded.userId);
-      if (!userSession) {
-        return res.status(401).json({
-          error: "Sessão não encontrada ou expirada.",
-        });
-      }
-
-      // Atualiza o timestamp de último uso
-      userSession.lastUsed = Date.now();
-
-      // Verifica permissões de role
-      if (requiredRoles.length > 0 && !requiredRoles.includes(decoded.role)) {
-        return res.status(403).json({
-          error: "Você não tem permissão para esta ação.",
-        });
-      }
-
-      req.user = decoded;
-      req.token = token;
-      next();
-    } catch (error) {
-      if (error.name === "TokenExpiredError") {
-        return res.status(401).json({
-          error: "Token expirado.",
-          code: "TOKEN_EXPIRED"
-        });
-      }
-      return res.status(401).json({
-        error: "Sessão inválida ou expirada.",
-      });
-    }
-  };
-}
-
-function checkLockoutMiddleware(req, res, next) {
-  const { identity } = req.body;
-  if (identity && checkLockout(identity)) {
-    return res.status(429).json({
-      error: "Conta temporariamente bloqueada por excesso de tentativas incorretas. Tente novamente em 15 minutos.",
-    });
-  }
-  next();
-}
-
-function handleLogin(role, loginEnv, passwordEnv) {
-  return (req, res) => {
-    const { identity, password } = req.body;
-
-    const expectedLogin = process.env[loginEnv];
-    const expectedPassword = process.env[passwordEnv];
-
-    if (!expectedLogin || !expectedPassword) {
-      console.error(`Credenciais ausentes para o papel: ${role}`);
-      return res.status(500).json({
-        error: "Erro de configuração do servidor.",
-      });
-    }
-
-    if (identity !== expectedLogin || password !== expectedPassword) {
-      recordFailedAttempt(identity);
-      console.warn(`Falha de login para o papel: ${role}`);
-      return res.status(401).json({
-        error: "Usuário ou senha incorretos.",
-      });
-    }
-
-    clearFailedAttempts(identity);
-
-    const userId = generateUserId(role, identity);
-    const accessToken = createAccessToken(userId, role, identity);
-    const refreshToken = createRefreshToken(userId, role, identity);
-
-    // Registra a sessão ativa
-    activeSessions.set(userId, {
-      refreshToken,
-      createdAt: Date.now(),
-      lastUsed: Date.now(),
-      identity,
-      role
-    });
-
-    return res.json({
-      accessToken,
-      refreshToken,
-      role,
-      userId,
-      identity,
-      expiresIn: 15 * 60, // 15 minutos em segundos
-    });
-  };
-}
-
-// Cadastro e login de clientes no MySQL (features/cadastro-mysql).
+// Rotas de API
 const { getPool } = require("./features/cadastro-mysql/db");
+
+// Cadastro e login de clientes
 const createClientAuth = require("./features/cadastro-mysql/client-auth");
 const { registerRouter, clientLogin } = createClientAuth({
   getPool,
@@ -316,7 +125,7 @@ const { registerRouter, clientLogin } = createClientAuth({
 });
 app.use("/api/register", registerRouter);
 
-// Login e contas da equipe (colaborador e dono) no MySQL.
+// Login e contas da equipe
 const createStaffAuth = require("./features/cadastro-mysql/staff-auth");
 const { staffRouter, staffLogin } = createStaffAuth({
   getPool,
@@ -328,56 +137,140 @@ const { staffRouter, staffLogin } = createStaffAuth({
 });
 app.use("/api/staff-users", staffRouter);
 
-// Lista de clientes para a tela /staff/clients.html (features/clientes-mysql).
-const createClientsRouter = require("./features/clientes-mysql/clients-routes");
-app.use("/api/clients", createClientsRouter({ authenticate, getPool }));
+app.use("/api/clients", require("./features/clientes-mysql/clients-routes")({ authenticate, getPool }));
+app.use("/api/services", require("./features/servicos-mysql/services-routes")({ authenticate, getPool }));
+app.use("/api/appointments", require("./features/agenda-mysql/appointments-routes")({ authenticate, getPool }));
+app.use("/api/products", require("./features/produtos-mysql/products-routes")({ authenticate, getPool }));
+app.use("/api/finance", require("./features/financeiro-mysql/finance-routes")({ authenticate, getPool }));
+app.use("/api/sales", require("./features/vendas-mysql/sales-routes")({ authenticate, getPool }));
 
-// Catálogo de serviços. Agendamentos futuros devem guardar snapshots do preço e da duração.
-const createServicesRouter = require("./features/servicos-mysql/services-routes");
-app.use("/api/services", createServicesRouter({ authenticate, getPool }));
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true, message: "Servidor Barber-Select funcionando." });
+});
 
-// Módulo de agendamentos (agenda-mysql).
-const createAppointmentsRouter = require("./features/agenda-mysql/appointments-routes");
-app.use("/api/appointments", createAppointmentsRouter({ authenticate, getPool }));
+function validateLoginInput(req, res, next) {
+  const body = req.body ?? {};
+  const { identity, password } = body;
 
-// Módulo de produtos (produtos-mysql).
-const createProductsRouter = require("./features/produtos-mysql/products-routes");
-app.use("/api/products", createProductsRouter({ authenticate, getPool }));
+  if (
+    typeof identity !== "string" ||
+    typeof password !== "string" ||
+    identity.length < 1 ||
+    identity.length > 100 ||
+    password.length < 1 ||
+    password.length > 200
+  ) {
+    return res.status(400).json({ error: "Dados de login inválidos." });
+  }
 
-// Módulo financeiro (financeiro-mysql).
-const createFinanceRouter = require("./features/financeiro-mysql/finance-routes");
-app.use("/api/finance", createFinanceRouter({ authenticate, getPool }));
+  next();
+}
 
-// Módulo de vendas (vendas-mysql).
-const createSalesRouter = require("./features/vendas-mysql/sales-routes");
-app.use("/api/sales", createSalesRouter({ authenticate, getPool }));
+function generateUserId(role, identity) {
+  return crypto.createHash("sha256").update(`${role}:${identity}`).digest("hex").substring(0, 16);
+}
 
-app.post(
-  "/auth/login/cliente",
-  loginLimiter,
-  checkLockoutMiddleware,
-  validateLoginInput,
-  handleLogin("client", "CLIENT_LOGIN", "CLIENT_PASSWORD"),
-);
+function createAccessToken(userId, role, identity) {
+  // jsonwebtoken@9 não aceita "algorithms" em sign() (só em verify()); o algoritmo
+  // é sempre HS256 quando a chave é string, então ele fica implícito aqui.
+  return jwt.sign(
+    { userId, role, identity, type: "access", jti: crypto.randomBytes(16).toString("hex") },
+    JWT_SECRET,
+    { expiresIn: "15m", issuer: JWT_ISSUER, audience: JWT_AUDIENCE }
+  );
+}
 
-app.post(
-  "/auth/login/colaborador",
-  loginLimiter,
-  checkLockoutMiddleware,
-  validateLoginInput,
-  handleLogin("staff", "STAFF_LOGIN", "STAFF_PASSWORD"),
-);
+function createRefreshToken(userId, role, identity) {
+  return jwt.sign(
+    { userId, role, identity, type: "refresh", jti: crypto.randomBytes(16).toString("hex") },
+    JWT_REFRESH_SECRET,
+    { expiresIn: "7d", issuer: JWT_ISSUER, audience: JWT_AUDIENCE }
+  );
+}
 
-app.post(
-  "/auth/login/admin",
-  loginLimiter,
-  checkLockoutMiddleware,
-  validateLoginInput,
-  handleLogin("admin", "ADMIN_LOGIN", "ADMIN_PASSWORD"),
-);
+function hashToken(token) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
 
-// Endpoint de login unificado que tenta todos os perfis internamente
-// Evita consumir rate limit fazendo múltiplas requisições do cliente
+function cleanupBlacklist() {
+  const now = Date.now();
+  for (const [jti, expMs] of tokenBlacklist) {
+    if (expMs <= now) tokenBlacklist.delete(jti);
+  }
+}
+
+function cleanupExpiredSessions() {
+  const now = Date.now();
+  const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+  for (const [userId, session] of activeSessions.entries()) {
+    if (now - session.lastUsed > SEVEN_DAYS) {
+      activeSessions.delete(userId);
+    }
+  }
+}
+
+setInterval(() => {
+  cleanupExpiredSessions();
+  cleanupBlacklist();
+}, 60 * 60 * 1000);
+
+function authenticate(requiredRoles = []) {
+  return (req, res, next) => {
+    const authorization = req.headers.authorization || "";
+    const [scheme, token] = authorization.split(" ");
+
+    if (scheme !== "Bearer" || !token) {
+      return res.status(401).json({ error: "Autenticação obrigatória." });
+    }
+
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET, {
+        issuer: JWT_ISSUER,
+        audience: JWT_AUDIENCE,
+        algorithms: ["HS256"],
+      });
+
+      if (decoded.type !== "access") {
+        return res.status(401).json({ error: "Tipo de token inválido." });
+      }
+
+      if (decoded.jti && tokenBlacklist.has(decoded.jti)) {
+        return res.status(401).json({ error: "Sessão encerrada. Faça login novamente." });
+      }
+
+      const userSession = activeSessions.get(decoded.userId);
+      if (!userSession) {
+        return res.status(401).json({ error: "Sessão não encontrada ou expirada." });
+      }
+
+      userSession.lastUsed = Date.now();
+
+      if (requiredRoles.length > 0 && !requiredRoles.includes(decoded.role)) {
+        return res.status(403).json({ error: "Você não tem permissão para esta ação." });
+      }
+
+      req.user = decoded;
+      req.token = token;
+      next();
+    } catch (error) {
+      if (error.name === "TokenExpiredError") {
+        return res.status(401).json({ error: "Token expirado.", code: "TOKEN_EXPIRED" });
+      }
+      return res.status(401).json({ error: "Sessão inválida ou expirada." });
+    }
+  };
+}
+
+function checkLockoutMiddleware(req, res, next) {
+  if (checkLockout(req)) {
+    return res.status(429).json({
+      error: "Conta temporariamente bloqueada por excesso de tentativas incorretas. Tente novamente em 15 minutos.",
+    });
+  }
+  next();
+}
+
+// Endpoint de login unificado (apenas MySQL)
 app.post(
   "/auth/login/unified",
   loginLimiter,
@@ -386,142 +279,69 @@ app.post(
   clientLogin,
   staffLogin,
   (req, res) => {
-    const { identity, password } = req.body;
-
-    // Define ordem de tentativa: client -> staff -> admin
-    const profiles = [
-      { role: "client", loginEnv: "CLIENT_LOGIN", passwordEnv: "CLIENT_PASSWORD" },
-      { role: "staff", loginEnv: "STAFF_LOGIN", passwordEnv: "STAFF_PASSWORD" },
-      { role: "admin", loginEnv: "ADMIN_LOGIN", passwordEnv: "ADMIN_PASSWORD" },
-    ];
-
-    // Tenta autenticar em cada perfil
-    for (const profile of profiles) {
-      const expectedLogin = process.env[profile.loginEnv];
-      const expectedPassword = process.env[profile.passwordEnv];
-
-      if (!expectedLogin || !expectedPassword) {
-        continue; // Pula se credenciais não configuradas
-      }
-
-      // Se as credenciais batem, autentica
-      if (identity === expectedLogin && password === expectedPassword) {
-        clearFailedAttempts(identity);
-        const userId = generateUserId(profile.role, identity);
-        const accessToken = createAccessToken(userId, profile.role, identity);
-        const refreshToken = createRefreshToken(userId, profile.role, identity);
-
-        // Registra a sessão ativa
-        activeSessions.set(userId, {
-          refreshToken,
-          createdAt: Date.now(),
-          lastUsed: Date.now(),
-          identity,
-          role: profile.role,
-        });
-
-        return res.json({
-          accessToken,
-          refreshToken,
-          role: profile.role,
-          userId,
-          identity,
-          expiresIn: 15 * 60,
-        });
-      }
-    }
-
-    // Se nenhum perfil autenticou
-    recordFailedAttempt(identity);
-    console.warn(`Falha de login unificado para: ${identity}`);
-    return res.status(401).json({
-      error: "Usuário ou senha incorretos.",
-    });
+    recordFailedAttempt(req);
+    return res.status(401).json({ error: "E-mail ou senha incorretos." });
   }
 );
 
-// Endpoint para refresh token (com Token Rotation)
-app.post("/auth/refresh", (req, res) => {
-  const { refreshToken } = req.body;
+// Refresh token com token rotation e hash de refresh token
+app.post("/auth/refresh", refreshLimiter, (req, res) => {
+  const body = req.body ?? {};
+  const { refreshToken } = body;
 
-  if (!refreshToken) {
-    return res.status(400).json({
-      error: "Refresh token obrigatório.",
-    });
+  if (!refreshToken || typeof refreshToken !== "string") {
+    return res.status(400).json({ error: "Refresh token obrigatório." });
   }
 
   try {
     const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET, {
       issuer: JWT_ISSUER,
       audience: JWT_AUDIENCE,
+      algorithms: ["HS256"],
     });
 
-    // Garante que é um refresh token
     if (decoded.type !== "refresh") {
-      return res.status(401).json({
-        error: "Tipo de token inválido.",
-      });
+      return res.status(401).json({ error: "Tipo de token inválido." });
     }
 
-    // Verifica se a sessão existe e se o refresh token corresponde
     const userSession = activeSessions.get(decoded.userId);
-    if (!userSession || userSession.refreshToken !== refreshToken) {
-      return res.status(401).json({
-        error: "Sessão inválida ou refresh token não corresponde.",
-      });
+    if (!userSession || userSession.refreshTokenHash !== hashToken(refreshToken)) {
+      return res.status(401).json({ error: "Sessão inválida ou refresh token não corresponde." });
     }
 
-    // Gera novo access token e novo refresh token (Token Rotation)
-    const newAccessToken = createAccessToken(
-      decoded.userId,
-      decoded.role,
-      decoded.identity
-    );
-    const newRefreshToken = createRefreshToken(
-      decoded.userId,
-      decoded.role,
-      decoded.identity
-    );
+    const newAccessToken = createAccessToken(decoded.userId, decoded.role, decoded.identity);
+    const newRefreshToken = createRefreshToken(decoded.userId, decoded.role, decoded.identity);
 
-    // Atualiza o refresh token na sessão ativa (invalida o anterior)
-    userSession.refreshToken = newRefreshToken;
+    userSession.refreshTokenHash = hashToken(newRefreshToken);
     userSession.lastUsed = Date.now();
 
     return res.json({
       accessToken: newAccessToken,
       refreshToken: newRefreshToken,
-      expiresIn: 15 * 60, // 15 minutos em segundos
+      expiresIn: 900,
     });
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      return res.status(401).json({
-        error: "Refresh token expirado. Faça login novamente.",
-        code: "REFRESH_EXPIRED"
-      });
+      return res.status(401).json({ error: "Refresh token expirado. Faça login novamente.", code: "REFRESH_EXPIRED" });
     }
-    return res.status(401).json({
-      error: "Refresh token inválido.",
-    });
+    return res.status(401).json({ error: "Refresh token inválido." });
   }
 });
 
-// Endpoint para logout
+// Logout unificado
 app.post("/auth/logout", authenticate(), (req, res) => {
-  const { userId } = req.user;
+  const { userId, jti, exp } = req.user;
   const token = req.token;
 
-  // Remove a sessão ativa
   activeSessions.delete(userId);
+  if (jti && exp) {
+    tokenBlacklist.set(jti, exp * 1000);
+  }
+  tokenBlacklist.set(token, Date.now() + 15 * 60 * 1000);
 
-  // Adiciona o token à blacklist
-  tokenBlacklist.add(token);
-
-  return res.json({
-    message: "Logout realizado com sucesso.",
-  });
+  return res.json({ message: "Logout realizado com sucesso." });
 });
 
-// Endpoint para verificar sessão atual
 app.get("/auth/session", authenticate(), (req, res) => {
   const { userId, role, identity } = req.user;
   const userSession = activeSessions.get(userId);
@@ -535,50 +355,29 @@ app.get("/auth/session", authenticate(), (req, res) => {
   });
 });
 
-// Endpoint para validar acesso a uma página específica
-app.post("/auth/validate-access", authenticate(), (req, res) => {
-  const { requiredRoles } = req.body;
-  const { role } = req.user;
+// Arquivos estáticos servidos no final (P3-09) e com dotfiles negados
+app.use(express.static(PUBLIC_DIR, { dotfiles: "deny", index: "index.html" }));
 
-  if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
-    return res.status(400).json({
-      error: "requiredRoles deve ser um array não vazio.",
-    });
-  }
-
-  // Verifica se o role do usuário está autorizado
-  const hasAccess = requiredRoles.includes(role);
-
-  if (!hasAccess) {
-    return res.status(403).json({
-      error: "Você não tem permissão para acessar esta página.",
-      userRole: role,
-      requiredRoles,
-    });
-  }
-
-  return res.json({
-    hasAccess: true,
-    userRole: role,
-  });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, "index.html"));
 });
 
-// Exemplo: use isto em endpoints administrativos reais.
-app.get("/api/admin/exemplo-protegido", authenticate(["admin"]), (req, res) => {
-  res.json({
-    message: "Acesso administrativo autorizado.",
-    user: req.user,
-  });
-});
-
+// Middleware global de tratamento de erros (X-12)
 app.use((err, req, res, next) => {
   console.error("Erro interno:", err);
+  if (res.headersSent) return next(err);
+  const status = Number.isInteger(err.status) && err.status >= 400 && err.status < 600 ? err.status : 500;
+  const isDbDown = err.code === "ECONNREFUSED" || err.code === "ER_ACCESS_DENIED_ERROR";
+  if (isDbDown) {
+    return res.status(503).json({ error: "O sistema está temporariamente indisponível. Tente em alguns instantes." });
+  }
+  res.status(status).json({ error: status === 500 ? "Erro interno do servidor." : err.message });
+});
 
-  res.status(500).json({
-    error: "Erro interno do servidor.",
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Servidor executando em http://localhost:${PORT}`);
   });
-});
+}
 
-app.listen(PORT, () => {
-  console.log(`Servidor executando em http://localhost:${PORT}`);
-});
+module.exports = app;
