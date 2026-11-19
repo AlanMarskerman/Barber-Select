@@ -93,6 +93,7 @@ Clientes adicionais são criados em `/pages/cadastro.html`. O login unificado co
 
 ![Landing page](docs/screenshots/landing.png)
 ![Login](docs/screenshots/login.png)
+![Login por perfil](docs/screenshots/auth.png)
 ![Cadastro de cliente](docs/screenshots/cadastro.png)
 
 ### Painel da equipe
@@ -107,6 +108,8 @@ Clientes adicionais são criados em `/pages/cadastro.html`. O login unificado co
 ![Financeiro](docs/screenshots/financeiro.png)
 ![Novo cliente](docs/screenshots/novocliente.png)
 ![Novo agendamento](docs/screenshots/novagendamento.png)
+![Agenda legada padronizada](docs/screenshots/appointments.png)
+![Configurações](docs/screenshots/settings.png)
 
 ### Portal do cliente
 

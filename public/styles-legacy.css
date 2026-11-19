@@ -399,6 +399,40 @@ a {
   }
 }
 
+.menu-button.hamb {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font-size: 24px;
+  padding: 8px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .menu-button.hamb {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(280px, 86vw);
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  .app.mobile-menu-open .sidebar {
+    transform: translateX(0);
+  }
+}
+
 @media (max-width: 720px) {
   .landing {
     grid-template-columns: 1fr;
