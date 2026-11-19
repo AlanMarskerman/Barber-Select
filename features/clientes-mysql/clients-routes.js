@@ -134,6 +134,68 @@ function createClientsRouter({ authenticate, getPool }) {
     }
   });
 
+  // POST /api/clients (Staff/Admin) — cadastro feito pelo painel "Novo cliente".
+  // O cliente recebe uma senha aleatória: o acesso ao portal continua pelo
+  // cadastro público. Este endpoint apenas registra os dados operacionais.
+  router.post("/", authenticate(STAFF_ROLES), async (req, res) => {
+    try {
+      await ensureClientColumns();
+      const pool = getPool();
+      const { name, phone, email, birthdate, notes } = req.body || {};
+
+      if (typeof name !== "string" || name.trim().length < 3 || name.trim().length > 100) {
+        return res.status(400).json({ error: "Informe o nome completo (3 a 100 caracteres)." });
+      }
+      if (typeof phone !== "string" || phone.replace(/\D/g, "").length < 10) {
+        return res.status(400).json({ error: "Informe um telefone com DDD." });
+      }
+
+      let cleanEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+      if (cleanEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+        return res.status(400).json({ error: "E-mail inválido." });
+      }
+      if (!cleanEmail) {
+        cleanEmail = `cliente-${Date.now()}-${crypto.randomBytes(3).toString("hex")}@barberselect.local`;
+      }
+
+      const [existing] = await pool.query("SELECT id FROM clients WHERE email = ? LIMIT 1", [cleanEmail]);
+      if (existing.length > 0) {
+        return res.status(409).json({ error: "Já existe um cliente com este e-mail." });
+      }
+
+      const passwordHash = await bcrypt.hash(crypto.randomBytes(24).toString("hex"), 10);
+      const cleanBirthdate = typeof birthdate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(birthdate) ? birthdate : null;
+      const cleanNotes = typeof notes === "string" ? notes.trim().slice(0, 300) : "";
+
+      const [result] = await pool.query(
+        "INSERT INTO clients (name, email, phone, password_hash, birthdate, skin_notes) VALUES (?, ?, ?, ?, ?, ?)",
+        [name.trim(), cleanEmail, phone.trim(), passwordHash, cleanBirthdate, cleanNotes],
+      );
+
+      await audit(pool, {
+        actor: req.user,
+        action: "create",
+        resourceType: "client",
+        resourceId: result.insertId,
+        legalBasis: "execucao_contrato",
+        request: req,
+      });
+
+      const [rows] = await pool.query(
+        "SELECT id, name, email, phone, birthdate, cpf, fav_barber, hair_style, beard_style, skin_notes, loyalty_points, active, created_at FROM clients WHERE id = ?",
+        [result.insertId],
+      );
+
+      return res.status(201).json({ client: toApi(rows[0], true) });
+    } catch (error) {
+      if (error.code === "ER_DUP_ENTRY") {
+        return res.status(409).json({ error: "Já existe um cliente com este e-mail." });
+      }
+      console.error("Erro ao criar cliente:", error);
+      return res.status(500).json({ error: "Erro interno ao criar cliente." });
+    }
+  });
+
   // GET /api/clients/me (Cliente logado busca seus próprios dados)
   router.get("/me", authenticate(["client"]), async (req, res) => {
     try {
