@@ -389,6 +389,26 @@
         grid-template-columns: 1fr;
       }
     }
+
+    @media (max-width: 760px) {
+      .dash-grid,
+      .dash-grid .panel {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .linechart {
+        overflow: hidden;
+      }
+      .dashboard-chart {
+        min-width: 0;
+        width: 100%;
+        height: auto;
+      }
+      .quick-grid,
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>

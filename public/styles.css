@@ -8,14 +8,23 @@
 
 :root {
   --sidebar-width: clamp(230px, 17vw, 286px);
-  --green: #064b2b;
-  --green-hover: #0f6b3f;
-  --green-soft: #e9f3ec;
-  --line: #e7e0d7;
-  --background: #fbf8f3;
-  --text: #111111;
-  --muted: #69727e;
-  --yellow: #c68a13;
+
+  /* Tokens alinhados aos da landing e das páginas de autenticação. */
+  --green: #173f36;
+  --green-hover: #1e5247;
+  --green-soft: #e6f0ed;
+  --line: #e0d8cc;
+  --background: #f7f3ec;
+  --text: #0e1513;
+  --muted: #6b665c;
+  --yellow: #c78e36;
+
+  /* Apelidos usados pelos outros arquivos de estilo. */
+  --ink: #0e1513;
+  --paper: #f7f3ec;
+  --panel: #fffdf8;
+  --gold: #c78e36;
+  --font: "DM Sans", system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -25,7 +34,7 @@ html {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: Inter, Arial, sans-serif;
+  font-family: var(--font);
   background: var(--background);
   color: var(--text);
 }
@@ -408,7 +417,7 @@ button {
 .dashboard-chart .chart-y-labels text,
 .dashboard-chart .chart-x-labels text {
   fill: #565656;
-  font-family: Inter, Arial, sans-serif;
+  font-family: var(--font);
   font-size: 12px;
 }
 
@@ -2216,5 +2225,66 @@ box-sizing: border-box;
 
   .panel-header {
     flex-wrap: wrap;
+  }
+}
+
+/* Correções de layout em telas pequenas, aplicadas no fim da cascata. */
+.caixa-horarios div {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .caixa-agendamentos {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-dados {
+    min-width: 0;
+    min-height: auto;
+  }
+
+  .titulo-caixa {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .caixa-detalhes > div,
+  .campo > div {
+    min-width: 0;
+  }
+
+  .resumo {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .resumo > div {
+    flex: 1 1 42%;
+    min-width: 0;
+    height: auto;
+    padding: 8px 0;
+    border-right: none;
+  }
+
+  .btn-agendamentos {
+    flex-direction: column;
+  }
+
+  .content table {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .appointments-table {
+    min-width: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .appointments-table td,
+  .appointments-table th {
+    overflow-wrap: anywhere;
   }
 }

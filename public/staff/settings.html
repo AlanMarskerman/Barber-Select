@@ -6,13 +6,34 @@
     <link rel="stylesheet" href="../styles-legacy.css" />
     <link rel="stylesheet" href="../styles-logout.css" />
     <title>Barber-Select | Configurações</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+      <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   </head>
   <body>
     <div class="app">
       <div class="shell">
-        <aside class="sidebar" id="sidebar"></aside>
+              <aside class="sidebar">
+        <div class="brand"><img src="../assets/LOGO.png" alt="Barber Select" /></div>
+        <div class="sidebar-nav">
+        <a class="nav-item" href="dashboard.html"><i class="bx bx-grid-alt"></i><span>Dashboard</span></a>
+        <a class="nav-item" href="agenda.html"><i class="bx bx-calendar"></i><span>Agenda</span></a>
+        <a class="nav-item" href="clients.html"><i class="bx bx-user"></i><span>Clientes</span></a>
+        <a class="nav-item" href="barbeiros.html"><i class="bx bx-user-plus"></i><span>Barbeiros</span></a>
+        <a class="nav-item" href="services.html"><i class="bx bx-cut"></i><span>Serviços</span></a>
+        <a class="nav-item" href="produtos.html"><i class="bx bx-package"></i><span>Produtos</span></a>
+        <a class="nav-item" href="venda.html"><i class="bx bx-cart"></i><span>Vendas</span></a>
+        <a class="nav-item" href="finance.html"><i class="bx bx-wallet"></i><span>Financeiro</span></a>
+        <a class="nav-item" href="relatorios.html"><i class="bx bx-bar-chart-alt-2"></i><span>Relatórios</span></a>
+        <a class="nav-item" href="avaliacoes.html"><i class="bx bx-star"></i><span>Avaliações</span></a>
+        <a class="nav-item active" href="configuracoes.html"><i class="bx bx-cog"></i><span>Configurações</span></a>
+        <button class="nav-item logout" type="button" id="logout-btn"><i class="bx bx-log-out"></i><span>Sair</span></button>
+        </div>
+      </aside>
         <div class="main">
           <header class="topbar">
+            <button class="menu-button hamb" type="button" aria-label="Abrir menu"><i class="bx bx-menu"></i></button>
             <h1 id="topbar-title">Configurações</h1>
             <div class="muted" id="topbar-role"></div>
           </header>

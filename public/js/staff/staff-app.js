@@ -156,7 +156,9 @@
       const app = document.querySelector('.app');
 
       if (hamburgerButton) {
-        hamburgerButton.addEventListener('click', () => {
+        hamburgerButton.addEventListener('click', (event) => {
+          // Evita que o clique chegue ao .main e feche o menu logo em seguida.
+          event.stopPropagation();
           // Toggle para desktop (esconde sidebar)
           if (window.innerWidth > 760) {
             app.classList.toggle('sidebar-collapsed');

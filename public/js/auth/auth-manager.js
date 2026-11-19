@@ -83,7 +83,9 @@
     const config = PROFILE_MAP[profile];
 
     try {
-      const response = await fetch(config.endpoint, {
+      // O servidor expõe apenas /auth/login/unified. As páginas por perfil
+      // usam o mesmo endpoint e conferem se o perfil retornado é o esperado.
+      const response = await fetch("/auth/login/unified", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +95,13 @@
 
       const data = await response.json();
 
-      if (response.ok) {
+      // Admin também é membro da equipe: a página de colaborador aceita os
+      // dois papéis. As demais páginas exigem o perfil exato.
+      const roleMatches = profile === "staff"
+        ? data.role === "staff" || data.role === "admin"
+        : data.role === profile;
+
+      if (response.ok && roleMatches) {
         return {
           success: true,
           accessToken: data.accessToken,

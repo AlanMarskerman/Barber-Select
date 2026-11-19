@@ -735,7 +735,7 @@
       document.addEventListener("DOMContentLoaded", async () => {
         const token = sessionStorage.getItem("accessToken");
         if (!token) {
-          window.location.href = "login.html";
+          window.location.href = "/pages/login.html";
           return;
         }
 
@@ -780,7 +780,7 @@
 
             if (!res.ok) {
               if (res.status === 401) {
-                window.location.href = "login.html";
+                window.location.href = "/pages/login.html";
                 return;
               }
               throw new Error("Erro ao carregar agendamentos");

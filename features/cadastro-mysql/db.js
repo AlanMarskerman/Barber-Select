@@ -24,6 +24,9 @@ function getPool() {
       // Endereço do servidor MySQL. "localhost" porque o MySQL do XAMPP
       // roda na mesma máquina.
 
+      port: Number(process.env.DB_PORT) || 3306,
+      // Porta do MySQL. O XAMPP usa 3306; ajuste no .env se necessário.
+
       user: process.env.DB_USER || "root",
       // Usuário do MySQL. "root" é o padrão do XAMPP.
 

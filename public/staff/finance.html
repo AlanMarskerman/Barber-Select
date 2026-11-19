@@ -601,7 +601,7 @@
         try {
           const res = await fetch(`/api/finance/${id}`, {
             method: "DELETE",
-            headers: { "Authorization": `Bearer ${token}` }
+            headers: { "Authorization": `Bearer ${session.accessToken}` }
           });
           if (res.ok) {
             loadTransactions();
@@ -628,7 +628,7 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
+              "Authorization": `Bearer ${session.accessToken}`
             },
             body: JSON.stringify({
               description,

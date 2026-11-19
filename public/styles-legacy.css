@@ -1,11 +1,11 @@
 :root {
-  --ink: #171b1a;
-  --paper: #f6f1e8;
+  --ink: #0e1513;
+  --paper: #f7f3ec;
   --panel: #fffdf8;
-  --line: #ded6c9;
-  --muted: #766f64;
+  --line: #e0d8cc;
+  --muted: #6b665c;
   --green: #173f36;
-  --green2: #24594d;
+  --green2: #1e5247;
   --gold: #c78e36;
   --gold-soft: #f0dfbf;
   --red: #a5483b;
@@ -245,6 +245,12 @@ a {
   gap: 26px;
 }
 
+.brand img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+
 .sidebar-nav {
   display: grid;
   gap: 6px;
@@ -390,6 +396,40 @@ a {
   }
   .kpis {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.menu-button.hamb {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font-size: 24px;
+  padding: 8px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .menu-button.hamb {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(280px, 86vw);
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  .app.mobile-menu-open .sidebar {
+    transform: translateX(0);
   }
 }
 
