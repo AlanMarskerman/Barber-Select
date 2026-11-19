@@ -405,6 +405,32 @@
         .client-main {
           margin-left: 0;
           padding: 20px 16px 80px;
+          min-width: 0;
+          max-width: 100%;
+        }
+
+        .client-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .user-badge {
+          min-width: 0;
+          max-width: 62%;
+        }
+
+        .user-badge > div {
+          min-width: 0;
+        }
+
+        .user-badge b {
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .welcome-text h1 {
+          overflow-wrap: anywhere;
         }
 
         .client-grid-sections {
@@ -581,8 +607,23 @@
           return;
         }
 
-        document.getElementById("welcome-title").textContent = `Olá, ${identity}`;
-        document.getElementById("client-name-display").textContent = identity;
+        // A sessão guarda o e-mail para a API; a saudação usa o nome do perfil.
+        let displayName = identity;
+        try {
+          const profileRes = await fetch("/api/clients/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (profileRes.ok) {
+            const profile = await profileRes.json();
+            if (profile.name) displayName = profile.name;
+          }
+        } catch (error) {
+          console.error("Erro ao carregar nome do cliente:", error);
+        }
+
+        const firstName = String(displayName).split(" ")[0];
+        document.getElementById("welcome-title").textContent = `Olá, ${firstName}`;
+        document.getElementById("client-name-display").textContent = displayName;
 
         const listContainer = document.getElementById("client-appointments-list");
 

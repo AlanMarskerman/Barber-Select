@@ -80,7 +80,22 @@ function clearFailedAttempts(req) {
 }
 
 app.disable("x-powered-by");
-app.use(helmet());
+
+// As páginas do painel usam <script> inline e handlers onclick. O CSP padrão do
+// helmet bloqueia essa lógica e quebra ações da interface. Mantemos as demais
+// diretivas de segurança e liberamos apenas scripts inline; ao migrar os scripts
+// para arquivos externos, remova 'unsafe-inline'.
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "script-src": ["'self'", "'unsafe-inline'"],
+        "script-src-attr": ["'self'", "'unsafe-inline'"],
+      },
+    },
+  }),
+);
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: false, limit: "100kb" }));
 

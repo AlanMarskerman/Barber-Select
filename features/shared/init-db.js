@@ -4,6 +4,31 @@
 // com as credenciais oficiais especificadas em CREDENCIAIS-DEBUG.md.
 
 const bcrypt = require("bcryptjs");
+const mysql = require("mysql2/promise");
+
+// Cria o banco antes de conectar o pool. Sem isto, o servidor nem sobe quando
+// o banco ainda não existe — por exemplo, num XAMPP recém-instalado.
+async function ensureDatabaseExists() {
+  const name = process.env.DB_NAME || "barber_select";
+  if (!/^[A-Za-z0-9_]+$/.test(name)) {
+    throw new Error(`DB_NAME inválido: ${JSON.stringify(name)}. Use letras, números e sublinhado.`);
+  }
+
+  const admin = await mysql.createConnection({
+    host: process.env.DB_HOST || "localhost",
+    port: Number(process.env.DB_PORT) || 3306,
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASSWORD || "",
+  });
+
+  try {
+    await admin.query(
+      `CREATE DATABASE IF NOT EXISTS ${name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`,
+    );
+  } finally {
+    await admin.end();
+  }
+}
 
 const DDL = {
   clients: `
@@ -140,6 +165,7 @@ const DDL = {
 };
 
 async function initDatabase({ getPool }) {
+  await ensureDatabaseExists();
   const pool = getPool();
 
   try {

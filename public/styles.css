@@ -2218,3 +2218,64 @@ box-sizing: border-box;
     flex-wrap: wrap;
   }
 }
+
+/* Correções de layout em telas pequenas, aplicadas no fim da cascata. */
+.caixa-horarios div {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .caixa-agendamentos {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-dados {
+    min-width: 0;
+    min-height: auto;
+  }
+
+  .titulo-caixa {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .caixa-detalhes > div,
+  .campo > div {
+    min-width: 0;
+  }
+
+  .resumo {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .resumo > div {
+    flex: 1 1 42%;
+    min-width: 0;
+    height: auto;
+    padding: 8px 0;
+    border-right: none;
+  }
+
+  .btn-agendamentos {
+    flex-direction: column;
+  }
+
+  .content table {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .appointments-table {
+    min-width: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .appointments-table td,
+  .appointments-table th {
+    overflow-wrap: anywhere;
+  }
+}
