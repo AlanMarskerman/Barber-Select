@@ -491,9 +491,9 @@
   <script src="../js/staff/staff-app.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) {
-        window.location.href = "../pages/login.html";
+      const session = getSession();
+      if (!session.accessToken) {
+        window.location.href = "/pages/login.html";
         return;
       }
 
@@ -504,6 +504,13 @@
       const tbody = document.getElementById("finance-tbody");
       const searchInput = document.getElementById("search-tx");
       const filterType = document.getElementById("filter-type");
+      const submitBtn = financeForm.querySelector("button[type='submit']");
+      const formMessage = document.createElement("div");
+      formMessage.style.marginTop = "12px";
+      formMessage.style.fontSize = "13px";
+      formMessage.style.fontWeight = "500";
+      formMessage.style.textAlign = "center";
+      financeForm.appendChild(formMessage);
 
       async function loadTransactions() {
         try {
@@ -513,16 +520,14 @@
           if (search) url += `search=${encodeURIComponent(search)}&`;
           if (type) url += `type=${encodeURIComponent(type)}`;
 
-          const res = await fetch(url, {
-            headers: { "Authorization": `Bearer ${token}` }
-          });
+          const res = await authenticatedFetch(url);
+          if (!res) return;
 
           if (!res.ok) {
-            if (res.status === 401) {
-              window.location.href = "../pages/login.html";
-              return;
-            }
-            throw new Error("Erro ao carregar transações");
+            const data = await res.json().catch(() => ({}));
+            console.error("[Financeiro] Erro:", data.error || res.status);
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px; color: var(--muted);">Erro ao carregar transações.</td></tr>`;
+            return;
           }
 
           const transactions = await res.json();

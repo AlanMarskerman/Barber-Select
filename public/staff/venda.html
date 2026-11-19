@@ -460,9 +460,10 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn-submit">
+                <button type="submit" class="btn-submit" id="btn-submit-sale">
                   <i class="bx bx-check-shield"></i> Registrar Venda
                 </button>
+                <div id="sale-form-message" style="margin-top: 12px; font-size: 13px; font-weight: 500; text-align: center;"></div>
               </form>
             </section>
 
@@ -504,9 +505,10 @@
     <script src="../js/staff/staff-app.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        const token = sessionStorage.getItem("accessToken");
-        if (!token) {
-          window.location.href = "../pages/login.html";
+        // Garante sessão ativa com refresh automático de token
+        const session = getSession();
+        if (!session.accessToken) {
+          window.location.href = "/pages/login.html";
           return;
         }
 
@@ -516,6 +518,8 @@
         const saleForm = document.getElementById("sale-form");
         const tbody = document.getElementById("sales-tbody");
         const searchInput = document.getElementById("search-sale");
+        const submitBtn = document.getElementById("btn-submit-sale");
+        const formMessage = document.getElementById("sale-form-message");
 
         async function loadSales() {
           try {
@@ -523,37 +527,43 @@
             let url = `/api/sales?`;
             if (search) url += `search=${encodeURIComponent(search)}`;
 
-            const res = await fetch(url, {
-              headers: { "Authorization": `Bearer ${token}` }
-            });
+            const res = await authenticatedFetch(url);
+            if (!res) return;
 
             if (!res.ok) {
-              if (res.status === 401) {
-                window.location.href = "../pages/login.html";
-                return;
-              }
-              throw new Error("Erro ao carregar vendas");
+              const data = await res.json().catch(() => ({}));
+              console.error("[Vendas] Erro ao listar:", data.error || res.status);
+              tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: var(--muted);">Erro ao carregar vendas. Tente novamente.</td></tr>`;
+              return;
             }
 
             const sales = await res.json();
             renderSales(sales);
             updateStats(sales);
           } catch (err) {
-            console.error("Erro:", err);
+            console.error("[Vendas] Erro de conexão:", err);
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: var(--muted);">Erro de conexão ao carregar vendas.</td></tr>`;
           }
+        }
+
+        function formatDateShort(dateStr) {
+          if (!dateStr) return "—";
+          const part = String(dateStr).substring(0, 10);
+          const [y, m, d] = part.split("-");
+          return `${d}/${m}/${y}`;
         }
 
         function renderSales(list) {
           tbody.innerHTML = "";
 
-          if (list.length === 0) {
+          if (!Array.isArray(list) || list.length === 0) {
             tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: var(--muted);">Nenhuma venda registrada.</td></tr>`;
             return;
           }
 
           list.forEach(s => {
-            const isPago = s.status.toLowerCase() === 'pago';
-            const formattedDate = new Date(s.sale_date).toLocaleDateString('pt-BR');
+            const isPago = String(s.status).toLowerCase() === 'pago';
+            const formattedDate = formatDateShort(s.sale_date);
             const tr = document.createElement("tr");
             tr.innerHTML = `
               <td><small>${formattedDate}</small></td>
@@ -589,11 +599,10 @@
         window.deleteSale = async function(id) {
           if (!confirm("Tem certeza que deseja excluir esta venda?")) return;
           try {
-            const res = await fetch(`/api/sales/${id}`, {
-              method: "DELETE",
-              headers: { "Authorization": `Bearer ${token}` }
+            const res = await authenticatedFetch(`/api/sales/${id}`, {
+              method: "DELETE"
             });
-            if (res.ok) {
+            if (res && res.ok) {
               loadSales();
             } else {
               alert("Erro ao excluir venda.");
@@ -606,19 +615,28 @@
         saleForm.addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          const client_name = document.getElementById("client_name").value;
-          const item_name = document.getElementById("item_name").value;
+          const client_name = document.getElementById("client_name").value.trim();
+          const item_name = document.getElementById("item_name").value.trim();
           const amount = document.getElementById("amount").value;
           const payment_method = document.getElementById("payment_method").value;
           const status = document.getElementById("status").value;
           const sale_date = document.getElementById("sale_date").value;
 
+          if (!client_name || !item_name || !amount || !sale_date) {
+            formMessage.textContent = "Preencha todos os campos obrigatórios.";
+            formMessage.style.color = "#a5483b";
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Salvando...';
+          formMessage.textContent = "";
+
           try {
-            const res = await fetch("/api/sales", {
+            const res = await authenticatedFetch("/api/sales", {
               method: "POST",
               headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Content-Type": "application/json"
               },
               body: JSON.stringify({
                 client_name,
@@ -630,17 +648,24 @@
               })
             });
 
-            if (res.ok) {
+            if (res && res.ok) {
+              formMessage.textContent = "✅ Venda registrada e lançada no financeiro com sucesso!";
+              formMessage.style.color = "#218c32";
               saleForm.reset();
               document.getElementById("sale_date").value = todayStr;
-              loadSales();
+              await loadSales();
             } else {
-              const errData = await res.json();
-              alert(errData.error || "Erro ao registrar venda.");
+              const errData = res ? await res.json().catch(() => ({})) : {};
+              formMessage.textContent = errData.error || "Erro ao registrar venda.";
+              formMessage.style.color = "#a5483b";
             }
           } catch (err) {
             console.error(err);
-            alert("Erro de conexão ao registrar venda.");
+            formMessage.textContent = "Erro de conexão ao registrar venda.";
+            formMessage.style.color = "#a5483b";
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bx bx-check-shield"></i> Registrar Venda';
           }
         });
 

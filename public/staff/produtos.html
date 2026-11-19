@@ -484,15 +484,23 @@
   <script src="../js/staff/staff-app.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) {
-        window.location.href = "../pages/login.html";
+      // Garante sessão ativa com refresh automático de token
+      const session = getSession();
+      if (!session.accessToken) {
+        window.location.href = "/pages/login.html";
         return;
       }
 
       const productForm = document.getElementById("product-form");
       const tbody = document.getElementById("products-tbody");
       const searchInput = document.getElementById("search-product");
+      const submitBtn = productForm.querySelector("button[type='submit']");
+      const formMessage = document.createElement("div");
+      formMessage.style.marginTop = "12px";
+      formMessage.style.fontSize = "13px";
+      formMessage.style.fontWeight = "500";
+      formMessage.style.textAlign = "center";
+      productForm.appendChild(formMessage);
 
       async function loadProducts() {
         try {
@@ -500,30 +508,29 @@
           let url = `/api/products?`;
           if (search) url += `search=${encodeURIComponent(search)}`;
 
-          const res = await fetch(url, {
-            headers: { "Authorization": `Bearer ${token}` }
-          });
+          const res = await authenticatedFetch(url);
+          if (!res) return;
 
           if (!res.ok) {
-            if (res.status === 401) {
-              window.location.href = "../pages/login.html";
-              return;
-            }
-            throw new Error("Erro ao carregar produtos");
+            const data = await res.json().catch(() => ({}));
+            console.error("[Produtos] Erro ao listar:", data.error || res.status);
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 30px; color: var(--muted);">Erro ao carregar produtos. Tente novamente.</td></tr>`;
+            return;
           }
 
           const products = await res.json();
           renderProducts(products);
           updateStats(products);
         } catch (err) {
-          console.error("Erro:", err);
+          console.error("[Produtos] Erro de conexão:", err);
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 30px; color: var(--muted);">Erro de conexão ao carregar produtos.</td></tr>`;
         }
       }
 
       function renderProducts(list) {
         tbody.innerHTML = "";
 
-        if (list.length === 0) {
+        if (!Array.isArray(list) || list.length === 0) {
           tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 30px; color: var(--muted);">Nenhum produto cadastrado.</td></tr>`;
           return;
         }
@@ -570,11 +577,10 @@
       window.deleteProduct = async function(id) {
         if (!confirm("Tem certeza que deseja excluir este produto?")) return;
         try {
-          const res = await fetch(`/api/products/${id}`, {
-            method: "DELETE",
-            headers: { "Authorization": `Bearer ${token}` }
+          const res = await authenticatedFetch(`/api/products/${id}`, {
+            method: "DELETE"
           });
-          if (res.ok) {
+          if (res && res.ok) {
             loadProducts();
           } else {
             alert("Erro ao excluir produto.");
@@ -587,20 +593,29 @@
       productForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const name = document.getElementById("name").value;
-        const description = document.getElementById("description").value;
+        const name = document.getElementById("name").value.trim();
+        const description = document.getElementById("description").value.trim();
         const cost_price = document.getElementById("cost_price").value || 0;
         const sale_price = document.getElementById("sale_price").value;
         const stock = document.getElementById("stock").value;
         const min_stock = document.getElementById("min_stock").value || 5;
         const category = document.getElementById("category").value;
 
+        if (!name || !sale_price || !stock) {
+          formMessage.textContent = "Preencha os campos obrigatórios.";
+          formMessage.style.color = "#a5483b";
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Salvando...';
+        formMessage.textContent = "";
+
         try {
-          const res = await fetch("/api/products", {
+          const res = await authenticatedFetch("/api/products", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({
               name,
@@ -613,16 +628,23 @@
             })
           });
 
-          if (res.ok) {
+          if (res && res.ok) {
+            formMessage.textContent = "✅ Produto cadastrado no estoque com sucesso!";
+            formMessage.style.color = "#218c32";
             productForm.reset();
-            loadProducts();
+            await loadProducts();
           } else {
-            const errData = await res.json();
-            alert(errData.error || "Erro ao cadastrar produto.");
+            const errData = res ? await res.json().catch(() => ({})) : {};
+            formMessage.textContent = errData.error || "Erro ao cadastrar produto.";
+            formMessage.style.color = "#a5483b";
           }
         } catch (err) {
           console.error(err);
-          alert("Erro de conexão ao cadastrar produto.");
+          formMessage.textContent = "Erro de conexão ao cadastrar produto.";
+          formMessage.style.color = "#a5483b";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="bx bx-plus"></i> Cadastrar Produto';
         }
       });
 

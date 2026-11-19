@@ -113,6 +113,7 @@ app.use("/api/", apiLimiter);
 
 // Rotas de API
 const { getPool } = require("./features/cadastro-mysql/db");
+const { initDatabase } = require("./features/shared/init-db");
 
 // Cadastro e login de clientes
 const createClientAuth = require("./features/cadastro-mysql/client-auth");
@@ -140,6 +141,7 @@ app.use("/api/staff-users", staffRouter);
 app.use("/api/clients", require("./features/clientes-mysql/clients-routes")({ authenticate, getPool }));
 app.use("/api/services", require("./features/servicos-mysql/services-routes")({ authenticate, getPool }));
 app.use("/api/appointments", require("./features/agenda-mysql/appointments-routes")({ authenticate, getPool }));
+app.use("/api/dashboard", require("./features/agenda-mysql/dashboard-routes")({ authenticate, getPool }));
 app.use("/api/products", require("./features/produtos-mysql/products-routes")({ authenticate, getPool }));
 app.use("/api/finance", require("./features/financeiro-mysql/finance-routes")({ authenticate, getPool }));
 app.use("/api/sales", require("./features/vendas-mysql/sales-routes")({ authenticate, getPool }));
@@ -375,8 +377,12 @@ app.use((err, req, res, next) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Servidor executando em http://localhost:${PORT}`);
+  initDatabase({ getPool }).then(() => {
+    app.listen(PORT, () => {
+      console.log(`Servidor executando em http://localhost:${PORT}`);
+    });
+  }).catch(err => {
+    console.error("Falha ao inicializar o banco de dados na partida:", err);
   });
 }
 

@@ -124,14 +124,14 @@
     </header>
 
 
-    <div class="cadastro1">
+    <form id="formCliente" class="cadastro1">
 
         <!-- NOME -->
         <label>Nome completo</label>
 
         <div class="input-icon">
             <i class="bx bx-user"></i>
-            <input class="elementos" type="text" name="nome" id="nome" placeholder="Digite o nome completo"
+            <input class="elementos" type="text" name="nome" id="nome" placeholder="Digite o nome completo" required
             >
         </div>
 
@@ -144,7 +144,7 @@
 
                 <div class="input-icon">
                     <i class="bx bx-phone"></i>
-                    <input class="elementos" type="number" name="telefone" id="telefone" placeholder="(00) 00000-0000"
+                    <input class="elementos" type="text" name="telefone" id="telefone" placeholder="(00) 00000-0000" required
                     >
                 </div>
             </div>
@@ -155,7 +155,7 @@
 
                 <div class="input-icon">
                     <i class="bx bx-calendar"></i>
-                    <input class="elementos" type="date" name="data"
+                    <input class="elementos" type="date" name="data" id="data_nascimento"
                     >
                 </div>
             </div>
@@ -168,7 +168,7 @@
 
         <div class="input-icon">
             <i class="bx bx-envelope"></i>
-            <input class="elementos" type="email" name="email" placeholder="exemplo@email.com"
+            <input class="elementos" type="email" name="email" id="email" placeholder="exemplo@email.com"
             >
         </div>
 
@@ -179,17 +179,16 @@
         <div class="input-icon observacao">
             <i class="bx bx-file-detail"></i>
 
-            <textarea class="elementos1" name="texto" placeholder="Adicione alguma observação sobre o cliente"
+            <textarea class="elementos1" name="texto" id="observacoes" placeholder="Adicione alguma observação sobre o cliente"
             ></textarea>
         </div>
 
 
     <!-- BOTÕES -->
 
-    <form id="formCliente">
     <div class="linha1">
 
-        <button class="btn12" type="button">
+        <button class="btn12" type="button" onclick="location.href='clients.html'">
             <i class="bx bx-x"></i>
             Cancelar
         </button>
@@ -200,8 +199,8 @@
         </button>
 
     </div>
-    
-      </section>
+
+    </form>
     </main>
   </div>
 

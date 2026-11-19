@@ -161,6 +161,23 @@
       height: auto;
     }
 
+    .chart-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 220px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 24px 0 !important;
+    }
+
     .chart-grid line {
       stroke: var(--line);
       stroke-dasharray: 4 4;
@@ -452,7 +469,7 @@
         <div class="head-right">
           <button class="bell" type="button" aria-label="Notificações">
             <i class="bx bx-bell"></i>
-            <span class="badge">3</span>
+            <span class="badge" id="notifications-badge" hidden>0</span>
           </button>
           <div class="user">
             <i class="bx bx-user-circle user-avatar"></i>
@@ -474,11 +491,11 @@
               </div>
               <div>
                 <div class="label">Atendimentos Hoje</div>
-                <div class="value">18</div>
+                <div class="value" id="stat-appointments-today">—</div>
               </div>
             </div>
             <div class="trend">
-              <b>↗ +12%</b>
+              <b id="stat-appointments-today-delta">—</b>
               <span>em relação a ontem</span>
             </div>
           </article>
@@ -490,11 +507,11 @@
               </div>
               <div>
                 <div class="label">Faturamento Hoje</div>
-                <div class="value">R$ 1.840</div>
+                <div class="value" id="stat-revenue-today">—</div>
               </div>
             </div>
             <div class="trend">
-              <b>↗ +15%</b>
+              <b id="stat-revenue-today-delta">—</b>
               <span>em relação a ontem</span>
             </div>
           </article>
@@ -506,12 +523,12 @@
               </div>
               <div>
                 <div class="label">Agendamentos</div>
-                <div class="value">24</div>
+                <div class="value" id="stat-upcoming-appointments">—</div>
               </div>
             </div>
             <div class="trend">
-              <b>↗ +8%</b>
-              <span>em relação a ontem</span>
+              <b id="stat-upcoming-sub">a partir de hoje</b>
+              <span>agendamentos futuros</span>
             </div>
           </article>
 
@@ -522,12 +539,12 @@
               </div>
               <div>
                 <div class="label">Ticket Médio</div>
-                <div class="value">R$ 76,60</div>
+                <div class="value" id="stat-avg-ticket">—</div>
               </div>
             </div>
             <div class="trend">
-              <b>↗ +6%</b>
-              <span>em relação a ontem</span>
+              <b id="stat-avg-ticket-sub">esta semana</b>
+              <span>faturamento / atendimentos concluídos</span>
             </div>
           </article>
         </div>
@@ -538,62 +555,20 @@
           <section class="panel revenue-panel">
             <div class="panel-header">
               <h2>Faturamento Semanal</h2>
-              <select class="period-select" aria-label="Período">
+              <select class="period-select" id="week-period" aria-label="Período" disabled title="Outros períodos em breve">
                 <option>Esta semana</option>
               </select>
             </div>
-            <div class="linechart">
-              <svg class="svg-chart dashboard-chart" viewBox="0 0 760 300" role="img" aria-label="Faturamento semanal">
-                <defs>
-                  <linearGradient id="dashboardArea" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stop-color="#173f36" stop-opacity="0.25"></stop>
-                    <stop offset="100%" stop-color="#173f36" stop-opacity="0.01"></stop>
-                  </linearGradient>
-                </defs>
-                <g class="chart-grid">
-                  <line x1="78" x2="730" y1="24" y2="24"></line>
-                  <line x1="78" x2="730" y1="68" y2="68"></line>
-                  <line x1="78" x2="730" y1="112" y2="112"></line>
-                  <line x1="78" x2="730" y1="156" y2="156"></line>
-                  <line x1="78" x2="730" y1="200" y2="200"></line>
-                  <line x1="78" x2="730" y1="244" y2="244"></line>
-                </g>
-                <g class="chart-y-labels">
-                  <text x="8" y="29">R$ 2.500</text>
-                  <text x="8" y="73">R$ 2.000</text>
-                  <text x="8" y="117">R$ 1.500</text>
-                  <text x="8" y="161">R$ 1.000</text>
-                  <text x="17" y="205">R$ 500</text>
-                  <text x="31" y="249">R$ 0</text>
-                </g>
-                <path class="chart-area" d="M 88 156 L 194 112 L 300 68 L 406 104 L 512 64 L 618 46 L 720 165 L 720 244 L 88 244 Z"></path>
-                <polyline class="chart-line" points="88,156 194,112 300,68 406,104 512,64 618,46 720,165"></polyline>
-                <g class="chart-points">
-                  <circle cx="88" cy="156" r="5"></circle>
-                  <circle cx="194" cy="112" r="5"></circle>
-                  <circle cx="300" cy="68" r="5"></circle>
-                  <circle cx="406" cy="104" r="5"></circle>
-                  <circle cx="512" cy="64" r="5"></circle>
-                  <circle cx="618" cy="46" r="5"></circle>
-                  <circle cx="720" cy="165" r="5"></circle>
-                </g>
-                <g class="chart-x-labels">
-                  <text text-anchor="middle" x="88" y="280">Seg</text>
-                  <text text-anchor="middle" x="194" y="280">Ter</text>
-                  <text text-anchor="middle" x="300" y="280">Qua</text>
-                  <text text-anchor="middle" x="406" y="280">Qui</text>
-                  <text text-anchor="middle" x="512" y="280">Sex</text>
-                  <text text-anchor="middle" x="618" y="280">Sáb</text>
-                  <text text-anchor="middle" x="720" y="280">Dom</text>
-                </g>
-              </svg>
+            <div class="linechart" id="week-chart">
+              <!-- SVG gerado dinamicamente a partir de /api/dashboard -->
+              <div class="chart-loading"><i class="bx bx-loader-alt bx-spin" aria-hidden="true"></i> Carregando faturamento...</div>
             </div>
             <div class="week-summary">
               <div>
                 <small>Total da semana</small>
-                <b>R$ 11.780,00</b>
+                <b id="week-total">—</b>
               </div>
-              <span>↗ +18% vs semana anterior</span>
+              <span id="week-delta">—</span>
             </div>
           </section>
 
@@ -604,31 +579,8 @@
               <a class="view-all" href="agenda.html">Ver todos</a>
             </div>
             <table class="appointments-table">
-              <tbody>
-                <tr>
-                  <td><span class="time">09:00</span></td>
-                  <td><b>Bruno Ferreira</b><small>Corte Social</small></td>
-                  <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
-                  <td><span class="pill green">Confirmado</span></td>
-                </tr>
-                <tr>
-                  <td><span class="time">10:30</span></td>
-                  <td><b>Gabriel Santos</b><small>Barba + Corte</small></td>
-                  <td><span class="barber"><i class="bx bx-user-circle"></i>Lucas</span></td>
-                  <td><span class="pill green">Confirmado</span></td>
-                </tr>
-                <tr>
-                  <td><span class="time">14:00</span></td>
-                  <td><b>Rafael Silva</b><small>Degradê</small></td>
-                  <td><span class="barber"><i class="bx bx-user-circle"></i>Mateus</span></td>
-                  <td><span class="pill yellow">Pendente</span></td>
-                </tr>
-                <tr>
-                  <td><span class="time">15:30</span></td>
-                  <td><b>André Lima</b><small>Corte Social</small></td>
-                  <td><span class="barber"><i class="bx bx-user-circle"></i>Carlos</span></td>
-                  <td><span class="pill green">Confirmado</span></td>
-                </tr>
+              <tbody id="appointments-tbody">
+                <tr><td colspan="4" class="empty-state">Carregando agendamentos...</td></tr>
               </tbody>
             </table>
           </section>
