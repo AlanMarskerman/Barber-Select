@@ -1,11 +1,11 @@
 :root {
-  --ink: #171b1a;
-  --paper: #f6f1e8;
+  --ink: #0e1513;
+  --paper: #f7f3ec;
   --panel: #fffdf8;
-  --line: #ded6c9;
-  --muted: #766f64;
+  --line: #e0d8cc;
+  --muted: #6b665c;
   --green: #173f36;
-  --green2: #24594d;
+  --green2: #1e5247;
   --gold: #c78e36;
   --gold-soft: #f0dfbf;
   --red: #a5483b;
@@ -243,6 +243,12 @@ a {
   display: flex;
   flex-direction: column;
   gap: 26px;
+}
+
+.brand img {
+  display: block;
+  width: 150px;
+  height: auto;
 }
 
 .sidebar-nav {

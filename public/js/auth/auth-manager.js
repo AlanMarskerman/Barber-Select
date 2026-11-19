@@ -95,7 +95,13 @@
 
       const data = await response.json();
 
-      if (response.ok && data.role === profile) {
+      // Admin também é membro da equipe: a página de colaborador aceita os
+      // dois papéis. As demais páginas exigem o perfil exato.
+      const roleMatches = profile === "staff"
+        ? data.role === "staff" || data.role === "admin"
+        : data.role === profile;
+
+      if (response.ok && roleMatches) {
         return {
           success: true,
           accessToken: data.accessToken,
